@@ -5,6 +5,8 @@ class_name Lantern
 @export var rotation_speed := 5.0
 
 func _process(delta):
+	
+	energie_logic()
 		
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	var y_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)

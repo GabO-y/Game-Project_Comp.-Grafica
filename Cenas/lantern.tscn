@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ib0ckcutc4k2"]
 
-[ext_resource type="Script" uid="uid://bokj0t6il3o7x" path="res://lantern.gd" id="1_ymxyl"]
+[ext_resource type="Script" uid="uid://c3qj8cf4f5uxy" path="res://lantern.gd" id="1_ymxyl"]
 [ext_resource type="Texture2D" uid="uid://u4uws8eeerds" path="res://Assets/sprites/lantern/shape.png" id="2_2nwt7"]
-[ext_resource type="Script" uid="uid://bkaqm6xg21jpu" path="res://Cenas/Lantern/light.gd" id="2_70xnt"]
+[ext_resource type="Script" uid="uid://bkaqm6xg21jpu" path="res://Cenas/LightArmor/Lantern/light.gd" id="2_70xnt"]
 
 [node name="Lantern" type="Node2D"]
 script = ExtResource("1_ymxyl")

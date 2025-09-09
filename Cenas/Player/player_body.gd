@@ -1,14 +1,18 @@
 extends Character
 
+var armor: LightArmor
+var armorEnergie
+
 var speed = 200
-@onready var armor := $LightArmor
 
 func _ready() -> void:
-	
-	armor = preload("res://Cenas/lantern.tscn").instantiate()
-	add_child(armor)
-	
 
+	armor = preload("res://Cenas/LightArmor/Lantern/lantern.tscn").instantiate()
+	
+	add_child(armor)
+		
+
+	
 func _physics_process(delta: float) -> void:
 	
 	armor.global_position = global_position
@@ -34,5 +38,7 @@ func _physics_process(delta: float) -> void:
 
 	velocity = input_vector * speed
 	move_and_slide()
+		
+signal hit(body: Enemie)
 	
 	

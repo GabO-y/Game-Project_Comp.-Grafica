@@ -1,6 +1,6 @@
 extends Area2D
 
-var damage = 10
+var damage = 5
 
 var enemies_on_light = {}
 
@@ -28,3 +28,5 @@ func _process(delta: float) -> void:
 		if(enemies_on_light[body] >= 2.0):
 			(body as Enemie).take_damage(damage) 
 			enemies_on_light[body] = 0.0
+			
+	

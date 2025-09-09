@@ -4,5 +4,3 @@
 
 [node name="LightArmor" type="Node2D"]
 script = ExtResource("1_j0ri1")
-
-[connection signal="hit" from="." to="." method="_on_hit"]

@@ -8,5 +8,10 @@
 script = ExtResource("1_26nif")
 
 [node name="Player" parent="." instance=ExtResource("1_vow35")]
+position = Vector2(85, 62)
 
 [node name="EnemiePattener" parent="." instance=ExtResource("2_eok6v")]
+position = Vector2(130, 244)
+
+[node name="EnemiePattener2" parent="." instance=ExtResource("2_eok6v")]
+position = Vector2(346, 119)

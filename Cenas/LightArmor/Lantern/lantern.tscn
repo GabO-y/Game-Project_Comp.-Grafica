@@ -8,7 +8,6 @@
 script = ExtResource("1_ymxyl")
 
 [node name="Light" type="Area2D" parent="."]
-visible = false
 script = ExtResource("2_70xnt")
 
 [node name="Sprite2D" type="Sprite2D" parent="Light"]
