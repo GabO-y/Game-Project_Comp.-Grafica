@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0ycmxpkip27y"]
+
+[ext_resource type="Script" uid="uid://bokj0t6il3o7x" path="res://lantern.gd" id="1_ymxyl"]
+[ext_resource type="Texture2D" uid="uid://u4uws8eeerds" path="res://Assets/sprites/lantern/shape.png" id="2_2nwt7"]
+[ext_resource type="Script" uid="uid://cqcu2tyls15ul" path="res://Cenas/light.gd" id="2_70xnt"]
+
+[node name="Lantern" type="Node2D"]
+script = ExtResource("1_ymxyl")
+
+[node name="Light" type="Area2D" parent="."]
+script = ExtResource("2_70xnt")
+
+[node name="Sprite2D" type="Sprite2D" parent="Light"]
+position = Vector2(0, 132)
+texture = ExtResource("2_2nwt7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light"]
+polygon = PackedVector2Array(0, 3, -137, 241, -80, 251, -2, 255, 66, 255, 137, 240)

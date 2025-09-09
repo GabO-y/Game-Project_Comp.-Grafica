@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://dies4xt7oegrb"]
+
+[ext_resource type="Script" uid="uid://c3svmxorsnj3i" path="res://Cenas/house.gd" id="1_e41ib"]
+[ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/player.tscn" id="1_vow35"]
+[ext_resource type="PackedScene" uid="uid://8qr6piau6jgp" path="res://Cenas/Test.tscn" id="2_e41ib"]
+[ext_resource type="PackedScene" uid="uid://b0ycmxpkip27y" path="res://Cenas/lantern.tscn" id="4_qrd84"]
+
+[node name="House" type="Node2D"]
+script = ExtResource("1_e41ib")
+
+[node name="Player" parent="." instance=ExtResource("1_vow35")]
+
+[node name="ColissionTest" parent="." instance=ExtResource("2_e41ib")]
+
+[node name="Lantern" parent="." instance=ExtResource("4_qrd84")]
+position = Vector2(3, 17)
