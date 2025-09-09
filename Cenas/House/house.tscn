@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxexjlkqbs61u"]
+
+[ext_resource type="Script" uid="uid://c3svmxorsnj3i" path="res://Cenas/House/house.gd" id="1_26nif"]
+[ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/Player/player.tscn" id="1_vow35"]
+[ext_resource type="PackedScene" uid="uid://1tr0f8hvuvba" path="res://Cenas/Enemie/Enemie_Pattener.tscn" id="2_eok6v"]
+
+[node name="House" type="Node2D"]
+script = ExtResource("1_26nif")
+
+[node name="Player" parent="." instance=ExtResource("1_vow35")]
+
+[node name="EnemiePattener" parent="." instance=ExtResource("2_eok6v")]

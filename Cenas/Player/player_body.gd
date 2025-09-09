@@ -1,8 +1,17 @@
-extends CharacterBody2D
+extends Character
 
 var speed = 200
+@onready var armor := $LightArmor
+
+func _ready() -> void:
+	
+	armor = preload("res://Cenas/lantern.tscn").instantiate()
+	add_child(armor)
+	
 
 func _physics_process(delta: float) -> void:
+	
+	armor.global_position = global_position
 			
 	var input_vector = Vector2.ZERO
 

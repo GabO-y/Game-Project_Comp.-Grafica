@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GameProject_Comp-Grafica"
-run/main_scene="uid://dies4xt7oegrb"
+run/main_scene="uid://cxexjlkqbs61u"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

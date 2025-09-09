@@ -1,9 +1,11 @@
-extends Node2D
+extends LightArmor
+
+class_name Lantern
 
 @export var rotation_speed := 5.0
 
 func _process(delta):
-	
+		
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	var y_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 
@@ -15,4 +17,3 @@ func _process(delta):
 	#var mouse_pos = get_global_mouse_position()
 	#var dir = (mouse_pos - global_position).normalized()
 	#rotation = dir.angle()
-		

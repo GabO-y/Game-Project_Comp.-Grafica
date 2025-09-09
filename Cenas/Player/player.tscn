@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=5 format=3 uid="uid://clp3coh5mf60x"]
 
-[ext_resource type="Script" uid="uid://dwi2lph361qvq" path="res://Cenas/player_body.gd" id="1_pmvhq"]
+[ext_resource type="Script" uid="uid://bgk4dupaaqr5k" path="res://Cenas/Player/player_body.gd" id="1_pmvhq"]
 [ext_resource type="Texture2D" uid="uid://7daj5pugw3ai" path="res://Assets/Player/Sprites/pngtree-red-square-seal-png-image_2441737.jpg" id="1_ytnb3"]
+[ext_resource type="PackedScene" uid="uid://c6bqv4u0hchsw" path="res://Cenas/LightArmor/LightArmor.tscn" id="3_yjlpd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmvhq"]
 size = Vector2(36, 35)
@@ -19,3 +20,5 @@ texture = ExtResource("1_ytnb3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pmvhq")
+
+[node name="LightArmor" parent="CharacterBody2D" instance=ExtResource("3_yjlpd")]
