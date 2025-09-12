@@ -7,8 +7,6 @@ var speed: float = 200
 var dash_speed: float = 600
 var dash_time: float = 0.2
 var dash_cooldown: float = 0.5
-var stamina = 50
-var stamina_per_dash = 5
 
 var last_direction: Vector2 = Vector2.RIGHT
 var is_dashing: bool = false
@@ -16,10 +14,12 @@ var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
 func _ready() -> void:
+	print("lashkd")
 	armor = preload("res://Cenas/LightArmor/Lighter/Lighter.tscn").instantiate()
 	add_child(armor)
 
 func _physics_process(delta: float) -> void:
+	
 	armor.global_position = global_position
 	
 	var input_vector = Vector2.ZERO
@@ -50,12 +50,10 @@ func _physics_process(delta: float) -> void:
 		dash_cooldown_timer -= delta
 
 	# Iniciar dash
-	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0 and stamina > 0:
-		stamina -= stamina_per_dash
+	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
 		is_dashing = true
 		dash_timer = dash_time
 		velocity = last_direction * dash_speed
-		print(stamina)
 
 	# Atualizar dash
 	if is_dashing:

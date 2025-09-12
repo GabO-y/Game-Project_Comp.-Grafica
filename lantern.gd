@@ -20,5 +20,5 @@ func _process(delta):
 		rotation = dir.angle()
 		
 	#var mouse_pos = get_global_mouse_position()
-	#var dir = (mouse_pos - global_position).normalized()
+	#dir = (mouse_pos - global_position).normalized()
 	#rotation = dir.angle()

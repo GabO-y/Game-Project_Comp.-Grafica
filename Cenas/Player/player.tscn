@@ -7,8 +7,9 @@
 size = Vector2(36, 35)
 
 [node name="Player" type="Node2D"]
+position = Vector2(50, 36)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_pmvhq")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
@@ -16,6 +17,8 @@ position = Vector2(-1.90735e-06, -9.53674e-07)
 scale = Vector2(0.116554, 0.116554)
 texture = ExtResource("1_ytnb3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" groups=["player"]]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pmvhq")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]

@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_nbknv"]
 radius = 189.235
 
-[node name="Lighter" type="Node2D"]
+[node name="Lighter" type="Node2D" groups=["Armor"]]
 script = ExtResource("1_dlcgh")
 
 [node name="Area2D" type="Area2D" parent="."]
