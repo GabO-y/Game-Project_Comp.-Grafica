@@ -1,4 +1,6 @@
-extends CharacterBody2D
+extends Node2D
+
+class_name Character
 
 var life = 100
 

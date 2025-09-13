@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-var armor: LightArmor
-var armorEnergie
+
 
 var speed: float = 200
 var dash_speed: float = 600
@@ -13,14 +12,10 @@ var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
-func _ready() -> void:
-	print("lashkd")
-	armor = preload("res://Cenas/LightArmor/Lighter/Lighter.tscn").instantiate()
-	add_child(armor)
 
 func _physics_process(delta: float) -> void:
 	
-	armor.global_position = global_position
+	get_parent().armor.global_position = global_position
 	
 	var input_vector = Vector2.ZERO
 

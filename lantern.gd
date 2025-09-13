@@ -6,11 +6,10 @@ class_name Lantern
 
 func _ready() -> void:
 	energie = 100
-
+	super._ready()
+	
 func _process(delta):
 	
-	energie_logic()
-		
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	var y_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 
@@ -22,3 +21,5 @@ func _process(delta):
 	#var mouse_pos = get_global_mouse_position()
 	#dir = (mouse_pos - global_position).normalized()
 	#rotation = dir.angle()
+	
+	super._process(delta)
