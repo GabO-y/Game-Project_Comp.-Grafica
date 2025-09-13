@@ -15,4 +15,3 @@ position = Vector2(1058, 358)
 position = Vector2(527, 243)
 
 [node name="SpawnFantasm" parent="." instance=ExtResource("4_p2fja")]
-position = Vector2(22, 13)

@@ -8,7 +8,7 @@
 size = Vector2(36, 35)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
-radius = 24.0832
+radius = 28.0179
 
 [node name="Player" type="Node2D"]
 position = Vector2(50, 36)
@@ -18,7 +18,7 @@ script = ExtResource("1_yjlpd")
 collision_mask = 4
 script = ExtResource("1_pmvhq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" groups=["player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pmvhq")
 

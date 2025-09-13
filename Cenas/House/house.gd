@@ -12,7 +12,6 @@ var spawns: Array[Spawn] = []
 func _ready() -> void:
 	
 	var fSpawn = get_node("SpawnFantasm") as Spawn
-	
 	fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))
 		
 	armor = player.armor

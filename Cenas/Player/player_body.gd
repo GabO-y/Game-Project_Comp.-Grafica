@@ -10,19 +10,28 @@ var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
-var enemies_touch : Dictionary[Enemie, float] = {}
+var enemies_touch = {}
 
 func _ready() -> void:
-	(get_node("Area2D") as Area2D).body_entered.connect(_touch_enemie)
-	pass 
+	var area = (get_node("Area2D") as Area2D)
+	area.body_entered.connect(_touch_enemie)
+	area.body_exited.connect(_exit_enemie)
 	
 func _process(delta: float) -> void:
-	for ene in enemies_touch.keys():
-		enemies_touch[ene] += delta
-		if enemies_touch[ene] >= 2.0:
-			ene.speed = 200
-			enemies_touch.erase(ene)
 	
+	for ene in enemies_touch.keys():
+		
+		#Enquanto o inimigo encosta no player, ele nao se mexe
+		ene.player = null
+		#Vai contando quanto tempo o inimigo esta tocando no playwr
+		enemies_touch[ene] += delta
+		#Se foi maior que meio segungo
+		if enemies_touch[ene] >= 0.1:
+			#O tempo volta pra zero
+			enemies_touch[ene] = 0
+			#Vai tirar a vida do player
+			get_parent().life -= ene.damage
+			
 func _physics_process(delta: float) -> void:
 	
 	get_parent().armor.global_position = global_position
@@ -76,4 +85,14 @@ func _touch_enemie(body):
 	var ene = body.get_parent()
 	if ene != null and ene is Enemie:
 		enemies_touch[ene] = 0.0
-		print("a")
+
+#para quando o inimigo para de encostar no player
+func _exit_enemie(body):
+	#pra pegar o corpo e verificar se é enemie
+	var ene = body.get_parent()
+	if ene != null and ene is Enemie:
+		#Quando o inimigo encosta no player, ele para de seguir o player
+		#ent quando ele para de encostar, ele volta a seguir
+		ene.player = self
+		#Tira o inimigo da lista, para nao ficar dando "dano fantasma"
+		enemies_touch.erase(ene)
