@@ -4,7 +4,7 @@ extends Character
 var armorEnergie
 
 func _ready() -> void:
-	armor = preload("res://Cenas/LightArmor/Lantern/lantern.tscn").instantiate()
+	armor = preload("res://Cenas/LightArmor/Lighter/Lighter.tscn").instantiate()
 	add_child(armor)
 	
 signal hit(body: Enemie)

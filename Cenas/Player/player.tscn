@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=6 format=3 uid="uid://clp3coh5mf60x"]
 
 [ext_resource type="Script" uid="uid://bgk4dupaaqr5k" path="res://Cenas/Player/player_body.gd" id="1_pmvhq"]
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
@@ -7,18 +7,28 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmvhq"]
 size = Vector2(36, 35)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
+radius = 24.0832
+
 [node name="Player" type="Node2D"]
 position = Vector2(50, 36)
 script = ExtResource("1_yjlpd")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+collision_mask = 4
 script = ExtResource("1_pmvhq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" groups=["player"]]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_pmvhq")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(-1.90735e-06, -9.53674e-07)
 scale = Vector2(0.116554, 0.116554)
 texture = ExtResource("1_ytnb3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" groups=["player"]]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_pmvhq")
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_yjlpd")
+debug_color = Color(0.992689, 0, 0.248493, 0.42)

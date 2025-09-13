@@ -4,7 +4,7 @@ class_name Lantern
 
 @export var rotation_speed := 5.0
 
-func _ready() -> void:
+func _ready() -> void:	
 	energie = 100
 	super._ready()
 	

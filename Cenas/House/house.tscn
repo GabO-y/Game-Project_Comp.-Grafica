@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxexjlkqbs61u"]
+[gd_scene load_steps=5 format=3 uid="uid://cxexjlkqbs61u"]
 
 [ext_resource type="Script" uid="uid://c3svmxorsnj3i" path="res://Cenas/House/house.gd" id="1_26nif"]
 [ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/Player/player.tscn" id="1_vow35"]
 [ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Fantasm/Fantasm.tscn" id="3_26nif"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/enemie_spawaner.tscn" id="4_p2fja"]
 
 [node name="House" type="Node2D"]
 script = ExtResource("1_26nif")
@@ -12,3 +13,6 @@ position = Vector2(1058, 358)
 
 [node name="Fantasm" parent="." instance=ExtResource("3_26nif")]
 position = Vector2(527, 243)
+
+[node name="SpawnFantasm" parent="." instance=ExtResource("4_p2fja")]
+position = Vector2(22, 13)

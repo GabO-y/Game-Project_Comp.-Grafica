@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-
-
 var speed: float = 200
 var dash_speed: float = 600
 var dash_time: float = 0.2
@@ -12,7 +10,19 @@ var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
+var enemies_touch : Dictionary[Enemie, float] = {}
 
+func _ready() -> void:
+	(get_node("Area2D") as Area2D).body_entered.connect(_touch_enemie)
+	pass 
+	
+func _process(delta: float) -> void:
+	for ene in enemies_touch.keys():
+		enemies_touch[ene] += delta
+		if enemies_touch[ene] >= 2.0:
+			ene.speed = 200
+			enemies_touch.erase(ene)
+	
 func _physics_process(delta: float) -> void:
 	
 	get_parent().armor.global_position = global_position
@@ -62,4 +72,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()  
 	
-signal hit(body: Enemie)
+func _touch_enemie(body):
+	var ene = body.get_parent()
+	if ene != null and ene is Enemie:
+		enemies_touch[ene] = 0.0
+		print("a")

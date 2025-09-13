@@ -7,30 +7,26 @@ extends Node2D
 var activateArmor = true
 var armor: LightArmor
 var infosModeActivate = false
+var spawns: Array[Spawn] = []
 
 func _ready() -> void:
 	
-	var x = 0
+	var fSpawn = get_node("SpawnFantasm") as Spawn
 	
-	for i in range(5):
-		
-		var f = preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn").instantiate();
-		f.position += Vector2(5, x)
-		x += 25
-		
-		add_child(f)
+	fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))
 		
 	armor = player.armor
 	armor.set_activate(false);
+	
+	spawns = [fSpawn]
+	
+		
 		
 func _process(delta: float) -> void:
 	
+	
+	
 	infosMode()		
-	#var n = get_tree().get_nodes_in_group("Armor")
-	#print("Aqui")
-	#for i in n:
-		#print(n)
-	#print("fim")
 	
 	toggle_activate_armor()
 		

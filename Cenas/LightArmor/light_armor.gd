@@ -5,11 +5,9 @@ class_name LightArmor
 var damage: int = 10
 var energie = 50
 var activate = false
+var area: Area2D
 
 var enemies_on_light:Dictionary[Enemie, float] = {}
-
-var areas2D: Array[Area2D] = []
-
 var readyTime = false
 
 func _ready() -> void:
@@ -17,28 +15,28 @@ func _ready() -> void:
 	#Pega as areas 2d que estao nas instancias armas e adiciona num array
 	for i in get_children():
 		if i is Area2D:
-			areas2D.append(i)
-			
+			area = i
+						
 	#Para todas as areas pegas, ele adiciona o sinal que verifica se um inimigo esta na luz
-	for area in areas2D:
-		area.body_entered.connect(_init_time_hit)
-		area.body_exited.connect(_reset_time_hit)
+	area.body_entered.connect(_init_time_hit)
+	area.body_exited.connect(_reset_time_hit)
 		
 		
 func _process(delta: float) -> void:
-		
-	for area in areas2D:
-		for body in enemies_on_light.keys():
-			if body == null:
-				continue
-		
-		# vai incrementando o tempo conforme ele fica na area
-			enemies_on_light[body] += delta
 			
-			# se der 2 segundos, ele zera o tempo e da o dano
-			if(enemies_on_light[body] >= 2.0):
-				body.take_damage(damage) 
-				enemies_on_light[body] = 0.0
+	for body in enemies_on_light.keys():
+		if body == null:
+			continue
+	
+		print(body)
+	
+	# vai incrementando o tempo conforme ele fica na area
+		enemies_on_light[body] += delta
+		
+		# se der 2 segundos, ele zera o tempo e da o dano
+		if(enemies_on_light[body] >= 2.0):
+			body.take_damage(damage) 
+			enemies_on_light[body] = 0.0
 		
 	energie_logic()
 
@@ -55,10 +53,8 @@ func energie_logic():
 func set_activate(mode: bool):
 	
 	activate = mode
-		
-	for i in areas2D:
-		i.monitoring = activate
-		i.visible = activate
+	area.monitoring = activate
+	area.visible = activate
 					
 
 func _init_time_hit(ene: CharacterBody2D):	

@@ -13,4 +13,5 @@ position = Vector2(0, 132)
 texture = ExtResource("2_2nwt7")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light"]
+visibility_layer = 3
 polygon = PackedVector2Array(0, 3, -137, 241, -80, 251, -2, 255, 66, 255, 137, 240)
