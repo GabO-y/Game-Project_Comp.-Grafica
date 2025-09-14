@@ -1,7 +1,6 @@
 extends Character
 class_name Player
 
-
 @export var armor: LightArmor
 var armorEnergie
 

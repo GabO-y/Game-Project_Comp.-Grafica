@@ -20,9 +20,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	
 	for ene in enemies_touch.keys():
-		
 		#Enquanto o inimigo encosta no player, ele nao se mexe
-		ene.player = null
+		(ene as Enemie).atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr
 		enemies_touch[ene] += delta
 		#Se foi maior que meio segungo
@@ -81,18 +80,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()  
 	
-#func _entered_enemie_view(body):
-	#for i in body.get_children():
-		#if i is CollisionShape2D:
-			#(i.shape as CircleShape2D).radius *= 2
-	#print("tocou: ", body)	
-	#
-#func _exit_enemie_view(body):
-	#for i in body.get_children():
-		#if i is CollisionShape2D:
-			#(i.shape as CircleShape2D).radius = (body.get_parent().get_parent() as Enemie).sizeChaseArea
-	#print("saiu")
-
 func _touch_enemie(body):
 	var ene = body.get_parent()
 	if ene != null and ene is Enemie:
@@ -103,8 +90,5 @@ func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
 	var ene = body.get_parent()
 	if ene != null and ene is Enemie:
-		#Quando o inimigo encosta no player, ele para de seguir o player
-		#ent quando ele para de encostar, ele volta a seguir
-		ene.player = self
-		#Tira o inimigo da lista, para nao ficar dando "dano fantasma"
 		enemies_touch.erase(ene)
+		ene.atack_player = false

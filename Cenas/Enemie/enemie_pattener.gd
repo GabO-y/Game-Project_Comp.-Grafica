@@ -12,6 +12,7 @@ var chaseArea: Area2D #Area que eu fica patrulhando
 var player #Proprio jogador
 var positionTarget #Para onde ele deve andar
 var sizeChaseArea = 100 #Tamanho da area que um inimigo tem em perseguição
+var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
 
 func _on_light_area():
 	return self
@@ -60,6 +61,9 @@ func update_bar():
 	bar.value = life
 
 func _physics_process(delta: float) -> void:
+	
+	var lastPosition = Vector2(positionTarget.x, positionTarget.y)
+	
 
 	if player == null:
 
@@ -70,6 +74,10 @@ func _physics_process(delta: float) -> void:
 			idleTime = 0
 	else:
 		positionTarget = player.global_position
+		
+	if atack_player:
+		positionTarget = lastPosition
+		
 
 	var direction = (positionTarget - body.global_position).normalized()
 

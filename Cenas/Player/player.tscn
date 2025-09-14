@@ -30,5 +30,6 @@ texture = ExtResource("1_ytnb3")
 [node name="Area2D" type="Area2D" parent="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+visibility_layer = 2
 shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
