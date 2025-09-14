@@ -10,6 +10,11 @@ var infosModeActivate = false
 var spawns: Array[Spawn] = []
 
 func _ready() -> void:
+	var door_scene = preload("res://Cenas/Objects/door/door.tscn")
+	var door = door_scene.instantiate()
+	door.position = Vector2(100, 300)  # posição da porta no cenário
+	add_child(door)
+	
 	
 	var fSpawn = get_node("SpawnFantasm") as Spawn
 	fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))

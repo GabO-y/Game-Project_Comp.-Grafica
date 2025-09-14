@@ -4,4 +4,4 @@ var life = 100
 
 func take_damage(damage: int):
 	life -= damage
-	print("life: ", life)
+	print("vida: ", life)
