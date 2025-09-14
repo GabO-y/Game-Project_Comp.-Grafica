@@ -9,3 +9,6 @@ func _ready():
 func _on_body_entered(body):
 	# Esta é a nossa linha de teste!
 	print("COLISÃO DETECTADA! Um corpo entrou na porta.")
+	if body.is_in_group("player"):
+		
+		get_tree().change_scene_to_file("res://Cenas/House/levels/room_1/room_1.tscn")

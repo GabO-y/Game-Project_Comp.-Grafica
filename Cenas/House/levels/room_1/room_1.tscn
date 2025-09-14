@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqel2s0xpwg8v"]
+
+[ext_resource type="Script" uid="uid://cgnkpkde6igj4" path="res://Cenas/House/levels/room_1/room_1.gd" id="1_v1oy7"]
+[ext_resource type="Texture2D" uid="uid://vr8mdlo7svxk" path="res://Cenas/House/levels/room_1/room_1_cortado.jpg" id="2_6j1h4"]
+
+[node name="Room1" type="Node2D"]
+script = ExtResource("1_v1oy7")
+
+[node name="piso" type="TextureRect" parent="."]
+offset_right = 1147.0
+offset_bottom = 645.0
+texture = ExtResource("2_6j1h4")
+stretch_mode = 1
