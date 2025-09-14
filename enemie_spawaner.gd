@@ -4,6 +4,7 @@ class_name Spawn
 
 var type_enemie: PackedScene
 var limit_spawn = 5
+var enemies_already_spawner = 0
 @export var enemies: Array[Enemie] = []
 var time = 0
 var time_to_spawn = 3.0
@@ -12,14 +13,15 @@ func _process(delta: float) -> void:
 		
 	time += delta
 	
-	#Caso seja necessario que o spawan continue fazendo nascer bixos caso ele mate eles
-	#for i in enemies:
-		#if !i.is_processing():
-			#enemies.erase(i)
+	for i in enemies:
+		if !i.is_processing():
+			enemies.erase(i)
+			remove_child(i)
 	
-	if(time >= time_to_spawn && enemies.size() < limit_spawn):
+	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0
 		var enemie = spawanEmenie()
+		enemies_already_spawner += 1
 
 
 		

@@ -5,6 +5,7 @@ class_name Lantern
 @export var rotation_speed := 5.0
 
 func _ready() -> void:	
+	damage = 2
 	energie = 100
 	super._ready()
 	

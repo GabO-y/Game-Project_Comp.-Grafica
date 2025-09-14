@@ -1,14 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://ib0ckcutc4k2"]
+[gd_scene load_steps=4 format=3 uid="uid://wghe0i5qunlf"]
 
 [ext_resource type="Script" uid="uid://c3qj8cf4f5uxy" path="res://lantern.gd" id="1_ymxyl"]
 [ext_resource type="Texture2D" uid="uid://u4uws8eeerds" path="res://Assets/sprites/lantern/shape.png" id="2_2nwt7"]
-[ext_resource type="Script" uid="uid://bkaqm6xg21jpu" path="res://Cenas/LightArmor/Lantern/light.gd" id="2_70xnt"]
+
+[sub_resource type="GDScript" id="GDScript_2nwt7"]
+script/source = "extends Area2D
+#
+#var damage = 10
+#
+#var enemies_on_light = {}
+#
+#func _ready() -> void:
+	#body_entered.connect(_init_time_hit)
+	#body_exited.connect(_reset_time_hit)
+	#
+##se o inicia o tempo que o inimigo esta na luz
+#func _init_time_hit(ene: Enemie):
+	#enemies_on_light[ene] = 0.0
+	#
+##se ele sair, remove do verificador
+#func _reset_time_hit(ene: Enemie):
+	#enemies_on_light.erase(ene)
+#
+#func _process(delta: float) -> void:
+	#
+	## vai passar pro todos os inimigos que estao na luz
+	#for body in enemies_on_light.keys():
+		#
+		## vai incrementando o tempo conforme ele fica na area
+		#enemies_on_light[body] += delta
+		#
+		## se der 2 segundos, ele zera o tempo e da o dano
+		#if(enemies_on_light[body] >= 2.0):
+			#(body as Enemie).take_damage(damage) 
+			#enemies_on_light[body] = 0.0
+"
 
 [node name="Lantern" type="Node2D"]
 script = ExtResource("1_ymxyl")
 
 [node name="Light" type="Area2D" parent="."]
-script = ExtResource("2_70xnt")
+script = SubResource("GDScript_2nwt7")
 
 [node name="Sprite2D" type="Sprite2D" parent="Light"]
 position = Vector2(0, 132)

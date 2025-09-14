@@ -81,6 +81,18 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()  
 	
+#func _entered_enemie_view(body):
+	#for i in body.get_children():
+		#if i is CollisionShape2D:
+			#(i.shape as CircleShape2D).radius *= 2
+	#print("tocou: ", body)	
+	#
+#func _exit_enemie_view(body):
+	#for i in body.get_children():
+		#if i is CollisionShape2D:
+			#(i.shape as CircleShape2D).radius = (body.get_parent().get_parent() as Enemie).sizeChaseArea
+	#print("saiu")
+
 func _touch_enemie(body):
 	var ene = body.get_parent()
 	if ene != null and ene is Enemie:

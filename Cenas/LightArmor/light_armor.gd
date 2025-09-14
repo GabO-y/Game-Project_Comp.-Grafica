@@ -23,21 +23,18 @@ func _ready() -> void:
 		
 		
 func _process(delta: float) -> void:
-			
 	for body in enemies_on_light.keys():
 		if body == null:
 			continue
 	
-		print(body)
-	
-	# vai incrementando o tempo conforme ele fica na area
+		# vai incrementando o tempo conforme ele fica na area
 		enemies_on_light[body] += delta
-		
-		# se der 2 segundos, ele zera o tempo e da o dano
-		if(enemies_on_light[body] >= 2.0):
+		# se der 1 segundos, ele zera o tempo e da o dano
+		if(enemies_on_light[body] >= 1.0):
 			body.take_damage(damage) 
 			enemies_on_light[body] = 0.0
 		
+	#usa a função com a logica da energia
 	energie_logic()
 
 
@@ -48,7 +45,6 @@ func energie_logic():
 	
 	if(activate):
 		energie -= 0.1
-		#print("energie: ", energie)
 
 func set_activate(mode: bool):
 	
@@ -62,6 +58,9 @@ func _init_time_hit(ene: CharacterBody2D):
 	
 #se ele sair, remove do verificador
 func _reset_time_hit(ene: CharacterBody2D):
+	var parent = ene.get_parent()
+	if !(parent is Enemie):
+		return
 	enemies_on_light.erase(ene.get_parent())
 
 	

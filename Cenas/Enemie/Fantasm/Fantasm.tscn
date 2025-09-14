@@ -1,11 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://25uf0g24cox"]
 
 [ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemie/Fantasm/fantasm.gd" id="1_fuhhv"]
-[ext_resource type="Script" uid="uid://6hhkca25sa64" path="res://Cenas/Enemie/Fantasm/fantasm_body.gd" id="2_fuhhv"]
 [ext_resource type="Texture2D" uid="uid://bebol15hywjbu" path="res://Cenas/Enemie/Fantasm/Captura de tela de 2025-09-13 12-22-59.png" id="3_fuhhv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuhhv"]
 size = Vector2(27, 38)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5v7o7"]
+radius = 139.004
 
 [node name="Fantasm" type="Node2D" groups=["player"]]
 position = Vector2(85, 50)
@@ -13,7 +15,6 @@ script = ExtResource("1_fuhhv")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(1, 29)
-script = ExtResource("2_fuhhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(-3.8147e-06, -3.8147e-06)
@@ -37,3 +38,10 @@ theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 value = 100.0
 show_percentage = false
+
+[node name="AreaChase" type="Area2D" parent="CharacterBody2D"]
+
+[node name="ViewArea" type="CollisionShape2D" parent="CharacterBody2D/AreaChase"]
+shape = SubResource("CircleShape2D_5v7o7")
+one_way_collision_margin = 0.0
+debug_color = Color(3.85046e-07, 0.60945, 0.641892, 0.42)

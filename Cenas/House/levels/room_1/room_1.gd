@@ -2,7 +2,7 @@
 extends Node2D
 
 # Variáveis de Cena
-var cena_player = preload("res://Cenas/Player/Player.tscn")
+var cena_player = preload("res://Cenas/Player/player.tscn")
 var cena_fantasma = preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn")
 var cena_porta = preload("res://Cenas/Objects/door/door.tscn")
 
