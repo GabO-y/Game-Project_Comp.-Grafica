@@ -10,7 +10,7 @@ size = Vector2(36, 35)
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 radius = 28.0179
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" groups=["player"]]
 position = Vector2(50, 36)
 script = ExtResource("1_yjlpd")
 

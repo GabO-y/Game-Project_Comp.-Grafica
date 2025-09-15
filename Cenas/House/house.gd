@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 	var door_scene = preload("res://Cenas/Objects/door/door.tscn")
 	var door = door_scene.instantiate()
-	door.position = Vector2(100, 300)  # posição da porta no cenário
+	door.position = Vector2(900, 300)  # posição da porta no cenário
 	add_child(door)
 	
 	

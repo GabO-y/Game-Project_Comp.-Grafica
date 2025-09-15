@@ -1,13 +1,52 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqel2s0xpwg8v"]
+[gd_scene load_steps=7 format=3 uid="uid://dqel2s0xpwg8v"]
 
 [ext_resource type="Script" uid="uid://cgnkpkde6igj4" path="res://Cenas/House/levels/room_1/room_1.gd" id="1_v1oy7"]
 [ext_resource type="Texture2D" uid="uid://vr8mdlo7svxk" path="res://Cenas/House/levels/room_1/room_1_cortado.jpg" id="2_6j1h4"]
+[ext_resource type="Script" uid="uid://brs4cvuqm0vq2" path="res://Cenas/House/levels/room_1/jogador.gd" id="3_xmbut"]
+[ext_resource type="Texture2D" uid="uid://7daj5pugw3ai" path="res://Assets/Player/Sprites/pngtree-red-square-seal-png-image_2441737.jpg" id="4_v0vyw"]
+[ext_resource type="Script" uid="uid://c30a26kj654kt" path="res://Cenas/House/levels/room_1/sub_viewport.gd" id="5_v0vyw"]
+[ext_resource type="Texture2D" uid="uid://cybjamgolcp2e" path="res://icon.svg" id="6_f1nis"]
 
 [node name="Room1" type="Node2D"]
 script = ExtResource("1_v1oy7")
 
 [node name="piso" type="TextureRect" parent="."]
-offset_right = 1147.0
-offset_bottom = 645.0
+offset_left = -2.0
+offset_top = 2.0
+offset_right = 1145.0
+offset_bottom = 647.0
 texture = ExtResource("2_6j1h4")
 stretch_mode = 1
+
+[node name="Jogador" type="CharacterBody2D" parent="."]
+script = ExtResource("3_xmbut")
+
+[node name="Sprite2D" type="Sprite2D" parent="Jogador"]
+position = Vector2(301, 196)
+scale = Vector2(0.238411, 0.185811)
+texture = ExtResource("4_v0vyw")
+
+[node name="Camera2D" type="Camera2D" parent="Jogador"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
+size = Vector2i(200, 200)
+script = ExtResource("5_v0vyw")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/SubViewportContainer/SubViewport"]
+position = Vector2(98, 95)
+scale = Vector2(0.423077, 1.36066)
+texture = ExtResource("2_6j1h4")
+
+[node name="Camera2D" type="Camera2D" parent="UI/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/SubViewportContainer"]
+position = Vector2(109.25, 110.75)
+scale = Vector2(0.207031, 0.246094)
+texture = ExtResource("6_f1nis")
