@@ -11,7 +11,6 @@ func _ready() -> void:
 			area = i
 			area.body_entered.connect(_player_enter)
 			break
-		
 
 func _player_enter(body: CharacterBody2D):
 	
@@ -33,9 +32,8 @@ func _player_enter(body: CharacterBody2D):
 	body.get_parent().can_teleport = false
 	
 	emit_signal("player_in", body, goTo)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	
 	body.get_parent().can_teleport = true
 
-	
 signal player_in(player, goTo)

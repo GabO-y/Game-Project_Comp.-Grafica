@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcd6ut6evy0ki"
-path="res://.godot/imported/sprites_v2.png-601fbbcfd0c733672adb7d5782dd3841.ctex"
+uid="uid://dx3r8kckmh7yr"
+path="res://.godot/imported/lighter.jpg-ae72706f784ba83132367e5df3067e2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/rooms/sprites_v2.png"
-dest_files=["res://.godot/imported/sprites_v2.png-601fbbcfd0c733672adb7d5782dd3841.ctex"]
+source_file="res://Assets/rooms/sprites/lighter/lighter.jpg"
+dest_files=["res://.godot/imported/lighter.jpg-ae72706f784ba83132367e5df3067e2c.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgbx3wn0jhhjl"
-path="res://.godot/imported/shape.jpg-a36909e185fc0514019ff347ce3d463d.ctex"
+path="res://.godot/imported/shape.jpg-887319ec4e64850e323e857bcb882388.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/lantern/shape.jpg"
-dest_files=["res://.godot/imported/shape.jpg-a36909e185fc0514019ff347ce3d463d.ctex"]
+source_file="res://Assets/rooms/sprites/lantern/shape.jpg"
+dest_files=["res://.godot/imported/shape.jpg-887319ec4e64850e323e857bcb882388.ctex"]
 
 [params]
 

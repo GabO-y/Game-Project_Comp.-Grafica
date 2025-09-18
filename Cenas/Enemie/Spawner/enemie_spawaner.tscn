@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://csvmtodty8e68"]
 
-[ext_resource type="Script" uid="uid://dl100jhqpqexx" path="res://enemie_spawaner.gd" id="1_ghg2t"]
+[ext_resource type="Script" uid="uid://bhv3eocbkyo33" path="res://Cenas/Enemie/Spawner/enemie_spawaner.gd" id="1_ghg2t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghg2t"]
 radius = 10.0499

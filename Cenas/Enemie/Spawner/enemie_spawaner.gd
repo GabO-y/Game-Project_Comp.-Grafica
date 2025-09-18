@@ -6,6 +6,7 @@ class_name Spawn
 @export var limit_spawn = 5
 @export var time_to_spawn = 3.0
 
+var enemies_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemie] = []
 var time = 0
@@ -21,9 +22,11 @@ func _process(delta: float) -> void:
 	
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0
-		var enemie = spawanEmenie()
+		enemies.append(spawanEmenie())
 		enemies_already_spawner += 1
 
+	update_enemies_activate()
+	
 func get_random_point_in_area(area: Area2D) -> Vector2:
 	# 1. Pega o CollisionShape2D da área
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
@@ -58,6 +61,8 @@ func spawanEmenie() -> Enemie:
 	
 	var point = get_random_point_in_area($Area2D)
 	
+	point = $Area2D.to_local(point)/2
+		
 	var ene = type_enemie.instantiate()
 	ene.global_position = point
 	
@@ -68,4 +73,9 @@ func spawanEmenie() -> Enemie:
 	
 func set_enemie(ene: PackedScene):
 	type_enemie = ene
+	
+func update_enemies_activate():
+	for i in get_children():
+		if i is Enemie:
+			i.enemie_active = enemies_active
 	

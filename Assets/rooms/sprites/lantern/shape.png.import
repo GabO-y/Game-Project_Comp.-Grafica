@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bebol15hywjbu"
-path="res://.godot/imported/fantams_test.png-d321f5aea7b10c717b00db3809bae3c6.ctex"
+uid="uid://u4uws8eeerds"
+path="res://.godot/imported/shape.png-957a37cfead3c74275196f715cb4cc1c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/enemie/fantams_test.png"
-dest_files=["res://.godot/imported/fantams_test.png-d321f5aea7b10c717b00db3809bae3c6.ctex"]
+source_file="res://Assets/rooms/sprites/lantern/shape.png"
+dest_files=["res://.godot/imported/shape.png-957a37cfead3c74275196f715cb4cc1c.ctex"]
 
 [params]
 

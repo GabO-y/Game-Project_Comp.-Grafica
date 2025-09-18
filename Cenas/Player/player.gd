@@ -49,6 +49,8 @@ func _exit_enemie(body):
 		
 func takeDamagePlayerLogic(delta):
 	for ene in enemies_touch.keys():
+		
+		if !ene.enemie_active: return
 	#Enquanto o inimigo encosta no player, ele nao se mexe
 		(ene as Enemie).atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr

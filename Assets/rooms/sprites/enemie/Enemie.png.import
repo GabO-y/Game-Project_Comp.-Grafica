@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dx3r8kckmh7yr"
-path="res://.godot/imported/lighter.jpg-8cc739f50ef14ad95cbc7fb8a8fdbd60.ctex"
+uid="uid://gs5bohu7adfg"
+path="res://.godot/imported/Enemie.png-8b3ab50940dde45a31ec88ca805d5ffc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/lighter/lighter.jpg"
-dest_files=["res://.godot/imported/lighter.jpg-8cc739f50ef14ad95cbc7fb8a8fdbd60.ctex"]
+source_file="res://Assets/rooms/sprites/enemie/Enemie.png"
+dest_files=["res://.godot/imported/Enemie.png-8b3ab50940dde45a31ec88ca805d5ffc.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=4 uid="uid://bht8b02r5jfpt"]
 
-[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/sprites/rooms/sprites_v2.png" id="1_lkc5o"]
+[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="1_lkc5o"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="2_g1h0n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q58lq"]

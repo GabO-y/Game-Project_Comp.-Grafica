@@ -13,17 +13,9 @@ func _ready() -> void:
 
 func _teleport(player, goTo):
 	
-	for door in Globals.current_scene.get_children():
-		if door is Door:
-			door.area.set_deferred("monitoring", false)
-	
-	Globals.current_scene.hide()
+	Globals.desable_room()
 	Globals.current_scene = goTo.get_parent()
-	Globals.current_scene.show()
-
-	for door in Globals.current_scene.get_children():
-		if door is Door:
-			door.area.set_deferred("monitoring", true)
+	Globals.enable_room()
 
 	player.global_position = goTo.area.global_position
 	

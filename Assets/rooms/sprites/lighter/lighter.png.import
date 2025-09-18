@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dt2ohb1nv6ec0"
-path="res://.godot/imported/lighter.png-0e066f3d941229ee8514dc20b313ddd5.ctex"
+path="res://.godot/imported/lighter.png-2e0a42c0022d09ff5c32e42217c6d37b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/lighter/lighter.png"
-dest_files=["res://.godot/imported/lighter.png-0e066f3d941229ee8514dc20b313ddd5.ctex"]
+source_file="res://Assets/rooms/sprites/lighter/lighter.png"
+dest_files=["res://.godot/imported/lighter.png-2e0a42c0022d09ff5c32e42217c6d37b.ctex"]
 
 [params]
 

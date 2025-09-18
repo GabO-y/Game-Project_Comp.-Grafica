@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player := $Player
 @onready var enemies: Array[Enemie]
+
 @onready var room_manager := $RoomManager
 
 var activateArmor = true
@@ -11,23 +12,15 @@ var spawns: Array[Spawn] = []
 
 func _ready() -> void:
 		
-	for i in get_tree().get_nodes_in_group("rooms"):
-		if i.name == "SafeRoom":
-			Globals.current_scene = i
-						
-#	Busca o quarto saferoom, e a porta hallway1
-#	Nisso, busca o quanto hallway1 e a porta saferoom
-# 	tendo essas duas, ele associa a primeira porta a segunda porta
+	for room in get_tree().get_nodes_in_group("rooms"):
+		if room.name == "SafeRoom":
+			Globals.current_scene = room
+			break
+			
+	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
 	room_manager.match_doors("Test","HallWay1")
-	
-	
-	Globals.current_scene.show()
-	
-	for i in Globals.current_scene.get_children():
-		if i is Door:
-			i.area.monitoring = true
 
 	#var door_scene = preload("res://Cenas/Objects/door/door.tscn")
 	#var door = door_scene.instantiate()
@@ -41,7 +34,7 @@ func _ready() -> void:
 	player.armor.set_activate(false);
 	
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	infosMode()		
 	toggle_activate_armor()
 		

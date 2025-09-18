@@ -8,11 +8,8 @@
 [node name="RoomManager" type="Node2D"]
 script = ExtResource("1_n2tco")
 
-[node name="SafeRoom" parent="." instance=ExtResource("2_rqem0")]
-position = Vector2(-192, 137)
+[node name="SafeRoom" parent="." groups=["rooms"] instance=ExtResource("2_rqem0")]
 
 [node name="Hallway1" parent="." instance=ExtResource("3_akp5x")]
-position = Vector2(8, -57)
 
 [node name="Test" parent="." instance=ExtResource("4_akp5x")]
-position = Vector2(87, -14)

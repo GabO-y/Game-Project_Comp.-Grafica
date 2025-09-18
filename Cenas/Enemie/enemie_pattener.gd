@@ -13,6 +13,7 @@ var player #Proprio jogador
 var positionTarget #Para onde ele deve andar
 var sizeChaseArea = 100 #Tamanho da area que um inimigo tem em perseguição
 var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
+var enemie_active = false #Caso o player nao estaja na sala desse inimigo, ele fica desativado
 
 func _on_light_area():
 	return self
@@ -24,7 +25,6 @@ func _ready() -> void:
 		if i is CharacterBody2D:
 			body = i
 			
-		
 	for i in body.get_children():
 		if i is ProgressBar:
 			bar = i			
@@ -47,8 +47,8 @@ func _ready() -> void:
 		bar.max_value = life
 		bar.value = life
 
-func _process(delta: float) -> void:
-			
+func _process(_delta: float) -> void:
+	
 	update_bar()
 	
 	if life <= 0:
@@ -61,9 +61,9 @@ func update_bar():
 	bar.value = life
 
 func _physics_process(delta: float) -> void:
+	if !enemie_active: return
 	
 	var lastPosition = Vector2(positionTarget.x, positionTarget.y)
-	
 
 	if player == null:
 
@@ -92,7 +92,7 @@ func get_random_point_in_area(area: Area2D) -> Vector2:
 	var distance = randf_range(0, radius)
 	return area.global_position + Vector2(cos(angle), sin(angle)) * distance
 
-func _find_player(body: CharacterBody2D):	
+func _find_player(_body: CharacterBody2D):	
 	if body.get_parent() is Player:
 		player = body
 	else: return
@@ -101,7 +101,7 @@ func _find_player(body: CharacterBody2D):
 		if i is CollisionShape2D:
 			(i.shape as CircleShape2D).radius *= 2
 			
-func _scape_player(body: CharacterBody2D):
+func _scape_player(_body: CharacterBody2D):
 	player = null
 	for i in chaseArea.get_children():
 		if i is CollisionShape2D:

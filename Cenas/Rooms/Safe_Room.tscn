@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://fudgcqmoskva"]
 
 [ext_resource type="Script" uid="uid://cr276xmk4yn4e" path="res://Cenas/Rooms/safe_room.gd" id="1_cuug0"]
-[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/sprites/rooms/sprites_v2.png" id="1_j2lhe"]
+[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="1_j2lhe"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="2_0k1ya"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0k1ya"]
@@ -115,7 +115,7 @@ sources/0 = SubResource("TileSetAtlasSource_0k1ya")
 [sub_resource type="LabelSettings" id="LabelSettings_cuug0"]
 font_size = 31
 
-[node name="SafeRoom" type="Node2D" groups=["rooms"]]
+[node name="SafeRoom" type="Node2D"]
 script = ExtResource("1_cuug0")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

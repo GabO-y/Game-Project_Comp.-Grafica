@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://dvmurnmtp6xkr"]
 
-[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/sprites/rooms/sprites_v2.png" id="1_ilb6o"]
+[ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="1_ilb6o"]
 [ext_resource type="Script" uid="uid://bs4kd63671aft" path="res://Cenas/Rooms/hallway_1_room.gd" id="1_oldmg"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="2_yqgoo"]
 [ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/enemie_spawaner.tscn" id="4_dhlrb"]

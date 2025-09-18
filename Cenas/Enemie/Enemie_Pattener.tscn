@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://1tr0f8hvuvba"]
 
 [ext_resource type="Script" uid="uid://bgxttih2iy14j" path="res://Cenas/Enemie/enemie_pattener.gd" id="1_oxyk0"]
-[ext_resource type="Texture2D" uid="uid://gs5bohu7adfg" path="res://Assets/sprites/enemie/Enemie.png" id="2_m5va2"]
+[ext_resource type="Texture2D" uid="uid://gs5bohu7adfg" path="res://Assets/rooms/sprites/enemie/Enemie.png" id="2_m5va2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxyk0"]
 size = Vector2(82, 83)
