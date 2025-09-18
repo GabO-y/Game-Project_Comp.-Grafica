@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bebol15hywjbu"
-path="res://.godot/imported/Captura de tela de 2025-09-13 12-22-59.png-65d9c518d8627411785433d724bfe538.ctex"
+uid="uid://bcd6ut6evy0ki"
+path="res://.godot/imported/sprites_v2.png-601fbbcfd0c733672adb7d5782dd3841.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cenas/Enemie/Fantasm/Captura de tela de 2025-09-13 12-22-59.png"
-dest_files=["res://.godot/imported/Captura de tela de 2025-09-13 12-22-59.png-65d9c518d8627411785433d724bfe538.ctex"]
+source_file="res://Assets/sprites/rooms/sprites_v2.png"
+dest_files=["res://.godot/imported/sprites_v2.png-601fbbcfd0c733672adb7d5782dd3841.ctex"]
 
 [params]
 

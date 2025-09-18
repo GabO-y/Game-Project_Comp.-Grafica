@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0ntae4uqgnun"]
+
+[ext_resource type="Script" uid="uid://dqal08vqko62g" path="res://Cenas/Rooms/room_manager.gd" id="1_n2tco"]
+[ext_resource type="PackedScene" uid="uid://fudgcqmoskva" path="res://Cenas/Rooms/Safe_Room.tscn" id="2_rqem0"]
+[ext_resource type="PackedScene" uid="uid://dvmurnmtp6xkr" path="res://Cenas/Rooms/Hallway1_Room.tscn" id="3_akp5x"]
+[ext_resource type="PackedScene" uid="uid://bht8b02r5jfpt" path="res://Cenas/Rooms/Test.tscn" id="4_akp5x"]
+
+[node name="RoomManager" type="Node2D"]
+script = ExtResource("1_n2tco")
+
+[node name="SafeRoom" parent="." instance=ExtResource("2_rqem0")]
+position = Vector2(-192, 137)
+
+[node name="Hallway1" parent="." instance=ExtResource("3_akp5x")]
+position = Vector2(8, -57)
+
+[node name="Test" parent="." instance=ExtResource("4_akp5x")]
+position = Vector2(87, -14)

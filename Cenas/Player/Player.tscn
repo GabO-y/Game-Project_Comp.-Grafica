@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=5 format=3 uid="uid://clp3coh5mf60x"]
 
-[ext_resource type="Script" uid="uid://bgk4dupaaqr5k" path="res://Cenas/Player/player_body.gd" id="1_pmvhq"]
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://7daj5pugw3ai" path="res://Assets/Player/Sprites/pngtree-red-square-seal-png-image_2441737.jpg" id="1_ytnb3"]
 
@@ -16,7 +15,6 @@ script = ExtResource("1_yjlpd")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 collision_mask = 4
-script = ExtResource("1_pmvhq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 0.5)

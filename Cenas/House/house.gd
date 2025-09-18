@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var player := $Player
 @onready var enemies: Array[Enemie]
-
+@onready var room_manager := $RoomManager
 
 var activateArmor = true
 var armor: LightArmor
@@ -10,34 +10,47 @@ var infosModeActivate = false
 var spawns: Array[Spawn] = []
 
 func _ready() -> void:
-	
-	var door_scene = preload("res://Cenas/Objects/door/door.tscn")
-	var door = door_scene.instantiate()
-	door.position = Vector2(900, 300)  # posição da porta no cenário
-	add_child(door)
-	
-	
-	var fSpawn = get_node("SpawnFantasm") as Spawn
-	fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))
 		
-	armor = player.armor
-	armor.set_activate(false);
+	for i in get_tree().get_nodes_in_group("rooms"):
+		if i.name == "SafeRoom":
+			Globals.current_scene = i
+						
+#	Busca o quarto saferoom, e a porta hallway1
+#	Nisso, busca o quanto hallway1 e a porta saferoom
+# 	tendo essas duas, ele associa a primeira porta a segunda porta
+
+	room_manager.match_doors("SafeRoom","HallWay1")
+	room_manager.match_doors("Test","HallWay1")
 	
-	spawns = [fSpawn]
 	
-		
-		
+	Globals.current_scene.show()
+	
+	for i in Globals.current_scene.get_children():
+		if i is Door:
+			i.area.monitoring = true
+
+	#var door_scene = preload("res://Cenas/Objects/door/door.tscn")
+	#var door = door_scene.instantiate()
+	#door.position = Vector2(900, 300)  # posição da porta no cenário
+	#add_child(door)
+	
+	#Jeito de setar um monstro a um spawner
+	#var fSpawn = get_node("SpawnFantasm") as Spawn
+	#fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))
+	
+	player.armor.set_activate(false);
+	
+	
 func _process(delta: float) -> void:
 	infosMode()		
 	toggle_activate_armor()
 		
 func toggle_activate_armor() -> void:
 	if Input.is_action_just_pressed("ui_toggle_armor"):
-		armor.set_activate(activateArmor)
+		player.armor.set_activate(activateArmor)
 		activateArmor = !activateArmor
 		
 func infosMode():
-			
 	if(!infosModeActivate):
 		var labelPlayer = Label.new()
 		labelPlayer.name = "labelPlayer"
@@ -52,7 +65,7 @@ func infosMode():
 			label.text =  ("""
 			Life: %.0f
 			Armor energie: %.0f
-			""" % [player.life, armor.energie])
+			""" % [player.life, player.armor.energie])
 		
 			
 func createLabelLog() -> Array[Label]:
@@ -67,5 +80,4 @@ func createLabelLog() -> Array[Label]:
 	var labels: Array[Label] = [labelP, labelE]
 	
 	return labels
-		
 	

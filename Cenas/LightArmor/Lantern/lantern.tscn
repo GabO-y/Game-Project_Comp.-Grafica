@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0ycmxpkip27y"]
 
-[ext_resource type="Script" uid="uid://c3qj8cf4f5uxy" path="res://lantern.gd" id="1_ymxyl"]
+[ext_resource type="Script" uid="uid://endjb4wi0jx7" path="res://Cenas/LightArmor/Lantern/lantern.gd" id="1_ymxyl"]
 [ext_resource type="Texture2D" uid="uid://u4uws8eeerds" path="res://Assets/sprites/lantern/shape.png" id="2_2nwt7"]
 
 [node name="Lantern" type="Node2D"]

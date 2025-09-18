@@ -6,6 +6,7 @@ var damage: int = 10
 var energie = 50
 var activate = false
 var area: Area2D
+var player: Player
 
 var enemies_on_light:Dictionary[Enemie, float] = {}
 var readyTime = false
@@ -20,9 +21,14 @@ func _ready() -> void:
 	#Para todas as areas pegas, ele adiciona o sinal que verifica se um inimigo esta na luz
 	area.body_entered.connect(_init_time_hit)
 	area.body_exited.connect(_reset_time_hit)
+	
+	
 		
 		
 func _process(delta: float) -> void:
+	
+	global_position = player.playerBody.global_position
+	
 	for body in enemies_on_light.keys():
 		if body == null:
 			continue
