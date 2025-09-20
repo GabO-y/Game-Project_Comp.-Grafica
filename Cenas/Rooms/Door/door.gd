@@ -11,9 +11,16 @@ func _ready() -> void:
 			area = i
 			area.body_entered.connect(_player_enter)
 			break
+			
 
 func _player_enter(body: CharacterBody2D):
 	
+	if !Globals.is_clean_room():
+		return
+		
+	if !Globals.can_teleport:
+		return
+		
 	var player: Player
 	
 	if !(body.get_parent() is Player):
@@ -21,19 +28,17 @@ func _player_enter(body: CharacterBody2D):
 	else:
 		player = body.get_parent()
 		
-	if !player.can_teleport:
-		return
 		
 	for i in get_children():
 		if i is Area2D:
 			i.set_deferred("monitoring", false)	
 			
-
-	body.get_parent().can_teleport = false
+	
+	print(Globals.current_scene.is_clean())
 	
 	emit_signal("player_in", body, goTo)
-	await get_tree().create_timer(0.1).timeout
 	
-	body.get_parent().can_teleport = true
-
+	print(Globals.is_clean_room())
+	
+	
 signal player_in(player, goTo)

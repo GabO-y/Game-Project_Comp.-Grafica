@@ -10,15 +10,24 @@ func _ready() -> void:
 			if door is Door:
 				door.player_in.connect(_teleport)
 				door.area.monitoring = false
+			if door is TileMapLayer:
+				door.collision_enabled = false
+
+				
 
 func _teleport(player, goTo):
-	
+
 	Globals.desable_room()
 	Globals.current_scene = goTo.get_parent()
 	Globals.enable_room()
 
 	player.global_position = goTo.area.global_position
 	
+	Globals.can_teleport = false
+	await get_tree().create_timer(0.2).timeout
+	Globals.can_teleport = true
+
+
 func match_doors(r_current: String, r_target: String):
 
 	var door_current: Door
@@ -54,6 +63,9 @@ func match_doors(r_current: String, r_target: String):
 	door_current.goTo = door_target
 	door_target.goTo = door_current
 	
+func is_clean_room() -> bool:
+	return Globals.current_scene.is_clean()
+				
 func showInfo():
 	for i in get_children():
 		if i is Room:

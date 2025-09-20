@@ -5,6 +5,8 @@ class_name Spawn
 @export var type_enemie: PackedScene
 @export var limit_spawn = 5
 @export var time_to_spawn = 3.0
+@export var enimies_level = 1
+
 
 var enemies_active = false
 var enemies_already_spawner = 0
@@ -18,7 +20,6 @@ func _process(delta: float) -> void:
 	for i in enemies:
 		if !i.is_processing():
 			enemies.erase(i)
-			remove_child(i)
 	
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0

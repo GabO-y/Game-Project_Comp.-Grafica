@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bebol15hywjbu" path="res://Assets/rooms/sprites/enemie/fantams_test.png" id="3_fuhhv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuhhv"]
-size = Vector2(27, 38)
+size = Vector2(14, 19)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5v7o7"]
 radius = 139.004
@@ -14,16 +14,15 @@ position = Vector2(85, 50)
 script = ExtResource("1_fuhhv")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(1, 29)
 collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(-3.8147e-06, -3.8147e-06)
-scale = Vector2(0.236882, 0.236882)
+position = Vector2(1.90735e-06, -1.90735e-06)
+scale = Vector2(0.123817, 0.123817)
 texture = ExtResource("3_fuhhv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(1, 2)
+position = Vector2(1, 0.5)
 shape = SubResource("RectangleShape2D_fuhhv")
 
 [node name="ProgressBar" type="ProgressBar" parent="CharacterBody2D"]

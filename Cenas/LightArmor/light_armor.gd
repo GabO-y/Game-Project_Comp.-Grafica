@@ -43,7 +43,6 @@ func _process(delta: float) -> void:
 	#usa a função com a logica da energia
 	energie_logic()
 
-
 func energie_logic():
 	
 	if(energie <= -1):

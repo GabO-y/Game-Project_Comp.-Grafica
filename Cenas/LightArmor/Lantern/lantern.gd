@@ -18,9 +18,9 @@ func _process(delta):
 
 	if dir.length() > 0.2: # deadzone
 		rotation = dir.angle()
+	else:
+		var mouse_pos = get_global_mouse_position()
+		dir = (mouse_pos - global_position).normalized()
+		rotation = dir.angle() - PI/2 
 		
-	#var mouse_pos = get_global_mouse_position()
-	#dir = (mouse_pos - global_position).normalized()
-	#rotation = dir.angle()
-	
 	super._process(delta)

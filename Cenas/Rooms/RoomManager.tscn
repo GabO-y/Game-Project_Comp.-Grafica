@@ -9,7 +9,10 @@
 script = ExtResource("1_n2tco")
 
 [node name="SafeRoom" parent="." groups=["rooms"] instance=ExtResource("2_rqem0")]
+position = Vector2(8, -79)
 
 [node name="Hallway1" parent="." instance=ExtResource("3_akp5x")]
+position = Vector2(7, -79)
 
 [node name="Test" parent="." instance=ExtResource("4_akp5x")]
+position = Vector2(5, -75)

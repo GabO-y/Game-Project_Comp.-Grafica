@@ -5,6 +5,7 @@ extends Node2D
 
 @onready var room_manager := $RoomManager
 
+
 var activateArmor = true
 var armor: LightArmor
 var infosModeActivate = false
@@ -35,7 +36,6 @@ func _ready() -> void:
 	
 	
 func _process(_delta: float) -> void:
-	infosMode()		
 	toggle_activate_armor()
 		
 func toggle_activate_armor() -> void:
@@ -43,34 +43,3 @@ func toggle_activate_armor() -> void:
 		player.armor.set_activate(activateArmor)
 		activateArmor = !activateArmor
 		
-func infosMode():
-	if(!infosModeActivate):
-		var labelPlayer = Label.new()
-		labelPlayer.name = "labelPlayer"
-
-		add_child(labelPlayer)
-		infosModeActivate = true
-		
-	for i in get_children():
-		
-		if i.name == "labelPlayer":
-			var label = i as Label
-			label.text =  ("""
-			Life: %.0f
-			Armor energie: %.0f
-			""" % [player.life, player.armor.energie])
-		
-			
-func createLabelLog() -> Array[Label]:
-	
-	var labelP = Label.new()
-	labelP.name = "labelPlayer"
-	
-	var labelE = Label.new()
-	labelE.name = "labelEnemie"
-	
-	
-	var labels: Array[Label] = [labelP, labelE]
-	
-	return labels
-	
