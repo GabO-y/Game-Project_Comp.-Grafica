@@ -3,6 +3,8 @@ class_name Player
 
 var armor: LightArmor
 var armorEnergie
+var input_vector
+
 
 var speed: float = 200
 var dash_speed: float = 600
@@ -15,24 +17,31 @@ var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 
 var can_teleport = true
+var last_direction_right
 
 @onready var playerBody := $CharacterBody2D as CharacterBody2D
+@onready var anim := $CharacterBody2D/AnimatedSprite2D
 
 var enemies_touch = {}
 
 func _ready() -> void:
+		
+	var hit_area = $CharacterBody2D/HitArea as Area2D
 	
-	var bodyArea = playerBody.get_node("Area2D") as Area2D
-	
-	bodyArea.body_entered.connect(_touch_enemie)
-	bodyArea.body_exited.connect(_exit_enemie)
+	hit_area.body_entered.connect(_touch_enemie)
+	hit_area.body_exited.connect(_exit_enemie)
 	
 	armor = preload("res://Cenas/LightArmor/Lantern/lantern.tscn").instantiate()
 	armor.player = self
 	add_child(armor)
 	
+#Apenas para teste, apagar depois
+@onready var label = $CharacterBody2D/Label
+
 func _process(delta: float) -> void:
+	animation_logic()
 	takeDamagePlayerLogic(delta)
+	label.text = str("life: ", life, "\n")
 	
 func _touch_enemie(body):
 	var ene = body.get_parent()
@@ -63,8 +72,8 @@ func takeDamagePlayerLogic(delta):
 			life -= ene.damage
 			
 func _physics_process(delta: float) -> void:
-	var input_vector = Vector2.ZERO
-
+	
+	input_vector = Vector2.ZERO
 	# Joystick
 	input_vector.x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
 	input_vector.y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
@@ -108,3 +117,38 @@ func _physics_process(delta: float) -> void:
 
 	playerBody.move_and_slide()  
 	
+func animation_logic():
+		
+	var right_x = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X) # mesmo que 2
+	var right_y = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y) # mesmo que 3
+
+# Cria o vetor de direção
+	var dir = Vector2(right_x, right_y)
+
+# Se quiser normalizar (pra usar só direção, ignorando intensidade)
+	if dir.length() > 0.2: # deadzone (evita drift)
+		dir = dir.normalized()
+		last_direction_right = dir
+	else:
+		dir = Vector2(input_vector.x, input_vector.y)
+				
+		
+	var play = ""
+	
+	if dir.length() > 0.2:
+		if dir.x > 0:
+			play += "right_"
+		else:
+			play += "left_"
+			
+		if dir.y < 0:
+			play += "back_"
+		
+		if input_vector.length() < 0.2:
+			play += "idle"
+		else:
+			#play += "walk" enquanto ainda nao tem as andando
+			play += "idle"
+
+	anim.play(play)
+	print(play)

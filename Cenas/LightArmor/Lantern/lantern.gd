@@ -17,10 +17,10 @@ func _process(delta):
 	var dir = Vector2(x_axis, y_axis)
 
 	if dir.length() > 0.2: # deadzone
-		rotation = dir.angle()
-	else:
-		var mouse_pos = get_global_mouse_position()
-		dir = (mouse_pos - global_position).normalized()
-		rotation = dir.angle() - PI/2 
+		rotation = dir.angle() - PI/2
+	#else:
+		#var mouse_pos = get_global_mouse_position()
+		#dir = (mouse_pos - global_position).normalized()
+		#rotation = dir.angle() - PI/2 
 		
 	super._process(delta)

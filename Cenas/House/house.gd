@@ -12,6 +12,8 @@ var infosModeActivate = false
 var spawns: Array[Spawn] = []
 
 func _ready() -> void:
+	
+	Globals.player = player
 		
 	for room in get_tree().get_nodes_in_group("rooms"):
 		if room.name == "SafeRoom":

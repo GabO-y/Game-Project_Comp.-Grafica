@@ -8,10 +8,10 @@ var idleTime = 0 #Tempo que esta sem caçar o inimigo (usado para ele ir para ou
 
 var bar: ProgressBar #Barra de progresso
 var body: CharacterBody2D #Corpo do inimigo
-var chaseArea: Area2D #Area que eu fica patrulhando
+var chase_area: Area2D #Area que eu fica patrulhando
 var player #Proprio jogador
-var positionTarget #Para onde ele deve andar
-var sizeChaseArea = 100 #Tamanho da area que um inimigo tem em perseguição
+var position_target #Para onde ele deve andar
+var size_chase_area = 100 #Tamanho da area que um inimigo tem em perseguição
 var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
 var enemie_active = false #Caso o player nao estaja na sala desse inimigo, ele fica desativado
 
@@ -34,19 +34,19 @@ func _ready() -> void:
 		if i is ProgressBar:
 			bar = i			
 		if i is Area2D:
-			chaseArea = i
-			for j in chaseArea.get_children():
+			chase_area = i
+			for j in chase_area.get_children():
 				if j is CollisionShape2D:
 					j.shape = CircleShape2D.new()
-					j.shape.radius = sizeChaseArea
+					j.shape.radius = size_chase_area
 
 	#quando o player entra na area de view, ele ativa a função para perseguição
-	chaseArea.body_entered.connect(_find_player)
+	chase_area.body_entered.connect(_find_player)
 	#se o player sair, ele volta a patrulhar
-	chaseArea.body_exited.connect(_scape_player)
+	chase_area.body_exited.connect(_scape_player)
 	
 #	define a posição inicial que um monstro vai andar
-	positionTarget = get_random_point_in_area(chaseArea)
+	position_target = get_random_point_in_area(chase_area)
 
 	if bar != null:
 		bar.max_value = life
@@ -72,23 +72,23 @@ func update_bar():
 func _physics_process(delta: float) -> void:
 	if !enemie_active: return
 	
-	var lastPosition = Vector2(positionTarget.x, positionTarget.y)
+	var last_position = Vector2(position_target.x, position_target.y)
 
 	if player == null:
 
 		idleTime += delta
 
 		if idleTime >= 3:
-			positionTarget = get_random_point_in_area(chaseArea)
+			position_target = get_random_point_in_area(chase_area)
 			idleTime = 0
 	else:
-		positionTarget = player.global_position
+		position_target = player.global_position
 		
 	if atack_player:
-		positionTarget = lastPosition
+		position_target = last_position
 		
 
-	var direction = (positionTarget - body.global_position).normalized()
+	var direction = (position_target - body.global_position).normalized()
 
 	# Aplica movimento
 	body.velocity = direction * speed
@@ -107,15 +107,15 @@ func _find_player(body: CharacterBody2D):
 	else:
 		return
 	
-	for i in chaseArea.get_children():
+	for i in chase_area.get_children():
 		if i is CollisionShape2D:
 			(i.shape as CircleShape2D).radius *= 2
 			
 func _scape_player(_body: CharacterBody2D):
 	player = null
-	for i in chaseArea.get_children():
+	for i in chase_area.get_children():
 		if i is CollisionShape2D:
-			(i.shape as CircleShape2D).radius = sizeChaseArea
+			(i.shape as CircleShape2D).radius = size_chase_area
 
 		
 	

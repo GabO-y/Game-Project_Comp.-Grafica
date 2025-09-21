@@ -1,31 +1,103 @@
-[gd_scene load_steps=5 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=10 format=3 uid="uid://clp3coh5mf60x"]
 
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
-[ext_resource type="Texture2D" uid="uid://7daj5pugw3ai" path="res://Assets/Player/Sprites/pngtree-red-square-seal-png-image_2441737.jpg" id="1_ytnb3"]
+[ext_resource type="Texture2D" uid="uid://s13ld4xlponx" path="res://Assets/Player/Animations/left_back_idle.png" id="3_4o7c8"]
+[ext_resource type="Texture2D" uid="uid://csy1cwe0ag6ri" path="res://Assets/Player/Animations/left_idle.png" id="4_xjvfg"]
+[ext_resource type="Texture2D" uid="uid://rlw7bnd18ao7" path="res://Assets/Player/Animations/right_back_idle.png" id="5_bsnao"]
+[ext_resource type="Texture2D" uid="uid://r48tw2r6mk3l" path="res://Assets/Player/Animations/right_idle.png" id="6_qhdav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmvhq"]
-size = Vector2(16, 16)
+size = Vector2(15, 21)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
-radius = 7.0
+radius = 11.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ihxy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htvwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4o7c8")
+}],
+"loop": true,
+"name": &"left_back_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"left_back_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_xjvfg")
+}],
+"loop": true,
+"name": &"left_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"left_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_bsnao")
+}],
+"loop": true,
+"name": &"right_back_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"right_back_walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_qhdav")
+}],
+"loop": true,
+"name": &"right_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"right_walk",
+"speed": 5.0
+}]
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_yjlpd")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
-collision_mask = 4
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-scale = Vector2(0.0498311, 0.0498311)
-texture = ExtResource("1_ytnb3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_pmvhq")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
-visible = false
+[node name="HitArea" type="Area2D" parent="CharacterBody2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitArea"]
 visibility_layer = 2
 shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
+
+[node name="Label" type="Label" parent="CharacterBody2D"]
+offset_left = -23.0
+offset_top = -31.0
+offset_right = 21.0
+offset_bottom = -20.0
+label_settings = SubResource("LabelSettings_6ihxy")
+autowrap_mode = 1
+justification_flags = 235
+clip_text = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+texture_filter = 1
+position = Vector2(-2.38419e-07, 2.38419e-07)
+scale = Vector2(1.375, 1.375)
+sprite_frames = SubResource("SpriteFrames_htvwm")
+animation = &"right_idle"

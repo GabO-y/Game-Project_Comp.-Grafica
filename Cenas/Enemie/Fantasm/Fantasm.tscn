@@ -14,7 +14,6 @@ position = Vector2(85, 50)
 script = ExtResource("1_fuhhv")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(1.90735e-06, -1.90735e-06)

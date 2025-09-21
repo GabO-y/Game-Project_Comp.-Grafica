@@ -23,8 +23,6 @@ func _ready() -> void:
 	area.body_exited.connect(_reset_time_hit)
 	
 	
-		
-		
 func _process(delta: float) -> void:
 	
 	global_position = player.playerBody.global_position
@@ -52,12 +50,10 @@ func energie_logic():
 		energie -= 0.1
 
 func set_activate(mode: bool):
-	
 	activate = mode
 	area.monitoring = activate
 	area.visible = activate
 					
-
 func _init_time_hit(ene: CharacterBody2D):	
 	enemies_on_light[ene.get_parent() as Enemie] = 0.0
 	

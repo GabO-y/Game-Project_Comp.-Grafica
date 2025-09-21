@@ -4,16 +4,36 @@ class_name Room
 
 @export var finish = false
 var spaweners = []
+var doors: Array[Door]
 
 func _ready() -> void:
-	for spawn in get_children():
-		if spawn is Spawn:
-			spaweners.append(spawn)
+	for child in get_children():
+		if child is Spawn:
+			spaweners.append(child)
+		if child is Door:
+			doors.append(child)
 			
 func is_clean() -> bool:
-	
 	for i in get_children():
 		if i is Spawn:
 			if i.enemies.size() != 0: return false
 			if i.enemies_already_spawner < i.limit_spawn: return false
 	return true
+	
+func desable():
+	switch_process(false)
+			
+func enable():
+	switch_process(true)
+			
+func switch_process(mode: bool):
+	if mode: show()
+	else: hide()
+	
+	for item in get_children():
+		if item is Door:
+			item.area.set_deferred("monitoring", mode)
+		if item is TileMapLayer:
+			item.collision_enabled = mode
+		if item is Spawn:
+			item.enemies_active = mode

@@ -7,6 +7,8 @@ func _ready() -> void:
 	damage = 5
 	speed = 100
 	life = 5
-	sizeChaseArea = 100
+	size_chase_area = 100
 	
 	super._ready()
+	
+	

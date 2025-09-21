@@ -29,20 +29,16 @@ func _process(delta: float) -> void:
 	update_enemies_activate()
 	
 func get_random_point_in_area(area: Area2D) -> Vector2:
-	# 1. Pega o CollisionShape2D da área
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
 	
-	# 2. Verifica se existe e tem um shape
 	if not collision_shape or not collision_shape.shape:
 		push_error("Area2D não tem CollisionShape2D ou shape definido!")
 		return area.global_position
 	
-	# 3. Converte para CircleShape2D
 	if collision_shape.shape is CircleShape2D:
 		var circle = collision_shape.shape as CircleShape2D
 		var radius = circle.radius
 		
-		# Gera um ponto aleatório dentro do círculo (distribuição uniforme)
 		var angle = randf_range(0, TAU)
 		var distance = sqrt(randf()) * radius
 		
@@ -64,8 +60,11 @@ func spawanEmenie() -> Enemie:
 	
 	point = $Area2D.to_local(point)/2
 		
-	var ene = type_enemie.instantiate()
+	var ene = type_enemie.instantiate() as Enemie
+	
 	ene.global_position = point
+	ene.position_target = point
+	
 	
 	add_child(ene)
 	enemies.append(ene)

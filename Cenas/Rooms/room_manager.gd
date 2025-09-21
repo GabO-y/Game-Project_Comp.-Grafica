@@ -5,16 +5,11 @@ var rooms = []
 func _ready() -> void:		
 	
 	for room in get_tree().get_nodes_in_group("rooms"):
-		room.visible = false
-		for door in room.get_children():
-			if door is Door:
-				door.player_in.connect(_teleport)
-				door.area.monitoring = false
-			if door is TileMapLayer:
-				door.collision_enabled = false
+		room.desable()
+		for door in room.doors:
+			door.player_in.connect(_teleport)
 
-				
-
+			
 func _teleport(player, goTo):
 
 	Globals.desable_room()
