@@ -7,19 +7,20 @@ class_name Spawn
 @export var time_to_spawn = 3.0
 @export var enimies_level = 1
 
-
 var enemies_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemie] = []
 var time = 0
 	
 func _process(delta: float) -> void:
-		
-	time += delta
 	
+			
+	time += delta
+			
 	for i in enemies:
-		if !i.is_processing():
+		if is_instance_valid(i) and i.life <= 0:
 			enemies.erase(i)
+			i.queue_free()
 	
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0

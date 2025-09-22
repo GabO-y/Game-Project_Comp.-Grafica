@@ -22,7 +22,6 @@ func _teleport(player, goTo):
 	await get_tree().create_timer(0.2).timeout
 	Globals.can_teleport = true
 
-
 func match_doors(r_current: String, r_target: String):
 
 	var door_current: Door

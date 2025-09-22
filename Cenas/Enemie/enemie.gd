@@ -14,6 +14,7 @@ var position_target #Para onde ele deve andar
 var size_chase_area = 100 #Tamanho da area que um inimigo tem em perseguição
 var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
 var enemie_active = false #Caso o player nao estaja na sala desse inimigo, ele fica desativado
+var dir: Vector2 #direção do inimigo, fiz pra facilitar com as animações
 
 func _on_light_area():
 	return self
@@ -59,10 +60,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	
 	update_bar()
-	
-	if life <= 0:
-		set_process(false)
-		visible = false
+
 
 func update_bar():
 	if bar == null:
@@ -88,10 +86,10 @@ func _physics_process(delta: float) -> void:
 		position_target = last_position
 		
 
-	var direction = (position_target - body.global_position).normalized()
+	dir = (position_target - body.global_position).normalized()
 
 	# Aplica movimento
-	body.velocity = direction * speed
+	body.velocity = dir * speed
 	body.move_and_slide()
 	
 func get_random_point_in_area(area: Area2D) -> Vector2:

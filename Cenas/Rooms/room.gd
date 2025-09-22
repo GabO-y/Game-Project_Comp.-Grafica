@@ -16,7 +16,8 @@ func _ready() -> void:
 func is_clean() -> bool:
 	for i in get_children():
 		if i is Spawn:
-			if i.enemies.size() != 0: return false
+			print(i.enemies.size())
+			if i.enemies.size() > 0: return false
 			if i.enemies_already_spawner < i.limit_spawn: return false
 	return true
 	

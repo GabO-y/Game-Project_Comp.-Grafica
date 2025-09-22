@@ -5,7 +5,6 @@ extends Node2D
 
 @onready var room_manager := $RoomManager
 
-
 var activateArmor = true
 var armor: LightArmor
 var infosModeActivate = false

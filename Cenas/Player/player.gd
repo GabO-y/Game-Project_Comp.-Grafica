@@ -151,4 +151,3 @@ func animation_logic():
 			play += "idle"
 
 	anim.play(play)
-	print(play)
