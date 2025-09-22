@@ -22,10 +22,12 @@ func _ready() -> void:
 	area.body_entered.connect(_init_time_hit)
 	area.body_exited.connect(_reset_time_hit)
 	
+	area.collision_mask = 2
+	
 	
 func _process(delta: float) -> void:
 	
-	global_position = player.playerBody.global_position
+	global_position = player.player_body.global_position
 	
 	for body in enemies_on_light.keys():
 		if body == null:
@@ -36,6 +38,7 @@ func _process(delta: float) -> void:
 		# se der 1 segundos, ele zera o tempo e da o dano
 		if(enemies_on_light[body] >= 1.0):
 			body.take_damage(damage) 
+			print(body.life)
 			enemies_on_light[body] = 0.0
 		
 	#usa a função com a logica da energia

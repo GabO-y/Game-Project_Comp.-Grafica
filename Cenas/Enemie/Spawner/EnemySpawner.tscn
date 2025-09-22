@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://csvmtodty8e68"]
 
-[ext_resource type="Script" uid="uid://bhv3eocbkyo33" path="res://Cenas/Enemie/Spawner/enemie_spawaner.gd" id="1_ghg2t"]
+[ext_resource type="Script" uid="uid://bhv3eocbkyo33" path="res://Cenas/Enemie/Spawner/enemy_spawaner.gd" id="1_si6ev"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghg2t"]
 radius = 10.0499
 
 [node name="EnemieSpawaner" type="Node2D"]
-script = ExtResource("1_ghg2t")
+script = ExtResource("1_si6ev")
 
 [node name="Area2D" type="Area2D" parent="."]
 

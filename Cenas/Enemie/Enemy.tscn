@@ -1,20 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://1tr0f8hvuvba"]
 
-[ext_resource type="Script" uid="uid://bgxttih2iy14j" path="res://Cenas/Enemie/enemie.gd" id="1_mqwc4"]
-[ext_resource type="Texture2D" uid="uid://gs5bohu7adfg" path="res://Assets/rooms/sprites/enemie/Enemie.png" id="2_ki4yh"]
+[ext_resource type="Script" uid="uid://bgxttih2iy14j" path="res://Cenas/Enemie/enemy.gd" id="1_c8q0v"]
+[ext_resource type="Texture2D" uid="uid://gs5bohu7adfg" path="res://Assets/rooms/sprites/enemie/Enemie.png" id="2_0yc7s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxyk0"]
 size = Vector2(82, 83)
 
 [node name="Enemie" type="Node2D"]
-script = ExtResource("1_mqwc4")
+script = ExtResource("1_c8q0v")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(-1, -1)
 scale = Vector2(0.293333, 0.293333)
-texture = ExtResource("2_ki4yh")
+texture = ExtResource("2_0yc7s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(-1, -1.5)

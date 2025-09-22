@@ -13,7 +13,7 @@ func _ready() -> void:
 			break
 			
 
-func _player_enter(body: CharacterBody2D):
+func _player_enter(body):
 	
 	if !Globals.is_clean_room():
 		return
@@ -27,7 +27,6 @@ func _player_enter(body: CharacterBody2D):
 		return
 	else:
 		player = body.get_parent()
-		
 		
 	for i in get_children():
 		if i is Area2D:

@@ -13,13 +13,23 @@ func _ready() -> void:
 		if child is Door:
 			doors.append(child)
 			
+	
 func is_clean() -> bool:
-	for i in get_children():
-		if i is Spawn:
-			print(i.enemies.size())
-			if i.enemies.size() > 0: return false
-			if i.enemies_already_spawner < i.limit_spawn: return false
+	
+
+		
+	for spawn in spaweners:
+		if spawn is Spawn:
+			
+			print("--------------")
+			for i in spawn.enemies:
+				print(i)
+			print("--------------")
+
+			
+			if !spawn.is_clean(): return false
 	return true
+	
 	
 func desable():
 	switch_process(false)
@@ -37,4 +47,4 @@ func switch_process(mode: bool):
 		if item is TileMapLayer:
 			item.collision_enabled = mode
 		if item is Spawn:
-			item.enemies_active = mode
+			item.switch(mode)

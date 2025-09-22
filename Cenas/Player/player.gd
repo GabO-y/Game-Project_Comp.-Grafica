@@ -2,7 +2,7 @@ extends Character
 class_name Player
 
 var armor: LightArmor
-var armorEnergie
+var armor_energie
 var input_vector
 
 
@@ -19,7 +19,7 @@ var dash_cooldown_timer: float = 0.0
 var can_teleport = true
 var last_direction_right
 
-@onready var playerBody := $CharacterBody2D as CharacterBody2D
+@onready var player_body := $CharacterBody2D as CharacterBody2D
 @onready var anim := $CharacterBody2D/AnimatedSprite2D
 
 var enemies_touch = {}
@@ -31,45 +31,48 @@ func _ready() -> void:
 	hit_area.body_entered.connect(_touch_enemie)
 	hit_area.body_exited.connect(_exit_enemie)
 	
-	armor = preload("res://Cenas/LightArmor/Lantern/lantern.tscn").instantiate()
+	armor = preload("res://Cenas/LightArmor/Lantern/Lantern.tscn").instantiate()
 	armor.player = self
 	add_child(armor)
 	
-#Apenas para teste, apagar depois
-@onready var label = $CharacterBody2D/Label
 
 func _process(delta: float) -> void:
 	animation_logic()
 	takeDamagePlayerLogic(delta)
-	label.text = str("life: ", life, "\n")
 	
 func _touch_enemie(body):
-	var ene = body.get_parent()
-	if ene != null and ene is Enemie:
-		enemies_touch[ene] = 0.0
+	if !(body.get_parent() is Enemie): return
+	enemies_touch[body.get_parent()] = 0.0
 
 #para quando o inimigo para de encostar no player
 func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
+	if !(body.get_parent() is Enemie): return
+
 	var ene = body.get_parent()
-	if ene != null and ene is Enemie:
-		enemies_touch.erase(ene)
-		ene.atack_player = false
+	
+	enemies_touch.erase(ene)
+	ene.atack_player = false
 		
 func takeDamagePlayerLogic(delta):
-	for ene in enemies_touch.keys():
+
+	for enemie in enemies_touch.keys():
 		
-		if !ene.enemie_active: return
-	#Enquanto o inimigo encosta no player, ele nao se mexe
-		(ene as Enemie).atack_player = true
+		enemie = enemie as Enemie
+		
+		if !enemie.is_active: return
+		#Enquanto o inimigo encosta no player, ele nao se mexe
+		enemie.atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr
-		enemies_touch[ene] += delta
+		enemies_touch[enemie] += delta
 		#Se foi maior que meio segungo
-		if enemies_touch[ene] >= 0.1:
+		if enemies_touch[enemie] >= 0.1:
 			#O tempo volta pra zero
-			enemies_touch[ene] = 0
+			enemies_touch[enemie] = 0
 			#Vai tirar a vida do player
-			life -= ene.damage
+			life -= enemie.damage
+			
+
 			
 func _physics_process(delta: float) -> void:
 	
@@ -103,7 +106,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
 		is_dashing = true
 		dash_timer = dash_time
-		playerBody.velocity = last_direction * dash_speed
+		player_body.velocity = last_direction * dash_speed
 
 	# Atualizar dash
 	if is_dashing:
@@ -111,11 +114,11 @@ func _physics_process(delta: float) -> void:
 		if dash_timer <= 0:
 			is_dashing = false
 			dash_cooldown_timer = dash_cooldown
-			playerBody.velocity = Vector2.ZERO
+			player_body.velocity = Vector2.ZERO
 	else:
-		playerBody.velocity = input_vector * speed
+		player_body.velocity = input_vector * speed
 
-	playerBody.move_and_slide()  
+	player_body.move_and_slide()  
 	
 func animation_logic():
 		
