@@ -7,6 +7,7 @@
 size = Vector2(82, 83)
 
 [node name="Enemie" type="Node2D"]
+z_index = 5
 script = ExtResource("1_c8q0v")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]

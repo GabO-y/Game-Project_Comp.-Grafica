@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0ycmxpkip27y"]
 
 [ext_resource type="Script" uid="uid://endjb4wi0jx7" path="res://Cenas/LightArmor/Lantern/lantern.gd" id="1_ix4eb"]
-[ext_resource type="Texture2D" uid="uid://u4uws8eeerds" path="res://Assets/rooms/sprites/lantern/shape.png" id="2_lxmur"]
+[ext_resource type="Texture2D" uid="uid://cv5jbawkjrp3x" path="res://Assets/LightArmor/Lantern/lantern_light.png" id="2_ix4eb"]
 
 [node name="Lantern" type="Node2D"]
 script = ExtResource("1_ix4eb")
@@ -10,9 +10,11 @@ script = ExtResource("1_ix4eb")
 collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Light"]
-position = Vector2(0, 132)
-texture = ExtResource("2_lxmur")
+modulate = Color(1, 1, 1, 0.670588)
+texture_filter = 1
+position = Vector2(-3.8147e-06, 40)
+scale = Vector2(2.47857, 2.47857)
+texture = ExtResource("2_ix4eb")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light"]
-visibility_layer = 3
-polygon = PackedVector2Array(0, 3, -137, 241, -80, 251, -2, 255, 66, 255, 137, 240)
+polygon = PackedVector2Array(0, -2, 0, -2, -43, 78, -28, 83, 25, 83, 44, 78)

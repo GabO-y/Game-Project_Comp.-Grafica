@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0ntae4uqgnun"]
+[gd_scene load_steps=6 format=3 uid="uid://b0ntae4uqgnun"]
 
 [ext_resource type="Script" uid="uid://dqal08vqko62g" path="res://Cenas/Rooms/room_manager.gd" id="1_n2tco"]
-[ext_resource type="PackedScene" uid="uid://fudgcqmoskva" path="res://Cenas/Rooms/Safe_Room.tscn" id="2_rqem0"]
-[ext_resource type="PackedScene" uid="uid://dvmurnmtp6xkr" path="res://Cenas/Rooms/Hallway1_Room.tscn" id="3_akp5x"]
+[ext_resource type="PackedScene" uid="uid://fudgcqmoskva" path="res://Cenas/Rooms/SafeRoom.tscn" id="2_rqem0"]
+[ext_resource type="PackedScene" uid="uid://dvmurnmtp6xkr" path="res://Cenas/Rooms/Hallway1.tscn" id="3_akp5x"]
 [ext_resource type="PackedScene" uid="uid://bht8b02r5jfpt" path="res://Cenas/Rooms/Test.tscn" id="4_akp5x"]
+[ext_resource type="PackedScene" uid="uid://b2celb3sqinke" path="res://Cenas/Rooms/MiniRoom.tscn" id="5_jxix1"]
 
 [node name="RoomManager" type="Node2D"]
 script = ExtResource("1_n2tco")
@@ -16,3 +17,6 @@ position = Vector2(7, -79)
 
 [node name="Test" parent="." instance=ExtResource("4_akp5x")]
 position = Vector2(5, -75)
+
+[node name="MiniRoom" parent="." groups=["rooms"] instance=ExtResource("5_jxix1")]
+position = Vector2(341, 107)

@@ -22,7 +22,6 @@ func _process(delta: float) -> void:
 			ene.disable()
 			enemies.erase(ene)
 
-	
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0
 		enemies.append(spawanEmenie())

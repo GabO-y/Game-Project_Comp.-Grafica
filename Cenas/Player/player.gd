@@ -1,8 +1,9 @@
 extends Character
 class_name Player
 
-var armor: LightArmor
-var armor_energie
+@export var armor: LightArmor
+@export var armor_energie: int
+
 var input_vector
 
 
@@ -127,14 +128,18 @@ func animation_logic():
 
 # Cria o vetor de direção
 	var dir = Vector2(right_x, right_y)
+	var idle = false
 
 # Se quiser normalizar (pra usar só direção, ignorando intensidade)
 	if dir.length() > 0.2: # deadzone (evita drift)
 		dir = dir.normalized()
 		last_direction_right = dir
-	else:
+	elif input_vector.length() != 0:
 		dir = Vector2(input_vector.x, input_vector.y)
-				
+	else:
+		dir = last_direction
+		idle = true
+	
 		
 	var play = ""
 	
@@ -147,10 +152,9 @@ func animation_logic():
 		if dir.y < 0:
 			play += "back_"
 		
-		if input_vector.length() < 0.2:
+		if idle:
 			play += "idle"
 		else:
-			#play += "walk" enquanto ainda nao tem as andando
-			play += "idle"
-
+			play += "walk" 
+			
 	anim.play(play)

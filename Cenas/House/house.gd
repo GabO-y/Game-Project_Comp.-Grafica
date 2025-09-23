@@ -23,6 +23,7 @@ func _ready() -> void:
 
 	room_manager.match_doors("SafeRoom","HallWay1")
 	room_manager.match_doors("Test","HallWay1")
+	room_manager.match_doors("MiniRoom", "HallWay1")
 
 	#var door_scene = preload("res://Cenas/Objects/door/door.tscn")
 	#var door = door_scene.instantiate()
@@ -35,7 +36,12 @@ func _ready() -> void:
 	
 	player.armor.set_activate(false);
 	
+	for i in get_children():
+		print("a: ", i.name)
+		for j in i.get_children():
+			print("\tb: ", j.name)
 	
+
 func _process(_delta: float) -> void:
 	toggle_activate_armor()
 		

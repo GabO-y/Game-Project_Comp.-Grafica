@@ -8,9 +8,8 @@ var last_position: Vector2
 func _ready() -> void:
 	
 	damage = 5
-	speed = 100
+	speed = 180
 	life = 5
-	size_chase_area = 100
 	
 	super._ready()
 	

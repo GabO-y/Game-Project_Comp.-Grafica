@@ -15,18 +15,8 @@ func _ready() -> void:
 			
 	
 func is_clean() -> bool:
-	
-
-		
 	for spawn in spaweners:
-		if spawn is Spawn:
-			
-			print("--------------")
-			for i in spawn.enemies:
-				print(i)
-			print("--------------")
-
-			
+		if spawn is Spawn:			
 			if !spawn.is_clean(): return false
 	return true
 	

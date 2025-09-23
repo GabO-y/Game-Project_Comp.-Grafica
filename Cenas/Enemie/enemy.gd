@@ -11,20 +11,16 @@ var bar: ProgressBar #Barra de progresso
 var chase_area: Area2D #Area que eu fica patrulhando
 var player: Player #Proprio jogador
 var position_target #Para onde ele deve andar
-var size_chase_area = 100 #Tamanho da area que um inimigo tem em perseguição
 var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
 var dir: Vector2 = Vector2.ZERO #direção do inimigo, fiz pra facilitar com as animações
 var is_active: bool = false
+var knockback_force: float = 500.0
 	
 func _ready() -> void:
 	
 	if level > 1:
 		life *= 1 + (0.5 * level)
 		damage *= 1 + (0.5 * level)
-	
-	#for i in get_children():
-		#if i is CharacterBody2D:
-			#body = i
 			
 	for i in body.get_children():
 		if i is ProgressBar:
@@ -67,3 +63,23 @@ func enable():
 	is_active = true
 	body.collision_layer = 1
 	body.collision_mask = 1
+	
+func take_damage(damage: int):
+	
+	
+	body.move_and_slide()
+	
+	var sprite = $CharacterBody2D/AnimatedSprite2D
+	var original_color = sprite.modulate
+
+	sprite.modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	sprite.modulate = original_color
+	
+	life -= damage
+	print("life: ", life)
+	
+	
+func knockback_logic():
+	var knockback_dir = (body.global_position - player.player_body.global_position).normalized()
+	body.velocity = knockback_dir * knockback_force
