@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://fudgcqmoskva"]
+[gd_scene load_steps=8 format=4 uid="uid://fudgcqmoskva"]
 
 [ext_resource type="Script" uid="uid://cr276xmk4yn4e" path="res://Cenas/Rooms/safe_room.gd" id="1_x5onc"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_n15xc"]
@@ -288,9 +288,6 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_0k1ya")
 sources/1 = SubResource("TileSetAtlasSource_s361c")
 
-[sub_resource type="LabelSettings" id="LabelSettings_cuug0"]
-font_size = 31
-
 [node name="SafeRoom" type="Node2D"]
 script = ExtResource("1_x5onc")
 
@@ -303,15 +300,3 @@ occlusion_enabled = false
 
 [node name="Hallway1" parent="." instance=ExtResource("4_6qrko")]
 position = Vector2(724, 201)
-
-[node name="Label" type="Label" parent="."]
-offset_left = 466.0
-offset_top = 485.0
-offset_right = 683.0
-offset_bottom = 529.0
-text = "Quarto seguro"
-label_settings = SubResource("LabelSettings_cuug0")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(601, 331)
-zoom = Vector2(2.5, 2.5)

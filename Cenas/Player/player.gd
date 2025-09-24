@@ -6,8 +6,7 @@ class_name Player
 
 var input_vector
 
-
-var speed: float = 200
+var speed: float = 140
 var dash_speed: float = 600
 var dash_time: float = 0.2
 var dash_cooldown: float = 0.5
