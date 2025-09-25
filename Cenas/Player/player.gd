@@ -40,6 +40,9 @@ func _process(delta: float) -> void:
 	animation_logic()
 	takeDamagePlayerLogic(delta)
 	
+	if life <= 0:
+		player_die.emit(self)
+	
 func _touch_enemie(body):
 	if !(body.get_parent() is Enemie): return
 	enemies_touch[body.get_parent()] = 0.0
@@ -71,8 +74,6 @@ func takeDamagePlayerLogic(delta):
 			enemies_touch[enemie] = 0
 			#Vai tirar a vida do player
 			life -= enemie.damage
-			
-
 			
 func _physics_process(delta: float) -> void:
 	
@@ -157,3 +158,5 @@ func animation_logic():
 			play += "walk" 
 			
 	anim.play(play)
+	
+signal player_die(player: Player)

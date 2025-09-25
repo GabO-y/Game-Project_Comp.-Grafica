@@ -4,6 +4,7 @@ extends Node2D
 @onready var enemies: Array[Enemie]
 
 @onready var room_manager := $RoomManager
+@onready var transaction_scene := $TransitionScene
 
 var activateArmor = true
 var armor: LightArmor
@@ -11,7 +12,7 @@ var infosModeActivate = false
 var spawns: Array[Spawn] = []
 
 func _ready() -> void:
-	
+			
 	Globals.player = player
 		
 	for room in get_tree().get_nodes_in_group("rooms"):
@@ -36,12 +37,8 @@ func _ready() -> void:
 	
 	player.armor.set_activate(false);
 	
-	for i in get_children():
-		print("a: ", i.name)
-		for j in i.get_children():
-			print("\tb: ", j.name)
-	
-
+	player.player_die.connect(transaction_scene._finish_round)
+			
 func _process(_delta: float) -> void:
 	toggle_activate_armor()
 		

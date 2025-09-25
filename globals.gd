@@ -4,7 +4,17 @@ var current_scene: Room
 var last_scene
 var can_teleport = true
 var player: Player
+var die = false
 
+func _process(delta: float) -> void:
+
+	if Input.is_key_pressed(KEY_SPACE) and die:
+		die = false
+		get_tree().paused = false
+		get_tree().reload_current_scene()
+		
+	process_mode = Node.PROCESS_MODE_ALWAYS
+		
 func desable_room():
 	current_scene.desable()
 	

@@ -1,0 +1,172 @@
+[gd_scene load_steps=8 format=3 uid="uid://oapef3dqlad"]
+
+[ext_resource type="Script" uid="uid://dj5sxff3c88t" path="res://Cenas/Menus/GameOver/transaction_scene.gd" id="1_k20cf"]
+
+[sub_resource type="Animation" id="Animation_kngsd"]
+resource_name = "fade_to_black"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.117647, 0.117647, 0.117647, 0), Color(0.118581, 0.118581, 0.118581, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.13333, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5.01, 7.09),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eubd1"]
+length = 0.1
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fpemh"]
+resource_name = "fade_to_normal"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.118581, 0.118581, 0.118581, 1), Color(0.117647, 0.117647, 0.117647, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eubd1"]
+_data = {
+&"RESET": SubResource("Animation_eubd1"),
+&"fade_to_black": SubResource("Animation_kngsd"),
+&"fade_to_normal": SubResource("Animation_fpemh")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_kngsd"]
+font_size = 50
+font_color = Color(1, 0.08, 0.08, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k20cf"]
+font_size = 30
+
+[node name="TransitionScene" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_k20cf")
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
+process_mode = 3
+libraries = {
+&"": SubResource("AnimationLibrary_eubd1")
+}
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 3.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Label" type="Label" parent="GameOver"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 78.0
+offset_top = 130.0
+offset_right = 383.0
+offset_bottom = 220.0
+rotation = -0.29147
+text = "Game Over"
+label_settings = SubResource("LabelSettings_kngsd")
+autowrap_mode = 3
+justification_flags = 171
+text_overrun_behavior = 4
+text_direction = 3
+
+[node name="Label2" type="Label" parent="GameOver"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 386.0
+offset_top = 568.0
+offset_right = 723.0
+offset_bottom = 610.0
+text = "Espaço para recomeçar"
+label_settings = SubResource("LabelSettings_k20cf")
