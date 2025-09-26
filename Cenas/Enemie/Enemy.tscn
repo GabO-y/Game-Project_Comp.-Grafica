@@ -6,9 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxyk0"]
 size = Vector2(82, 83)
 
-[node name="Enemie" type="Node2D"]
+[node name="Enemie" type="Node2D" node_paths=PackedStringArray("body")]
 z_index = 5
 script = ExtResource("1_c8q0v")
+body = NodePath("CharacterBody2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 

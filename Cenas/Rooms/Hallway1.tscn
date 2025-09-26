@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://dvmurnmtp6xkr"]
+[gd_scene load_steps=10 format=4 uid="uid://dvmurnmtp6xkr"]
 
 [ext_resource type="Script" path="res://Cenas/Rooms/hallway_1.gd" id="1_ul83h"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_4cqkd"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_aavrk"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_1535b"]
 [ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="5_adw16"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Fantasm/Fantasm.tscn" id="6_ygftr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yqgoo"]
 texture = ExtResource("2_4cqkd")
@@ -306,7 +305,6 @@ position = Vector2(784, 362)
 
 [node name="FantasmSpawn" parent="." groups=["spawns"] instance=ExtResource("5_adw16")]
 position = Vector2(454, 319)
-type_enemie = ExtResource("6_ygftr")
 limit_spawn = 3
 time_to_spawn = 0.1
 

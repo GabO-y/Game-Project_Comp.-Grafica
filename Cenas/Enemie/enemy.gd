@@ -7,7 +7,7 @@ var damage = 1 #dano que o inimigo da
 var idleTime = 0 #Tempo que esta sem caçar o inimigo (usado para ele ir para outros pontos, caso nao esteja caçando)
 
 var bar: ProgressBar #Barra de progresso
-@onready var body: CharacterBody2D = $CharacterBody2D #Corpo do inimigo
+@export var body: CharacterBody2D #Corpo do inimigo
 var chase_area: Area2D #Area que eu fica patrulhando
 var player: Player #Proprio jogador
 var position_target #Para onde ele deve andar

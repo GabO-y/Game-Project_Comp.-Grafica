@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://bht8b02r5jfpt"]
+[gd_scene load_steps=9 format=4 uid="uid://bht8b02r5jfpt"]
 
 [ext_resource type="Script" uid="uid://cmep8mptn6bji" path="res://Cenas/Rooms/test.gd" id="1_j4x1o"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="1_lkc5o"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="2_g1h0n"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_6ubgd"]
 [ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="3_g1h0n"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Fantasm/Fantasm.tscn" id="4_q58lq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q58lq"]
 texture = ExtResource("1_lkc5o")
@@ -303,7 +302,6 @@ position = Vector2(368, 247)
 
 [node name="EnemieSpawaner" parent="." instance=ExtResource("3_g1h0n")]
 position = Vector2(57, 45)
-type_enemie = ExtResource("4_q58lq")
 limit_spawn = 3
 time_to_spawn = 0.1
 
