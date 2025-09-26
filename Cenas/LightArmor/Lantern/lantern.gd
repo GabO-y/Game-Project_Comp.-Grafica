@@ -18,9 +18,9 @@ func _process(delta):
 
 	if dir.length() > 0.2: 
 		rotation = dir.angle() - PI/2
-	#else:
-		#var mouse_pos = get_global_mouse_position()
-		#dir = (mouse_pos - global_position).normalized()
-		#rotation = dir.angle() - PI/2 
+	elif Input.CURSOR_MOVE:
+		var mouse_pos = get_global_mouse_position()
+		dir = (mouse_pos - global_position).normalized()
+		rotation = dir.angle() - PI/2 
 		
 	super._process(delta)

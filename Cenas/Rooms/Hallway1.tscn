@@ -305,8 +305,7 @@ position = Vector2(784, 362)
 
 [node name="FantasmSpawn" parent="." groups=["spawns"] instance=ExtResource("5_adw16")]
 position = Vector2(454, 319)
-limit_spawn = 3
-time_to_spawn = 0.1
+limit_spawn = 1
 
 [node name="Test" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(785, 278)

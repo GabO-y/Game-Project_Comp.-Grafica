@@ -303,7 +303,6 @@ position = Vector2(368, 247)
 [node name="EnemieSpawaner" parent="." instance=ExtResource("3_g1h0n")]
 position = Vector2(57, 45)
 limit_spawn = 3
-time_to_spawn = 0.1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(230, 130)

@@ -1,10 +1,50 @@
-[gd_scene load_steps=72 format=3 uid="uid://25uf0g24cox"]
+[gd_scene load_steps=82 format=3 uid="uid://25uf0g24cox"]
 
 [ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemie/Fantasm/fantasm.gd" id="1_fuhhv"]
 [ext_resource type="Texture2D" uid="uid://ba5o5r15gpsgu" path="res://Assets/Enemies/Fantasm/spr_ghost_tileset.png" id="2_ciyev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuhhv"]
 size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bymns"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(0, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nt27g"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(16, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r23c"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(32, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anfpx"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(48, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7i2ub"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(64, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0im5y"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(96, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_me0vd"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(80, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m4mh"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(32, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxfi1"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(48, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cw8vc"]
+atlas = ExtResource("2_ciyev")
+region = Rect2(64, 96, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dhty2"]
 atlas = ExtResource("2_ciyev")
@@ -72,6 +112,46 @@ region = Rect2(112, 64, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fuhhv"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bymns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nt27g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7r23c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anfpx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7i2ub")
+}],
+"loop": true,
+"name": &"die_left",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0im5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me0vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m4mh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxfi1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cw8vc")
+}],
+"loop": true,
+"name": &"die_right",
+"speed": 11.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dhty2")
@@ -552,8 +632,7 @@ script = ExtResource("1_fuhhv")
 body = NodePath("CharacterBody2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("RectangleShape2D_fuhhv")
@@ -576,26 +655,26 @@ show_percentage = false
 visible = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
-animation = &"left"
-frame_progress = 0.134755
+animation = &"die_right"
+frame_progress = 0.283915
 
 [node name="Animated2" type="AnimatedSprite2D" parent="CharacterBody2D"]
 visible = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_bymns")
 animation = &"right"
-frame_progress = 0.667872
+frame_progress = 0.266903
 
 [node name="Animated3" type="AnimatedSprite2D" parent="CharacterBody2D"]
 visible = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_nt27g")
 animation = &"right_back"
-frame_progress = 0.050188
+frame_progress = 0.64922
 
 [node name="Animated4" type="AnimatedSprite2D" parent="CharacterBody2D"]
 visible = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7r23c")
 animation = &"left"
-frame_progress = 0.320635
+frame_progress = 0.919669

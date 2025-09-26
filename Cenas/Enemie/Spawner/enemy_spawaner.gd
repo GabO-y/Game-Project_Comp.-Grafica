@@ -9,7 +9,7 @@ class_name Spawn
 
 var is_active = false
 var enemies_already_spawner = 0
-var enemies: Array[Enemie] = []
+var enemies: Array[Enemy] = []
 var time = 0
 	
 func _process(delta: float) -> void:
@@ -19,7 +19,6 @@ func _process(delta: float) -> void:
 	for ene in enemies:
 				
 		if ene.life <= 0:
-			ene.disable()
 			enemies.erase(ene)
 
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
@@ -51,7 +50,7 @@ func get_random_point_in_area(area: Area2D) -> Vector2:
 		push_error("O shape não é um CircleShape2D!")
 		return area.global_position
 
-func spawanEmenie() -> Enemie:
+func spawanEmenie() -> Enemy:
 	
 	if type_enemie == null:
 		return
@@ -60,11 +59,10 @@ func spawanEmenie() -> Enemie:
 	
 	point = $Area2D.to_local(point)/2
 		
-	var ene = type_enemie.instantiate() as Enemie
+	var ene = type_enemie.instantiate() as Enemy
 	
 	ene.global_position = point
 	ene.position_target = point
-	
 	
 	add_child(ene)
 	enemies.append(ene)
@@ -81,17 +79,19 @@ func disable():
 	switch(false)
 	
 func switch(mode: bool):
-		for enemie in enemies:
+		for enemy in enemies:
 			if mode:
-				enemie.enable()
+				enemy.enable()
 			else: 
-				enemie.disable()
+				enemy.hide()
+				enemy.disable()
 				
 func is_clean() -> bool:
 
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
 	return true
+	
 		
 		
 	

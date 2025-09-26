@@ -40,17 +40,17 @@ func _process(delta: float) -> void:
 	animation_logic()
 	takeDamagePlayerLogic(delta)
 	
-	if life <= 0:
-		player_die.emit(self)
+	#if life <= 0:
+		#player_die.emit(self)
 	
 func _touch_enemie(body):
-	if !(body.get_parent() is Enemie): return
+	if !(body.get_parent() is Enemy): return
 	enemies_touch[body.get_parent()] = 0.0
 
 #para quando o inimigo para de encostar no player
 func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
-	if !(body.get_parent() is Enemie): return
+	if !(body.get_parent() is Enemy): return
 
 	var ene = body.get_parent()
 	
@@ -59,21 +59,21 @@ func _exit_enemie(body):
 		
 func takeDamagePlayerLogic(delta):
 
-	for enemie in enemies_touch.keys():
+	for enemy in enemies_touch.keys():
 		
-		enemie = enemie as Enemie
+		enemy = enemy as Enemy
 		
-		if !enemie.is_active: return
+		if !enemy.is_active: return
 		#Enquanto o inimigo encosta no player, ele nao se mexe
-		enemie.atack_player = true
+		enemy.atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr
-		enemies_touch[enemie] += delta
+		enemies_touch[enemy] += delta
 		#Se foi maior que meio segungo
-		if enemies_touch[enemie] >= 0.1:
+		if enemies_touch[enemy] >= 0.1:
 			#O tempo volta pra zero
-			enemies_touch[enemie] = 0
+			enemies_touch[enemy] = 0
 			#Vai tirar a vida do player
-			life -= enemie.damage
+			life -= enemy.damage
 			
 func _physics_process(delta: float) -> void:
 	

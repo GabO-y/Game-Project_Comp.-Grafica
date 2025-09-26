@@ -8,7 +8,7 @@ var activate = false
 var area: Area2D
 var player: Player
 
-var enemies_on_light:Dictionary[Enemie, float] = {}
+var enemies_on_light: Dictionary[Enemy, float] = {}
 var readyTime = false
 
 func _ready() -> void:
@@ -38,7 +38,6 @@ func _process(delta: float) -> void:
 		# se der 1 segundos, ele zera o tempo e da o dano
 		if(enemies_on_light[body] >= 1.0):
 			body.take_damage(damage) 
-			print(body.life)
 			enemies_on_light[body] = 0.0
 		
 	#usa a função com a logica da energia
@@ -58,12 +57,12 @@ func set_activate(mode: bool):
 	area.visible = activate
 					
 func _init_time_hit(ene: CharacterBody2D):	
-	enemies_on_light[ene.get_parent() as Enemie] = 0.0
+	enemies_on_light[ene.get_parent() as Enemy] = 0.0
 	
 #se ele sair, remove do verificador
 func _reset_time_hit(ene: CharacterBody2D):
 	var parent = ene.get_parent()
-	if !(parent is Enemie):
+	if !(parent is Enemy):
 		return
 	enemies_on_light.erase(ene.get_parent())
 

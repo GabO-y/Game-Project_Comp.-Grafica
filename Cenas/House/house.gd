@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player := $Player
-@onready var enemies: Array[Enemie]
+@onready var enemies: Array[Enemy]
 
 @onready var room_manager := $RoomManager
 @onready var transaction_scene := $TransitionScene
