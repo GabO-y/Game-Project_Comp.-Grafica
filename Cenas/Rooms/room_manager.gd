@@ -5,16 +5,19 @@ var rooms = []
 func _ready() -> void:		
 	
 	for room in get_tree().get_nodes_in_group("rooms"):
+		
 		room.desable()
+		room.spread_items()
+				
 		for door in room.doors:
 			door.player_in.connect(_teleport)
 
-			
 func _teleport(player, goTo):
 
 	Globals.desable_room()
 	Globals.current_scene = goTo.get_parent()
 	Globals.enable_room()
+	Globals.spread_items()
 
 	player.global_position = goTo.area.global_position
 	
@@ -64,3 +67,4 @@ func showInfo():
 	for i in get_children():
 		if i is Room:
 			i._doors()
+			

@@ -3,6 +3,7 @@ class_name Player
 
 @export var armor: LightArmor
 @export var armor_energie: int
+var items: Array[Item]
 
 var input_vector
 
@@ -19,12 +20,14 @@ var dash_cooldown_timer: float = 0.0
 var can_teleport = true
 var last_direction_right
 
-@onready var player_body := $CharacterBody2D as CharacterBody2D
-@onready var anim := $CharacterBody2D/AnimatedSprite2D
+@export var player_body: CharacterBody2D
+@export var anim: AnimatedSprite2D
 
 var enemies_touch = {}
 
 func _ready() -> void:
+	
+	items.append(Key.generate_key("SafeRoom,Hallway1"))
 		
 	var hit_area = $CharacterBody2D/HitArea as Area2D
 	
@@ -34,6 +37,9 @@ func _ready() -> void:
 	armor = preload("res://Cenas/LightArmor/Lantern/Lantern.tscn").instantiate()
 	armor.player = self
 	add_child(armor)
+	
+	for i in items:
+		print(i.name)
 	
 
 func _process(delta: float) -> void:

@@ -8,10 +8,10 @@
 [node name="House" type="Node2D"]
 script = ExtResource("1_rmjq6")
 
-[node name="Player" parent="." instance=ExtResource("2_iqu7b")]
-position = Vector2(123, 201)
-
 [node name="RoomManager" parent="." instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
+
+[node name="Player" parent="." instance=ExtResource("2_iqu7b")]
+position = Vector2(123, 201)
 
 [node name="TransitionScene" parent="." instance=ExtResource("4_rmjq6")]

@@ -24,7 +24,6 @@ func _ready() -> void:
 	
 	area.collision_mask = 2
 	
-	
 func _process(delta: float) -> void:
 	
 	global_position = player.player_body.global_position

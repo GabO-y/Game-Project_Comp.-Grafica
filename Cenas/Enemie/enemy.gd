@@ -17,8 +17,14 @@ var atack_player = false #para verificar se esta atacando o player para ter que 
 var dir: Vector2 = Vector2.ZERO #direção do inimigo, fiz pra facilitar com as animações
 var is_active: bool = false
 var knockback_force: float = 500.0
+var drop = []
+var max_drop_amount: int
 	
 func _ready() -> void:
+	
+	max_drop_amount = Globals.random_width([0,1,2], [40, 40, 5])
+	
+	print("max: ", max_drop_amount)
 	
 	if level > 1:
 		life *= 1 + (0.5 * level)
@@ -58,7 +64,7 @@ func get_random_point_in_area(area: Area2D) -> Vector2:
 	var distance = randf_range(0, radius)
 	return area.global_position + Vector2(cos(angle), sin(angle)) * distance
 
-func disable():
+func disable():# Fallback
 	is_active = false
 	body.collision_layer = 10
 	body.collision_mask = 10
@@ -84,6 +90,12 @@ func knockback_logic():
 	body.velocity = knockback_dir * knockback_force
 	
 func die():
+	print("dropou:")
+	for i in drop:
+		print("\t", i)
+		
+	die_alert.emit(drop, body.global_position)
+		
 	hide()
 	disable()
 
@@ -96,5 +108,5 @@ func change_color_damage():
 	sprite.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
-	
-	
+
+signal die_alert(drop, position)

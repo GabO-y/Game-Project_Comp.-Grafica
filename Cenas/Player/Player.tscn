@@ -220,8 +220,10 @@ size = Vector2(13, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" groups=["player"]]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("player_body", "anim") groups=["player"]]
 script = ExtResource("1_yjlpd")
+player_body = NodePath("CharacterBody2D")
+anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 

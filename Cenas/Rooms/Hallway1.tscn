@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=4 uid="uid://dvmurnmtp6xkr"]
 
-[ext_resource type="Script" path="res://Cenas/Rooms/hallway_1.gd" id="1_ul83h"]
+[ext_resource type="Script" uid="uid://bs4kd63671aft" path="res://Cenas/Rooms/hallway_1.gd" id="1_ul83h"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_4cqkd"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_aavrk"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_1535b"]
@@ -292,8 +292,9 @@ sources/1 = SubResource("TileSetAtlasSource_ji4dc")
 [sub_resource type="LabelSettings" id="LabelSettings_dhlrb"]
 font_size = 34
 
-[node name="Hallway1" type="Node2D" groups=["rooms"]]
+[node name="Hallway1" type="Node2D" node_paths=PackedStringArray("spaweners") groups=["rooms"]]
 script = ExtResource("1_ul83h")
+spaweners = [NodePath("FantasmSpawn")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -305,7 +306,7 @@ position = Vector2(784, 362)
 
 [node name="FantasmSpawn" parent="." groups=["spawns"] instance=ExtResource("5_adw16")]
 position = Vector2(454, 319)
-limit_spawn = 1
+limit_spawn = 5
 
 [node name="Test" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(785, 278)

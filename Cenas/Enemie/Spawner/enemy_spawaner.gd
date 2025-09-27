@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 		time = 0
 		enemies.append(spawanEmenie())
 		enemies_already_spawner += 1
-
+		
+		
 	
 func get_random_point_in_area(area: Area2D) -> Vector2:
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
@@ -67,6 +68,8 @@ func spawanEmenie() -> Enemy:
 	add_child(ene)
 	enemies.append(ene)
 	
+	ene.die_alert.connect(_drop_items)
+	
 	return ene
 	
 func set_enemie(ene: PackedScene):
@@ -91,6 +94,35 @@ func is_clean() -> bool:
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
 	return true
+	
+func someone_cotains_key() -> bool:
+	for ene in enemies:
+		for item in ene.drop:
+			if item is Key:
+				return true
+				
+	return false
+	
+func _drop_items(drop, postion):
+	
+	print("hdfkjdshfukhsdk")
+	
+	for i in drop:
+		if i is Node2D:
+			if i is Key:
+				print("essa chave aqui: ", i.name)
+				i.global_position = position
+				add_child(i)
+				print("tem chave")
+				#Agr tem que fazer as coisas aqui
+				#a chave ja esta no nó spawn que gerencia isso (talvez por exquanto)
+				#So precisa fazer a chave ser vizualizada, e dps o player obter ela
+				#Tem que por a animação de pegar chave tbm
+				
+	
+			
+	
+	
 	
 		
 		

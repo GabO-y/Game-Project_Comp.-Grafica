@@ -300,3 +300,4 @@ occlusion_enabled = false
 
 [node name="Hallway1" parent="." instance=ExtResource("4_6qrko")]
 position = Vector2(724, 201)
+is_locked = false

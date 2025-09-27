@@ -82,6 +82,10 @@ func enable():
 	body.collision_mask = 2
 	
 func die():
+	
+	print("dropou:")
+	for i in drop:
+		print("\t", i)
 		
 	if !is_active: return
 
@@ -99,7 +103,9 @@ func die():
 		die.sprite_frames.set_animation_loop("die_left", false)
 		
 	await die.animation_finished
-	die.visible = false		
+	die.visible = false
+
+	die_alert.emit(drop, body.global_position)
 
 		
 
