@@ -68,8 +68,9 @@ func spawanEmenie() -> Enemy:
 	add_child(ene)
 	enemies.append(ene)
 	
-	ene.die_alert.connect(_drop_items)
+	ene.set_active(is_active)
 	
+		
 	return ene
 	
 func set_enemie(ene: PackedScene):
@@ -82,26 +83,19 @@ func disable():
 	switch(false)
 	
 func switch(mode: bool):
-		for enemy in enemies:
-			if mode:
-				enemy.enable()
-			else: 
-				enemy.hide()
-				enemy.disable()
+	for enemy in enemies:
+		if mode:
+			enemy.enable()
+		else: 
+			enemy.hide()
+			enemy.disable()
+	is_active = mode
 				
 func is_clean() -> bool:
 
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
 	return true
-	
-func someone_cotains_key() -> bool:
-	for ene in enemies:
-		for item in ene.drop:
-			if item is Key:
-				return true
-				
-	return false
 	
 func _drop_items(drop, postion):
 	

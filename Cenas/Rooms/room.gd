@@ -15,18 +15,12 @@ func _ready() -> void:
 			spaweners.append(child)
 		if child is Door:
 			doors.append(child)
-			
-func _process(delta: float) -> void:
-	if spread:
-		spread_items()
-		
+
 func is_clean() -> bool:
 	for spawn in spaweners:
 		if spawn is Spawn:			
 			if !spawn.is_clean(): return false
 			
-	claer_room.emit()
-	
 	return true
 	
 func desable():
@@ -50,26 +44,6 @@ func switch_process(mode: bool):
 		if item is Spawn:
 			item.switch(mode)
 				
-func spread_items():
-	for spa in spaweners:
-				
-		if spa.enemies_already_spawner == spa.limit_spawn and spread_one:
-			return
-			
-		print("a")
-		
-		for ene in spa.enemies:
-									
-			if !spa.someone_cotains_key():
-				ene.drop.append(get_random_key())
-							
-			if ene.drop.size() < ene.max_drop_amount:
-				ene.drop.append(get_random_drop())
-				
-			spread_one = true
-
-signal claer_room
-
 func get_random_key() -> Key:
 		
 	var possible_keys = []

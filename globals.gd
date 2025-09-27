@@ -7,16 +7,9 @@ var player: Player
 var die = false
 var already_keys = []
 
+
 func _process(delta: float) -> void:
 	
-	if Input.is_action_just_pressed("ui_accept"):
-		
-		for i in already_keys:
-			print(i)
-			
-		if already_keys.is_empty():
-			print("vazio")
-
 	if Input.is_key_pressed(KEY_SPACE) and die:
 		die = false
 		get_tree().paused = false
@@ -59,10 +52,7 @@ func add_probably_key(r1: String, r2: String):
 	var new_key = Key.generate_key(r1 + "," + r2)
 	
 	already_keys.append([new_key, true])
-	
-func spread_items():
-	current_scene.spread_items()
-	
+		
 func random_width(options: Array, widths: Array):
 	var total_width = 0
 	for width in widths:
