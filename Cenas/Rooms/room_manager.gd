@@ -8,11 +8,13 @@ func _ready() -> void:
 		room.desable()
 		for door in room.doors:
 			door.player_in.connect(_teleport)
+			
+	Globals.generate_new_key.connect(_unlock_doors)
 
 func _teleport(player, goTo):
 
 	Globals.desable_room()
-	Globals.current_scene = goTo.get_parent()
+	Globals.current_room = goTo.get_parent()
 	Globals.enable_room()
 
 	player.global_position = goTo.area.global_position
@@ -57,10 +59,23 @@ func match_doors(r_current: String, r_target: String):
 	door_target.goTo = door_current
 	
 func is_clean_room() -> bool:
-	return Globals.current_scene.is_clean()
+	return Globals.current_room.is_clean()
 				
 func showInfo():
 	for i in get_children():
 		if i is Room:
 			i._doors()
 			
+func _unlock_doors(key: Key):
+	for room in get_children():
+		
+		if room.name == key.what_open[0]:
+			for door in room.get_children():
+				if door.name == key.what_open[1]:
+					door.is_locked = false
+					print("room: ", room.name, "| ", door.name, " unlocked: ", door.is_locked)
+		if room.name == key.what_open[1]:
+			for door in room.get_children():
+				if door.name == key.what_open[0]:
+					door.is_locked = false	
+					print("room: ", room.name, "| ", door.name, " unlocked: ", door.is_locked)

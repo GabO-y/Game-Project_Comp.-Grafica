@@ -85,5 +85,4 @@ func death_animation():
 	anim.sprite_frames.set_animation_loop(play, false)
 	anim.play(play)
 	
-	await anim.animation_finished
-	disable()
+	return anim.animation_finished

@@ -1,27 +1,26 @@
 extends Node
 
-var current_scene: Room
+var current_room: Room
 var last_scene
 var can_teleport = true
 var player: Player
 var die = false
 var already_keys = []
-
+var is_get_animation = false
 
 func _process(delta: float) -> void:
-	
-	if Input.is_key_pressed(KEY_SPACE) and die:
-		die = false
-		get_tree().paused = false
-		get_tree().reload_current_scene()
+		
+	if is_get_animation:
+		if Input.is_anything_pressed():
+			finish_get_animation()
 		
 	process_mode = Node.PROCESS_MODE_ALWAYS
 		
 func desable_room():
-	current_scene.desable()
+	current_room.desable()
 	
 func enable_room():
-	current_scene.enable()
+	current_room.enable()
 	
 func set_teleport(can: bool):
 	if can:
@@ -30,50 +29,58 @@ func set_teleport(can: bool):
 	else:
 		Globals.can_teleport = false
 
-
 func is_clean_room():
-	return current_scene.is_clean()
+	return current_room.is_clean()
 	
-func add_probably_key(r1: String, r2: String):
+func drop_key():
 	
-	for keys in already_keys:
+	if current_room.already_drop_key: return
+	
+	var is_for_drop = false
+	
+	if current_room.calculate_total_enemies() == 1:
+		is_for_drop = true
+	elif randf() >= 0.5:
+		is_for_drop = true
 		
-		var k = keys[0].split(",")
+	if is_for_drop: 
+		current_room.already_drop_key = true
+		return generate_random_key()
 		
-		if str(k[0]) == r1 and str(k[1]) == r2:
-			#print("negada chave: ", str(k[0], ",", k[1]))
-			return
-		elif str(k[0]) == r2 and str(k[1]) == r1:
-			#print("negada chave: ", str(k[1], ",", k[0]))
-			return
+	return null
+
+func generate_random_key():
 	
-	#print("aceita chave: ", str(r1, ",", r2))
+	var possibles_keys = []
 	
-	var new_key = Key.generate_key(r1 + "," + r2)
+	for door in current_room.get_children():
+		if door is Door:
+			if door.name != "ParentsRoom" and door.is_locked:
+				possibles_keys.append(current_room.name + "," + door.name)
+			
+	var key = Key.generate_key(possibles_keys.pick_random())
+
+	generate_new_key.emit(key)
+	return key
 	
-	already_keys.append([new_key, true])
-		
-func random_width(options: Array, widths: Array):
-	var total_width = 0
-	for width in widths:
-		total_width += width
+signal generate_new_key(key: Key)
+
+func a(algo):
+	self.algo = algo
 	
-	var rand = randf() * total_width
-	var accumulate = 0
+func finish_get_animation():
+	get_tree().paused = false
+	player.anim.process_mode = Node.PROCESS_MODE_INHERIT
+	for key in current_room.get_children():
+		if key is Key:
+			key.queue_free()
+	is_get_animation = false
 	
-	for i in range(options.size()):
-		accumulate += widths[i]
-		if rand < accumulate:
-			return options[i]
-	
-	return options[0]  # Fallback
-	
-func available_key(key: Key) -> bool:
-	
-	for i in already_keys:
-		var key_a = i[0] as Key
-		
-		if key_a.equals(key):
-			return false
-		
-	return true
+func have_enemy_live():
+	for spa in current_room.spaweners:
+		for ene in spa.enemies:
+			if !ene.is_dead:
+				return true 
+	return false  
+
+			

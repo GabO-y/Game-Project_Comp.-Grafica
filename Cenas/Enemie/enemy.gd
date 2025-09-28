@@ -19,9 +19,9 @@ var knockback_force: float = 500.0
 var is_dead: bool = false
 var last_position: Vector2
 
-
 var drop_table = [
-	{"item": Key.new(), "chance": 0.0},
+	{"item": "Energy", "chance": 0.5},
+	{"item": "Life", "chance": 0.3}
 ]
 	
 func _ready() -> void:
@@ -90,19 +90,16 @@ func die():
 	if is_dead: return
 	is_dead = true
 	
+	drop_logic()	
+	
 	set_physics_process(false)
 	set_process(false)
 	body.collision_layer = 0
 	body.collision_mask = 0
 	
-	drop_logic()	
-	
-	death_animation()
-	
-	await get_tree().create_timer(3).timeout
+	await death_animation()
 	queue_free()
 	
-
 
 func drop_logic():
 	
@@ -112,8 +109,16 @@ func drop_logic():
 		if randf() >= drop["chance"]:
 			var item = drop["item"]
 			print("dropou: ", item)
-			item.global_position = global_position
-			Globals.current_scene.add_child(item)
+			#item.global_position = global_position
+			#Globals.current_scene.add_child(item)
+			
+	var key = Globals.drop_key()
+	
+	if key != null:
+		Globals.current_room.add_child(key)
+		key.global_position = body.global_position
+	else:
+		print("nao dropou")
 
 func change_color_damage():
 	body.move_and_slide()

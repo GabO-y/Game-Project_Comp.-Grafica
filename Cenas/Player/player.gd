@@ -22,16 +22,16 @@ var last_direction_right
 
 @export var player_body: CharacterBody2D
 @export var anim: AnimatedSprite2D
+@export var hit_area: Area2D
 
 var enemies_touch = {}
 
 func _ready() -> void:
 	
 	items.append(Key.generate_key("SafeRoom,Hallway1"))
-		
-	var hit_area = $CharacterBody2D/HitArea as Area2D
-	
-	hit_area.body_entered.connect(_touch_enemie)
+			
+	hit_area.area_entered.connect(_on_key_entered)
+	hit_area.body_entered.connect(_on_enemy_entered)
 	hit_area.body_exited.connect(_exit_enemie)
 	
 	armor = preload("res://Cenas/LightArmor/Lantern/Lantern.tscn").instantiate()
@@ -49,9 +49,24 @@ func _process(delta: float) -> void:
 	#if life <= 0:
 		#player_die.emit(self)
 	
-func _touch_enemie(body):
-	if !(body.get_parent() is Enemy): return
+func _on_enemy_entered(body):
+	if body.get_parent() is not Enemy: return
 	enemies_touch[body.get_parent()] = 0.0
+	
+func _on_key_entered(area):
+	
+	if Globals.have_enemy_live(): return
+
+	if  !Globals.current_room.finish: return
+
+	
+	var key = area.get_parent()
+	
+	print(key)
+	
+	if key is not Key: return
+		
+	get_key_animation(key)
 
 #para quando o inimigo para de encostar no player
 func _exit_enemie(body):
@@ -164,5 +179,62 @@ func animation_logic():
 			play += "walk" 
 			
 	anim.play(play)
+	
+#func get_key_animation(key: Key):
+	#
+	#anim.sprite_frames.set_animation_loop("get_item", false)
+	#anim.play("get_item")
+	#
+	#anim.process_mode = Node.PROCESS_MODE_ALWAYS
+	#get_tree().paused = true
+	#
+	#var x = key.position.x
+	#var y = key.position.y
+	#
+	#while x != player_body.global_position.x and y != player_body.global_position.y:
+		#x += key.global_position.direction_to(player_body.global_position).x * 0.1
+		#y += key.global_position.direction_to(player_body.global_position).y * 0.1
+#
+	#await get_tree().create_timer(3).timeout	
+	#
+	#anim.process_mode = PROCESS_MODE_INHERIT
+	#get_tree().paused = false
+
+func get_key_animation(key: Key):
+	
+	armor.set_activate(false)
+	get_tree().paused = true
+	
+	anim.process_mode = Node.PROCESS_MODE_ALWAYS
+	key.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	anim.sprite_frames.set_animation_loop("get_item", false)
+	anim.play("get_item")
+	
+	var duration = 0.2 
+	var elapsed = 0.0
+	var start_pos = key.global_position
+	var end_pos = player_body.global_position
+	end_pos.y -= 15
+	
+	while elapsed < duration:
+		var progress = elapsed / duration
+		
+		key.global_position = start_pos.lerp(end_pos, progress)
+		
+		elapsed += get_physics_process_delta_time()
+		
+		await get_tree().process_frame
+	
+	key.global_position = end_pos
+	key.scale = Vector2(1.5, 1.5)  
+	key.label.visible = true
+	
+	while anim.is_playing():
+		await get_tree().process_frame
+		
+	await key.play_scale_key()
+	
+	Globals.is_get_animation = true
 	
 signal player_die(player: Player)

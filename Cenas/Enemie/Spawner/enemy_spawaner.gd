@@ -16,8 +16,8 @@ func _process(delta: float) -> void:
 	
 	time += delta
 			
-	for ene in enemies:
-				
+	for ene in enemies:	
+		if not is_instance_valid(ene): continue
 		if ene.life <= 0:
 			enemies.erase(ene)
 

@@ -516,4 +516,4 @@ show_percentage = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
 animation = &"die_left"
-frame_progress = 0.897588
+frame_progress = 0.0600413

@@ -17,6 +17,9 @@ func _player_enter(body):
 	if !Globals.can_teleport:
 		return
 		
+	if is_locked:
+		return
+		
 	var player: Player
 	
 	if !(body.get_parent() is Player):
@@ -32,14 +35,11 @@ func _player_enter(body):
 				contains_key = true
 				break
 		
-	if !contains_key:
-		return
-		
 	for i in get_children():
 		if i is Area2D:
 			i.set_deferred("monitoring", false)	
 			
-	print(Globals.current_scene.is_clean())
+	print(Globals.current_room.is_clean())
 	
 	emit_signal("player_in", body, goTo)
 	

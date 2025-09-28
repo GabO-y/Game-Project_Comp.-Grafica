@@ -303,12 +303,13 @@ tile_set = SubResource("TileSet_oldmg")
 
 [node name="SafeRoom" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(784, 362)
+is_locked = false
 
 [node name="FantasmSpawn" parent="." groups=["spawns"] instance=ExtResource("5_adw16")]
 position = Vector2(454, 319)
 limit_spawn = 5
 
-[node name="Test" parent="." instance=ExtResource("4_1535b")]
+[node name="ParentsRoom" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(785, 278)
 
 [node name="Label" type="Label" parent="."]
@@ -318,10 +319,6 @@ offset_right = 657.0
 offset_bottom = 472.0
 text = "Corredor 1"
 label_settings = SubResource("LabelSettings_dhlrb")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(601, 331)
-zoom = Vector2(2.5, 2.5)
 
 [node name="MiniRoom" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(376, 320)

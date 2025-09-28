@@ -17,13 +17,13 @@ func _ready() -> void:
 		
 	for room in get_tree().get_nodes_in_group("rooms"):
 		if room.name == "SafeRoom":
-			Globals.current_scene = room
+			Globals.current_room = room
 			break
 			
 	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
-	room_manager.match_doors("Test","HallWay1")
+	room_manager.match_doors("ParentsRoom","HallWay1")
 	room_manager.match_doors("MiniRoom", "HallWay1")
 
 	#var door_scene = preload("res://Cenas/Objects/door/door.tscn")
