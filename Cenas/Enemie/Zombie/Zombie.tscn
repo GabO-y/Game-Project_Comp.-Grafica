@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemie/Zombie/zombie.gd" id="1_21gwn"]
 [ext_resource type="Texture2D" uid="uid://x4wylbchjdug" path="res://Assets/Enemies/Zombie/Captura de tela de 2025-10-02 08-43-34.png" id="2_q1jsx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1jsx"]
-size = Vector2(6, 19)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_q1jsx"]
 atlas = ExtResource("2_q1jsx")
 region = Rect2(0, 0, 162, 291)
@@ -21,6 +18,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1jsx"]
+radius = 3.0
+height = 18.0
+
 [node name="Zombie" type="Node2D" node_paths=PackedStringArray("agent", "time", "body", "anim")]
 script = ExtResource("1_21gwn")
 agent = NodePath("CharacterBody2D/NavigationAgent2D")
@@ -30,19 +31,23 @@ anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 life = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-collision_layer = 9
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(-1, -1.5)
-shape = SubResource("RectangleShape2D_q1jsx")
+collision_layer = 8
+motion_mode = 1
+wall_min_slide_angle = 0.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+navigation_layers = 4
+path_postprocessing = 1
 debug_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(-1, -2)
+position = Vector2(1, -1)
 scale = Vector2(0.0393519, 0.0667955)
 sprite_frames = SubResource("SpriteFrames_ck86d")
+
+[node name="CollisionBody" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_q1jsx")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

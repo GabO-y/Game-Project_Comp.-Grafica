@@ -39,10 +39,8 @@ func drop_key():
 	var is_for_drop = false
 	
 	if current_room.calculate_total_enemies() == 1:
-		print("tem apenas um, tem que dropar")
 		is_for_drop = true
 	elif randf() >= 0.5:
-		print("sua sorte, dropou")
 		is_for_drop = true
 		
 	if is_for_drop: 
@@ -60,7 +58,11 @@ func generate_random_key():
 			if door.name != "ParentsRoom" and door.is_locked:
 				possibles_keys.append(current_room.name + "," + door.name)
 			
-	var key = Key.generate_key(possibles_keys.pick_random())
+			
+	var key: Key = null
+	
+	if not possibles_keys.is_empty():
+		key = Key.generate_key(possibles_keys.pick_random())
 
 	return key
 	
@@ -88,6 +90,5 @@ func change_room():
 	
 	for spawn in current_room.spaweners:
 		for ene in spawn.enemies:
-			print("aaaaaaaaaaaaaaaaaaaaaaaa")
 			ene.enemy_die.connect(current_room._check_clear)
 			ene.enemy_die.connect(spawn._free_enemy)

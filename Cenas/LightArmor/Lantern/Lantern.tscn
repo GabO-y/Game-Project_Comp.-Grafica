@@ -35,7 +35,9 @@ rotation = 3.89034
 scale = Vector2(3.79115, 3.86459)
 energy = 0.57
 shadow_enabled = true
+shadow_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_lxmur")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Light/PointLight2D"]
 occluder = SubResource("OccluderPolygon2D_ix4eb")
+occluder_light_mask = 2

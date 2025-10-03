@@ -1,11 +1,9 @@
-[gd_scene load_steps=13 format=4 uid="uid://dvmurnmtp6xkr"]
+[gd_scene load_steps=10 format=4 uid="uid://dvmurnmtp6xkr"]
 
 [ext_resource type="Script" uid="uid://bs4kd63671aft" path="res://Cenas/Rooms/hallway_1.gd" id="1_ul83h"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_4cqkd"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_aavrk"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_1535b"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="5_adw16"]
-[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="6_ul83h"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rjvdu"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -356,12 +354,9 @@ navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_yqgoo")
 sources/1 = SubResource("TileSetAtlasSource_ji4dc")
 
-[sub_resource type="LabelSettings" id="LabelSettings_dhlrb"]
-font_size = 34
-
 [node name="Hallway1" type="Node2D" node_paths=PackedStringArray("spaweners") groups=["rooms"]]
 script = ExtResource("1_ul83h")
-spaweners = [NodePath("FantasmSpawn")]
+spaweners = [null]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -372,21 +367,9 @@ tile_set = SubResource("TileSet_oldmg")
 position = Vector2(784, 380)
 is_locked = false
 
-[node name="FantasmSpawn" parent="." groups=["spawns"] instance=ExtResource("5_adw16")]
-position = Vector2(454, 319)
-type_enemie = ExtResource("6_ul83h")
-limit_spawn = 3
-
 [node name="ParentsRoom" parent="." instance=ExtResource("4_1535b")]
 position = Vector2(784, 261)
 
-[node name="Label" type="Label" parent="."]
-offset_left = 481.0
-offset_top = 425.0
-offset_right = 657.0
-offset_bottom = 472.0
-text = "Corredor 1"
-label_settings = SubResource("LabelSettings_dhlrb")
-
 [node name="MiniRoom" parent="." instance=ExtResource("4_1535b")]
-position = Vector2(390, 320)
+position = Vector2(391, 320)
+is_locked = false

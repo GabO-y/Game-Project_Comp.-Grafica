@@ -27,8 +27,6 @@ var last_direction_right
 var enemies_touch = {}
 
 func _ready() -> void:
-		
-	items.append(Key.generate_key("SafeRoom,Hallway1"))
 			
 	hit_area.area_entered.connect(_on_key_entered)
 	hit_area.body_entered.connect(_on_enemy_entered)
@@ -152,7 +150,7 @@ func animation_logic():
 	var idle = false
 
 # Se quiser normalizar (pra usar só direção, ignorando intensidade)
-	if dir.length() > 0.2: # deadzone (evita drift)
+	if dir.length() > 0.2: 
 		dir = dir.normalized()
 		last_direction_right = dir
 	elif input_vector.length() != 0:
@@ -214,7 +212,6 @@ func collision(mode: bool):
 		player_body.collision_layer = 2
 		player_body.collision_mask = 2
 	
-
 signal player_die(player: Player)
 
 signal get_new_key(key: Key)
