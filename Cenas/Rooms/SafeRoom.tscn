@@ -13,3 +13,6 @@ tile_map_data = PackedByteArray("AAAZAA4AAAAKAAUAAAAZAA8AAAAKAAUAAAAZABAAAAAKAAU
 [node name="Hallway1" parent="." instance=ExtResource("4_6qrko")]
 position = Vector2(720, 202)
 is_locked = false
+
+[node name="MegaGhostRoom" parent="." instance=ExtResource("4_6qrko")]
+position = Vector2(426, 246)

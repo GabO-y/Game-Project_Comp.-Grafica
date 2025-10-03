@@ -3,6 +3,8 @@ class_name Player
 
 @export var armor: LightArmor
 @export var armor_energie: int
+@export var can_die = true
+
 var items: Array[Item]
 
 var input_vector
@@ -44,7 +46,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_toggle_armor"):
 		armor.toggle_active.emit()
 	
-	if life <= 0:
+	if life <= 0 and can_die:
 		player_die.emit(self)
 	
 func _on_enemy_entered(body):
@@ -211,6 +213,15 @@ func collision(mode: bool):
 	else:
 		player_body.collision_layer = 2
 		player_body.collision_mask = 2
+	
+func take_damage(damage: int):
+	life -= damage;
+	print("damage: ", damage, " -> life: ", life)
+	
+func take_knockback(direction: Vector2, force: float):
+	
+	player_body.velocity -= direction.normalized() * force
+	player_body.move_and_slide()
 	
 signal player_die(player: Player)
 

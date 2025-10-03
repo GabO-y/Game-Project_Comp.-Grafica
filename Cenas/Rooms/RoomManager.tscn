@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0ntae4uqgnun"]
+[gd_scene load_steps=7 format=3 uid="uid://b0ntae4uqgnun"]
 
 [ext_resource type="Script" uid="uid://dqal08vqko62g" path="res://Cenas/Rooms/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://fudgcqmoskva" path="res://Cenas/Rooms/SafeRoom.tscn" id="2_rqem0"]
 [ext_resource type="PackedScene" uid="uid://dvmurnmtp6xkr" path="res://Cenas/Rooms/Hallway1.tscn" id="3_akp5x"]
 [ext_resource type="PackedScene" uid="uid://bht8b02r5jfpt" path="res://Cenas/Rooms/ParentsRoom.tscn" id="4_akp5x"]
 [ext_resource type="PackedScene" uid="uid://b2celb3sqinke" path="res://Cenas/Rooms/MiniRoom.tscn" id="5_jxix1"]
+[ext_resource type="PackedScene" uid="uid://dh8cy7t2ceti5" path="res://Cenas/Rooms/MegaGhostRoom/MegaGhostRoom.tscn" id="6_6m1og"]
 
 [node name="RoomManager" type="Node2D"]
 script = ExtResource("1_n2tco")
@@ -28,3 +29,6 @@ zoom = Vector2(2.5, 2.5)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.232448, 0.173158, 0.606102, 1)
+
+[node name="MegaGhostRoom" parent="." groups=["rooms"] instance=ExtResource("6_6m1og")]
+position = Vector2(95, 47)

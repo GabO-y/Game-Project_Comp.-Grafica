@@ -260,6 +260,7 @@ fill_from = Vector2(0.490029, 0.481481)
 script = ExtResource("1_yjlpd")
 armor = NodePath("CharacterBody2D/Lantern")
 armor_energie = 100000
+can_die = false
 player_body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")

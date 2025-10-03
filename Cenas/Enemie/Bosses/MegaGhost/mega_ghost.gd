@@ -1,0 +1,122 @@
+extends Enemy
+
+class_name MegaGhost
+
+@export var attack_area: Area2D
+@export var attack_collision: CollisionPolygon2D
+@export var timer: Timer
+@export var is_stop: bool
+
+#pra verificar se esta dando o ataque especial
+var on_special_atack = false
+var start_special = false
+var dir_special_attack: Vector2
+
+#para verificar se esta na area do ataque 1
+var is_player_on_attack_area_1 = false
+
+#pra nao ficar dando consecutivos danos toda vez que o player esta na area 
+#do boss
+var finish_attack = true
+
+func _ready() -> void:
+	
+	attack_area.body_entered.connect(_on_body_entered)
+	attack_area.body_exited.connect(_exit_attack_area)
+
+	super._ready()
+	
+func _process(delta: float) -> void:
+	
+	super._process(delta)
+	
+	if is_player_on_attack_area_1:
+		attack_1(Globals.player)
+
+func _physics_process(delta: float) -> void:
+	
+	if on_special_atack:
+		
+		special_attack()
+			
+		move_special()
+			
+		return
+	
+	if is_stop: return
+	
+	var pla_pos = Globals.player.player_body.global_position
+	var ene_pos = body.global_position
+	
+	dir = ene_pos.direction_to(pla_pos).normalized()
+	
+	if dir == null or ene_pos.distance_to(pla_pos) < 50:
+		dir = Vector2.ZERO
+
+	body.velocity = dir * speed
+	body.move_and_slide()
+	
+func attack_1(player: Player):	
+		
+	var dir = body.global_position.direction_to(player.player_body.global_position).normalized()
+	attack_collision.rotation = (dir.angle() - PI/1.5)
+	
+	if not finish_attack: return
+	finish_attack = false
+	
+	await get_tree().create_timer(1.5).timeout
+	finish_attack = true
+	attack()
+		
+func _on_body_entered(body):
+	if body.get_parent() is not Player: return
+	is_player_on_attack_area_1 = true
+		
+func _exit_attack_area(body):
+	if body.get_parent() is not Player: return
+	is_player_on_attack_area_1 = false
+	
+func attack():
+	if not is_player_on_attack_area_1: return
+	Globals.player.take_damage(damage)
+	
+	var dir = (Globals.player.player_body.global_position.direction_to(body.global_position))
+
+	Globals.player.take_knockback(dir , 2500)
+
+func special_attack():
+	
+	if start_special: return
+	
+	is_stop = true
+	start_special = true
+
+	await get_tree().create_timer(2).timeout
+	
+	is_stop = false
+
+	body.collision_layer = 4
+	body.collision_mask = 4
+	
+	on_special_atack = true
+	
+	var index_dir = int(randf() * 4)
+	
+	match index_dir:
+		0: dir_special_attack = Vector2.UP
+		1: dir_special_attack = Vector2.DOWN
+		2: dir_special_attack = Vector2.LEFT
+		3: dir_special_attack = Vector2.RIGHT
+		
+
+func move_special():
+	
+	if is_stop: return
+	
+	body.velocity = dir_special_attack * 100
+	body.move_and_slide()
+	
+func _on_timer_timeout() -> void:
+	special_attack()
+	
+	

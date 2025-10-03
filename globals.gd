@@ -92,3 +92,10 @@ func change_room():
 		for ene in spawn.enemies:
 			ene.enemy_die.connect(current_room._check_clear)
 			ene.enemy_die.connect(spawn._free_enemy)
+
+func set_initial_room(name: String):
+	for room in get_tree().get_nodes_in_group("rooms"):
+		if room.name == name:
+			current_room = room
+			break
+	

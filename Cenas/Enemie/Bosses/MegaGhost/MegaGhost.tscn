@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bts2u7o7pqcl6"]
+
+[ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xlh7a"]
+
+[sub_resource type="Gradient" id="Gradient_2h161"]
+offsets = PackedFloat32Array(0.955556, 0.988889, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.75, 0.75, 0.75, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_redsd"]
+gradient = SubResource("Gradient_2h161")
+fill_from = Vector2(0.894587, 0.048433)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xlh7a"]
+radius = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2h161"]
+radius = 57.0088
+
+[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "timer", "body", "anim")]
+script = ExtResource("1_xlh7a")
+attack_area = NodePath("CharacterBody2D/AtackArea")
+attack_collision = NodePath("CharacterBody2D/AtackArea/Attack_collisiion")
+timer = NodePath("Timer")
+speed = 50
+damage = 50
+body = NodePath("CharacterBody2D")
+anim = NodePath("CharacterBody2D/AnimatedSprite2D")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_xlh7a")
+
+[node name="TempSprite" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(0.65625, 0.65625)
+texture = SubResource("GradientTexture2D_redsd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_xlh7a")
+
+[node name="AtackArea" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AtackArea"]
+shape = SubResource("CircleShape2D_2h161")
+debug_color = Color(0.992736, 0, 0.247824, 0.42)
+
+[node name="Attack_collisiion" type="CollisionPolygon2D" parent="CharacterBody2D/AtackArea"]
+modulate = Color(0, 1, 1, 1)
+polygon = PackedVector2Array(-57, 0, -55, 18, -44, 38, -26, 51, 0, 57, 0, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

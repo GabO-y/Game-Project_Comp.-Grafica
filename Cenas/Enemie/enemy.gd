@@ -2,15 +2,15 @@ extends Character
 
 class_name Enemy
 
-var speed = 20 #velocidade de movimentação
-var damage = 1 #dano que o inimigo da
-var idleTime = 0 #Tempo que esta sem caçar o inimigo (usado para ele ir para outros pontos, caso nao esteja caçando)
+@export var speed = 20 #velocidade de movimentação
+@export var damage = 1 #dano que o inimigo da
 
 @export var body: CharacterBody2D #Corpo do inimigo
 @export var anim: AnimatedSprite2D
 
-var bar: ProgressBar #Barra de progresso
+@export var bar: ProgressBar #Barra de progresso
 var player: Player #Proprio jogador
+
 var position_target #Para onde ele deve andar
 var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
 var dir: Vector2 = Vector2.ZERO #direção do inimigo, fiz pra facilitar com as animações
@@ -25,6 +25,8 @@ var drop_table = [
 ]
 	
 func _ready() -> void:
+	
+	player = Globals.player
 	
 	if level > 1:
 		life *= 1 + (0.5 * level)

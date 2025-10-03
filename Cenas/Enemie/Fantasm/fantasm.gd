@@ -87,3 +87,4 @@ func death_animation():
 	anim.play(play)
 	
 	return anim.animation_finished
+	
