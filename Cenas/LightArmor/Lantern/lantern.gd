@@ -6,7 +6,7 @@ class_name Lantern
 
 func _ready() -> void:	
 	damage = 2
-	energie = 100
+	energie = 10000
 	super._ready()
 	
 func _process(delta):

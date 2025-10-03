@@ -20,6 +20,8 @@ static func generate_key(name: String):
 	key.name = name
 	
 	key.label.text = str(rooms_name[1])
+	
+	print("chave gerada: ", key)
 
 	return key
 	

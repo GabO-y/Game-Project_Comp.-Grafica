@@ -4,30 +4,24 @@ class_name LightArmor
 
 var damage: int = 10
 var energie = 50
-var activate = false
-var area: Area2D
-var player: Player
+
+@export var is_active = true
+@export var area: Area2D
 
 var enemies_on_light: Dictionary[Enemy, float] = {}
-var readyTime = false
 
 func _ready() -> void:
-	
-	#Pega as areas 2d que estao nas instancias armas e adiciona num array
-	for i in get_children():
-		if i is Area2D:
-			area = i
-						
+							
 	#Para todas as areas pegas, ele adiciona o sinal que verifica se um inimigo esta na luz
 	area.body_entered.connect(_init_time_hit)
 	area.body_exited.connect(_reset_time_hit)
+		
+	toggle_active.connect(_on_toggle_activate)
 	
-	area.collision_mask = 2
-	
+	_on_toggle_activate()
+		
 func _process(delta: float) -> void:
-	
-	global_position = player.player_body.global_position
-	
+			
 	for body in enemies_on_light.keys():
 		if body == null:
 			continue
@@ -44,28 +38,45 @@ func _process(delta: float) -> void:
 
 func energie_logic():
 	
-	if(energie <= -1):
-		set_activate(false)
-	
-	if(activate):
+	if energie <= 0:
+		if is_active:
+			_on_toggle_activate()
+		return
+				
+	if(is_active):
 		energie -= 0.1
 
-func set_activate(mode: bool):
-	activate = mode
-	area.monitoring = activate
-	area.visible = activate
 					
-func _init_time_hit(ene: CharacterBody2D):	
-	enemies_on_light[ene.get_parent() as Enemy] = 0.0
+func _init_time_hit(ene: CharacterBody2D):		
+		
+	var parent = ene.get_parent() as Enemy
+	
+	if parent == null or parent is not Enemy:
+		return	
+		
+	enemies_on_light[parent] = 0.0
 	
 #se ele sair, remove do verificador
-func _reset_time_hit(ene: CharacterBody2D):
+func _reset_time_hit(ene: Node):
 	var parent = ene.get_parent()
+	
 	if !(parent is Enemy):
 		return
 	enemies_on_light.erase(ene.get_parent())
-
 	
+func _on_toggle_activate():
+	is_active = !is_active
+		
+	if is_active:
+		area.show()
+		area.collision_layer = 1
+		area.collision_mask = (1 << 0) | (1 << 1)
+	else:
+		area.hide()
+		area.collision_layer = 0
+		area.collision_mask = 0
+
+signal toggle_active
 	
 
 

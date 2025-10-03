@@ -25,25 +25,10 @@ func _ready() -> void:
 	room_manager.match_doors("SafeRoom","HallWay1")
 	room_manager.match_doors("ParentsRoom","HallWay1")
 	room_manager.match_doors("MiniRoom", "HallWay1")
-
-	#var door_scene = preload("res://Cenas/Objects/door/door.tscn")
-	#var door = door_scene.instantiate()
-	#door.position = Vector2(900, 300)  # posição da porta no cenário
-	#add_child(door)
-	
-	#Jeito de setar um monstro a um spawner
-	#var fSpawn = get_node("SpawnFantasm") as Spawn
-	#fSpawn.set_enemie(preload("res://Cenas/Enemie/Fantasm/Fantasm.tscn"))
-	
-	player.armor.set_activate(false);
 	
 	player.player_die.connect(transaction_scene._finish_round)
 			
-func _process(_delta: float) -> void:
-	toggle_activate_armor()
+
 		
-func toggle_activate_armor() -> void:
-	if Input.is_action_just_pressed("ui_toggle_armor"):
-		player.armor.set_activate(activateArmor)
-		activateArmor = !activateArmor
+
 		

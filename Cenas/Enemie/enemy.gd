@@ -49,13 +49,6 @@ func update_bar():
 		return
 	bar.value = life
 
-func get_random_point_in_area(area: Area2D) -> Vector2:
-	var shape = area.get_node("ViewArea").shape as CircleShape2D
-	var radius = shape.radius
-	var angle = randf_range(0, TAU)
-	var distance = randf_range(0, radius)
-	return area.global_position + Vector2(cos(angle), sin(angle)) * distance
-
 func disable():
 	hide()
 	is_active = false
@@ -79,8 +72,6 @@ func take_damage(damage: int):
 	else:
 		change_color_damage()
 
-	
-	
 func knockback_logic():
 	var knockback_dir = (body.global_position - player.player_body.global_position).normalized()
 	body.velocity = knockback_dir * knockback_force
@@ -88,8 +79,9 @@ func knockback_logic():
 func die():
 	
 	if is_dead: return
-	is_dead = true
 	
+	is_dead = true
+
 	drop_logic()	
 	
 	set_physics_process(false)
@@ -97,9 +89,9 @@ func die():
 	body.collision_layer = 0
 	body.collision_mask = 0
 	
+	enemy_die.emit(self)
 	await death_animation()
 	queue_free()
-	
 
 func drop_logic():
 	
@@ -108,7 +100,6 @@ func drop_logic():
 	for drop in drop_table:
 		if randf() >= drop["chance"]:
 			var item = drop["item"]
-			print("dropou: ", item)
 			#item.global_position = global_position
 			#Globals.current_scene.add_child(item)
 			
@@ -117,8 +108,7 @@ func drop_logic():
 	if key != null:
 		Globals.current_room.add_child(key)
 		key.global_position = body.global_position
-	else:
-		print("nao dropou")
+
 
 func change_color_damage():
 	body.move_and_slide()
@@ -139,3 +129,5 @@ func set_active(mode: bool):
 	else:
 		disable()
 	is_active = mode
+	
+signal enemy_die(ene: Enemy)

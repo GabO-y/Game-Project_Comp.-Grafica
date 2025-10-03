@@ -9,7 +9,6 @@ radius = 10.0499
 [node name="EnemieSpawaner" type="Node2D"]
 script = ExtResource("1_si6ev")
 type_enemie = ExtResource("2_owc6l")
-limit_spawn = 100
 time_to_spawn = 0.1
 
 [node name="Area2D" type="Area2D" parent="."]

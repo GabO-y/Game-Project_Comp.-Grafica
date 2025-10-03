@@ -7,6 +7,7 @@ class_name Spawn
 @export var time_to_spawn = 3.0
 @export var enimies_level = 1
 
+
 var is_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemy] = []
@@ -16,18 +17,17 @@ func _process(delta: float) -> void:
 	
 	time += delta
 			
-	for ene in enemies:	
-		if not is_instance_valid(ene): continue
-		if ene.life <= 0:
-			enemies.erase(ene)
+	#for ene in enemies:	
+		#if not is_instance_valid(ene): continue
+		#
+		#if ene.life <= 0:
+			#enemies.erase(ene)
 
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0
 		enemies.append(spawanEmenie())
 		enemies_already_spawner += 1
 		
-		
-	
 func get_random_point_in_area(area: Area2D) -> Vector2:
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
 	
@@ -66,10 +66,8 @@ func spawanEmenie() -> Enemy:
 	ene.position_target = point
 	
 	add_child(ene)
-	enemies.append(ene)
 	
 	ene.set_active(is_active)
-	
 		
 	return ene
 	
@@ -89,6 +87,7 @@ func switch(mode: bool):
 		else: 
 			enemy.hide()
 			enemy.disable()
+			
 	is_active = mode
 				
 func is_clean() -> bool:
@@ -96,22 +95,13 @@ func is_clean() -> bool:
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
 	return true
-	
-func _drop_items(drop, postion):
-	
-	print("hdfkjdshfukhsdk")
-	
-	for i in drop:
-		if i is Node2D:
-			if i is Key:
-				print("essa chave aqui: ", i.name)
-				i.global_position = position
-				add_child(i)
-				print("tem chave")
-				#Agr tem que fazer as coisas aqui
-				#a chave ja esta no nó spawn que gerencia isso (talvez por exquanto)
-				#So precisa fazer a chave ser vizualizada, e dps o player obter ela
-				#Tem que por a animação de pegar chave tbm
+				
+func _free_enemy(ene: Enemy):
+	enemies.erase(ene)
+	ene.is_active = false
+	ene.queue_free()
+	print(enemies.size())
+
 				
 	
 			

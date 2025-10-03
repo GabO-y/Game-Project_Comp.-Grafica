@@ -5,6 +5,7 @@ class_name Door
 @export var area: Area2D;
 var goTo #Room que ele deve ir
 @export var is_locked: bool			
+@export var light: PointLight2D 
 
 func _ready():
 	area.body_entered.connect(_player_enter)
@@ -44,6 +45,10 @@ func _player_enter(body):
 	emit_signal("player_in", body, goTo)
 	
 	print(Globals.is_clean_room())
+		
+		
+func turn_light(turn: bool):
+	light.visible = turn
 		
 	
 signal player_in(player, goTo)

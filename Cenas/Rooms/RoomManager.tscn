@@ -25,3 +25,6 @@ position = Vector2(-366, -198)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(227, 132)
 zoom = Vector2(2.5, 2.5)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.232448, 0.173158, 0.606102, 1)

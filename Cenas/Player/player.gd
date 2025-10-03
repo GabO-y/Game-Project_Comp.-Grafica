@@ -27,27 +27,27 @@ var last_direction_right
 var enemies_touch = {}
 
 func _ready() -> void:
-	
+		
 	items.append(Key.generate_key("SafeRoom,Hallway1"))
 			
 	hit_area.area_entered.connect(_on_key_entered)
 	hit_area.body_entered.connect(_on_enemy_entered)
 	hit_area.body_exited.connect(_exit_enemie)
+		
+	get_new_key.connect(_unlocked_doors)
 	
-	armor = preload("res://Cenas/LightArmor/Lantern/Lantern.tscn").instantiate()
-	armor.player = self
-	add_child(armor)
-	
-	for i in items:
-		print(i.name)
-	
-
 func _process(delta: float) -> void:
+		
 	animation_logic()
 	takeDamagePlayerLogic(delta)
 	
-	#if life <= 0:
-		#player_die.emit(self)
+	armor.global_position = player_body.global_position
+	
+	if Input.is_action_just_pressed("ui_toggle_armor"):
+		armor.toggle_active.emit()
+	
+	if life <= 0:
+		player_die.emit(self)
 	
 func _on_enemy_entered(body):
 	if body.get_parent() is not Enemy: return
@@ -55,17 +55,12 @@ func _on_enemy_entered(body):
 	
 func _on_key_entered(area):
 	
-	if Globals.have_enemy_live(): return
-
 	if  !Globals.current_room.finish: return
 
-	
 	var key = area.get_parent()
-	
-	print(key)
-	
-	if key is not Key: return
 		
+	if key is not Key: return
+	
 	get_key_animation(key)
 
 #para quando o inimigo para de encostar no player
@@ -129,7 +124,12 @@ func _physics_process(delta: float) -> void:
 		is_dashing = true
 		dash_timer = dash_time
 		player_body.velocity = last_direction * dash_speed
-
+		
+	if is_dashing:
+		collision(false)
+	else:
+		collision(true)
+		
 	# Atualizar dash
 	if is_dashing:
 		dash_timer -= delta
@@ -180,61 +180,41 @@ func animation_logic():
 			
 	anim.play(play)
 	
-#func get_key_animation(key: Key):
-	#
-	#anim.sprite_frames.set_animation_loop("get_item", false)
-	#anim.play("get_item")
-	#
-	#anim.process_mode = Node.PROCESS_MODE_ALWAYS
-	#get_tree().paused = true
-	#
-	#var x = key.position.x
-	#var y = key.position.y
-	#
-	#while x != player_body.global_position.x and y != player_body.global_position.y:
-		#x += key.global_position.direction_to(player_body.global_position).x * 0.1
-		#y += key.global_position.direction_to(player_body.global_position).y * 0.1
-#
-	#await get_tree().create_timer(3).timeout	
-	#
-	#anim.process_mode = PROCESS_MODE_INHERIT
-	#get_tree().paused = false
-
 func get_key_animation(key: Key):
 	
-	armor.set_activate(false)
+	if armor.is_active:
+		armor._on_toggle_activate()
+			
 	get_tree().paused = true
 	
 	anim.process_mode = Node.PROCESS_MODE_ALWAYS
 	key.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	anim.sprite_frames.set_animation_loop("get_item", false)
+	
 	anim.play("get_item")
 	
-	var duration = 0.2 
-	var elapsed = 0.0
-	var start_pos = key.global_position
-	var end_pos = player_body.global_position
-	end_pos.y -= 15
+	key.global_position = player_body.global_position
+	key.global_position.y -= 10
 	
-	while elapsed < duration:
-		var progress = elapsed / duration
-		
-		key.global_position = start_pos.lerp(end_pos, progress)
-		
-		elapsed += get_physics_process_delta_time()
-		
-		await get_tree().process_frame
-	
-	key.global_position = end_pos
-	key.scale = Vector2(1.5, 1.5)  
 	key.label.visible = true
-	
-	while anim.is_playing():
-		await get_tree().process_frame
 		
 	await key.play_scale_key()
-	
 	Globals.is_get_animation = true
+	get_new_key.emit(key)
 	
+func _unlocked_doors(key: Key):
+	Globals.generate_new_key.emit(key)
+	
+func collision(mode: bool):
+	if mode:
+		player_body.collision_layer = 1
+		player_body.collision_mask = 1
+	else:
+		player_body.collision_layer = 2
+		player_body.collision_mask = 2
+	
+
 signal player_die(player: Player)
+
+signal get_new_key(key: Key)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=37 format=3 uid="uid://clp3coh5mf60x"]
 
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://8qj0ov3p7avy" path="res://Assets/Player/Animations/spr_player_assets.png" id="4_4o7c8"]
+[ext_resource type="PackedScene" uid="uid://b0ycmxpkip27y" path="res://Cenas/LightArmor/Lantern/Lantern.tscn" id="4_5akqg"]
 [ext_resource type="Texture2D" uid="uid://csy1cwe0ag6ri" path="res://Assets/Player/Animations/left_idle.png" id="4_xjvfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ynwyb"]
@@ -242,34 +243,55 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmvhq"]
-size = Vector2(13, 18)
+size = Vector2(11.5, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("player_body", "anim", "hit_area") groups=["player"]]
+[sub_resource type="Gradient" id="Gradient_r8ryd"]
+offsets = PackedFloat32Array(0, 0.188889)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5akqg"]
+gradient = SubResource("Gradient_r8ryd")
+fill = 1
+fill_from = Vector2(0.490029, 0.481481)
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "player_body", "anim", "hit_area") groups=["player"]]
 script = ExtResource("1_yjlpd")
+armor = NodePath("CharacterBody2D/Lantern")
+armor_energie = 100000
 player_body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(4, -2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 texture_filter = 1
-position = Vector2(0, -4.47035e-07)
+position = Vector2(1, -3)
 scale = Vector2(1.125, 1.125)
 sprite_frames = SubResource("SpriteFrames_htvwm")
-animation = &"get_item"
-frame_progress = 0.416098
+animation = &"left_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
+position = Vector2(1, -3)
 shape = SubResource("RectangleShape2D_pmvhq")
 
 [node name="HitArea" type="Area2D" parent="CharacterBody2D"]
+position = Vector2(4, -5)
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitArea"]
 visibility_layer = 2
+position = Vector2(-3, 2)
 shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
+
+[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
+scale = Vector2(9.72625, 9.72625)
+color = Color(1, 0.819608, 0.74902, 0.654902)
+texture = SubResource("GradientTexture2D_5akqg")
+
+[node name="Lantern" parent="CharacterBody2D" instance=ExtResource("4_5akqg")]
+position = Vector2(-4, 2)

@@ -5,6 +5,7 @@ class_name Fantasm
 var animation_type: int
 var mouse_pos: Vector2
 
+
 func _ready() -> void:
 		
 	animation_type = int(randf() * 4) + 1

@@ -39,8 +39,10 @@ func drop_key():
 	var is_for_drop = false
 	
 	if current_room.calculate_total_enemies() == 1:
+		print("tem apenas um, tem que dropar")
 		is_for_drop = true
 	elif randf() >= 0.5:
+		print("sua sorte, dropou")
 		is_for_drop = true
 		
 	if is_for_drop: 
@@ -60,27 +62,32 @@ func generate_random_key():
 			
 	var key = Key.generate_key(possibles_keys.pick_random())
 
-	generate_new_key.emit(key)
 	return key
 	
 signal generate_new_key(key: Key)
-
-func a(algo):
-	self.algo = algo
 	
 func finish_get_animation():
+	
 	get_tree().paused = false
+	
 	player.anim.process_mode = Node.PROCESS_MODE_INHERIT
 	for key in current_room.get_children():
 		if key is Key:
 			key.queue_free()
+	update_room_light()
 	is_get_animation = false
 	
-func have_enemy_live():
-	for spa in current_room.spaweners:
-		for ene in spa.enemies:
-			if !ene.is_dead:
-				return true 
-	return false  
-
-			
+func update_room_light():
+	current_room._update_doors_light()
+	
+func change_room():
+	
+	current_room._update_doors_light()
+		
+	if current_room.finish: return
+	
+	for spawn in current_room.spaweners:
+		for ene in spawn.enemies:
+			print("aaaaaaaaaaaaaaaaaaaaaaaa")
+			ene.enemy_die.connect(current_room._check_clear)
+			ene.enemy_die.connect(spawn._free_enemy)
