@@ -31,14 +31,12 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	
 	if is_player_on_attack_area_1:
-		attack_1(Globals.player)
+		slash(Globals.player)
 
 func _physics_process(delta: float) -> void:
 	
 	if on_special_atack:
-		
-		special_attack()
-			
+		attack_fantasm_run()
 		move_special()
 			
 		return
@@ -55,8 +53,8 @@ func _physics_process(delta: float) -> void:
 
 	body.velocity = dir * speed
 	body.move_and_slide()
-	
-func attack_1(player: Player):	
+		
+func slash(player: Player):	
 		
 	var dir = body.global_position.direction_to(player.player_body.global_position).normalized()
 	attack_collision.rotation = (dir.angle() - PI/1.5)
@@ -67,7 +65,7 @@ func attack_1(player: Player):
 	await get_tree().create_timer(1.5).timeout
 	finish_attack = true
 	attack()
-		
+			
 func _on_body_entered(body):
 	if body.get_parent() is not Player: return
 	is_player_on_attack_area_1 = true
@@ -84,19 +82,23 @@ func attack():
 
 	Globals.player.take_knockback(dir , 2500)
 
-func special_attack():
+func attack_fantasm_run():
 	
 	if start_special: return
 	
+	running_attack = true
 	is_stop = true
 	start_special = true
 
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(1).timeout
 	
 	is_stop = false
-
-	body.collision_layer = 4
-	body.collision_mask = 4
+	
+	body.collision_layer = 1 << 5
+	body.collision_mask = 1 << 5
+	
+	print(body.collision_layer)
+	print(body.collision_mask)
 	
 	on_special_atack = true
 	
@@ -108,7 +110,6 @@ func special_attack():
 		2: dir_special_attack = Vector2.LEFT
 		3: dir_special_attack = Vector2.RIGHT
 		
-
 func move_special():
 	
 	if is_stop: return
@@ -117,6 +118,22 @@ func move_special():
 	body.move_and_slide()
 	
 func _on_timer_timeout() -> void:
-	special_attack()
+	init_special_attack()
 	
+func init_special_attack():
+	
+	if on_special_atack: return
+	on_special_atack = true
+	
+	pass
+
+func refrash_setup():
+	body.collision_layer = 1
+	body.collision_mask = 1 
+	start_special = false
+	on_special_atack = false
+	timer.stop()
+	timer.start()
+	is_stop = false
+	running_attack = false
 	

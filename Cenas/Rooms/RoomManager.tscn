@@ -25,6 +25,7 @@ position = Vector2(-366, -198)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(227, 132)
+enabled = false
 zoom = Vector2(2.5, 2.5)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]

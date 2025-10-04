@@ -50,8 +50,16 @@ func _process(delta: float) -> void:
 		player_die.emit(self)
 	
 func _on_enemy_entered(body):
-	if body.get_parent() is not Enemy: return
-	enemies_touch[body.get_parent()] = 0.0
+	
+	var ene = body.get_parent() as Enemy
+	
+	if ene == null: return
+	
+	if ene.running_attack:
+		take_damage(ene.damage)
+		return
+	 
+	enemies_touch[ene] = 0.0
 	
 func _on_key_entered(area):
 	
@@ -216,7 +224,8 @@ func collision(mode: bool):
 	
 func take_damage(damage: int):
 	life -= damage;
-	print("damage: ", damage, " -> life: ", life)
+	print("take damage")
+	print(str(int(life + damage)), " -> ", life)
 	
 func take_knockback(direction: Vector2, force: float):
 	
