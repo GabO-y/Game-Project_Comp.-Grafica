@@ -5,6 +5,7 @@ var rooms = []
 func _ready() -> void:		
 	
 	for room in get_tree().get_nodes_in_group("rooms"):
+		print(room.name)
 		room.desable()
 		for door in room.doors:
 			door.player_in.connect(_teleport)

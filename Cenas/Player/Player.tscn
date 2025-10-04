@@ -248,7 +248,7 @@ size = Vector2(11.5, 18)
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
 [sub_resource type="Gradient" id="Gradient_r8ryd"]
-offsets = PackedFloat32Array(0, 0.188889)
+offsets = PackedFloat32Array(0, 0.411111)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5akqg"]
@@ -290,8 +290,9 @@ shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
 
 [node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
-scale = Vector2(9.72625, 9.72625)
+scale = Vector2(1.80656, 1.80656)
 color = Color(1, 0.819608, 0.74902, 0.654902)
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_5akqg")
 
 [node name="Lantern" parent="CharacterBody2D" instance=ExtResource("4_5akqg")]

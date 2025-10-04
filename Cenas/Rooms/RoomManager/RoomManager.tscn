@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0ntae4uqgnun"]
+
+[ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
+[ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
+
+[node name="RoomManager" type="Node2D"]
+script = ExtResource("1_n2tco")
+
+[node name="SafeRoom" parent="." groups=["rooms"] instance=ExtResource("2_rqem0")]
+position = Vector2(1, 2)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(158, 96)
+zoom = Vector2(3, 3)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.211543, 0.188376, 0.598353, 1)

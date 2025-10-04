@@ -1,0 +1,51 @@
+[gd_scene load_steps=11 format=4 uid="uid://cirgr2k7g1tgi"]
+
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/teto_0.tscn" id="0_id"]
+[ext_resource type="Script" uid="uid://cb3mmc8s7ai8c" path="res://Cenas/Rooms/SafeRoom/safe_room.gd" id="1_ckbd2"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/moveis_alto_1.tscn" id="1_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/moveis_baixo_2.tscn" id="2_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/Porta_3.tscn" id="3_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/roda_pé_4.tscn" id="4_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/papel_de_parede_5.tscn" id="5_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/chão_6.tscn" id="6_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/SafeRoom/Fundo_7.tscn" id="7_id"]
+[ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="10_ko388"]
+
+[node name="SafeRoom" type="Node2D"]
+script = ExtResource("1_ckbd2")
+
+[node name="Layers" type="Node2D" parent="."]
+
+[node name="Fundo_7" parent="Layers" instance=ExtResource("7_id")]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAAAAAAAAAEAAgAAAABAAAAAAAEAAgAAAACAAAAAAAEAAgAAAADAAAAAAAEAAgAAAAEAAAAAAAEAAgAAAAFAAAAAAAEAAgAAAAGAAAAAAAEAAgAAAAHAAAAAAAEAAgAAAAIAAAAAAAEAAgAAAAJAAAAAAAEAAgAAAAKAAAAAAAEAAgAAAALAAAAAAAEAAgAAAAMAAAAAAAEAAgAAAANAAAAAAAEAAgAAAAOAAAAAAAEAAgAAAAPAAAAAAAEAAgAAAAQAAAAAAAEAAgAAAARAAAAAAAEAAgAAAASAAAAAAAEAAgAAAAAAAEAAAAEAAgAAAASAAEAAAAEAAgAAAAAAAIAAAAEAAgAAAASAAIAAAAEAAgAAAAAAAMAAAAEAAgAAAASAAMAAAAEAAgAAAAAAAQAAAAEAAgAAAASAAQAAAAEAAgAAAAAAAUAAAAEAAgAAAASAAUAAAAEAAgAAAAAAAYAAAAEAAgAAAASAAYAAAAEAAgAAAAAAAcAAAAEAAgAAAASAAcAAAAEAAgAAAAAAAgAAAAEAAgAAAASAAgAAAAEAAgAAAAAAAkAAAAEAAgAAAASAAkAAAAEAAgAAAAAAAoAAAAEAAgAAAASAAoAAAAEAAgAAAAAAAsAAAAEAAgAAAABAAsAAAAEAAgAAAACAAsAAAAEAAgAAAADAAsAAAAEAAgAAAAEAAsAAAAEAAgAAAAFAAsAAAAEAAgAAAAGAAsAAAAEAAgAAAAHAAsAAAAEAAgAAAAIAAsAAAAEAAgAAAAJAAsAAAAEAAgAAAAKAAsAAAAEAAgAAAALAAsAAAAEAAgAAAAMAAsAAAAEAAgAAAANAAsAAAAEAAgAAAAOAAsAAAAEAAgAAAAPAAsAAAAEAAgAAAAQAAsAAAAEAAgAAAARAAsAAAAEAAgAAAASAAsAAAAEAAgAAAA=")
+collision_enabled = true
+
+[node name="chão_6" parent="Layers" instance=ExtResource("6_id")]
+texture_filter = 1
+
+[node name="papel_de_parede_5" parent="Layers" instance=ExtResource("5_id")]
+texture_filter = 1
+collision_enabled = true
+
+[node name="roda_pé_4" parent="Layers" instance=ExtResource("4_id")]
+texture_filter = 1
+collision_enabled = true
+
+[node name="Porta_3" parent="Layers" instance=ExtResource("3_id")]
+texture_filter = 1
+
+[node name="moveis_baixo_2" parent="Layers" instance=ExtResource("2_id")]
+texture_filter = 1
+collision_enabled = true
+
+[node name="moveis_alto_1" parent="Layers" instance=ExtResource("1_id")]
+texture_filter = 1
+collision_enabled = true
+
+[node name="teto_0" parent="Layers" instance=ExtResource("0_id")]
+texture_filter = 1
+collision_enabled = true
+
+[node name="HallWay1" parent="." instance=ExtResource("10_ko388")]
+position = Vector2(232, 56)

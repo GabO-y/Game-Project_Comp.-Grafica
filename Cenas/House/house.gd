@@ -14,13 +14,8 @@ var spawns: Array[Spawn] = []
 func _ready() -> void:
 			
 	Globals.player = player
-	Globals.set_initial_room("MegaGhostRoom")
+	Globals.set_initial_room("SafeRoom")
 		
-	#for room in get_tree().get_nodes_in_group("rooms"):
-		#if room.name == "SafeRoom":
-			#Globals.current_room = room
-			#break
-			
 	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
@@ -29,6 +24,10 @@ func _ready() -> void:
 	room_manager.match_doors("SafeRoom", "MegaGhostRoom")
 	
 	player.player_die.connect(transaction_scene._finish_round)
+	
+	print(player.player_body.collision_layer)
+	print(player.player_body.collision_mask)
+	$RoomManager/SafeRoom/Layers
 			
 
 		

@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://dvmurnmtp6xkr"]
+[gd_scene load_steps=10 format=4 uid="uid://0326r48r64ek"]
 
-[ext_resource type="Script" uid="uid://bs4kd63671aft" path="res://Cenas/Rooms/hallway_1.gd" id="1_ul83h"]
+[ext_resource type="Script" uid="uid://boa8quyit1ib8" path="res://Cenas/Rooms/HallWay1/hallway_1.gd" id="1_ul83h"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_4cqkd"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_aavrk"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_1535b"]

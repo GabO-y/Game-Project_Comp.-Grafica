@@ -33,7 +33,6 @@ polygon = PackedVector2Array(-30, 157, 41, 157, 8, 62)
 texture_filter = 1
 rotation = 3.89034
 scale = Vector2(3.79115, 3.86459)
-energy = 0.57
 shadow_enabled = true
 shadow_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_lxmur")
