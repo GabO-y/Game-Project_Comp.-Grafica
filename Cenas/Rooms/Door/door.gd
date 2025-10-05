@@ -6,12 +6,13 @@ class_name Door
 var goTo #Room que ele deve ir
 @export var is_locked: bool			
 @export var light: PointLight2D 
+@export var door_sprite: TileMapLayer
 
 func _ready():
 	area.body_entered.connect(_player_enter)
 
 func _player_enter(body):
-	
+				
 	if !Globals.is_clean_room():
 		return
 		
@@ -21,12 +22,9 @@ func _player_enter(body):
 	if is_locked:
 		return
 		
-	var player: Player
+	var player = body.get_parent() as Player
 	
-	if !(body.get_parent() is Player):
-		return
-	else:
-		player = body.get_parent()
+	if player == null: return
 		
 	var contains_key = false
 		
@@ -40,15 +38,12 @@ func _player_enter(body):
 		if i is Area2D:
 			i.set_deferred("monitoring", false)	
 			
-	print(Globals.current_room.is_clean())
 	
 	emit_signal("player_in", body, goTo)
 	
-	print(Globals.is_clean_room())
-		
-		
 func turn_light(turn: bool):
 	light.visible = turn
+	if door_sprite != null:
+		door_sprite.visible = turn
 		
-	
 signal player_in(player, goTo)

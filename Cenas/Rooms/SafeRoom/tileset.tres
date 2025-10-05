@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://7p5286wn2dk0" path="res://Cenas/Rooms/SafeRoom/tileset.png" id="1"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3rsoy"]
-polygon = PackedVector2Array(-4.09756, 8, -4.21218, -4.47006, 8, -4.47006, 8, -8, -8, -8, -8, 8)
+polygon = PackedVector2Array(-6.56484, 8, -6.38498, -4.94612, 8, -4.47006, 8, -8, -8, -8, -8, 8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_606kv"]
 polygon = PackedVector2Array(8, -4.29814, 8, -3.03735, 3.86833, -3.15197, 3.75371, -4.24083)
@@ -51,7 +51,7 @@ polygon = PackedVector2Array(-7.19222, -4.18352, 5.98874, -4.18352, 5.98874, -3.
 polygon = PackedVector2Array(-6.20513, -8, 5.48569, -8, 5.66555, -0.269788, -5.48569, -0.269788)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gtlwb"]
-polygon = PackedVector2Array(-4.26948, 8, -4.21218, -8, -8, -8, -8, 8)
+polygon = PackedVector2Array(-6.56484, 8, -6.38498, -8, -8, -8, -8, 8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_tdlch"]
 polygon = PackedVector2Array(-4.92399, 8, -4.92399, -0.964493, 8, -1.06602, 8, -0.152288, -4.11178, -0.0507622, -4.01026, 8)
@@ -87,7 +87,7 @@ polygon = PackedVector2Array(-8, -4.82246, 8, -4.82246, 8, -5.93924, -8, -5.9392
 polygon = PackedVector2Array(-8, -5.04315, 1.91984, -4.98584, 1.86253, -3.95429, -8, -3.95429)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vuo58"]
-polygon = PackedVector2Array(4.04025, -8, 3.98294, 8, 8, 8, 8, -8)
+polygon = PackedVector2Array(7.30684, -8, 7.42145, 8, 8, 8, 8, -8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fxfkk"]
 polygon = PackedVector2Array(-4.92399, -8, -5.12704, 8, -4.11178, 8, -4.11178, -8)
@@ -117,11 +117,11 @@ texture = ExtResource("1")
 2:0/0 = 0
 2:0/0/z_index = 1
 2:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_ljcwb")
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -4.22668, -8, -4.40654, 8, -8, 8)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -5.18642, -8, -4.40654, 8, -8, 8)
 3:0/0 = 0
 3:0/0/z_index = 1
 3:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_gtlwb")
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -4.40654, -8, -4.5864, 8, -8, 8)
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -5.0718, -8, -5.01449, 8, -8, 8)
 4:0/0 = 0
 4:0/0/z_index = 1
 4:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_yh88f")

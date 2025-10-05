@@ -16,7 +16,6 @@ func _ready() -> void:
 	anim.show()
 	
 	damage = 5
-	speed = 180
 	life = 5
 		
 	super._ready()
@@ -48,7 +47,6 @@ func animation_logic():
 	
 	if dir_anim.y < 0:
 		play += "_back"
-		
 		
 	if play.contains("back"):
 		if (animation_type == 2 || animation_type == 4) and play.contains("back"):
@@ -85,6 +83,7 @@ func death_animation():
 	
 	anim.sprite_frames.set_animation_loop(play, false)
 	anim.play(play)
-	
+
 	return anim.animation_finished
+		
 	

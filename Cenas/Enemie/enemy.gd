@@ -2,7 +2,7 @@ extends Character
 
 class_name Enemy
 
-@export var speed = 20 #velocidade de movimentação
+@export var speed = 200 #velocidade de movimentação
 @export var damage = 1 #dano que o inimigo da
 
 @export var body: CharacterBody2D #Corpo do inimigo
@@ -41,13 +41,10 @@ func _ready() -> void:
 	if bar != null:
 		bar.max_value = life
 		bar.value = life
-		
+				
 func _process(_delta: float) -> void:
 	update_bar()
-
-	if life <= 0 and is_active:
-		die()
-
+	
 func update_bar():
 	if bar == null:
 		return
@@ -83,19 +80,22 @@ func knockback_logic():
 func die():
 	
 	if is_dead: return
-	
+		
 	is_dead = true
-
+	
 	drop_logic()	
 	
 	set_physics_process(false)
 	set_process(false)
+	
 	body.collision_layer = 0
 	body.collision_mask = 0
 	
 	enemy_die.emit(self)
+	
 	await death_animation()
 	queue_free()
+	
 
 func drop_logic():
 	

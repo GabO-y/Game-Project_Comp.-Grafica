@@ -6,9 +6,10 @@ class_name Room
 @export var finish = false
 @export var spaweners: Array[Spawn]
 @export var spread: bool = false
+@export var doors: Array[Door]
+@export var camera: Camera2D
 
 var spread_one = false
-var doors: Array[Door]
 var total_enemies: int = 0
 var already_drop_key = false
 
@@ -16,23 +17,25 @@ func _ready() -> void:
 	
 	for child in get_children():
 		
-		if child is Spawn:
-			if spaweners.find(child) == -1:
-				spaweners.append(child)
+		if child is Camera2D:
+			camera = child
+		
+		if child.name == "Spawners":
+			for spawn in child.get_children():
+				spaweners.append(spawn)
 			
-		if child is Door:
-			doors.append(child)
+		if child.name == "Doors":
+			for door in child.get_children():
+				if door is Door:
+					print("b")
+					doors.append(door)
 			
 	clear.connect(_clear_effects)
-	
-	print(name, " ", spaweners.size())			
-			
+					
 func _process(delta: float) -> void:
 	if !finish:
-		if is_clean():
-			finish = true
-			clear.emit()
-		
+		is_clean()
+					
 func calculate_total_enemies() -> int:	
 	total_enemies = 0
 
@@ -42,10 +45,15 @@ func calculate_total_enemies() -> int:
 	return total_enemies
 
 func is_clean() -> bool:
+	
+	if finish: return true
+	
 	for spawn in spaweners:
 		if spawn is Spawn:			
 			if !spawn.is_clean(): return false
 			
+	finish = true
+	clear.emit()
 	return true
 	
 func desable():
@@ -59,16 +67,23 @@ func switch_process(mode: bool):
 	if mode: show()
 	else: hide()
 	
+	camera.enabled = mode
 	spread = mode
 	
-	for item in get_children():
-		if item is Door:
-			item.area.set_deferred("monitoring", mode)
-		if item is TileMapLayer:
-			item.collision_enabled = mode
-		if item is Spawn:
-			item.switch(mode)
+	for door in doors:
+		if door is Door:
+			door.set_process(mode)
+			door.area.set_deferred("monitoring", mode)
 			
+	for spawn in spaweners:
+		if spawn is Spawn:
+			spawn.switch(mode)
+	
+	for layers in get_children():
+		if layers.name == "Layers":
+			for layer in layers.get_children():
+				(layer as TileMapLayer).collision_enabled = mode
+						
 func _items_go_player():
 	for item in get_children():
 		if item is Item:
@@ -81,16 +96,13 @@ func _update_doors_light():
 func _clear_effects():
 	_items_go_player()
 	_update_doors_light()
-		
-func _check_clear(_ene: Enemy):
-	
-	print("quarto checado")
-	
-	if is_clean():
-		print("is clear")
-		clear.emit()
-	else:
-		print("nao limpo")
 
+func get_door(door_name: String) -> Door:
+	for door in doors:
+		print(door_name.to_lower(), " | ", door.name.to_lower())
+		if door is Door and door.name.to_lower() == door_name.to_lower():
+			return door
+	print("nao achou")
+	return null
 	
 signal clear

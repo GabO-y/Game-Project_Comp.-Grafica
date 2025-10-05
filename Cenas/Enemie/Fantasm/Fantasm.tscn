@@ -256,7 +256,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a7j3t")
 }],
-"loop": true,
+"loop": false,
 "name": &"die_left",
 "speed": 7.0
 }, {
@@ -276,7 +276,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tidjk")
 }],
-"loop": true,
+"loop": false,
 "name": &"die_right",
 "speed": 5.0
 }, {
@@ -488,6 +488,7 @@ animations = [{
 [node name="Fantasm" type="Node2D" node_paths=PackedStringArray("body", "anim")]
 position = Vector2(85, 50)
 script = ExtResource("1_fuhhv")
+speed = 100
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animated1")
 
@@ -512,10 +513,9 @@ theme_override_colors/font_outline_color = Color(0, 1, 0, 1)
 value = 100.0
 show_percentage = false
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+
 [node name="Animated1" type="AnimatedSprite2D" parent="CharacterBody2D"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
 animation = &"die_left"
-frame_progress = 0.0600413
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]

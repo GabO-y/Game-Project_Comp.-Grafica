@@ -5,3 +5,4 @@
 [node name="Enemy" type="Node2D"]
 z_index = 5
 script = ExtResource("1_c8q0v")
+speed = 10

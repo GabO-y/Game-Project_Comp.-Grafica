@@ -5,26 +5,22 @@ var rooms = []
 func _ready() -> void:		
 	
 	for room in get_tree().get_nodes_in_group("rooms"):
-		print(room.name)
 		room.desable()
 		for door in room.doors:
 			door.player_in.connect(_teleport)
 			
 	Globals.generate_new_key.connect(_unlock_doors)
-	
 	changed_room.connect(Globals.change_room)
 
 func _teleport(player, goTo):
-
-	Globals.desable_room()
-	Globals.current_room = goTo.get_parent()
 	
+	Globals.desable_room()	
+	Globals.current_room = goTo[0]
 	Globals.enable_room()
 	
-	player.global_position = goTo.area.global_position
+	player.global_position = goTo[1]
 	
 	Globals.can_teleport = false
-	
 	await get_tree().create_timer(0.2).timeout
 	Globals.can_teleport = true
 	
@@ -43,17 +39,17 @@ func match_doors(r_current: String, r_target: String):
 	
 	for room in get_tree().get_nodes_in_group("rooms"):
 		
+		var result: Door
+		
 		if room.name.to_lower() == r_current:
-			for i in room.get_children():
-				if i is Door:
-					if i.name.to_lower() == d_current:
-						door_current = i
-
+			result = room.get_door(d_current)
+			if result != null:
+				door_current = result
 		if room.name.to_lower() == r_target:
-			for i in room.get_children():
-				if i is Door:
-					if i.name.to_lower() == d_target:
-						door_target = i
+			result = room.get_door(d_target)
+			if result != null:
+				door_target = result
+			
 	
 	if door_current == null:
 		print(d_current, " nao encontrado")
@@ -62,8 +58,18 @@ func match_doors(r_current: String, r_target: String):
 		print(d_target, " nao encontado")
 		return
 
-	door_current.goTo = door_target
-	door_target.goTo = door_current
+	print(door_current)
+	print(door_target)
+
+	door_current.goTo = [
+		door_target.get_parent().get_parent(), #
+		door_target.area.global_position # area de teleport
+		]
+		
+	door_target.goTo = [
+		door_current.get_parent().get_parent(),
+		door_current.area.global_position
+		]
 	
 func is_clean_room() -> bool:
 	return Globals.current_room.is_clean()

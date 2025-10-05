@@ -65,6 +65,9 @@ func spawanEmenie() -> Enemy:
 	ene.global_position = point
 	ene.position_target = point
 	
+	ene.enemy_die.connect(Globals.current_room.is_clean)
+	ene.enemy_die.connect(_free_enemy)
+	
 	add_child(ene)
 	
 	ene.set_active(is_active)
@@ -91,7 +94,6 @@ func switch(mode: bool):
 	is_active = mode
 				
 func is_clean() -> bool:
-
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
 	return true
@@ -100,7 +102,6 @@ func _free_enemy(ene: Enemy):
 	enemies.erase(ene)
 	ene.is_active = false
 	ene.queue_free()
-	print(enemies.size())
 
 				
 	

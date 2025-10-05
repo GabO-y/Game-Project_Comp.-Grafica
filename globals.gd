@@ -58,7 +58,6 @@ func generate_random_key():
 			if door.name != "ParentsRoom" and door.is_locked:
 				possibles_keys.append(current_room.name + "," + door.name)
 			
-			
 	var key: Key = null
 	
 	if not possibles_keys.is_empty():
@@ -83,15 +82,9 @@ func update_room_light():
 	current_room._update_doors_light()
 	
 func change_room():
-	
 	current_room._update_doors_light()
-		
 	if current_room.finish: return
-	
-	for spawn in current_room.spaweners:
-		for ene in spawn.enemies:
-			ene.enemy_die.connect(current_room._check_clear)
-			ene.enemy_die.connect(spawn._free_enemy)
+
 
 func set_initial_room(name: String):
 	for room in get_tree().get_nodes_in_group("rooms"):
