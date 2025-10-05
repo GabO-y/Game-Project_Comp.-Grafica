@@ -1,6 +1,13 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bgrmo3qk1vjs1"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bgrmo3qk1vjs1"]
 
 [ext_resource type="Texture2D" uid="uid://5ipjp2yjnstl" path="res://Cenas/Rooms/HallWay1/tileset.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dh4hfx1aks8nm" path="res://Cenas/Rooms/HallWay1/doors_test.png" id="2_svs6t"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_svs6t"]
+polygon = PackedVector2Array(-7.02029, 0.171926, -7.02029, 5.90278, 8, 6.0747, 8, 7.10626, -8, 6.99164, -8, 0.114617)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_yq1jl"]
+polygon = PackedVector2Array(-8, 6.01739, 7.0776, 5.96009, 7.02029, -0.0573082, 8, -0.0573082, 8, 7.04895, -8, 7.10626)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_crvQsrYkPRW"]
 texture = ExtResource("1")
@@ -31,7 +38,11 @@ texture = ExtResource("1")
 2:1/0/z_index = 1
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.22668, -8, 8, -8, 8, 8, 4.5864, 8)
 3:1/0 = 0
+3:1/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_svs6t")
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.01525, 8, 1.01525, 8, 8, -8, 8)
 4:1/0 = 0
+4:1/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_yq1jl")
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.01525, 8, 1.01525, 8, 8, -8, 8)
 5:1/0 = 0
 6:1/0 = 0
 7:1/0 = 0
@@ -46,11 +57,13 @@ texture = ExtResource("1")
 0:3/0 = 0
 1:3/0 = 0
 2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.12704, -6.90374, 4.92399, -7.00526, 4.92399, -6.09153, -5.12704, -5.99001)
 3:3/0 = 0
 4:3/0 = 0
 5:3/0 = 0
 6:3/0 = 0
 7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.02029, -1.89118, 6.90568, -1.94849, 6.90568, -0.916936, -7.13491, -0.916936)
 0:4/0 = 0
 1:4/0 = 0
 2:4/0 = 0
@@ -65,7 +78,56 @@ texture = ExtResource("1")
 1:5/0/z_index = 1
 1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -4.22668, 8, -4.22668, 8, 8, -8, 8)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_svs6t"]
+texture = ExtResource("2_svs6t")
+0:0/0 = 0
+0:0/0/z_index = 1
+1:0/0 = 0
+1:0/0/z_index = 1
+2:0/0 = 0
+2:0/0/z_index = 1
+3:0/0 = 0
+3:0/0/z_index = 1
+4:0/0 = 0
+4:0/0/z_index = 1
+5:0/0 = 0
+5:0/0/z_index = 1
+6:0/0 = 0
+6:0/0/z_index = 1
+8:0/0 = 0
+8:0/0/z_index = 1
+0:1/0 = 0
+0:1/0/z_index = 1
+5:1/0 = 0
+5:1/0/z_index = 1
+6:1/0 = 0
+6:1/0/z_index = 1
+8:1/0 = 0
+8:1/0/z_index = 1
+0:2/0 = 0
+0:2/0/z_index = 1
+1:2/0 = 0
+1:2/0/z_index = 1
+2:2/0 = 0
+2:2/0/z_index = 1
+3:2/0 = 0
+3:2/0/z_index = 1
+4:2/0 = 0
+4:2/0/z_index = 1
+5:2/0 = 0
+5:2/0/z_index = 1
+6:2/0 = 0
+6:2/0/z_index = 1
+7:2/0 = 0
+7:2/0/z_index = 1
+8:2/0 = 0
+8:2/0/z_index = 1
+7:0/0 = 0
+7:0/0/z_index = 1
+
 [resource]
-physics_layer_0/collision_layer = 3
+occlusion_layer_0/light_mask = 1
+physics_layer_0/collision_layer = 129
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_crvQsrYkPRW")
+sources/1 = SubResource("TileSetAtlasSource_svs6t")

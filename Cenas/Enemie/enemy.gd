@@ -100,12 +100,12 @@ func die():
 func drop_logic():
 	
 	if !is_active: return
-	
+		
 	for drop in drop_table:
 		if randf() >= drop["chance"]:
 			var item = drop["item"]
-			#item.global_position = global_position
 			#Globals.current_scene.add_child(item)
+			#item.global_position = global_position
 			
 	var key = Globals.drop_key()
 	

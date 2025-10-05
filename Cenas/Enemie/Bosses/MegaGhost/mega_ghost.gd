@@ -4,6 +4,7 @@ class_name MegaGhost
 
 @export var attack_area: Area2D
 @export var attack_collision: CollisionPolygon2D
+@export var form_attack: Node2D
 @export var timer: Timer
 @export var is_stop: bool
 
@@ -11,6 +12,7 @@ class_name MegaGhost
 var on_special_atack = false
 var start_special = false
 var dir_special_attack: Vector2
+var speed_special_attack: int = 200
 
 #para verificar se esta na area do ataque 1
 var is_player_on_attack_area_1 = false
@@ -58,13 +60,17 @@ func slash(player: Player):
 		
 	var dir = body.global_position.direction_to(player.player_body.global_position).normalized()
 	attack_collision.rotation = (dir.angle() - PI/1.5)
+	form_attack.rotation = (dir.angle() - PI/1.5)
 	
 	if not finish_attack: return
 	finish_attack = false
 	
 	await get_tree().create_timer(1.5).timeout
+	form_attack.visible = true
 	finish_attack = true
 	attack()
+	await get_tree().create_timer(0.1).timeout
+	form_attack.visible = false
 			
 func _on_body_entered(body):
 	if body.get_parent() is not Player: return
@@ -114,7 +120,7 @@ func move_special():
 	
 	if is_stop: return
 	
-	body.velocity = dir_special_attack * 100
+	body.velocity = dir_special_attack * speed_special_attack
 	body.move_and_slide()
 	
 func _on_timer_timeout() -> void:

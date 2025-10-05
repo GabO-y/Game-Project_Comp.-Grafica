@@ -5,6 +5,7 @@ extends Room
 @export var left_coll: Area2D
 @export var right_coll: Area2D
 @export var inside_area: Area2D
+@export var segs_node: Node2D
 
 @export var boss: MegaGhost
 var is_attack_running_fantasm = false
@@ -15,17 +16,14 @@ var check_collider = false
 
 func _ready():
 	
-	segs.append(Line.create_line("up",-60,-70,330,-70))
-	segs.append(Line.create_line("down",-60,250,330,250))
-	segs.append(Line.create_line("left", -175, 16,-175, 175))
-	segs.append(Line.create_line("right", 420,16,420,175))
-
+	setup()
+	
 	out_of_camera.connect(start_special_attack)
 	start_attacks_fanstams_running.connect(running_fantasms)
 	finish_running_fantasm.connect(start_entrace_boss)
 	
 func _physics_process(delta: float) -> void:
-	
+
 	for attr in fantasm_on_attack:
 		var fan = attr["fan"] as Enemy
 		var dir = attr["dir"] as Vector2
@@ -67,11 +65,11 @@ func get_randm_point_segment(line: Line, top_down: bool):
 	else:
 		y = limit[1] + (int(randf() * limit[0]))
 		x = x1 + (y - y1)/m
-	
-		
+			
 	return Vector2(x, y)
 
 func start_special_attack(thing):
+	#if thing.get_parent() != boss: return
 	start_running_fantasm(thing)
 
 func start_running_fantasm(thing):
@@ -99,7 +97,7 @@ func start_running_fantasm(thing):
 		call_deferred("add_child", fantasm)
 						
 		fantasm.name = seg.name + str(randf())
-		
+				
 		var point = get_randm_point_segment(
 				seg,
 				fantasm.name.contains("up") or fantasm.name.contains("down")
@@ -116,6 +114,7 @@ func start_running_fantasm(thing):
 				fantasm.add_to_group("attack_queue")
 				start_attacks_fanstams_running.emit(fantasm)
 				fantasm.enemy_die.connect(check_end_running_fantasm)
+				fantasm.speed = 300
 		)
 	
 func running_fantasms(fan: Enemy):
@@ -142,7 +141,7 @@ func start_entrace_boss():
 	boss.body.collision_layer = inside_area.collision_layer
 	boss.body.collision_mask = inside_area.collision_mask
 	
-	var ran_dir = ["up", "down", "right", "left"].pick_random()
+	var ran_dir = segs.pick_random().name
 	
 	var x: float
 	var y: float
@@ -150,26 +149,20 @@ func start_entrace_boss():
 	for line in segs:
 		if line.name == ran_dir:
 			match ran_dir:
-				"up": y = line.y1
-				"down": y = line.y1 + 50
-				"right": x = line.x1 + 100
+				"up": y = line.y2 + 100
+				"down": y = line.y2
+				"right": x = line.x1 
 				"left": x = line.x1 
 			break
 			
 	match ran_dir:
-		"down", "up": x = Globals.player.player_body.global_position[0]
-		"left", "right": y =  Globals.player.player_body.global_position[1]
+		"down", "up": x = Globals.player.player_body.global_position.x
+		"left", "right": y =  Globals.player.player_body.global_position.y
 		
-	if y > 190:
-		y -= 20
-	if y < 60:
-		y += 17
-	if x < 25:
-		x += 20
-	if x > 430:
-		x -= 20
+#	Necessario corrigir a posição caso o player esteja nos limites do mapa
 		
 	boss.body.global_position = Vector2(x, y)
+	
 	var dir: Vector2
 	
 	match ran_dir:
@@ -180,7 +173,6 @@ func start_entrace_boss():
 					
 	await get_tree().create_timer(1).timeout
 	fantasm_on_attack.append({"fan": boss, "dir": dir})
-	
 	
 func check_end_running_fantasm(ene):
 	if fantasm_on_attack.is_empty():
@@ -194,6 +186,25 @@ func refrash_setup():
 	is_attack_running_fantasm = false
 	fantasm_on_attack.clear()
 	
+func setup():
+	
+	print("setou")
+	
+	segs.clear()
+	
+	for seg in segs_node.get_children():
+		
+		seg = seg as Line2D
+					
+		var x1 = seg.points[0][0]
+		var y1 = seg.points[0][1]
+		var x2 = seg.points[1][0]
+		var y2 = seg.points[1][1]
+				
+		var seg_name = seg.name.replace("Line", "")
+		segs.append(Line.create_line(seg_name, x1,y1,x2,y2))
+
+	
 class Line:
 	var x1: float
 	var y1: float
@@ -201,12 +212,13 @@ class Line:
 	var y2: float
 	var name: String
 	
-	static func create_line(name, x1, y1, x2, y2) -> Line:
+	static func create_line(line_name, x1, y1, x2, y2) -> Line:
+		
 		var line = Line.new()
-		line.name = name
+		line.name = line_name.to_lower()
 		line.x1 = x1
-		line.x2 = x2
 		line.y1 = y1
+		line.x2 = x2
 		line.y2 = y2
 		return line
 		
@@ -215,7 +227,10 @@ class Line:
 			return [max(y1, y2), min(y1, y2)]
 		if name.contains("up") or name.contains("down"):
 			return [max(x1, x2), min(x1, x2)]
-
+	
+	func _to_string() -> String:
+		return str(self.name, "\n\tp1: (", x1, ", ", y1, ")\n\tp2: (", x2, ", ", y2, ")\n")
+		
 signal start_attacks_fanstams_running	
 
 signal finish_running_fantasm

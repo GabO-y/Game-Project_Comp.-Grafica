@@ -65,7 +65,7 @@ func spawanEmenie() -> Enemy:
 	ene.global_position = point
 	ene.position_target = point
 	
-	ene.enemy_die.connect(Globals.current_room.is_clean)
+	ene.enemy_die.connect(Globals.current_room._check_clear_by_signal)
 	ene.enemy_die.connect(_free_enemy)
 	
 	add_child(ene)

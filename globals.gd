@@ -33,7 +33,7 @@ func is_clean_room():
 	return current_room.is_clean()
 	
 func drop_key():
-	
+		
 	if current_room.already_drop_key: return
 	
 	var is_for_drop = false
@@ -42,10 +42,12 @@ func drop_key():
 		is_for_drop = true
 	elif randf() >= 0.5:
 		is_for_drop = true
-		
+
 	if is_for_drop: 
 		current_room.already_drop_key = true
-		return generate_random_key()
+		var new_key = generate_random_key()
+		return new_key
+		
 		
 	return null
 
@@ -53,7 +55,7 @@ func generate_random_key():
 	
 	var possibles_keys = []
 	
-	for door in current_room.get_children():
+	for door in current_room.doors:
 		if door is Door:
 			if door.name != "ParentsRoom" and door.is_locked:
 				possibles_keys.append(current_room.name + "," + door.name)
@@ -64,9 +66,7 @@ func generate_random_key():
 		key = Key.generate_key(possibles_keys.pick_random())
 
 	return key
-	
-signal generate_new_key(key: Key)
-	
+		
 func finish_get_animation():
 	
 	get_tree().paused = false
@@ -85,10 +85,13 @@ func change_room():
 	current_room._update_doors_light()
 	if current_room.finish: return
 
-
 func set_initial_room(name: String):
 	for room in get_tree().get_nodes_in_group("rooms"):
 		if room.name == name:
 			current_room = room
 			break
 	
+#Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
+#Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
+#chave for finalizada 
+signal generate_new_key(key: Key)

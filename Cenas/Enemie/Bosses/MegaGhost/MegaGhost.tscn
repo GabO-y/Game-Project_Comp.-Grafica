@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bts2u7o7pqcl6"]
+[gd_scene load_steps=9 format=3 uid="uid://bts2u7o7pqcl6"]
 
 [ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
 
@@ -18,10 +18,21 @@ radius = 22.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2h161"]
 radius = 57.0088
 
-[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "timer", "body", "anim")]
+[sub_resource type="Gradient" id="Gradient_xlh7a"]
+offsets = PackedFloat32Array(0, 0.955556, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.027451, 0.00392157, 0.470588, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2h161"]
+gradient = SubResource("Gradient_xlh7a")
+fill = 1
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "form_attack", "timer", "body", "anim")]
 script = ExtResource("1_xlh7a")
 attack_area = NodePath("CharacterBody2D/AtackArea")
 attack_collision = NodePath("CharacterBody2D/AtackArea/Attack_collisiion")
+form_attack = NodePath("CharacterBody2D/AtackArea/PointAttack")
 timer = NodePath("Timer")
 speed = 50
 damage = 50
@@ -50,8 +61,16 @@ debug_color = Color(0.992736, 0, 0.247824, 0.42)
 modulate = Color(0, 1, 1, 1)
 polygon = PackedVector2Array(-57, 0, -55, 18, -44, 38, -26, 51, 0, 57, 0, 0)
 
+[node name="PointAttack" type="Node2D" parent="CharacterBody2D/AtackArea"]
+visible = false
+
+[node name="FormAttack" type="Sprite2D" parent="CharacterBody2D/AtackArea/PointAttack"]
+position = Vector2(-29, 29)
+scale = Vector2(0.90625, 0.90625)
+texture = SubResource("GradientTexture2D_2h161")
+
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 0.01
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

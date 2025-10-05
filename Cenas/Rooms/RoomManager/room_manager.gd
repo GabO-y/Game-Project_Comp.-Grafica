@@ -1,14 +1,18 @@
 extends Node2D
 
-var rooms = []
+var rooms: Array[Room]
+@export var roomsNode: Node2D
 
 func _ready() -> void:		
 	
-	for room in get_tree().get_nodes_in_group("rooms"):
-		room.desable()
-		for door in room.doors:
-			door.player_in.connect(_teleport)
-			
+	for room in roomsNode.get_children():
+		if room is Room:
+			room.add_to_group("rooms")
+			room.desable()
+			rooms.append(room)
+			for door in room.doors:
+				door.player_in.connect(_teleport)
+
 	Globals.generate_new_key.connect(_unlock_doors)
 	changed_room.connect(Globals.change_room)
 
@@ -37,7 +41,7 @@ func match_doors(r_current: String, r_target: String):
 	var d_current = r_target.to_lower()
 	var d_target = r_current.to_lower()
 	
-	for room in get_tree().get_nodes_in_group("rooms"):
+	for room in rooms:
 		
 		var result: Door
 		
@@ -52,14 +56,11 @@ func match_doors(r_current: String, r_target: String):
 			
 	
 	if door_current == null:
-		print(d_current, " nao encontrado")
+		print("porta: ", d_current, " nao encontrado, do quarto: ", r_current)
 		return
 	if door_target == null:
-		print(d_target, " nao encontado")
+		print("porta: ", d_target, " nao encontado, do quarto: ", r_target)
 		return
-
-	print(door_current)
-	print(door_target)
 
 	door_current.goTo = [
 		door_target.get_parent().get_parent(), #
@@ -73,25 +74,26 @@ func match_doors(r_current: String, r_target: String):
 	
 func is_clean_room() -> bool:
 	return Globals.current_room.is_clean()
-				
-func showInfo():
-	for i in get_children():
-		if i is Room:
-			i._doors()
-			
+
 func _unlock_doors(key: Key):
 	
-	for room in get_children():
-		
+	var door_1: Door
+	var door_2: Door
+	
+	for room in rooms:
 		if room.name == key.what_open[0]:
-			for door in room.get_children():
-				if door.name == key.what_open[1]:
-					door.is_locked = false
-					print("room: ", room.name, "| ", door.name, " unlocked: ", door.is_locked)
+			door_1 = room.get_door(key.what_open[1])
 		if room.name == key.what_open[1]:
-			for door in room.get_children():
-				if door.name == key.what_open[0]:
-					door.is_locked = false	
-					print("room: ", room.name, "| ", door.name, " unlocked: ", door.is_locked)
+			door_2 = room.get_door(key.what_open[0])
+
+					
+	if door_1 != null and door_2 != null:
+		door_1.is_locked = false
+		door_2.is_locked = false
+	else:
+		if door_1 == null:
+			print("porta: ", key.what_open[1], " nao encontrada no quarto: ", key.what_open[0])
+		if door_2 == null:
+			print("porta: ", key.what_open[0], " nao encontrada no quarto: ", key.what_open[1])
 
 signal changed_room

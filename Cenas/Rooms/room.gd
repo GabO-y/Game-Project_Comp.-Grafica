@@ -27,7 +27,6 @@ func _ready() -> void:
 		if child.name == "Doors":
 			for door in child.get_children():
 				if door is Door:
-					print("b")
 					doors.append(door)
 			
 	clear.connect(_clear_effects)
@@ -55,6 +54,9 @@ func is_clean() -> bool:
 	finish = true
 	clear.emit()
 	return true
+
+func _check_clear_by_signal(ene):
+	return is_clean()
 	
 func desable():
 	switch_process(false)
@@ -70,6 +72,9 @@ func switch_process(mode: bool):
 	camera.enabled = mode
 	spread = mode
 	
+	set_process(mode)
+	set_physics_process(mode)
+	
 	for door in doors:
 		if door is Door:
 			door.set_process(mode)
@@ -80,6 +85,8 @@ func switch_process(mode: bool):
 			spawn.switch(mode)
 	
 	for layers in get_children():
+		if layers is TileMapLayer:
+			layers.collision_enabled = mode
 		if layers.name == "Layers":
 			for layer in layers.get_children():
 				(layer as TileMapLayer).collision_enabled = mode
@@ -99,10 +106,11 @@ func _clear_effects():
 
 func get_door(door_name: String) -> Door:
 	for door in doors:
-		print(door_name.to_lower(), " | ", door.name.to_lower())
 		if door is Door and door.name.to_lower() == door_name.to_lower():
 			return door
-	print("nao achou")
 	return null
 	
+	
+func setup():
+	pass
 signal clear

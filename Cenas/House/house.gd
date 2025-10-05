@@ -9,11 +9,13 @@ extends Node2D
 func _ready() -> void:
 			
 	Globals.player = player
-	Globals.set_initial_room("SafeRoom")
+	Globals.set_initial_room("MegaGhostRoom")
+	Globals.current_room.setup()
 		
 	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
+	room_manager.match_doors("Hallway1", "MiniRoom")
 	
 	player.player_die.connect(transaction_scene._finish_round)
 	

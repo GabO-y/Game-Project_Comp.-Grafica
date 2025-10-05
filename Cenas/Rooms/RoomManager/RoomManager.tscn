@@ -1,18 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0ntae4uqgnun"]
+[gd_scene load_steps=6 format=3 uid="uid://b0ntae4uqgnun"]
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
 [ext_resource type="PackedScene" uid="uid://dbwpr3aghpuba" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="3_ufchu"]
+[ext_resource type="PackedScene" uid="uid://b2celb3sqinke" path="res://Cenas/Rooms/MiniRoom/MiniRoom.tscn" id="4_ctr5e"]
+[ext_resource type="PackedScene" uid="uid://dh8cy7t2ceti5" path="res://Cenas/Rooms/MegaGhostRoom/MegaGhostRoom.tscn" id="5_0aayb"]
 
-[node name="RoomManager" type="Node2D"]
+[node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode")]
 script = ExtResource("1_n2tco")
+roomsNode = NodePath("Rooms")
+metadata/_edit_vertical_guides_ = [-149.0, -529.0]
+metadata/_edit_horizontal_guides_ = [135.0]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.211543, 0.188376, 0.598353, 1)
 
 [node name="Rooms" type="Node2D" parent="."]
 
-[node name="Hallway1" parent="Rooms" groups=["rooms"] instance=ExtResource("3_ufchu")]
+[node name="Hallway1" parent="Rooms" instance=ExtResource("3_ufchu")]
+position = Vector2(-54, -344)
 
-[node name="SafeRoom" parent="Rooms" groups=["rooms"] instance=ExtResource("2_rqem0")]
-position = Vector2(1, 2)
+[node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
+position = Vector2(-61, -101)
+
+[node name="MiniRoom" parent="Rooms" instance=ExtResource("4_ctr5e")]
+position = Vector2(-690, -392)
+
+[node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]
+position = Vector2(22, -81)

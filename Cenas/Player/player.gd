@@ -218,9 +218,11 @@ func collision(mode: bool):
 	if mode:
 		player_body.collision_layer = 1
 		player_body.collision_mask = 1
-	else:
-		player_body.collision_layer = 2
-		player_body.collision_mask = 2
+	else: 
+		#player_body.collision_layer = 0 << 0
+		#player_body.collision_mask =  0 << 0
+		player_body.collision_layer = 1 << 7
+		player_body.collision_mask = 1 << 7
 	
 func take_damage(damage: int):
 	life -= damage;
@@ -228,7 +230,6 @@ func take_damage(damage: int):
 	print(str(int(life + damage)), " -> ", life)
 	
 func take_knockback(direction: Vector2, force: float):
-	
 	player_body.velocity -= direction.normalized() * force
 	player_body.move_and_slide()
 	

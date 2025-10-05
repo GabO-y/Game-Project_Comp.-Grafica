@@ -12,8 +12,6 @@ script = ExtResource("1_rmjq6")
 position = Vector2(0, -2)
 
 [node name="Player" parent="." instance=ExtResource("2_iqu7b")]
-position = Vector2(50, 110)
 
 [node name="TransitionScene" parent="." instance=ExtResource("4_rmjq6")]
-visible = false
-position = Vector2(-91, -102)
+position = Vector2(-251, -171)

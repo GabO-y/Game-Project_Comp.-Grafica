@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cettUMO9NQn"]
+[gd_scene load_steps=2 format=3 uid="uid://bdyl2iui4g7u"]
 
-[ext_resource type="TileSet" id="tileset_id" path="tileset.tres"]
+[ext_resource type="TileSet" uid="uid://bgrmo3qk1vjs1" path="res://Cenas/Rooms/HallWay1/tileset.tres" id="tileset_id"]
 
 [node name="porta_2_0" type="TileMapLayer"]
-collision_enabled = false
-tile_set = ExtResource("tileset_id")
 tile_map_data = PackedByteArray(0, 0, 14, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 15, 0, 8, 0, 0, 0, 2, 0, 0, 0, 0, 0)
+tile_set = ExtResource("tileset_id")
+collision_enabled = false
