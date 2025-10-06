@@ -8,13 +8,23 @@ var die = false
 var already_keys = []
 var is_get_animation = false
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
 func _process(delta: float) -> void:
+	
+	if die:
+		if Input.is_key_label_pressed(KEY_SPACE):
+			get_tree().reload_current_scene()
+			get_tree().paused = false
+			die = false
+		
 		
 	if is_get_animation:
 		if Input.is_anything_pressed():
 			finish_get_animation()
 		
-	process_mode = Node.PROCESS_MODE_ALWAYS
 		
 func desable_room():
 	current_room.desable()

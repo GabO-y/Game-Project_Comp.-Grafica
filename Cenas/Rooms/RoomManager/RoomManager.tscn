@@ -18,13 +18,9 @@ color = Color(0.211543, 0.188376, 0.598353, 1)
 [node name="Rooms" type="Node2D" parent="."]
 
 [node name="Hallway1" parent="Rooms" instance=ExtResource("3_ufchu")]
-position = Vector2(-54, -344)
 
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
-position = Vector2(-61, -101)
 
 [node name="MiniRoom" parent="Rooms" instance=ExtResource("4_ctr5e")]
-position = Vector2(-690, -392)
 
 [node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]
-position = Vector2(22, -81)

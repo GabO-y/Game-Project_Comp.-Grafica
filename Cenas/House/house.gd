@@ -10,8 +10,7 @@ func _ready() -> void:
 			
 	Globals.player = player
 	Globals.set_initial_room("MegaGhostRoom")
-	Globals.current_room.setup()
-		
+			
 	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
@@ -21,8 +20,7 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 
-	#for i in Globals.current_room.doors:
-		#print(i.light.visible)
+	#print(Globals.current_room.is_clean())
 		
 	pass
 

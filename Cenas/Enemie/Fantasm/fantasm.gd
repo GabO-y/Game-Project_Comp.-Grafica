@@ -24,7 +24,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	animation_logic()
-	chase_player()
+	if is_running_attack:
+		running_player()
+	else:
+		chase_player()
 	super._process(delta)
 	
 func animation_logic():
@@ -85,5 +88,9 @@ func death_animation():
 	anim.play(play)
 
 	return anim.animation_finished
+	
+func running_player():
+	pass
+
 		
 	

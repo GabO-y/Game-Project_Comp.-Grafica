@@ -60,7 +60,7 @@ func spawanEmenie() -> Enemy:
 	
 	point = $Area2D.to_local(point)/2
 		
-	var ene = type_enemie.instantiate() as Enemy
+	var ene = type_enemie.instantiate() 
 	
 	ene.global_position = point
 	ene.position_target = point

@@ -19,7 +19,7 @@ var knockback_force: float = 500.0
 var is_dead: bool = false
 var last_position: Vector2
 #exclusivo dos fantasmas
-var running_attack = false
+var is_running_attack = false
 
 var drop_table = [
 	{"item": "Energy", "chance": 0.5},

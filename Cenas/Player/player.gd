@@ -53,12 +53,14 @@ func _on_enemy_entered(body):
 	
 	var ene = body.get_parent() as Enemy
 	
-	if ene == null: return
+	#caso especial de ataque de boss
 	
-	if ene.running_attack:
+	if ene == null: return
+	 
+	if ene.is_running_attack:
 		take_damage(ene.damage)
 		return
-	 
+	
 	enemies_touch[ene] = 0.0
 	
 func _on_key_entered(area):
@@ -88,6 +90,8 @@ func takeDamagePlayerLogic(delta):
 		enemy = enemy as Enemy
 		
 		if !enemy.is_active: return
+	
+		
 		#Enquanto o inimigo encosta no player, ele nao se mexe
 		enemy.atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr
@@ -221,8 +225,8 @@ func collision(mode: bool):
 	else: 
 		#player_body.collision_layer = 0 << 0
 		#player_body.collision_mask =  0 << 0
-		player_body.collision_layer = 1 << 7
-		player_body.collision_mask = 1 << 7
+		player_body.collision_layer = 1 << 2
+		player_body.collision_mask = 1 << 2
 	
 func take_damage(damage: int):
 	life -= damage;

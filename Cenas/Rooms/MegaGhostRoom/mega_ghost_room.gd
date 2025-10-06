@@ -12,7 +12,8 @@ var is_attack_running_fantasm = false
 
 var segs: Array[Line]
 var fantasm_on_attack = []
-var check_collider = false
+var is_last_update_bar = false
+var time_can_go = 3
 
 func _ready():
 	
@@ -27,10 +28,25 @@ func _physics_process(delta: float) -> void:
 	for attr in fantasm_on_attack:
 		var fan = attr["fan"] as Enemy
 		var dir = attr["dir"] as Vector2
+				
+		if attr.has("is_continue_toward") and attr["is_continue_toward"]:
+			dir = attr["last_dir"]
+		else:
+			if fan.body.global_position.distance_to(Globals.player.player_body.global_position) < 40:
+				attr["dir"] = attr["last_dir"]
+				attr["is_continue_toward"] = true
+			else:
+				attr["dir"] = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
+				attr["last_dir"] = attr["dir"]
+		
 		fan.body.velocity = fan.speed * dir
 		fan.body.move_and_slide()
 
-signal out_of_camera
+func _process(delta: float) -> void:
+	if is_last_update_bar:
+		$DamageBar.value -= 0.4
+		if $DamageBar.value <= 0:
+			is_last_update_bar = false
 
 func _on_left_coll_body_entered(area_body: Node2D) -> void:	
 	out_of_camera.emit(area_body.get_parent())
@@ -60,10 +76,10 @@ func get_randm_point_segment(line: Line, top_down: bool):
 	var y: float
 	
 	if top_down:
-		x = limit[1] + int(randf() * limit[0])
+		x = limit["min"] + int(randf() * (limit["max"] * 2))
 		y = (m * (x - 1)) + y1
 	else:
-		y = limit[1] + (int(randf() * limit[0]))
+		y = limit["min"] + int(randf() * (limit["max"] * 2))
 		x = x1 + (y - y1)/m
 			
 	return Vector2(x, y)
@@ -109,32 +125,33 @@ func start_running_fantasm(thing):
 			func():
 				fantasm.body.collision_mask = 1 << 4
 				fantasm.body.collision_layer = 1 << 4
-				fantasm.running_attack = true
+				fantasm.is_running_attack = true
 				
 				fantasm.add_to_group("attack_queue")
 				start_attacks_fanstams_running.emit(fantasm)
 				fantasm.enemy_die.connect(check_end_running_fantasm)
-				fantasm.speed = 300
+				fantasm.speed = 200
 		)
 	
 func running_fantasms(fan: Enemy):
 	
 	fan.body.collision_layer = 2
 	
-	await get_tree().create_timer(3).timeout
-	var dir: Vector2
+	var dir: Vector2 = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
+	
+	#if fan.name.contains("up"):
+		#dir = Vector2.DOWN
+	#if fan.name.contains("down"):
+		#dir = Vector2.UP
+	#if fan.name.contains("left"):
+		#dir = Vector2.RIGHT
+	#if fan.name.contains("right"):
+		#dir = Vector2.LEFT
 		
-	if fan.name.contains("up"):
-		dir = Vector2.DOWN
-	if fan.name.contains("down"):
-		dir = Vector2.UP
-	if fan.name.contains("left"):
-		dir = Vector2.RIGHT
-	if fan.name.contains("right"):
-		dir = Vector2.LEFT
-					
-	fantasm_on_attack.append({"fan": fan, "dir": dir})
-		
+	time_can_go *= 1.1
+	await get_tree().create_timer(time_can_go).timeout
+	fantasm_on_attack.append({"fan": fan, "dir": dir, "is_continue_toward": false})
+	
 func start_entrace_boss():
 	
 	await get_tree().process_frame
@@ -142,6 +159,7 @@ func start_entrace_boss():
 	boss.body.collision_mask = inside_area.collision_mask
 	
 	var ran_dir = segs.pick_random().name
+	ran_dir = "right"
 	
 	var x: float
 	var y: float
@@ -159,8 +177,22 @@ func start_entrace_boss():
 		"down", "up": x = Globals.player.player_body.global_position.x
 		"left", "right": y =  Globals.player.player_body.global_position.y
 		
-#	Necessario corrigir a posição caso o player esteja nos limites do mapa
+	var limit
+	for i in segs:
+		if i.name == ran_dir:
+			limit = i.get_limit()
+				
+	var max_limit = limit["max"] - (limit["max"] * 0.1)
+	var min_limit = limit["min"] - (limit["min"] * 0.1)
 		
+	match ran_dir:
+		"up", "down":
+			if x >= max_limit or x <= min_limit:
+				x *= 0.9
+		"right", "left":
+			if y >= max_limit or  y <= min_limit:
+				y *= 0.8	
+				
 	boss.body.global_position = Vector2(x, y)
 	
 	var dir: Vector2
@@ -203,8 +235,23 @@ func setup():
 				
 		var seg_name = seg.name.replace("Line", "")
 		segs.append(Line.create_line(seg_name, x1,y1,x2,y2))
-
+		
+	for line in segs:
+		print(line)
 	
+func _last_update_damage_bar(ene: Enemy) -> void:
+	$DamageBar/LifeBar.value = 0
+	await get_tree().create_timer(2).timeout
+	is_last_update_bar = true
+	
+signal out_of_camera
+
+signal start_attacks_fanstams_running	
+
+signal finish_running_fantasm
+
+signal check_can_run_ghost(ene: Enemy)
+
 class Line:
 	var x1: float
 	var y1: float
@@ -224,13 +271,9 @@ class Line:
 		
 	func get_limit():
 		if name.contains("left") or name.contains("right"):
-			return [max(y1, y2), min(y1, y2)]
+			return {"max": max(y1, y2), "min": min(y1, y2)}
 		if name.contains("up") or name.contains("down"):
-			return [max(x1, x2), min(x1, x2)]
+			return {"max": max(x1, x2), "min": min(x1, x2)}
 	
 	func _to_string() -> String:
 		return str(self.name, "\n\tp1: (", x1, ", ", y1, ")\n\tp2: (", x2, ", ", y2, ")\n")
-		
-signal start_attacks_fanstams_running	
-
-signal finish_running_fantasm

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bts2u7o7pqcl6"]
+[gd_scene load_steps=10 format=3 uid="uid://bts2u7o7pqcl6"]
 
 [ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
 
@@ -28,12 +28,16 @@ fill = 1
 fill_from = Vector2(1, 0)
 fill_to = Vector2(1, 1)
 
-[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "form_attack", "timer", "body", "anim")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xlh7a"]
+size = Vector2(42, 42)
+
+[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "form_attack", "timer", "timer_damage_bar", "body", "anim")]
 script = ExtResource("1_xlh7a")
 attack_area = NodePath("CharacterBody2D/AtackArea")
 attack_collision = NodePath("CharacterBody2D/AtackArea/Attack_collisiion")
 form_attack = NodePath("CharacterBody2D/AtackArea/PointAttack")
-timer = NodePath("Timer")
+timer = NodePath("SpecialAttackTimer")
+timer_damage_bar = NodePath("CheckBarDamage")
 speed = 50
 damage = 50
 body = NodePath("CharacterBody2D")
@@ -69,8 +73,18 @@ position = Vector2(-29, 29)
 scale = Vector2(0.90625, 0.90625)
 texture = SubResource("GradientTexture2D_2h161")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.01
+[node name="HitAreaRunning" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitAreaRunning"]
+shape = SubResource("RectangleShape2D_xlh7a")
+
+[node name="SpecialAttackTimer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="CheckBarDamage" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="_take_damages" from="." to="." method="_start_timer_damage_bar"]
+[connection signal="body_entered" from="CharacterBody2D/HitAreaRunning" to="." method="_player_enter_while_running"]
+[connection signal="timeout" from="SpecialAttackTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="CheckBarDamage" to="." method="_update_damage_bar"]
