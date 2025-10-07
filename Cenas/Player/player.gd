@@ -22,6 +22,12 @@ var dash_cooldown_timer: float = 0.0
 var can_teleport = true
 var last_direction_right
 
+var is_on_knockback = false
+var knockback_dir: Vector2
+var knockback_force: int
+var knockback_time = 0
+var knockback_duration = 0.5
+
 @export var player_body: CharacterBody2D
 @export var anim: AnimatedSprite2D
 @export var hit_area: Area2D
@@ -54,11 +60,12 @@ func _on_enemy_entered(body):
 	var ene = body.get_parent() as Enemy
 	
 	#caso especial de ataque de boss
-	
 	if ene == null: return
-	 
 	if ene.is_running_attack:
-		take_damage(ene.damage)
+		if ene is MegaGhost:
+			ene.apply_special_damage(self)
+		else:
+			take_damage(ene.damage)
 		return
 	
 	enemies_touch[ene] = 0.0
@@ -90,8 +97,6 @@ func takeDamagePlayerLogic(delta):
 		enemy = enemy as Enemy
 		
 		if !enemy.is_active: return
-	
-		
 		#Enquanto o inimigo encosta no player, ele nao se mexe
 		enemy.atack_player = true
 		#Vai contando quanto tempo o inimigo esta tocando no playwr
@@ -104,6 +109,16 @@ func takeDamagePlayerLogic(delta):
 			life -= enemy.damage
 			
 func _physics_process(delta: float) -> void:
+	
+	if is_on_knockback:
+		if knockback_time >= knockback_duration:
+			is_on_knockback = false
+			knockback_time = 0
+			return
+		player_body.velocity = knockback_dir * knockback_force
+		player_body.move_and_slide()
+		knockback_time += delta
+		return
 	
 	input_vector = Vector2.ZERO
 	# Joystick
@@ -223,8 +238,6 @@ func collision(mode: bool):
 		player_body.collision_layer = 1
 		player_body.collision_mask = 1
 	else: 
-		#player_body.collision_layer = 0 << 0
-		#player_body.collision_mask =  0 << 0
 		player_body.collision_layer = 1 << 2
 		player_body.collision_mask = 1 << 2
 	
@@ -233,9 +246,10 @@ func take_damage(damage: int):
 	print("take damage")
 	print(str(int(life + damage)), " -> ", life)
 	
-func take_knockback(direction: Vector2, force: float):
-	player_body.velocity -= direction.normalized() * force
-	player_body.move_and_slide()
+func take_knockback(direction: Vector2, force: int):
+	is_on_knockback = true
+	knockback_dir = direction
+	knockback_force = force
 	
 signal player_die(player: Player)
 

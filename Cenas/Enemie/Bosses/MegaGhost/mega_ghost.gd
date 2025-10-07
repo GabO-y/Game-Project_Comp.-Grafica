@@ -10,29 +10,67 @@ class_name MegaGhost
 @export var life_bar: ProgressBar
 @export var damage_bar: ProgressBar
 @export var timer_damage_bar: Timer
+@export var split_part: Enemy
+@export var vertical_points: Line2D
+@export var horizontal_points: Line2D
+@export var vertical_mid_spawn_1: Marker2D
+@export var vertical_mid_spawn_2: Marker2D
+@export var horizontal_mid_spawn_1: Marker2D
+@export var horizontal_mid_spawn_2: Marker2D
 
 #pra verificar se esta dando o ataque especial
-var on_special_atack = false
+var on_special_attack = false
+# quando um ataque especial começa, e para que certas funcs nao sejam chamadas diversas vezes
+# enquanto esta rolando o especial
 var start_special = false
+# quando esta esta, essa vira sua nova variavel momentania que controlará
+# sua direção
 var dir_special_attack: Vector2
-var last_dir_special: Vector2
-var speed_special_attack: int = 200
+# quando o boss entra no ataque "ghost run", ele primeiro vai em sua direção, mas dps
+# de uma distancia, ele so continua indo para frente, isso que define se é so pra ele continuar
 var is_continue_toward = false
+# fica com a ultima direção que o boss estava, para quando o is_continue_toward for true, ele
+# ter essa direção para seguir
+var last_dir_special: Vector2
+# quando ele esta num especial, a movimentação padrao muda, nisso, a velocidade tbm
+# controlado por essa variavel 
+var speed_special_attack: int = 100
+# verificador para atualizar a barra de dono
 var is_update_damage_bar = false
+# Quando a barra de damage esta descendo, ela vai descer ate esse last
 var last_life
-
-#para verificar se esta na area do ataque 1
+# Qual o ataque especial que esta rolando
+var current_special_attack: String
+# para verificar se esta na area do ataque 1
 var is_player_on_attack_area_1 = false
-
-#pra nao ficar dando consecutivos danos toda vez que o player esta na area 
-#do boss
+# pra nao ficar dando consecutivos danos toda vez que o player esta na area 
+# do boss
 var finish_attack = true
+# guarda o nome da ultima parade com que colidiu, para o
+# ataque de "crash_wall"
+var last_wall_collide: String
+var times_crash_wall = 1
+var ene_in_crash_attack: Array[Enemy]
+var already_split = false
+var is_split = false
+var type_split = "mid"
+
+var collision_special = 2
+
+# todos os ataques especias
+var all_special_attacks = [
+	"ghosts_run",
+	"crash_wall"
+]
 
 func _ready() -> void:
 	
-	attack_area.body_entered.connect(_on_body_entered)
+	attack_area.body_entered.connect(_entrered_attack_area)
 	attack_area.body_exited.connect(_exit_attack_area)
+	
+	is_active = true
 
+	split_part.visible = false
 	super._ready()
 	
 func _process(delta: float) -> void:
@@ -49,23 +87,21 @@ func _process(delta: float) -> void:
 			is_update_damage_bar = false
 
 func _physics_process(delta: float) -> void:
-	
-	if on_special_atack:
-		attack_fantasm_run()
+		
+	if on_special_attack:
 		move_special()
-			
 		return
-	
+
 	if is_stop: return
-	
+
 	var pla_pos = Globals.player.player_body.global_position
 	var ene_pos = body.global_position
 	
 	dir = ene_pos.direction_to(pla_pos).normalized()
-	
+		
 	if dir == null or ene_pos.distance_to(pla_pos) < 50:
 		dir = Vector2.ZERO
-
+	
 	body.velocity = dir * speed
 	body.move_and_slide()
 		
@@ -77,57 +113,98 @@ func slash(player: Player):
 	attack_collision.rotation = (dir.angle() - PI/1.5)
 	form_attack.rotation = (dir.angle() - PI/1.5)
 	
-	if not finish_attack: return
+	if !finish_attack: return
 	finish_attack = false
 	
 	await get_tree().create_timer(1.5).timeout
 	form_attack.visible = true
 	finish_attack = true
-	attack()
+		
+	if is_player_on_attack_area_1: 
+		Globals.player.take_damage(damage)
+		var knockback_dir = -(Globals.player.player_body.global_position.direction_to(body.global_position))
+		Globals.player.take_knockback(knockback_dir , 200)
+	
 	await get_tree().create_timer(0.1).timeout
 	form_attack.visible = false
 			
-func _on_body_entered(body):
+func _entrered_attack_area(body):
 	if body.get_parent() is not Player: return
 	is_player_on_attack_area_1 = true
+	if not is_running_attack:
+		is_stop = true
 		
 func _exit_attack_area(body):
 	if body.get_parent() is not Player: return
 	is_player_on_attack_area_1 = false
+	if not is_running_attack:
+		await Globals.time(0.2)
+		is_stop = true
+		
+func start_special_attack():
 	
-func attack():
-	if not is_player_on_attack_area_1: return
-	Globals.player.take_damage(damage)
+	if start_special: return 	
 	
-	var dir = (Globals.player.player_body.global_position.direction_to(body.global_position))
-
-	Globals.player.take_knockback(dir , 2500)
-
-func attack_fantasm_run():
-	
-	if start_special: return
-	
-	is_running_attack = true
 	is_stop = true
 	start_special = true
 
-	await get_tree().create_timer(1).timeout
+	await Globals.time(2)
 	
 	is_stop = false
+	on_special_attack = true
+
+	#current_special_attack = all_special_attacks.pick_random()
+	current_special_attack = "crash_wall"
+	
+	match current_special_attack:
+		"ghosts_run":
+			attack_ghost_run()
+		"crash_wall":
+			start_attack_crash_wall()
+	
+func attack_ghost_run():
 	
 	body.collision_layer = 1 << 5
 	body.collision_mask = 1 << 5
+
+	is_running_attack = true
+
+func start_attack_crash_wall():
 	
-	print(body.collision_layer)
-	print(body.collision_mask)
+	speed_special_attack = 100
 	
-	on_special_atack = true
+	body.collision_layer = 1 << 2
+	body.collision_mask = 1 << 2
+	
+	is_running_attack = true
+	
+	speed_special_attack = 2
+	
+	var dialgonal_dir = [
+		Vector2( 1, -1),
+		Vector2( 1,  1),
+		Vector2(-1,  1),
+		Vector2(-1, -1)
+		].pick_random()
 		
+		
+	dir_special_attack = dialgonal_dir
+	ene_in_crash_attack.append(self)
+
 func move_special():
 	
 	if is_stop: return
+		
+	match current_special_attack:
+		"ghost_run":
+			move_ghosts_run()
+		"crash_wall":
+			pass_all_in_crash_attack()	
+			
+func move_ghosts_run():
 	
 	dir_special_attack = body.global_position.direction_to(Globals.player.player_body.global_position)
+	
 	if body.global_position.distance_to(Globals.player.player_body.global_position) < 60:
 		dir_special_attack = Vector2.ZERO
 		is_continue_toward = true
@@ -140,26 +217,89 @@ func move_special():
 	body.velocity = dir_special_attack * speed_special_attack
 	body.move_and_slide()
 	
-func _on_timer_timeout() -> void:
-	init_special_attack()
+func move_crash_wall():
 	
-func init_special_attack():
+	var collsiion = body.move_and_collide(dir_special_attack * speed_special_attack)
+		
+	if collsiion:
+		var collider = collsiion.get_collider()
+		print(collider.name)
+			
+		if collider is TileMapLayer:
+						
+			dir_special_attack = Globals.dir_possibles_crash_wall[dir_special_attack].get(last_wall_collide,
+				Vector2(
+					1 if dir_special_attack.x == -1 else 1,
+					1 if dir_special_attack.y == -1 else 1
+				)
+			)
+			
+			if times_crash_wall != 0 and times_crash_wall % 2 == 0 and not already_split:
+				split_when_crash()
+				already_split = true
+			else:
+				times_crash_wall += 1
 	
-	if on_special_atack: return
-	on_special_atack = true
-	
-	pass
+func pass_all_in_crash_attack():
+	for ene in ene_in_crash_attack:
+		ene.move_crash_wall()
 
+func split_when_crash():
+	
+		split_part.is_active = true
+		var second_part = split_part.duplicate()
+		add_child(second_part)
+		
+		ene_in_crash_attack.erase(self)
+		ene_in_crash_attack.append(split_part)
+		ene_in_crash_attack.append(second_part)
+		
+		for ene in ene_in_crash_attack:
+			ene.show()
+			ene.dir_special_attack = dir_special_attack
+			ene.speed_special_attack = speed_special_attack
+			ene.last_wall_collide = last_wall_collide
+			ene.body.collision_mask = 1 << 2
+			ene.body.collision_layer = 1 << 2
+			ene.set_collision_layer_ray(3)
+			
+		match last_wall_collide:
+			"down", "up":
+				split_part.body.global_position = vertical_mid_spawn_1.global_position
+				second_part.body.global_position = vertical_mid_spawn_2.global_position
+				second_part.dir_special_attack = Vector2(
+					1 if dir_special_attack.x == -1 else -1,
+					dir_special_attack.y
+				)
+				
+			"left", "right":
+				split_part.body.global_position = horizontal_mid_spawn_1.global_position
+				second_part.body.global_position = horizontal_mid_spawn_2.global_position
+				second_part.dir_special_attack = Vector2(
+					dir_special_attack.x,
+					1 if dir_special_attack.y == -1 else -1
+				)
+
+
+		is_active = false
+		body.hide()
+		
+		body.collision_layer = 0
+		body.collision_mask = 0
+
+		return
+	
 func refrash_setup():
 	body.collision_layer = 1
 	body.collision_mask = 1 
 	start_special = false
-	on_special_atack = false
+	on_special_attack = false
 	timer.stop()
 	timer.start()
 	is_stop = false
 	is_running_attack = false
 	is_continue_toward = false
+	times_crash_wall = 0
 	
 func _player_enter_while_running(body: Node2D) -> void:
 	var player = body.get_parent() as Player
@@ -168,6 +308,7 @@ func _player_enter_while_running(body: Node2D) -> void:
 		player.take_damage(damage)
 		
 func update_bar():
+	if life_bar == null: return
 	life_bar.value = life
 	pass
 	
@@ -178,9 +319,6 @@ func take_damage(damage: int):
 	_take_damages.emit()
 	super.take_damage(damage)
 
-	
-signal _take_damages
-
 func _update_damage_bar() -> void:
 	is_update_damage_bar = true
 	last_life = life
@@ -188,3 +326,21 @@ func _update_damage_bar() -> void:
 
 func _start_timer_damage_bar() -> void:
 	timer_damage_bar.start()
+
+func _start_special_attack() -> void:
+	start_special_attack()
+
+func apply_special_damage(pla: Player):
+	if finish_attack: return
+	pla.take_damage(damage)
+	finish_attack = false
+
+func _player_exit_area(body: Node2D) -> void:
+	var player = body.get_parent() as Player
+	if player == null: return
+	finish_attack = true
+
+signal _take_damages
+
+func _on_rays_to_wall_crash_with(wall_name: String) -> void:
+	last_wall_collide = wall_name

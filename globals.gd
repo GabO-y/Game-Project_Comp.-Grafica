@@ -8,6 +8,14 @@ var die = false
 var already_keys = []
 var is_get_animation = false
 
+# mapa de qual nova diagonal ele deve ir dependendo de onde bate
+var dir_possibles_crash_wall = {
+		Vector2( 1,   1)  : {"right" : Vector2(-1,  1), "down" : Vector2( 1, -1)},
+		Vector2( 1,  -1)  : {"right" : Vector2(-1, -1), "up"   : Vector2( 1,  1)},
+		Vector2(-1,   1)  : {"left"  : Vector2( 1,  1), "down" : Vector2(-1, -1)},
+		Vector2(-1,  -1)  : {"left"  : Vector2( 1, -1), "up"   : Vector2(-1,  1)}
+	}
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -100,6 +108,9 @@ func set_initial_room(name: String):
 		if room.name == name:
 			current_room = room
 			break
+
+func time(time: float):
+	return get_tree().create_timer(time).timeout
 	
 #Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
 #Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a

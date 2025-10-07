@@ -138,15 +138,6 @@ func running_fantasms(fan: Enemy):
 	fan.body.collision_layer = 2
 	
 	var dir: Vector2 = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
-	
-	#if fan.name.contains("up"):
-		#dir = Vector2.DOWN
-	#if fan.name.contains("down"):
-		#dir = Vector2.UP
-	#if fan.name.contains("left"):
-		#dir = Vector2.RIGHT
-	#if fan.name.contains("right"):
-		#dir = Vector2.LEFT
 		
 	time_can_go *= 1.1
 	await get_tree().create_timer(time_can_go).timeout
@@ -216,12 +207,11 @@ func _on_inside_area_body_entered(body: Node2D) -> void:
 	
 func refrash_setup():
 	is_attack_running_fantasm = false
+	time_can_go = 3
 	fantasm_on_attack.clear()
 	
 func setup():
-	
-	print("setou")
-	
+
 	segs.clear()
 	
 	for seg in segs_node.get_children():
@@ -235,10 +225,7 @@ func setup():
 				
 		var seg_name = seg.name.replace("Line", "")
 		segs.append(Line.create_line(seg_name, x1,y1,x2,y2))
-		
-	for line in segs:
-		print(line)
-	
+			
 func _last_update_damage_bar(ene: Enemy) -> void:
 	$DamageBar/LifeBar.value = 0
 	await get_tree().create_timer(2).timeout
