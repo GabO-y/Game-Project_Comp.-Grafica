@@ -23,6 +23,7 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player") 
 
 func _process(delta: float) -> void:
+		
 	animation_logic()
 	if is_running_attack:
 		running_player()

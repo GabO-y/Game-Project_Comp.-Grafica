@@ -7,6 +7,9 @@ var player: Player
 var die = false
 var already_keys = []
 var is_get_animation = false
+var center_pos: Vector2
+
+var is_using_array = false
 
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
@@ -15,11 +18,15 @@ var dir_possibles_crash_wall = {
 		Vector2(-1,   1)  : {"left"  : Vector2( 1,  1), "down" : Vector2(-1, -1)},
 		Vector2(-1,  -1)  : {"left"  : Vector2( 1, -1), "up"   : Vector2(-1,  1)}
 	}
+	
+var ene_in_crash_attack: Array[Enemy]
+var special_ghost_collision = 2
+
+var already_center = 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-
-
+	
 func _process(delta: float) -> void:
 	
 	if die:
@@ -112,7 +119,30 @@ func set_initial_room(name: String):
 func time(time: float):
 	return get_tree().create_timer(time).timeout
 	
+	
+func _on_goint_to_center():
+	already_center += 1
+	print(already_center)
+	if already_center >= 8:
+		emerge_boss.emit()
+		already_center = 0
+	
+func connect_safe(sign, function):
+	sign.connect(function)
+	
+	if sign and (sign as Signal).is_connected(function):
+		print(sign, " connect")
+	else:
+		print(sign, " not connect")
+	
+	
 #Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
 #Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
 #chave for finalizada 
 signal generate_new_key(key: Key)
+
+signal goint_to_center
+
+signal emerge_boss
+
+signal gone_use_array

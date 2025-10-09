@@ -6,8 +6,8 @@ extends Room
 @export var right_coll: Area2D
 @export var inside_area: Area2D
 @export var segs_node: Node2D
-
 @export var boss: MegaGhost
+
 var is_attack_running_fantasm = false
 
 var segs: Array[Line]
@@ -16,7 +16,7 @@ var is_last_update_bar = false
 var time_can_go = 3
 
 func _ready():
-	
+		
 	setup()
 	
 	out_of_camera.connect(start_special_attack)

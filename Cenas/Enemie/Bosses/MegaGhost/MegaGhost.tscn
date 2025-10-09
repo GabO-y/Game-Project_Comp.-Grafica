@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://bts2u7o7pqcl6"]
+[gd_scene load_steps=12 format=3 uid="uid://bts2u7o7pqcl6"]
 
 [ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
-[ext_resource type="Script" uid="uid://dfyhrssforncl" path="res://Cenas/Enemie/Bosses/MegaGhost/split_parts.gd" id="2_2h161"]
 [ext_resource type="Script" uid="uid://b2pi0hl5dhvrm" path="res://Cenas/Enemie/Bosses/MegaGhost/rays_to_wall.gd" id="2_redsd"]
-[ext_resource type="Script" uid="uid://cbisqtokcl6vq" path="res://Cenas/Enemie/Bosses/MegaGhost/ray_to_wall.gd" id="4_0lw7i"]
+[ext_resource type="Script" uid="uid://cawflp5ogyjva" path="res://Cenas/Enemie/Bosses/MegaGhost/locals.gd" id="9_oiqga"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xlh7a"]
 
@@ -34,31 +33,18 @@ fill_to = Vector2(1, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xlh7a"]
 size = Vector2(42, 42)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2h161"]
-
-[sub_resource type="Gradient" id="Gradient_redsd"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0lw7i"]
-gradient = SubResource("Gradient_redsd")
-fill_from = Vector2(1, 0)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2h161"]
-size = Vector2(24, 24)
-
-[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "form_attack", "timer", "timer_damage_bar", "split_part", "vertical_points", "horizontal_points", "vertical_mid_spawn_1", "vertical_mid_spawn_2", "horizontal_mid_spawn_1", "horizontal_mid_spawn_2", "body", "anim")]
+[node name="MegaGhost" type="Node2D" node_paths=PackedStringArray("attack_area", "attack_collision", "form_attack", "timer", "timer_damage_bar", "vertical_mid_spawn_1", "vertical_mid_spawn_2", "horizontal_mid_spawn_1", "horizontal_mid_spawn_2", "locals", "body", "anim")]
 script = ExtResource("1_xlh7a")
 attack_area = NodePath("CharacterBody2D/AtackArea")
 attack_collision = NodePath("CharacterBody2D/AtackArea/Attack_collisiion")
 form_attack = NodePath("CharacterBody2D/AtackArea/PointAttack")
 timer = NodePath("SpecialAttackTimer")
 timer_damage_bar = NodePath("CheckBarDamage")
-split_part = NodePath("SplitMid")
-vertical_points = NodePath("")
-horizontal_points = NodePath("")
 vertical_mid_spawn_1 = NodePath("CharacterBody2D/PointsMidSpwan/Vertical1")
 vertical_mid_spawn_2 = NodePath("CharacterBody2D/PointsMidSpwan/Vertical2")
 horizontal_mid_spawn_1 = NodePath("CharacterBody2D/PointsMidSpwan/Horizontal1")
 horizontal_mid_spawn_2 = NodePath("CharacterBody2D/PointsMidSpwan/Horizontal2")
+locals = NodePath("Locals")
 speed = 50
 damage = 50
 body = NodePath("CharacterBody2D")
@@ -130,67 +116,21 @@ target_position = Vector2(-24, 0)
 [node name="UpRay" type="RayCast2D" parent="CharacterBody2D/RaysToWall"]
 target_position = Vector2(0, -25)
 
-[node name="SplitMid" type="Node2D" parent="." node_paths=PackedStringArray("random_dir_timer", "node_rays", "body", "anim")]
-position = Vector2(-97, 0)
-script = ExtResource("2_2h161")
-random_dir_timer = NodePath("Timer")
-node_rays = NodePath("HalfBodyPart/RayToWall")
-body = NodePath("HalfBodyPart")
-anim = NodePath("HalfBodyPart/Area2D/AnimatedSprite2D")
-
-[node name="HalfBodyPart" type="CharacterBody2D" parent="SplitMid"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="Area2D" type="Area2D" parent="SplitMid/HalfBodyPart"]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SplitMid/HalfBodyPart/Area2D"]
-sprite_frames = SubResource("SpriteFrames_2h161")
-
-[node name="Sprite2D" type="Sprite2D" parent="SplitMid/HalfBodyPart/Area2D"]
-scale = Vector2(0.382812, 0.382812)
-texture = SubResource("GradientTexture2D_0lw7i")
-
-[node name="AreaHit" type="CollisionShape2D" parent="SplitMid/HalfBodyPart/Area2D"]
-shape = SubResource("RectangleShape2D_2h161")
-
-[node name="AreaHit" type="CollisionShape2D" parent="SplitMid/HalfBodyPart"]
-shape = SubResource("RectangleShape2D_2h161")
-
-[node name="RayToWall" type="Node2D" parent="SplitMid/HalfBodyPart" node_paths=PackedStringArray("rays")]
-script = ExtResource("4_0lw7i")
-rays = [NodePath("Down"), NodePath("Up"), NodePath("Left"), NodePath("Right")]
-
-[node name="Down" type="RayCast2D" parent="SplitMid/HalfBodyPart/RayToWall"]
-target_position = Vector2(0, 16)
-
-[node name="Up" type="RayCast2D" parent="SplitMid/HalfBodyPart/RayToWall"]
-target_position = Vector2(0, -16)
-
-[node name="Left" type="RayCast2D" parent="SplitMid/HalfBodyPart/RayToWall"]
-target_position = Vector2(-14, 0)
-
-[node name="Right" type="RayCast2D" parent="SplitMid/HalfBodyPart/RayToWall"]
-target_position = Vector2(14, 0)
-
-[node name="Timer" type="Timer" parent="SplitMid"]
-wait_time = 2.0
-
-[node name="SplitMin" type="Node2D" parent="."]
-visible = false
-
 [node name="SpecialAttackTimer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [node name="CheckBarDamage" type="Timer" parent="."]
 wait_time = 2.0
 
-[connection signal="_take_damages" from="." to="." method="_start_timer_damage_bar"]
+[node name="Locals" type="Node2D" parent="."]
+script = ExtResource("9_oiqga")
+
 [connection signal="body_entered" from="CharacterBody2D/HitAreaRunning" to="." method="_player_enter_while_running"]
 [connection signal="body_exited" from="CharacterBody2D/HitAreaRunning" to="." method="_player_exit_area"]
 [connection signal="crash_with" from="CharacterBody2D/RaysToWall" to="." method="_on_rays_to_wall_crash_with"]
-[connection signal="body_entered" from="SplitMid/HalfBodyPart/Area2D" to="SplitMid" method="_entered_hit_area"]
-[connection signal="crash_wall" from="SplitMid/HalfBodyPart/RayToWall" to="SplitMid" method="_on_ray_to_wall_crash_wall"]
-[connection signal="timeout" from="SplitMid/Timer" to="SplitMid" method="_on_timer_timeout"]
 [connection signal="timeout" from="SpecialAttackTimer" to="." method="_start_special_attack"]
 [connection signal="timeout" from="CheckBarDamage" to="." method="_update_damage_bar"]
+[connection signal="emerge_boss" from="Locals" to="." method="_on_locals_emerge_boss"]
+[connection signal="free_all" from="Locals" to="." method="_on_locals_free_all"]
+[connection signal="goint_to_center" from="Locals" to="Locals" method="_on_goint_to_center"]

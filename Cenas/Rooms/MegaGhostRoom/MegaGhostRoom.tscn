@@ -54,10 +54,11 @@ position = Vector2(0, 12)
 enabled = false
 zoom = Vector2(2.5, 2.5)
 
-[node name="MegaGhost" parent="." node_paths=PackedStringArray("life_bar", "damage_bar") instance=ExtResource("4_busjt")]
+[node name="MegaGhost" parent="." node_paths=PackedStringArray("life_bar", "damage_bar", "center_to_split") instance=ExtResource("4_busjt")]
 position = Vector2(0, -88)
 life_bar = NodePath("../DamageBar/LifeBar")
 damage_bar = NodePath("../DamageBar")
+center_to_split = NodePath("../CenterPos")
 
 [node name="LeftColl" type="Area2D" parent="."]
 collision_layer = 255
@@ -141,6 +142,8 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_gf7wg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_gf7wg")
 value = 70.0
 show_percentage = false
+
+[node name="CenterPos" type="Marker2D" parent="."]
 
 [connection signal="enemy_die" from="MegaGhost" to="." method="_last_update_damage_bar"]
 [connection signal="body_entered" from="LeftColl" to="." method="_on_left_coll_body_entered"]
