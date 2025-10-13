@@ -37,38 +37,17 @@ var enemies_touch = {}
 func _ready() -> void:
 			
 	hit_area.area_entered.connect(_on_key_entered)
-	hit_area.body_entered.connect(_on_enemy_entered)
 	hit_area.body_exited.connect(_exit_enemie)
-		
 	get_new_key.connect(_unlocked_doors)
 	
 func _process(delta: float) -> void:
 		
 	animation_logic()
-	takeDamagePlayerLogic(delta)
 	
 	armor.global_position = player_body.global_position
 	
-	if Input.is_action_just_pressed("ui_toggle_armor"):
-		armor.toggle_active.emit()
-	
 	if life <= 0 and can_die:
 		player_die.emit(self)
-	
-func _on_enemy_entered(body):
-	
-	var ene = body.get_parent() as Enemy
-	
-	#caso especial de ataque de boss
-	if ene == null: return
-	if ene.is_running_attack:
-		if ene is MegaGhost:
-			ene.apply_special_damage(self)
-		else:
-			take_damage(ene.damage)
-		return
-	
-	enemies_touch[ene] = 0.0
 	
 func _on_key_entered(area):
 	
@@ -80,7 +59,6 @@ func _on_key_entered(area):
 	
 	get_key_animation(key)
 
-#para quando o inimigo para de encostar no player
 func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
 	if !(body.get_parent() is Enemy): return
@@ -90,24 +68,6 @@ func _exit_enemie(body):
 	enemies_touch.erase(ene)
 	ene.atack_player = false
 		
-func takeDamagePlayerLogic(delta):
-
-	for enemy in enemies_touch.keys():
-		
-		enemy = enemy as Enemy
-		
-		if !enemy.is_active: return
-		#Enquanto o inimigo encosta no player, ele nao se mexe
-		enemy.atack_player = true
-		#Vai contando quanto tempo o inimigo esta tocando no playwr
-		enemies_touch[enemy] += delta
-		#Se foi maior que meio segungo
-		if enemies_touch[enemy] >= 0.1:
-			#O tempo volta pra zero
-			enemies_touch[enemy] = 0
-			#Vai tirar a vida do player
-			life -= enemy.damage
-			
 func _physics_process(delta: float) -> void:
 	
 	if is_on_knockback:
@@ -210,7 +170,7 @@ func animation_logic():
 func get_key_animation(key: Key):
 	
 	if armor.is_active:
-		armor._on_toggle_activate()
+		armor.toggle_activate()
 			
 	get_tree().paused = true
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://25uf0g24cox"]
+[gd_scene load_steps=64 format=3 uid="uid://25uf0g24cox"]
 
 [ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemie/Fantasm/fantasm.gd" id="1_fuhhv"]
 [ext_resource type="Texture2D" uid="uid://ba5o5r15gpsgu" path="res://Assets/Enemies/Fantasm/spr_ghost_tileset.png" id="2_ciyev"]
@@ -485,6 +485,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5v7o7"]
+radius = 8.0
+
 [node name="Fantasm" type="Node2D" node_paths=PackedStringArray("body", "anim")]
 position = Vector2(85, 50)
 script = ExtResource("1_fuhhv")
@@ -519,3 +522,12 @@ show_percentage = false
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
 animation = &"die_left"
+
+[node name="Areas" type="Node2D" parent="CharacterBody2D"]
+
+[node name="HitArea" type="Area2D" parent="CharacterBody2D/Areas"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Areas/HitArea"]
+shape = SubResource("CircleShape2D_5v7o7")
+
+[connection signal="body_entered" from="CharacterBody2D/Areas/HitArea" to="." method="_player_enter_hit"]

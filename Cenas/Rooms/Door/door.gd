@@ -6,7 +6,7 @@ class_name Door
 var goTo #Room que ele deve ir
 @export var is_locked: bool			
 @export var light: PointLight2D 
-@export var door_sprite: TileMapLayer
+@export var open_door_sprite: TileMapLayer
 
 func _ready():
 	area.body_entered.connect(_player_enter)
@@ -43,7 +43,7 @@ func _player_enter(body):
 	
 func turn_light(turn: bool):
 	light.visible = turn
-	if door_sprite != null:
-		door_sprite.visible = turn
+	if open_door_sprite != null:
+		open_door_sprite.visible = turn
 		
 signal player_in(player, goTo)

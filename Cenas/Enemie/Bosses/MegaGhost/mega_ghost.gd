@@ -64,7 +64,11 @@ var all_special_attacks = [
 	"crash_wall"
 ]
 
+var available_special_attacks: Array[String]
+
 func _ready() -> void:
+	
+	
 		
 	#Globals.connect_safe(locals.emerge_boss, _on_locals_emerge_boss)
 	
@@ -72,6 +76,9 @@ func _ready() -> void:
 	attack_area.body_exited.connect(_exit_attack_area)
 	
 	is_active = true
+	
+	for attack in all_special_attacks:
+		available_special_attacks.append(attack)
 
 	super._ready()
 	
@@ -166,8 +173,11 @@ func start_special_attack():
 	is_stop = false
 	on_special_attack = true
 
-	current_special_attack = all_special_attacks.pick_random()
-	current_special_attack	= "crash_wall"
+	current_special_attack = get_random_special_attack()
+	print(current_special_attack)
+	print(speed_special_attack)	
+	
+#	Verificar pq o ghost run nao esta funcionando
 	
 	match current_special_attack:
 		"ghosts_run":
@@ -314,6 +324,7 @@ func refrash_setup():
 	times_crash_wall = 0
 	is_active = true
 	already_split = false
+	speed_special_attack = 100
 	
 func _player_enter_while_running(body: Node2D) -> void:
 	var player = body.get_parent() as Player
@@ -365,8 +376,6 @@ func _on_locals_emerge_boss() -> void:
 	modulate.a = 0
 	emerge_boos = true
 
-signal _take_damages
-
 func _on_locals_free_all() -> void:
 	
 	for ene in ene_in_crash_attack:
@@ -378,3 +387,14 @@ func _on_locals_free_all() -> void:
 			
 	ene_in_crash_attack.clear()
 	
+func get_random_special_attack():
+	if available_special_attacks.is_empty():
+		for attack in all_special_attacks:
+			available_special_attacks.append(attack)
+		return get_random_special_attack()
+
+	var attack = available_special_attacks.pick_random()
+	available_special_attacks.erase(attack)
+	return attack
+
+signal _take_damages

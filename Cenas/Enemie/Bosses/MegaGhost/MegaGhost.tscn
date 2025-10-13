@@ -117,7 +117,7 @@ target_position = Vector2(-24, 0)
 target_position = Vector2(0, -25)
 
 [node name="SpecialAttackTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 0.1
 autostart = true
 
 [node name="CheckBarDamage" type="Timer" parent="."]

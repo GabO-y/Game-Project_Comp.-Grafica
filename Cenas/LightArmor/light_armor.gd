@@ -10,10 +10,15 @@ class_name LightArmor
 var enemies_on_light: Dictionary[Enemy, float] = {}
 
 func _ready() -> void:
-	toggle_active.connect(_on_toggle_activate)
-	_on_toggle_activate()
-		
+		#toggle_activate()
+	pass
+	
 func _process(delta: float) -> void:
+	
+	if Input.is_action_just_pressed("ui_toggle_armor"):
+		print("asd")
+		toggle_activate()
+	
 	#usa a função com a logica da energia
 	energie_logic()
 
@@ -21,25 +26,16 @@ func energie_logic():
 	
 	if energie <= 0:
 		if is_active:
-			_on_toggle_activate()
+			toggle_activate()
 		return
 				
 	if(is_active):
 		energie -= 0.1
 
-func _on_toggle_activate():
-	is_active = !is_active
-		
-	if is_active:
-		area.show()
-		area.collision_layer = 1
-		area.collision_mask = (1 << 0) | (1 << 1)
-	else:
-		area.hide()
-		area.collision_layer = 0
-		area.collision_mask = 0
+func toggle_activate():
+	pass
 
-signal toggle_active
+
 	
 
 

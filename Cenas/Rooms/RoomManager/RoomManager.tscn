@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
-[ext_resource type="PackedScene" uid="uid://dbwpr3aghpuba" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="3_ufchu"]
+[ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="3_ufchu"]
 [ext_resource type="PackedScene" uid="uid://b2celb3sqinke" path="res://Cenas/Rooms/MiniRoom/MiniRoom.tscn" id="4_ctr5e"]
 [ext_resource type="PackedScene" uid="uid://dh8cy7t2ceti5" path="res://Cenas/Rooms/MegaGhostRoom/MegaGhostRoom.tscn" id="5_0aayb"]
 

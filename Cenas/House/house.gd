@@ -9,7 +9,8 @@ extends Node2D
 func _ready() -> void:
 			
 	Globals.player = player
-	Globals.set_initial_room("MegaGhostRoom")
+	
+	Globals.set_initial_room("SafeRoom")
 			
 	Globals.enable_room()
 
@@ -17,13 +18,3 @@ func _ready() -> void:
 	room_manager.match_doors("Hallway1", "MiniRoom")
 	
 	player.player_die.connect(transaction_scene._finish_round)
-	
-func _process(delta: float) -> void:
-
-	#print(Globals.current_room.is_clean())
-		
-	pass
-
-		
-
-		

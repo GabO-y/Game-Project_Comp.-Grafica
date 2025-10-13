@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://8qj0ov3p7avy" path="res://Assets/Player/Animations/spr_player_assets.png" id="4_4o7c8"]
-[ext_resource type="PackedScene" uid="uid://b0ycmxpkip27y" path="res://Cenas/LightArmor/Lantern/Lantern.tscn" id="4_5akqg"]
+[ext_resource type="PackedScene" uid="uid://vwhvhpe7hrxg" path="res://Cenas/LightArmor/FairyLight/FairyLight.tscn" id="4_5akqg"]
 [ext_resource type="Texture2D" uid="uid://csy1cwe0ag6ri" path="res://Assets/Player/Animations/left_idle.png" id="4_xjvfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ynwyb"]
@@ -258,7 +258,7 @@ fill_from = Vector2(0.490029, 0.481481)
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "player_body", "anim", "hit_area") groups=["player"]]
 script = ExtResource("1_yjlpd")
-armor = NodePath("CharacterBody2D/Lantern")
+armor = NodePath("CharacterBody2D/FairyLight")
 armor_energie = 100000
 can_die = false
 player_body = NodePath("CharacterBody2D")
@@ -295,7 +295,7 @@ color = Color(1, 0.819608, 0.74902, 0.654902)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_5akqg")
 
-[node name="Lantern" parent="CharacterBody2D" instance=ExtResource("4_5akqg")]
+[node name="FairyLight" parent="CharacterBody2D" instance=ExtResource("4_5akqg")]
 position = Vector2(-4, 2)
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_ene_boss_touch_player"]
