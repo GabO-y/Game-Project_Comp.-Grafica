@@ -8,11 +8,8 @@ class_name LightArmor
 @export var area: Area2D
 
 var enemies_on_light: Dictionary[Enemy, float] = {}
+var mouse_move = false
 
-func _ready() -> void:
-		#toggle_activate()
-	pass
-	
 func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_toggle_armor"):
@@ -35,7 +32,11 @@ func energie_logic():
 func toggle_activate():
 	pass
 
-
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		mouse_move = true
+	else:
+		mouse_move = false
 	
 
 

@@ -11,7 +11,7 @@ var input_vector
 
 var speed: float = 140
 var dash_speed: float = 600
-var dash_time: float = 0.2
+var dash_time: float = 0.1
 var dash_cooldown: float = 0.5
 
 var last_direction: Vector2 = Vector2.RIGHT
@@ -39,6 +39,7 @@ func _ready() -> void:
 	hit_area.area_entered.connect(_on_key_entered)
 	hit_area.body_exited.connect(_exit_enemie)
 	get_new_key.connect(_unlocked_doors)
+	armor.toggle_activate()
 	
 func _process(delta: float) -> void:
 		
@@ -75,6 +76,7 @@ func _physics_process(delta: float) -> void:
 			is_on_knockback = false
 			knockback_time = 0
 			return
+			
 		player_body.velocity = knockback_dir * knockback_force
 		player_body.move_and_slide()
 		knockback_time += delta

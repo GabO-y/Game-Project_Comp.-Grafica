@@ -90,6 +90,7 @@ position = Vector2(248, 71)
 
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("10_mppsl")]
 position = Vector2(-15, 118)
+limit_spawn = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)

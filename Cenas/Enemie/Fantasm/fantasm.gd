@@ -11,6 +11,7 @@ var time_attack = 0.5;
 var timer_attack = 0
 var speed_when_attack = 2
 var last_dir_player: Vector2
+var check_on_collision = false
 
 func _ready() -> void:
 		
@@ -29,15 +30,29 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player") 
 
 func _process(delta: float) -> void:
+	
+	var dist = body.global_position.distance_to(player.player_body.global_position)
+	
+	if dist < 30:
+		await Globals.time(0.5)
+		is_attacking = true
+		body.collision_layer = Globals.collision_map["no_player_but_damage"]
+		
+	if check_on_collision:
+		if dist >= 30:
+			refrash()
+			check_on_collision = false
 		
 	animation_logic()
 	
 	if is_attacking:
 		dash_slash(delta)
+		
 	if is_running_attack:
 		running_player()
 	else:
 		chase_player()
+		
 	super._process(delta)
 	
 func animation_logic():
@@ -78,6 +93,7 @@ func dash_slash(delta: float):
 		await Globals.time(0.5)
 		is_attacking = false
 		timer_attack = 0
+		check_on_collision = true
 		return
 	
 	var dir
@@ -102,11 +118,6 @@ func chase_player():
 	
 	var distance = ene_pos.distance_to(pla_pos)
 	
-	if distance < 30:
-		await Globals.time(0.5)
-		is_attacking = true
-		return
-	
 	if !is_active or player == null:
 		dir = Vector2.ZERO
 	else:
@@ -120,8 +131,7 @@ func chase_player():
 func enable():
 	show()
 	is_active = true
-	body.collision_layer = 2
-	body.collision_mask = 0
+	refrash()
 	
 func death_animation():
 		
@@ -139,3 +149,7 @@ func _player_enter_hit(body: Node2D) -> void:
 	var player = body.get_parent() as Player
 	if player == null: return
 	player.take_damage(damage)
+
+func refrash():
+	body.collision_layer = Globals.collision_map["enemy"]
+	body.collision_mask = Globals.collision_map["enemy"]

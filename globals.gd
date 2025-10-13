@@ -19,6 +19,11 @@ var dir_possibles_crash_wall = {
 		Vector2(-1,  -1)  : {"left"  : Vector2( 1, -1), "up"   : Vector2(-1,  1)}
 	}
 	
+var collision_map = {
+	"no_player_but_damage" : 1 << 3,
+	"enemy" : 1 << 2
+}
+	
 var ene_in_crash_attack: Array[Enemy]
 var special_ghost_collision = 2
 

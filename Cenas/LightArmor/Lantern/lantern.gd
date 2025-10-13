@@ -5,16 +5,14 @@ class_name Lantern
 @export var rotation_speed := 5.0
 
 var ene_on_light = {}
-var mouse_move = false
 
 func _ready() -> void:	
 	
 	damage = 2
 	energie = 10000
-	super._ready()
+	
 	area.body_entered.connect(_ene_join_light)
 	area.body_exited.connect(_ene_exit_light)
-
 
 func _process(delta):
 	
@@ -32,13 +30,7 @@ func _process(delta):
 		
 	damage_logig(delta)
 	super._process(delta)
-	
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouse:
-		mouse_move = true
-	else:
-		mouse_move = false
-		
+			
 func damage_logig(delta: float):
 	
 	for key in ene_on_light:
@@ -64,7 +56,7 @@ func toggle_activate():
 	if is_active:
 		area.show()
 		area.collision_layer = 1
-		area.collision_mask = (1 << 0) | (1 << 1)
+		area.collision_mask = (1 << 0) | (1 << 1) | (1 << 2)
 	else:
 		area.hide()
 		area.collision_layer = 0

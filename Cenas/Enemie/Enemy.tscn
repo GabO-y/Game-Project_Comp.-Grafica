@@ -3,6 +3,5 @@
 [ext_resource type="Script" uid="uid://bgxttih2iy14j" path="res://Cenas/Enemie/enemy.gd" id="1_c8q0v"]
 
 [node name="Enemy" type="Node2D"]
-z_index = 5
 script = ExtResource("1_c8q0v")
 speed = 10

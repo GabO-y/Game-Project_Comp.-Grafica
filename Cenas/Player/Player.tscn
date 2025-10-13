@@ -258,7 +258,7 @@ fill_from = Vector2(0.490029, 0.481481)
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "player_body", "anim", "hit_area") groups=["player"]]
 script = ExtResource("1_yjlpd")
-armor = NodePath("CharacterBody2D/FairyLight")
+armor = NodePath("FairyLight")
 armor_energie = 100000
 can_die = false
 player_body = NodePath("CharacterBody2D")
@@ -295,7 +295,6 @@ color = Color(1, 0.819608, 0.74902, 0.654902)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_5akqg")
 
-[node name="FairyLight" parent="CharacterBody2D" instance=ExtResource("4_5akqg")]
-position = Vector2(-4, 2)
+[node name="FairyLight" parent="." instance=ExtResource("4_5akqg")]
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_ene_boss_touch_player"]

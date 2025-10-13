@@ -12,6 +12,7 @@ script = ExtResource("1_57ktk")
 aim_sprite = NodePath("aim")
 
 [node name="aim" type="Sprite2D" parent="."]
-position = Vector2(14, 0)
-scale = Vector2(0.109375, 2)
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(0.101563, 1)
 texture = SubResource("GradientTexture1D_l8kg5")
+centered = false

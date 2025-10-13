@@ -9,6 +9,7 @@ class_name Enemy
 @export var anim: AnimatedSprite2D
 
 @export var bar: ProgressBar #Barra de progresso
+
 var player: Player #Proprio jogador
 
 var position_target #Para onde ele deve andar
@@ -20,6 +21,7 @@ var is_dead: bool = false
 var last_position: Vector2
 #exclusivo dos fantasmas
 var is_running_attack = false
+var is_wrapped = false
 
 var drop_table = [
 	{"item": "Energy", "chance": 0.5},
@@ -110,7 +112,8 @@ func drop_logic():
 	var key = Globals.drop_key()
 	
 	if key != null:
-		Globals.current_room.add_child(key)
+		#Globals.current_room.add_child(key)
+		Globals.current_room.call_deferred("add_child", key)
 		key.global_position = body.global_position
 
 

@@ -30,7 +30,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	
 	if is_stop: return
 
 	for ray in rays:
