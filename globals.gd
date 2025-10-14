@@ -21,7 +21,8 @@ var dir_possibles_crash_wall = {
 	
 var collision_map = {
 	"no_player_but_damage" : 1 << 3,
-	"enemy" : 1 << 2
+	"enemy" : 1 << 2,
+	"special_attack_area_megaghost" : 1 << 7
 }
 	
 var ene_in_crash_attack: Array[Enemy]

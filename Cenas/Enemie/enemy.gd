@@ -97,7 +97,6 @@ func die():
 	
 	await death_animation()
 	queue_free()
-	
 
 func drop_logic():
 	

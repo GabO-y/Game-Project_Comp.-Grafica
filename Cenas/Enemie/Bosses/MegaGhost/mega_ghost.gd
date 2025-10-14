@@ -5,7 +5,7 @@ class_name MegaGhost
 @export var attack_area: Area2D
 @export var attack_collision: CollisionPolygon2D
 @export var form_attack: Node2D
-@export var timer: Timer
+@export var special_attack_timer: Timer
 @export var is_stop: bool
 @export var life_bar: ProgressBar
 @export var damage_bar: ProgressBar
@@ -16,6 +16,7 @@ class_name MegaGhost
 @export var horizontal_mid_spawn_2: Marker2D
 @export var center_to_split: Marker2D
 @export var locals: LocalVar
+
 
 #pra verificar se esta dando o ataque especial
 var on_special_attack = false
@@ -67,11 +68,7 @@ var all_special_attacks = [
 var available_special_attacks: Array[String]
 
 func _ready() -> void:
-	
-	
-		
-	#Globals.connect_safe(locals.emerge_boss, _on_locals_emerge_boss)
-	
+			
 	attack_area.body_entered.connect(_entrered_attack_area)
 	attack_area.body_exited.connect(_exit_attack_area)
 	
@@ -83,6 +80,8 @@ func _ready() -> void:
 	super._ready()
 	
 func _process(delta: float) -> void:
+	
+	animation_logic()
 	
 	if emerge_boos:
 		if modulate.a < 1:
@@ -99,7 +98,7 @@ func _process(delta: float) -> void:
 	if is_player_on_attack_area_1:
 		slash(Globals.player)
 	
-	if is_update_damage_bar:			
+	if is_update_damage_bar:
 		damage_bar.value -= 0.4
 		if damage_bar.value == last_life:
 			is_update_damage_bar = false
@@ -187,8 +186,8 @@ func start_special_attack():
 	
 func attack_ghost_run():
 	
-	body.collision_layer = 1 << 5
-	body.collision_mask = 1 << 5
+	body.collision_layer = Globals.collision_map["special_attack_area_megaghost"]
+	body.collision_mask = Globals.collision_map["special_attack_area_megaghost"]
 
 	is_running_attack = true
 
@@ -233,6 +232,8 @@ func move_ghosts_run():
 		is_continue_toward = true
 		
 	if dir_special_attack == Vector2.ZERO or is_continue_toward:
+		if last_dir_special == null or last_dir_special == Vector2.ZERO:
+			last_dir_special = body.global_position.direction_to(Globals.player.player_body.global_position)
 		dir_special_attack = last_dir_special
 	else:
 		last_dir_special = dir_special_attack
@@ -312,12 +313,12 @@ func split_when_crash():
 		body.collision_mask = 0
 
 func refrash_setup():
-	body.collision_layer = 1
-	body.collision_mask = 1 
+	body.collision_layer = Globals.collision_map["no_player_but_damage"] 
+	body.collision_mask =  Globals.collision_map["no_player_but_damage"]
 	start_special = false
 	on_special_attack = false
-	timer.stop()
-	timer.start()
+	special_attack_timer.stop()
+	special_attack_timer.start()
 	is_stop = false
 	is_running_attack = false
 	is_continue_toward = false
@@ -353,6 +354,7 @@ func _start_timer_damage_bar() -> void:
 	timer_damage_bar.start()
 
 func _start_special_attack() -> void:
+	special_attack_timer.wait_time = 3 + int(randf() * 10)
 	start_special_attack()
 
 func apply_special_damage(pla: Player):
@@ -397,4 +399,23 @@ func get_random_special_attack():
 	available_special_attacks.erase(attack)
 	return attack
 
+func animation_logic():
+	
+	if on_special_attack:
+		dir = dir_special_attack
+	
+	var play: String
+	
+	if dir.x > 0:
+		play += "right"
+	elif dir.x < 0:
+		play += "left"
+		
+	if dir.y < 0:
+		play += "_back"
+	
+	
+		
+	anim.play(play)
+		
 signal _take_damages

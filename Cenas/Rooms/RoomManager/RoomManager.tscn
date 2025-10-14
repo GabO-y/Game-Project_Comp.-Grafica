@@ -20,7 +20,9 @@ color = Color(0.211543, 0.188376, 0.598353, 1)
 [node name="Hallway1" parent="Rooms" instance=ExtResource("3_ufchu")]
 
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
+visible = false
 
 [node name="MiniRoom" parent="Rooms" instance=ExtResource("4_ctr5e")]
+visible = false
 
 [node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]

@@ -34,6 +34,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			if fan.body.global_position.distance_to(Globals.player.player_body.global_position) < 40:
 				attr["dir"] = attr["last_dir"]
+				
+				if attr["dir"] or attr["dir"] == Vector2.ZERO:
+					attr["dir"] = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
+					
 				attr["is_continue_toward"] = true
 			else:
 				attr["dir"] = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
@@ -123,8 +127,8 @@ func start_running_fantasm(thing):
 		
 		fantasm.tree_entered.connect(
 			func():
-				fantasm.body.collision_mask = 1 << 4
-				fantasm.body.collision_layer = 1 << 4
+				fantasm.body.collision_mask = Globals.collision_map["special_attack_area_megaghost"]
+				fantasm.body.collision_layer = Globals.collision_map["special_attack_area_megaghost"]
 				fantasm.is_running_attack = true
 				
 				fantasm.add_to_group("attack_queue")
@@ -135,7 +139,7 @@ func start_running_fantasm(thing):
 	
 func running_fantasms(fan: Enemy):
 	
-	fan.body.collision_layer = 2
+	fan.body.collision_layer = Globals.collision_map["special_attack_area_megaghost"]
 	
 	var dir: Vector2 = fan.body.global_position.direction_to(Globals.player.player_body.global_position)
 		
