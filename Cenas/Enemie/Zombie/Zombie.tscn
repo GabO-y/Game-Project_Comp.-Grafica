@@ -1,26 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5t1rcxsbscp5"]
+[gd_scene load_steps=7 format=3 uid="uid://c5t1rcxsbscp5"]
 
 [ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemie/Zombie/zombie.gd" id="1_21gwn"]
-[ext_resource type="Texture2D" uid="uid://x4wylbchjdug" path="res://Assets/Enemies/Zombie/Captura de tela de 2025-10-02 08-43-34.png" id="2_q1jsx"]
+[ext_resource type="Texture2D" uid="uid://b7j2tgblr1apf" path="res://Assets/Enemies/Zombie/spr_zumbi.png" id="2_q1jsx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q1jsx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ck86d"]
 atlas = ExtResource("2_q1jsx")
-region = Rect2(0, 0, 162, 291)
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ck86d"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q1jsx")
+"texture": SubResource("AtlasTexture_ck86d")
 }],
 "loop": true,
-"name": &"default",
+"name": &"left_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"right_idle",
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1jsx"]
-radius = 3.0
-height = 18.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_ck86d"]
+radius = 12.0416
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q1jsx"]
+radius = 17.0
 
 [node name="Zombie" type="Node2D" node_paths=PackedStringArray("agent", "time", "body", "anim")]
 script = ExtResource("1_21gwn")
@@ -32,24 +39,36 @@ anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 life = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-collision_layer = 9
 motion_mode = 1
-wall_min_slide_angle = 0.0
+wall_min_slide_angle = 0.00174533
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
-navigation_layers = 4
+path_desired_distance = 3.0
+target_desired_distance = 3.0
+navigation_layers = 8
 path_postprocessing = 1
+radius = 30.0
 debug_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(1, -1)
-scale = Vector2(0.0393519, 0.0667955)
+texture_filter = 1
+scale = Vector2(1.47859, 1.42553)
 sprite_frames = SubResource("SpriteFrames_ck86d")
+animation = &"left_idle"
 
 [node name="CollisionBody" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(1, 0)
-shape = SubResource("CapsuleShape2D_q1jsx")
+shape = SubResource("CircleShape2D_ck86d")
+
+[node name="AttackArea" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]
+shape = SubResource("CircleShape2D_q1jsx")
+debug_color = Color(0.99862, 0, 0.137187, 0.42)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[connection signal="body_entered" from="CharacterBody2D/AttackArea" to="." method="_hit_play"]
+[connection signal="body_exited" from="CharacterBody2D/AttackArea" to="." method="_exit_player_area_attack"]
+[connection signal="timeout" from="Timer" to="." method="_update_agent"]

@@ -81,6 +81,8 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	
+	if not is_active: return
+
 	animation_logic()
 	
 	if emerge_boos:
@@ -105,7 +107,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 		
-	if is_stop: return
+	if is_stop or not is_active: return
 
 	if on_special_attack:
 		move_special()
@@ -313,6 +315,9 @@ func split_when_crash():
 		body.collision_mask = 0
 
 func refrash_setup():
+	
+	if not is_active: return
+
 	body.collision_layer = Globals.collision_map["no_player_but_damage"] 
 	body.collision_mask =  Globals.collision_map["no_player_but_damage"]
 	start_special = false
@@ -328,6 +333,7 @@ func refrash_setup():
 	speed_special_attack = 100
 	
 func _player_enter_while_running(body: Node2D) -> void:
+	if not is_active: return
 	var player = body.get_parent() as Player
 	if player == null: return
 	if is_running_attack:
@@ -346,6 +352,8 @@ func take_damage(damage: int):
 	super.take_damage(damage)
 
 func _update_damage_bar() -> void:
+	if not is_active: return
+
 	is_update_damage_bar = true
 	last_life = life
 	timer_damage_bar.stop()
@@ -354,6 +362,8 @@ func _start_timer_damage_bar() -> void:
 	timer_damage_bar.start()
 
 func _start_special_attack() -> void:
+	if not is_active: return
+
 	special_attack_timer.wait_time = 3 + int(randf() * 10)
 	start_special_attack()
 
@@ -372,6 +382,8 @@ func _on_rays_to_wall_crash_with(wall_name: String) -> void:
 
 func _on_locals_emerge_boss() -> void:
 	
+	if not is_active: return
+	
 	body.global_position = center_to_split.global_position
 	body.show()
 	is_stop = true
@@ -379,6 +391,9 @@ func _on_locals_emerge_boss() -> void:
 	emerge_boos = true
 
 func _on_locals_free_all() -> void:
+	
+	if not is_active: return
+
 	
 	for ene in ene_in_crash_attack:
 		
@@ -414,8 +429,6 @@ func animation_logic():
 	if dir.y < 0:
 		play += "_back"
 	
-	
-		
 	anim.play(play)
 		
 signal _take_damages

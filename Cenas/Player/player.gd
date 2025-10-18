@@ -4,6 +4,7 @@ class_name Player
 @export var armor: LightArmor
 @export var armor_energie: int
 @export var can_die = true
+@export var hit_kill = false
 
 var items: Array[Item]
 
@@ -216,3 +217,10 @@ func take_knockback(direction: Vector2, force: int):
 signal player_die(player: Player)
 
 signal get_new_key(key: Key)
+
+
+func _on_hit_area_body_entered(body: Node2D) -> void:
+	var ene = body.get_parent() as Enemy
+	if ene == null: return
+	if hit_kill:
+		ene.take_damage(ene.life)

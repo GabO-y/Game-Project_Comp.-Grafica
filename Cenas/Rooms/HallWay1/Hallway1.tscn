@@ -1,15 +1,14 @@
-[gd_scene load_steps=15 format=4 uid="uid://map"]
+[gd_scene load_steps=14 format=4 uid="uid://map"]
 
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/Teto_0.tscn" id="0_id"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/moveis_baixo_1.tscn" id="1_id"]
+[ext_resource type="PackedScene" uid="uid://c14ddi75r80ei" path="res://Cenas/Rooms/HallWay1/Teto_0.tscn" id="0_id"]
+[ext_resource type="PackedScene" uid="uid://dupt6y8bpq8p8" path="res://Cenas/Rooms/HallWay1/moveis_baixo_1.tscn" id="1_id"]
 [ext_resource type="Script" uid="uid://cn6uolrs1md5g" path="res://Cenas/Rooms/HallWay1/hallway_1.gd" id="1_vdj4r"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/porta_2.tscn" id="2_id"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/roda_pé_3.tscn" id="3_id"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/papel_de_parede_4.tscn" id="4_id"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/chão_5.tscn" id="5_id"]
-[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallWay1/Fundo_6.tscn" id="6_id"]
+[ext_resource type="PackedScene" uid="uid://capcpc5njsjoq" path="res://Cenas/Rooms/HallWay1/porta_2.tscn" id="2_id"]
+[ext_resource type="PackedScene" uid="uid://pt1wv8nf3rfj" path="res://Cenas/Rooms/HallWay1/roda_pé_3.tscn" id="3_id"]
+[ext_resource type="PackedScene" uid="uid://cp5lrg3wol2cd" path="res://Cenas/Rooms/HallWay1/papel_de_parede_4.tscn" id="4_id"]
+[ext_resource type="PackedScene" uid="uid://cyqdmrgqkxxjb" path="res://Cenas/Rooms/HallWay1/chão_5.tscn" id="5_id"]
+[ext_resource type="PackedScene" uid="uid://bga1bpq25rgf" path="res://Cenas/Rooms/HallWay1/Fundo_6.tscn" id="6_id"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="8_s148i"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="10_mppsl"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mppsl"]
 polygon = PackedVector2Array(-215, -169, -220, -142, -206, -142, -190, -142, -197, -168, -197, -152, -197, -148, -206, -148, -215, -148, -215, -152)
@@ -68,14 +67,15 @@ is_locked = false
 position = Vector2(206, 157)
 occluder = SubResource("OccluderPolygon2D_mppsl")
 
-[node name="MiniRoom" parent="Doors" node_paths=PackedStringArray("light") instance=ExtResource("8_s148i")]
+[node name="Hall" parent="Doors" node_paths=PackedStringArray("light") instance=ExtResource("8_s148i")]
 position = Vector2(-36, 119)
+is_locked = false
 light = NodePath("PointLight2D2")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/MiniRoom"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/Hall"]
 occluder = SubResource("OccluderPolygon2D_8pbou")
 
-[node name="PointLight2D2" type="PointLight2D" parent="Doors/MiniRoom"]
+[node name="PointLight2D2" type="PointLight2D" parent="Doors/Hall"]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(-19, -2)
@@ -83,14 +83,7 @@ scale = Vector2(2.96094, 3.02394)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_mppsl")
 
-[node name="ParentsRoom" parent="Doors" instance=ExtResource("8_s148i")]
-position = Vector2(248, 71)
-
 [node name="Spawners" type="Node2D" parent="."]
-
-[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("10_mppsl")]
-position = Vector2(-15, 118)
-limit_spawn = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)

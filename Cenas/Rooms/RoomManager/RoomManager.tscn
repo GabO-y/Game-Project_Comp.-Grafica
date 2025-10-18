@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
-[ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="3_ufchu"]
-[ext_resource type="PackedScene" uid="uid://b2celb3sqinke" path="res://Cenas/Rooms/MiniRoom/MiniRoom.tscn" id="4_ctr5e"]
 [ext_resource type="PackedScene" uid="uid://dh8cy7t2ceti5" path="res://Cenas/Rooms/MegaGhostRoom/MegaGhostRoom.tscn" id="5_0aayb"]
+[ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="5_0t272"]
+[ext_resource type="PackedScene" uid="uid://dfbt2q3vq6op5" path="res://Cenas/Rooms/Hall/Hall.tscn" id="5_ow6w0"]
 
 [node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode")]
 script = ExtResource("1_n2tco")
@@ -13,16 +13,15 @@ metadata/_edit_vertical_guides_ = [-149.0, -529.0]
 metadata/_edit_horizontal_guides_ = [135.0]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.211543, 0.188376, 0.598353, 1)
+color = Color(0.258125, 0.1475, 0.59, 1)
 
 [node name="Rooms" type="Node2D" parent="."]
 
-[node name="Hallway1" parent="Rooms" instance=ExtResource("3_ufchu")]
+[node name="Hallway1" parent="Rooms" instance=ExtResource("5_0t272")]
 
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
-visible = false
-
-[node name="MiniRoom" parent="Rooms" instance=ExtResource("4_ctr5e")]
-visible = false
 
 [node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]
+
+[node name="Hall" parent="Rooms" instance=ExtResource("5_ow6w0")]
+texture_filter = 1

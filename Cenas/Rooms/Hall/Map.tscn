@@ -1,0 +1,31 @@
+[gd_scene load_steps=10 format=3 uid="uid://cv2etj6qj2v0c"]
+
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/teto_0.tscn" id="0_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/moveis_cima_1.tscn" id="1_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/porta_2.tscn" id="2_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/moveis_alto_3.tscn" id="3_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/moveis_baixo_4.tscn" id="4_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/roda_pe_5.tscn" id="5_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/papel_de_parede_6.tscn" id="6_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/chão_7.tscn" id="7_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/fundo_8.tscn" id="8_id"]
+
+[node name="map" type="Node2D"]
+
+[node name="fundo_8" parent="." instance=ExtResource("8_id")]
+
+[node name="chão_7" parent="." instance=ExtResource("7_id")]
+
+[node name="papel_de_parede_6" parent="." instance=ExtResource("6_id")]
+
+[node name="roda_pe_5" parent="." instance=ExtResource("5_id")]
+
+[node name="moveis_baixo_4" parent="." instance=ExtResource("4_id")]
+
+[node name="moveis_alto_3" parent="." instance=ExtResource("3_id")]
+
+[node name="porta_2" parent="." instance=ExtResource("2_id")]
+
+[node name="moveis_cima_1" parent="." instance=ExtResource("1_id")]
+
+[node name="teto_0" parent="." instance=ExtResource("0_id")]

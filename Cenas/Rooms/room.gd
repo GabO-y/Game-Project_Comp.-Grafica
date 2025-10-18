@@ -89,7 +89,11 @@ func switch_process(mode: bool):
 			layers.collision_enabled = mode
 		if layers.name == "Layers":
 			for layer in layers.get_children():
-				(layer as TileMapLayer).collision_enabled = mode
+				layer = layer as TileMapLayer
+				layer.collision_enabled = mode
+				layer.navigation_enabled = mode
+				layer.set_process(mode)
+				layer.set_physics_process(mode)
 						
 func _items_go_player():
 	for item in get_children():

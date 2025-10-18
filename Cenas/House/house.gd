@@ -10,11 +10,11 @@ func _ready() -> void:
 			
 	Globals.player = player
 	
-	Globals.set_initial_room("MegaGhostRoom")
+	Globals.set_initial_room("Hallway1")
 			
 	Globals.enable_room()
 
 	room_manager.match_doors("SafeRoom","HallWay1")
-	room_manager.match_doors("Hallway1", "MiniRoom")
+	room_manager.match_doors("Hallway1", "Hall")
 	
 	player.player_die.connect(transaction_scene._finish_round)

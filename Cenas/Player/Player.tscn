@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene load_steps=35 format=3 uid="uid://clp3coh5mf60x"]
 
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://8qj0ov3p7avy" path="res://Assets/Player/Animations/spr_player_assets.png" id="4_4o7c8"]
@@ -247,15 +247,6 @@ size = Vector2(11.5, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[sub_resource type="Gradient" id="Gradient_r8ryd"]
-offsets = PackedFloat32Array(0, 0.411111)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5akqg"]
-gradient = SubResource("Gradient_r8ryd")
-fill = 1
-fill_from = Vector2(0.490029, 0.481481)
-
 [node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "player_body", "anim", "hit_area") groups=["player"]]
 script = ExtResource("1_yjlpd")
 armor = NodePath("FairyLight")
@@ -289,12 +280,6 @@ position = Vector2(-3, 2)
 shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
 
-[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
-scale = Vector2(1.80656, 1.80656)
-color = Color(1, 0.819608, 0.74902, 0.654902)
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_5akqg")
-
 [node name="FairyLight" parent="." instance=ExtResource("4_5akqg")]
 
-[connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_ene_boss_touch_player"]
+[connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]

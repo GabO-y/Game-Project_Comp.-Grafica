@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://bht8b02r5jfpt"]
+[gd_scene load_steps=9 format=4 uid="uid://blwcpgg1roxxv"]
 
-[ext_resource type="Script" uid="uid://cmep8mptn6bji" path="res://Cenas/Rooms/parents_room.gd" id="1_evx3j"]
 [ext_resource type="Texture2D" uid="uid://bcd6ut6evy0ki" path="res://Assets/rooms/sprites_v2.png" id="2_wsc06"]
 [ext_resource type="Texture2D" uid="uid://c47cyplll431l" path="res://Assets/rooms/sprites_v3.png" id="3_rw54e"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_qs6ug"]
 [ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="5_0dmcn"]
+
+[sub_resource type="Resource" id="Resource_7wrvj"]
+metadata/__load_path__ = "res://Cenas/Rooms/parents_room.gd"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q58lq"]
 texture = ExtResource("2_wsc06")
@@ -290,7 +292,7 @@ sources/0 = SubResource("TileSetAtlasSource_q58lq")
 sources/1 = SubResource("TileSetAtlasSource_ncre6")
 
 [node name="ParentsRoom" type="Node2D" groups=["rooms"]]
-script = ExtResource("1_evx3j")
+script = SubResource("Resource_7wrvj")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1

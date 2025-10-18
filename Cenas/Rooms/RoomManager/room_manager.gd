@@ -4,18 +4,40 @@ var rooms: Array[Room]
 @export var roomsNode: Node2D
 
 func _ready() -> void:		
-	
+
+	var hall
+	var hall1
+
 	for room in roomsNode.get_children():
 		if room is Room:
+			
+			if room.name == "Hall":
+				hall = room
+			if room.name == "Hallway1":
+				hall1 = room
+			
 			room.add_to_group("rooms")
 			room.desable()
 			rooms.append(room)
+			
 			for door in room.doors:
 				door.player_in.connect(_teleport)
+			
+	var doors1 = get_doors(hall)
+	var doors2 = get_doors(hall1)
+	
+	for d1 in doors1:
+		for d2 in doors2:
+			print(d1.name, " == ", d2.name, ": ", d1 == d2)
 
 	Globals.generate_new_key.connect(_unlock_doors)
 	changed_room.connect(Globals.change_room)
 
+func get_doors(room: Room) -> Array[Door]:
+	var doors: Array[Door]
+	for door in room.doors:
+		doors.append(door)
+	return doors
 func _teleport(player, goTo):
 	
 	Globals.desable_room()	
@@ -41,19 +63,31 @@ func match_doors(r_current: String, r_target: String):
 	var d_current = r_target.to_lower()
 	var d_target = r_current.to_lower()
 	
+	var find_r1 = false
+	var find_r2 = false
+	
 	for room in rooms:
 		
 		var result: Door
 		
 		if room.name.to_lower() == r_current:
+			find_r1 = true
 			result = room.get_door(d_current)
 			if result != null:
 				door_current = result
+				
 		if room.name.to_lower() == r_target:
+			find_r2 = true
 			result = room.get_door(d_target)
 			if result != null:
 				door_target = result
 			
+	if not find_r1:
+		print("room: ", r_current, ", nao encontrado")
+		return
+	if not find_r2:
+		print("room: ", r_target, ", nao encontrado")
+		return
 	
 	if door_current == null:
 		print("porta: ", d_current, " nao encontrado, do quarto: ", r_current)
@@ -71,7 +105,7 @@ func match_doors(r_current: String, r_target: String):
 		door_current.get_parent().get_parent(),
 		door_current.area.global_position
 		]
-	
+
 func is_clean_room() -> bool:
 	return Globals.current_room.is_clean()
 

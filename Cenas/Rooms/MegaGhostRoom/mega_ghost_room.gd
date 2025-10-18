@@ -89,7 +89,6 @@ func get_randm_point_segment(line: Line, top_down: bool):
 	return Vector2(x, y)
 
 func start_special_attack(thing):
-	#if thing.get_parent() != boss: return
 	start_running_fantasm(thing)
 
 func start_running_fantasm(thing):
@@ -234,6 +233,12 @@ func _last_update_damage_bar(ene: Enemy) -> void:
 	$DamageBar/LifeBar.value = 0
 	await get_tree().create_timer(2).timeout
 	is_last_update_bar = true
+	
+func switch_process(mode: bool):
+	boss.is_active = mode
+	boss.set_process(mode)
+	boss.set_physics_process(mode)
+	super.switch_process(mode)
 	
 signal out_of_camera
 

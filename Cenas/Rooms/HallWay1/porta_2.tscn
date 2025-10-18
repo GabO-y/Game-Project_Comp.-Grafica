@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://chI0glrANSf"]
+[gd_scene load_steps=2 format=4 uid="uid://capcpc5njsjoq"]
 
-[ext_resource type="TileSet" id="tileset_id" path="tileset.tres"]
+[ext_resource type="TileSet" uid="uid://beitqqbn2empt" path="res://Cenas/Rooms/HallWay1/tileset.tres" id="tileset_id"]
 
 [node name="porta_2" type="TileMapLayer"]
 collision_enabled = false
 tile_set = ExtResource("tileset_id")
-tile_map_data = PackedByteArray(0, 0, 14, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 15, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 14, 0, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0, 16, 0, 3, 0, 0, 0, 1, 0, 4, 0, 0, 0, 14, 0, 4, 0, 0, 0, 2, 0, 4, 0, 0, 0, 16, 0, 4, 0, 0, 0, 3, 0, 4, 0, 0, 0, 15, 0, 3, 0, 0, 0, 4, 0, 4, 0, 0, 0, 15, 0, 4, 0, 0, 0, 5, 0, 4, 0, 0, 0)
+tile_map_data = PackedByteArray("AAAOAAIAAAABAAAAAAAPAAIAAAAAAAAAAAAQAAIAAAACAAAAAAAOAAMAAAAAAAQAAAAQAAMAAAABAAQAAAAOAAQAAAACAAQAAAAQAAQAAAADAAQAAAAPAAMAAAAEAAQAAAAPAAQAAAAFAAQAAAA=")
