@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbd2jesc0lry3"]
 
 [ext_resource type="Script" uid="uid://bjbw3yd0np1wr" path="res://Cenas/Enemie/Bosses/MegaGhost/Parts/MidPart/mid_part.gd" id="1_tgi38"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Fantasm/Fantasm.tscn" id="2_tj1ym"]
+[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Ghost/Ghost.tscn" id="2_tj1ym"]
 
 [node name="MidPart" type="Node2D" node_paths=PackedStringArray("rays", "ghost", "random_dir_timer", "vertical_point", "horizontal_point")]
 scale = Vector2(1.5, 1.5)

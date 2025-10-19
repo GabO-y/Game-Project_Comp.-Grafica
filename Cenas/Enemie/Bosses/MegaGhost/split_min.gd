@@ -2,7 +2,7 @@ extends Split
 
 class_name MinSplit
 
-@export var ghost: Fantasm
+@export var ghost: Ghost
 
 var in_game = false
 

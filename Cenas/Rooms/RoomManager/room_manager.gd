@@ -25,10 +25,6 @@ func _ready() -> void:
 			
 	var doors1 = get_doors(hall)
 	var doors2 = get_doors(hall1)
-	
-	for d1 in doors1:
-		for d2 in doors2:
-			print(d1.name, " == ", d2.name, ": ", d1 == d2)
 
 	Globals.generate_new_key.connect(_unlock_doors)
 	changed_room.connect(Globals.change_room)

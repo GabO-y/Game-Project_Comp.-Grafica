@@ -1,6 +1,6 @@
 extends Enemy
 
-class_name Fantasm
+class_name Ghost
 
 var animation_type: int
 var mouse_pos: Vector2
@@ -75,7 +75,7 @@ func animation_logic():
 	var dir_anim: Vector2
 
 	if dir == Vector2.ZERO: 
-		dir_anim = last_position
+		dir_anim = last_dir
 	else: 
 		dir_anim = dir
 	
@@ -133,7 +133,7 @@ func chase_player():
 		dir = Vector2.ZERO
 	else:
 		dir = (pla_pos - ene_pos).normalized()
-		last_position = dir
+		last_dir = dir
 		
 	body.velocity = dir * speed
 	
@@ -143,15 +143,6 @@ func enable():
 	show()
 	is_active = true
 	refrash()
-	
-func death_animation():
-		
-	var play = "die_right" if last_position.x > 0 else "die_left"
-	
-	anim.sprite_frames.set_animation_loop(play, false)
-	anim.play(play)
-
-	return anim.animation_finished
 	
 func running_player():
 	pass

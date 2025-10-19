@@ -54,6 +54,8 @@ func get_random_point_in_area(area: Area2D) -> Vector2:
 func spawanEmenie() -> Enemy:
 	
 	if type_enemie == null:
+		push_error("ENEMY TYPE IS NULL: ", get_path())
+		get_tree().quit()
 		return
 	
 	var point = get_random_point_in_area($Area2D)
@@ -70,7 +72,10 @@ func spawanEmenie() -> Enemy:
 	
 	add_child(ene)
 	
+	print(ene)
+	
 	ene.set_active(is_active)
+
 		
 	return ene
 	

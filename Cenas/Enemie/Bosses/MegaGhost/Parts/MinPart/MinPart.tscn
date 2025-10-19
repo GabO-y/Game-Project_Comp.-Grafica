@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bearv3o0iguj8"]
 
 [ext_resource type="Script" uid="uid://uo78eu1k0fwb" path="res://Cenas/Enemie/Bosses/MegaGhost/Parts/MinPart/min_part.gd" id="1_0yiun"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Fantasm/Fantasm.tscn" id="2_wqgyy"]
+[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Ghost/Ghost.tscn" id="2_wqgyy"]
 
 [node name="MinPart" type="Node2D" node_paths=PackedStringArray("rays", "ghost", "random_dir_timer", "vertical_point", "horizontal_point")]
 scale = Vector2(0.8, 0.8)

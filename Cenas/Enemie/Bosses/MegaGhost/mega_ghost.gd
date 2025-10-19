@@ -192,6 +192,13 @@ func start_special_attack():
 	
 	is_stop = true
 	start_special = true
+	
+	anim.play("start_special")
+	
+	if body.global_position.direction_to(Globals.player.player_body.global_position).normalized().x < 0:
+		anim.flip_h = true
+	else:
+		anim.flip_h = false
 
 	await Globals.time(2)
 	
@@ -199,7 +206,6 @@ func start_special_attack():
 	on_special_attack = true
 
 	current_special_attack = get_random_special_attack()
-	current_special_attack = "crash_wall"
 		
 	match current_special_attack:
 		"ghosts_run":
@@ -451,6 +457,8 @@ func get_random_special_attack():
 func animation_logic():
 	
 	if on_special_attack:
+		if is_stop:
+			return
 		dir = dir_special_attack
 	
 	var is_back = ""
@@ -478,12 +486,12 @@ func boss_touch_area(body: Node2D):
 	if body.get_parent() is MegaGhost:
 		is_stop = true
 		step_1_ghost_run()
-	elif body.get_parent() is Fantasm:
+	elif body.get_parent() is Ghost:
 		body.get_parent().die()
 	
 func generate_ghost_random_point(point: Vector2):
 	
-	var gho = load("res://Cenas/Enemie/Fantasm/Fantasm.tscn").instantiate() as Fantasm
+	var gho = load("res://Cenas/Enemie/Ghost/Ghost.tscn").instantiate() as Ghost
 	Globals.current_room.call_deferred("add_child", gho)
 	
 	gho.special_attack = current_special_attack

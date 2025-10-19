@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cirgr2k7g1tgi"]
+[gd_scene load_steps=17 format=4 uid="uid://cirgr2k7g1tgi"]
 
 [ext_resource type="PackedScene" uid="uid://dls8b0gmqgxgr" path="res://Cenas/Rooms/SafeRoom/teto_0.tscn" id="0_id"]
 [ext_resource type="Script" uid="uid://cb3mmc8s7ai8c" path="res://Cenas/Rooms/SafeRoom/safe_room.gd" id="1_ckbd2"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c42kqnewe2l" path="res://Cenas/Rooms/SafeRoom/Fundo_7.tscn" id="7_id"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="7_t81q4"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="10_ko388"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="12_6su08"]
+[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="13_gqryf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6su08"]
 texture = ExtResource("7_t81q4")
@@ -188,6 +190,13 @@ open_door_sprite = NodePath("../../Layers/Porta_aberta")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/HallWay1"]
 occluder = SubResource("OccluderPolygon2D_t81q4")
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("12_6su08")]
+position = Vector2(208, 117)
+type_enemie = ExtResource("13_gqryf")
+limit_spawn = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(154, 96)
