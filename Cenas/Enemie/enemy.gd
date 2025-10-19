@@ -10,6 +10,8 @@ class_name Enemy
 
 @export var bar: ProgressBar #Barra de progresso
 
+var is_stop = false
+
 var player: Player #Proprio jogador
 
 var position_target #Para onde ele deve andar
@@ -61,8 +63,8 @@ func disable():
 func enable():
 	show()
 	is_active = true
-	body.collision_layer = 1
-	body.collision_mask = 1
+	body.collision_layer = Globals.collision_map["zombie"]
+	body.collision_mask = Globals.collision_map["zombie"]
 	
 func take_damage(damage: int):
 	
@@ -114,6 +116,8 @@ func drop_logic():
 		#Globals.current_room.add_child(key)
 		Globals.current_room.call_deferred("add_child", key)
 		key.global_position = body.global_position
+	else:
+		Globals.generate_new_key.emit(null)
 
 
 func change_color_damage():

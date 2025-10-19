@@ -39,6 +39,8 @@ anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 life = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.00174533
 

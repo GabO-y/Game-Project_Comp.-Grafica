@@ -1,23 +1,8 @@
-[gd_scene load_steps=13 format=4 uid="uid://dh8cy7t2ceti5"]
+[gd_scene load_steps=12 format=4 uid="uid://dh8cy7t2ceti5"]
 
 [ext_resource type="Script" uid="uid://cnd74vp62bkot" path="res://Cenas/Rooms/MegaGhostRoom/mega_ghost_room.gd" id="1_akcp5"]
 [ext_resource type="PackedScene" uid="uid://b004ceoelpayb" path="res://Cenas/Objects/TileMao/tile_map_main.tscn" id="2_usvkd"]
 [ext_resource type="PackedScene" uid="uid://bts2u7o7pqcl6" path="res://Cenas/Enemie/Bosses/MegaGhost/MegaGhost.tscn" id="4_busjt"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_busjt"]
-size = Vector2(217, 502)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_adp6g"]
-size = Vector2(822, 138)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wnqr"]
-size = Vector2(834, 176)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_06qbf"]
-size = Vector2(199, 518)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewnpg"]
-size = Vector2(344, 134)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_busjt"]
 bg_color = Color(0, 0, 0, 1)
@@ -35,14 +20,25 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gf7wg"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="MegaGhostRoom" type="Node2D" node_paths=PackedStringArray("down_coll", "up_coll", "left_coll", "right_coll", "inside_area", "segs_node", "boss", "camera")]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gf7wg"]
+a = Vector2(-407.5, -216)
+b = Vector2(390.5, -214)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_busjt"]
+a = Vector2(386.5, 231)
+b = Vector2(-427.5, 237)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_adp6g"]
+a = Vector2(-359.5, -243)
+b = Vector2(-364.5, 264)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_2wnqr"]
+a = Vector2(347.5, 258)
+b = Vector2(349.5, -230)
+
+[node name="MegaGhostRoom" type="Node2D" node_paths=PackedStringArray("segs_node", "boss", "camera")]
 script = ExtResource("1_akcp5")
-down_coll = NodePath("DownColl")
-up_coll = NodePath("UpColl")
-left_coll = NodePath("LeftColl")
-right_coll = NodePath("RightColl")
-inside_area = NodePath("InsideArea")
-segs_node = NodePath("Segs")
+segs_node = NodePath("Lines")
 boss = NodePath("MegaGhost")
 camera = NodePath("Camera2D")
 
@@ -54,64 +50,26 @@ position = Vector2(0, 12)
 enabled = false
 zoom = Vector2(2.5, 2.5)
 
-[node name="MegaGhost" parent="." node_paths=PackedStringArray("life_bar", "damage_bar", "center_to_split") instance=ExtResource("4_busjt")]
+[node name="MegaGhost" parent="." node_paths=PackedStringArray("life_bar", "damage_bar", "center_to_split", "walls_area_room", "lines_to_spawn") instance=ExtResource("4_busjt")]
 position = Vector2(0, -88)
 life_bar = NodePath("../DamageBar/LifeBar")
 damage_bar = NodePath("../DamageBar")
 center_to_split = NodePath("../CenterPos")
+walls_area_room = NodePath("../Walls")
+lines_to_spawn = [NodePath("../Lines/UpLine"), NodePath("../Lines/DownLine"), NodePath("../Lines/LeftLine"), NodePath("../Lines/RightLine")]
 
-[node name="LeftColl" type="Area2D" parent="."]
-collision_layer = 255
-collision_mask = 255
+[node name="Lines" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftColl"]
-position = Vector2(-427, 10)
-shape = SubResource("RectangleShape2D_busjt")
-
-[node name="UpColl" type="Area2D" parent="."]
-collision_layer = 255
-collision_mask = 255
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UpColl"]
-position = Vector2(47, -287)
-shape = SubResource("RectangleShape2D_adp6g")
-
-[node name="DownColl" type="Area2D" parent="."]
-collision_layer = 255
-collision_mask = 255
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DownColl"]
-position = Vector2(89, 332)
-shape = SubResource("RectangleShape2D_2wnqr")
-
-[node name="RightColl" type="Area2D" parent="."]
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightColl"]
-position = Vector2(450, 3)
-shape = SubResource("RectangleShape2D_06qbf")
-
-[node name="InsideArea" type="Area2D" parent="."]
-collision_layer = 512
-collision_mask = 512
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InsideArea"]
-position = Vector2(-1, 4)
-shape = SubResource("RectangleShape2D_ewnpg")
-
-[node name="Segs" type="Node2D" parent="."]
-
-[node name="UpLine" type="Line2D" parent="Segs"]
+[node name="UpLine" type="Line2D" parent="Lines"]
 points = PackedVector2Array(-192, -192, 192, -192)
 
-[node name="DownLine" type="Line2D" parent="Segs"]
+[node name="DownLine" type="Line2D" parent="Lines"]
 points = PackedVector2Array(192, 192, -192, 192)
 
-[node name="LeftLine" type="Line2D" parent="Segs"]
+[node name="LeftLine" type="Line2D" parent="Lines"]
 points = PackedVector2Array(-288, -88, -288, 106)
 
-[node name="RightLine" type="Line2D" parent="Segs"]
+[node name="RightLine" type="Line2D" parent="Lines"]
 points = PackedVector2Array(288, -96, 288, 80)
 
 [node name="DamageBar" type="ProgressBar" parent="."]
@@ -145,9 +103,30 @@ show_percentage = false
 
 [node name="CenterPos" type="Marker2D" parent="."]
 
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Up" type="Area2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Up"]
+position = Vector2(1.5, 0)
+shape = SubResource("SegmentShape2D_gf7wg")
+
+[node name="Down" type="Area2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Down"]
+position = Vector2(1.5, 0)
+shape = SubResource("SegmentShape2D_busjt")
+
+[node name="Left" type="Area2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+position = Vector2(1.5, 0)
+shape = SubResource("SegmentShape2D_adp6g")
+
+[node name="Right" type="Area2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+position = Vector2(1.5, 0)
+shape = SubResource("SegmentShape2D_2wnqr")
+
 [connection signal="enemy_die" from="MegaGhost" to="." method="_last_update_damage_bar"]
-[connection signal="body_entered" from="LeftColl" to="." method="_on_left_coll_body_entered"]
-[connection signal="body_entered" from="UpColl" to="." method="_on_up_coll_body_entered"]
-[connection signal="body_entered" from="DownColl" to="." method="_on_down_coll_body_entered"]
-[connection signal="body_entered" from="RightColl" to="." method="_on_right_coll_body_entered"]
-[connection signal="body_entered" from="InsideArea" to="." method="_on_inside_area_body_entered"]

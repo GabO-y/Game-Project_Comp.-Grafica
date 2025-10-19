@@ -8,6 +8,7 @@ var die = false
 var already_keys = []
 var is_get_animation = false
 var center_pos: Vector2
+var special_time_ghost_run = 2
 
 var is_using_array = false
 
@@ -21,8 +22,11 @@ var dir_possibles_crash_wall = {
 	
 var collision_map = {
 	"no_player_but_damage" : 1 << 3,
-	"enemy" : 1 << 2,
-	"special_attack_area_megaghost" : 1 << 7
+	"enemy" : 1 | 1 << 1,
+	"special_attack_area_megaghost" : 1 << 7,
+	"zombie": 1 | 1 << 1,
+	"player_dash" : 1 << 2,
+	"player_normal": 1 
 }
 	
 var ene_in_crash_attack: Array[Enemy]
@@ -34,7 +38,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 func _process(delta: float) -> void:
-	
+		
 	if die:
 		if Input.is_key_label_pressed(KEY_SPACE):
 			get_tree().reload_current_scene()
@@ -128,20 +132,14 @@ func time(time: float):
 	
 func _on_goint_to_center():
 	already_center += 1
-	print(already_center)
 	if already_center >= 8:
 		emerge_boss.emit()
 		already_center = 0
-	
-func connect_safe(sign, function):
-	sign.connect(function)
-	
-	if sign and (sign as Signal).is_connected(function):
-		print(sign, " connect")
-	else:
-		print(sign, " not connect")
-	
-	
+
+func get_special_time_ghost_run():
+	special_time_ghost_run *= 1.1
+	return special_time_ghost_run
+
 #Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
 #Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
 #chave for finalizada 

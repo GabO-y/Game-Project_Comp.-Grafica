@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://map"]
+[gd_scene load_steps=16 format=4 uid="uid://map"]
 
 [ext_resource type="PackedScene" uid="uid://c14ddi75r80ei" path="res://Cenas/Rooms/HallWay1/Teto_0.tscn" id="0_id"]
 [ext_resource type="PackedScene" uid="uid://dupt6y8bpq8p8" path="res://Cenas/Rooms/HallWay1/moveis_baixo_1.tscn" id="1_id"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cyqdmrgqkxxjb" path="res://Cenas/Rooms/HallWay1/chão_5.tscn" id="5_id"]
 [ext_resource type="PackedScene" uid="uid://bga1bpq25rgf" path="res://Cenas/Rooms/HallWay1/Fundo_6.tscn" id="6_id"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="8_s148i"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="10_8pbou"]
+[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="11_kl4xd"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mppsl"]
 polygon = PackedVector2Array(-215, -169, -220, -142, -206, -142, -190, -142, -197, -168, -197, -152, -197, -148, -206, -148, -215, -148, -215, -152)
@@ -69,7 +71,6 @@ occluder = SubResource("OccluderPolygon2D_mppsl")
 
 [node name="Hall" parent="Doors" node_paths=PackedStringArray("light") instance=ExtResource("8_s148i")]
 position = Vector2(-36, 119)
-is_locked = false
 light = NodePath("PointLight2D2")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/Hall"]
@@ -84,6 +85,11 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_mppsl")
 
 [node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("10_8pbou")]
+position = Vector2(-4, 114)
+type_enemie = ExtResource("11_kl4xd")
+limit_spawn = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)

@@ -10,7 +10,7 @@ func _ready() -> void:
 			
 	Globals.player = player
 	
-	Globals.set_initial_room("Hallway1")
+	Globals.set_initial_room("MegaGhostRoom")
 			
 	Globals.enable_room()
 

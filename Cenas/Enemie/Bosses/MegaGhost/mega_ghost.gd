@@ -6,7 +6,6 @@ class_name MegaGhost
 @export var attack_collision: CollisionPolygon2D
 @export var form_attack: Node2D
 @export var special_attack_timer: Timer
-@export var is_stop: bool
 @export var life_bar: ProgressBar
 @export var damage_bar: ProgressBar
 @export var timer_damage_bar: Timer
@@ -15,8 +14,23 @@ class_name MegaGhost
 @export var horizontal_mid_spawn_1: Marker2D
 @export var horizontal_mid_spawn_2: Marker2D
 @export var center_to_split: Marker2D
+
 @export var locals: LocalVar
 
+# As variaveis a baixo precisam ser configuradas dentro do quarto do boss
+
+# As areas fora do mapa que ele deve bater para iniciar os proximos passos
+@export var walls_area_room: Node2D
+# As linhas de spawns dos fantamas e do proprio boss quando estiver finalizando o ataque
+@export var lines_to_spawn: Array[Line2D]
+# =====
+
+var amount_spawn_ghost = 10
+var count_ghosts = 0
+var is_emerge_boss_ghost_run = false
+
+var BOSS_LAYER = Globals.collision_map["no_player_but_damage"]
+var WALL_LAYER = 1 << 7
 
 #pra verificar se esta dando o ataque especial
 var on_special_attack = false
@@ -77,6 +91,12 @@ func _ready() -> void:
 	for attack in all_special_attacks:
 		available_special_attacks.append(attack)
 
+	for area in walls_area_room.get_children():
+		area = area as Area2D
+		area.collision_layer = WALL_LAYER
+		area.collision_mask = WALL_LAYER | BOSS_LAYER
+		area.body_entered.connect(boss_touch_area)
+		
 	super._ready()
 	
 func _process(delta: float) -> void:
@@ -98,7 +118,7 @@ func _process(delta: float) -> void:
 	update_bar()
 	
 	if is_player_on_attack_area_1:
-		slash(Globals.player)
+		prepare_slash()
 	
 	if is_update_damage_bar:
 		damage_bar.value -= 0.4
@@ -123,36 +143,40 @@ func _physics_process(delta: float) -> void:
 	
 	body.velocity = dir * speed
 	body.move_and_slide()
-		
-func slash(player: Player):	
+
+func prepare_slash():
 	
 	if is_running_attack or on_special_attack: return
+
+	var angle = body.global_position.direction_to(
+		Globals.player.player_body.global_position
+		).normalized().angle()
 		
-	var dir = body.global_position.direction_to(player.player_body.global_position).normalized()
-	attack_collision.rotation = (dir.angle() - PI/1.5)
-	form_attack.rotation = (dir.angle() - PI/1.5)
+	attack_collision.rotation = (angle - PI/1.5)
+	form_attack.rotation = (angle - PI/1.5)
+		
+	slash()
 	
-	if !finish_attack: return
+	
+func slash():	
+	
+	if not finish_attack: return
 	finish_attack = false
-	speed *= 0.9
 	
+	await Globals.time(0.5)
 	
+	form_attack.show()
 	
-	await get_tree().create_timer(1.5).timeout
-	
-	
-	form_attack.visible = true
-	finish_attack = true
-	
-	speed *= 1.1
-		
 	if is_player_on_attack_area_1: 
 		Globals.player.take_damage(damage)
 		var knockback_dir = -(Globals.player.player_body.global_position.direction_to(body.global_position))
 		Globals.player.take_knockback(knockback_dir , 200)
+		
+	await Globals.time(0.4)
+	form_attack.hide()
+	finish_attack = true
 	
-	await get_tree().create_timer(0.1).timeout
-	form_attack.visible = false
+	
 			
 func _entrered_attack_area(body):
 	if body.get_parent() is not Player: return
@@ -175,11 +199,8 @@ func start_special_attack():
 	on_special_attack = true
 
 	current_special_attack = get_random_special_attack()
-	print(current_special_attack)
-	print(speed_special_attack)	
-	
-#	Verificar pq o ghost run nao esta funcionando
-	
+	current_special_attack = "crash_wall"
+		
 	match current_special_attack:
 		"ghosts_run":
 			attack_ghost_run()
@@ -188,8 +209,8 @@ func start_special_attack():
 	
 func attack_ghost_run():
 	
-	body.collision_layer = Globals.collision_map["special_attack_area_megaghost"]
-	body.collision_mask = Globals.collision_map["special_attack_area_megaghost"]
+	body.collision_layer = BOSS_LAYER
+	body.collision_mask = WALL_LAYER
 
 	is_running_attack = true
 
@@ -226,20 +247,32 @@ func move_special():
 			move_crash_wall()
 			
 func move_ghosts_run():
-	
-	dir_special_attack = body.global_position.direction_to(Globals.player.player_body.global_position)
-	
-	if body.global_position.distance_to(Globals.player.player_body.global_position) < 60:
+						
+	var ene_pos = body.global_position
+	var pla_pos = Globals.player.player_body.global_position
+			
+	var dist = ene_pos.distance_to(pla_pos)
+	dir_special_attack = ene_pos.direction_to(pla_pos)
+
+	if is_emerge_boss_ghost_run:
+		body.velocity = dir_special_attack * speed_special_attack
+		body.move_and_slide()
+		if dist < 60:
+			slash()
+			refrash_setup()
+		return	
+
+	if dist < 60:
 		dir_special_attack = Vector2.ZERO
 		is_continue_toward = true
 		
 	if dir_special_attack == Vector2.ZERO or is_continue_toward:
 		if last_dir_special == null or last_dir_special == Vector2.ZERO:
-			last_dir_special = body.global_position.direction_to(Globals.player.player_body.global_position)
+			last_dir_special = ene_pos.direction_to(pla_pos)
 		dir_special_attack = last_dir_special
 	else:
 		last_dir_special = dir_special_attack
-	
+		
 	body.velocity = dir_special_attack * speed_special_attack
 	body.move_and_slide()
 	
@@ -318,8 +351,8 @@ func refrash_setup():
 	
 	if not is_active: return
 
-	body.collision_layer = Globals.collision_map["no_player_but_damage"] 
-	body.collision_mask =  Globals.collision_map["no_player_but_damage"]
+	body.collision_layer = BOSS_LAYER
+	body.collision_mask = WALL_LAYER
 	start_special = false
 	on_special_attack = false
 	special_attack_timer.stop()
@@ -331,6 +364,9 @@ func refrash_setup():
 	is_active = true
 	already_split = false
 	speed_special_attack = 100
+	count_ghosts = 0
+	Globals.special_time_ghost_run = 2
+	is_emerge_boss_ghost_run = false
 	
 func _player_enter_while_running(body: Node2D) -> void:
 	if not is_active: return
@@ -382,18 +418,16 @@ func _on_rays_to_wall_crash_with(wall_name: String) -> void:
 
 func _on_locals_emerge_boss() -> void:
 	
-	if not is_active: return
-	
 	body.global_position = center_to_split.global_position
 	body.show()
 	is_stop = true
+	is_active = true
 	modulate.a = 0
 	emerge_boos = true
 
 func _on_locals_free_all() -> void:
 	
 	if not is_active: return
-
 	
 	for ene in ene_in_crash_attack:
 		
@@ -419,16 +453,75 @@ func animation_logic():
 	if on_special_attack:
 		dir = dir_special_attack
 	
-	var play: String
+	var is_back = ""
 	
-	if dir.x > 0:
-		play += "right"
-	elif dir.x < 0:
-		play += "left"
-		
 	if dir.y < 0:
-		play += "_back"
+		is_back = "_back"
+	if dir.x < 0:
+		anim.flip_h = true
+	else:
+		anim.flip_h = false
 	
-	anim.play(play)
+	anim.play("right" + is_back)
 		
 signal _take_damages
+
+# Gera x fantamas em cantos aleatorios
+func step_1_ghost_run():
+	
+	for i in range(amount_spawn_ghost):
+		generate_ghost_random_point(get_random_point())
+		
+
+func boss_touch_area(body: Node2D):
+	
+	if body.get_parent() is MegaGhost:
+		is_stop = true
+		step_1_ghost_run()
+	elif body.get_parent() is Fantasm:
+		body.get_parent().die()
+	
+func generate_ghost_random_point(point: Vector2):
+	
+	var gho = load("res://Cenas/Enemie/Fantasm/Fantasm.tscn").instantiate() as Fantasm
+	Globals.current_room.call_deferred("add_child", gho)
+	
+	gho.special_attack = current_special_attack
+	
+	gho.body.collision_mask = WALL_LAYER
+	gho.body.collision_layer = BOSS_LAYER
+	
+	gho.body.global_position = point
+	gho.speed = 120
+	
+	gho.enemy_die.connect(_check_amount_die)
+	
+	gho.is_stop = true
+	await Globals.time(Globals.get_special_time_ghost_run())
+	gho.is_stop = false
+
+func get_random_point() -> Vector2:
+	
+	var line = lines_to_spawn.pick_random() as Line2D
+	
+	var x1 = line.points[0].x
+	var y1 = line.points[0].y
+	var x2 = line.points[1].x
+	var y2 = line.points[1].y
+	
+	var t = randf()
+	
+	var x = x1 + t * (x2 - x1)
+	var y = y1 + t * (y2 - y1)
+	
+	return Vector2(x, y)
+
+func _check_amount_die(fan):
+	count_ghosts += 1
+	if count_ghosts >= amount_spawn_ghost:
+		step_2_running_ghosts()
+
+func step_2_running_ghosts():
+	body.global_position = get_random_point()
+	is_stop = false
+	is_emerge_boss_ghost_run = true

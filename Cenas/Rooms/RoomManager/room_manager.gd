@@ -38,6 +38,7 @@ func get_doors(room: Room) -> Array[Door]:
 	for door in room.doors:
 		doors.append(door)
 	return doors
+	
 func _teleport(player, goTo):
 	
 	Globals.desable_room()	
@@ -110,6 +111,8 @@ func is_clean_room() -> bool:
 	return Globals.current_room.is_clean()
 
 func _unlock_doors(key: Key):
+	
+	if key == null: return
 	
 	var door_1: Door
 	var door_2: Door

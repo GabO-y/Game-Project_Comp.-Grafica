@@ -11,7 +11,7 @@ var is_stuck = false
 var ene_stuck: Enemy
 var all_ene_on_light = []
 var time_to_take_damage = 2.5
-var damage = 2
+var damage = 100
 var time_remain = 5
 
 func _ready() -> void:

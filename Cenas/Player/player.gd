@@ -114,16 +114,13 @@ func _physics_process(delta: float) -> void:
 		is_dashing = true
 		dash_timer = dash_time
 		player_body.velocity = last_direction * dash_speed
-		
-	if is_dashing:
-		collision(false)
-	else:
-		collision(true)
+		set_collision(Globals.collision_map["player_dash"])
 		
 	# Atualizar dash
 	if is_dashing:
 		dash_timer -= delta
 		if dash_timer <= 0:
+			set_collision(Globals.collision_map["player_normal"])
 			is_dashing = false
 			dash_cooldown_timer = dash_cooldown
 			player_body.velocity = Vector2.ZERO
@@ -196,19 +193,9 @@ func get_key_animation(key: Key):
 func _unlocked_doors(key: Key):
 	Globals.generate_new_key.emit(key)
 	
-func collision(mode: bool):
-	if mode:
-		player_body.collision_layer = 1
-		player_body.collision_mask = 1
-	else: 
-		player_body.collision_layer = 1 << 2
-		player_body.collision_mask = 1 << 2
-	
 func take_damage(damage: int):
 	life -= damage;
-	print("take damage")
-	print(str(int(life + damage)), " -> ", life)
-	
+	print("take damage")	
 func take_knockback(direction: Vector2, force: int):
 	is_on_knockback = true
 	knockback_dir = direction
@@ -218,9 +205,12 @@ signal player_die(player: Player)
 
 signal get_new_key(key: Key)
 
-
 func _on_hit_area_body_entered(body: Node2D) -> void:
 	var ene = body.get_parent() as Enemy
 	if ene == null: return
 	if hit_kill:
 		ene.take_damage(ene.life)
+		
+func set_collision(value):
+	player_body.collision_layer = value
+	player_body.collision_mask = value

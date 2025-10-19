@@ -21,17 +21,16 @@ var camare_chase_player = false
 func _process(delta: float) -> void:
 	if camare_chase_player:
 		camera.global_position.y = Globals.player.player_body.global_position.y
+	super._process(delta)
 
 
 func _camara_chase(body: Node2D) -> void:
 	if body.get_parent() is not Player: return
 	camare_chase_player = true
-	print(\"entrou\")
 	
 func _not_camera_chase(body: Node2D) -> void:
 	if body.get_parent() is not Player: return
 	camare_chase_player = false
-	print(\"saiu\")
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kegp6"]
@@ -92,7 +91,6 @@ collision_enabled = true
 
 [node name="Hallway1" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(279, 184)
-is_locked = false
 
 [node name="Spawners" type="Node2D" parent="."]
 

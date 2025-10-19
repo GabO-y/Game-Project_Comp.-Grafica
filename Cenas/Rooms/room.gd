@@ -34,7 +34,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !finish:
 		is_clean()
-					
+		
 func calculate_total_enemies() -> int:	
 	total_enemies = 0
 
@@ -114,7 +114,7 @@ func get_door(door_name: String) -> Door:
 			return door
 	return null
 	
-	
 func setup():
 	pass
+	
 signal clear

@@ -12,6 +12,9 @@ var timer_attack = 0
 var speed_when_attack = 2
 var last_dir_player: Vector2
 var check_on_collision = false
+var is_continue_toward = false
+
+var special_attack = ""
 
 func _ready() -> void:
 		
@@ -30,6 +33,14 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player") 
 
 func _process(delta: float) -> void:
+	
+	if is_stop: return
+	
+	if not special_attack.is_empty():
+		match special_attack:
+			"ghosts_run":
+				ghosts_run_move()
+		return
 	
 	var dist = body.global_position.distance_to(player.player_body.global_position)
 	
@@ -153,3 +164,21 @@ func _player_enter_hit(body: Node2D) -> void:
 func refrash():
 	body.collision_layer = Globals.collision_map["enemy"]
 	body.collision_mask = Globals.collision_map["enemy"]
+	
+func ghosts_run_move():
+	
+	var ene_pos = body.global_position
+	var pla_pos = Globals.player.player_body.global_position
+	
+	var dist = ene_pos.distance_to(pla_pos)
+	dir = ene_pos.direction_to(pla_pos)
+	
+	if dist <= 40 or is_continue_toward:
+		dir = last_dir_player
+		is_continue_toward = true
+	else:
+		last_dir_player = dir
+	
+	body.velocity = dir * speed
+	body.move_and_slide()
+		

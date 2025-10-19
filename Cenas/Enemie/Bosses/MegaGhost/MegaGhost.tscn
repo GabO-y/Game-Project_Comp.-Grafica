@@ -1,47 +1,56 @@
-[gd_scene load_steps=15 format=3 uid="uid://bts2u7o7pqcl6"]
+[gd_scene load_steps=19 format=3 uid="uid://bts2u7o7pqcl6"]
 
 [ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
 [ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_0lw7i"]
 [ext_resource type="Script" uid="uid://b2pi0hl5dhvrm" path="res://Cenas/Enemie/Bosses/MegaGhost/rays_to_wall.gd" id="2_redsd"]
 [ext_resource type="Script" uid="uid://cawflp5ogyjva" path="res://Cenas/Enemie/Bosses/MegaGhost/locals.gd" id="9_oiqga"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lw7i"]
+atlas = ExtResource("2_0lw7i")
+region = Rect2(0, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_2oh6i"]
 atlas = ExtResource("2_0lw7i")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0lw7i"]
-atlas = ExtResource("2_0lw7i")
-region = Rect2(32, 32, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r3iy"]
 atlas = ExtResource("2_0lw7i")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_klga1"]
 atlas = ExtResource("2_0lw7i")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl8lf"]
+atlas = ExtResource("2_0lw7i")
 region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiqga"]
+atlas = ExtResource("2_0lw7i")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70et5"]
+atlas = ExtResource("2_0lw7i")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwrsq"]
+atlas = ExtResource("2_0lw7i")
+region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xlh7a"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2oh6i")
-}],
-"loop": true,
-"name": &"left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_0lw7i")
-}],
-"loop": true,
-"name": &"left_back",
-"speed": 5.0
 }, {
-"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2oh6i")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7r3iy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klga1")
 }],
 "loop": true,
 "name": &"right",
@@ -49,7 +58,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_klga1")
+"texture": SubResource("AtlasTexture_jl8lf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiqga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70et5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwrsq")
 }],
 "loop": true,
 "name": &"right_back",
@@ -98,7 +116,7 @@ anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 texture_filter = 1
 scale = Vector2(1.34375, 1.34375)
 sprite_frames = SubResource("SpriteFrames_xlh7a")
-animation = &"left"
+animation = &"right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_xlh7a")
@@ -158,7 +176,7 @@ target_position = Vector2(-24, 0)
 target_position = Vector2(0, -25)
 
 [node name="SpecialAttackTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 autostart = true
 
 [node name="CheckBarDamage" type="Timer" parent="."]
@@ -166,6 +184,8 @@ wait_time = 2.0
 
 [node name="Locals" type="Node2D" parent="."]
 script = ExtResource("9_oiqga")
+
+[node name="Walls" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="CharacterBody2D/HitAreaRunning" to="." method="_player_enter_while_running"]
 [connection signal="body_exited" from="CharacterBody2D/HitAreaRunning" to="." method="_player_exit_area"]

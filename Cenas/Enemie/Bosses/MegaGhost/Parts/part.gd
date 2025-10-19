@@ -15,7 +15,6 @@ var ene_in_crash_attack: Array[Enemy]
 var last_wall_collide: String
 var times_crash = 0
 var is_splited = false
-var is_stop = false
 var is_min_min = false
 var toward_center = false
 var dir_special_attack: Vector2

@@ -8,8 +8,6 @@ class_name Zombie
 enum State { CHASING, DASHING, ATTACKING }
 var current_state: State = State.CHASING
 
-var is_stop = false
-
 var dash_timer = 0.0
 var dash_duration = 0.5
 var dash_direction: Vector2
@@ -96,5 +94,4 @@ func _exit_player_area_attack(body: Node2D) -> void:
 		is_player_in_attack_range = false
 
 func _update_agent() -> void:
-	print("update")
 	agent.target_position = Globals.player.player_body.global_position
