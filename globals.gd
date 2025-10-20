@@ -9,9 +9,7 @@ var already_keys = []
 var is_get_animation = false
 var center_pos: Vector2
 var special_time_ghost_run = 2
-
-var is_using_array = false
-
+var player_pos: Vector2
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
 		Vector2( 1,   1)  : {"right" : Vector2(-1,  1), "down" : Vector2( 1, -1)},
@@ -37,8 +35,11 @@ var already_center = 0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
+	
 func _process(delta: float) -> void:
-		
+	
+	player_pos = player.player_body.global_position
+
 	if die:
 		if Input.is_key_label_pressed(KEY_SPACE):
 			get_tree().reload_current_scene()

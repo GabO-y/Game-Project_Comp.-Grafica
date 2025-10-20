@@ -11,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c42kqnewe2l" path="res://Cenas/Rooms/SafeRoom/Fundo_7.tscn" id="7_id"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="7_t81q4"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="10_ko388"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="12_6su08"]
-[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="13_gqryf"]
+[ext_resource type="PackedScene" uid="uid://b6mu4j6timduc" path="res://Cenas/Interfaces/ChestUI.tscn" id="15_wllog"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6su08"]
 texture = ExtResource("7_t81q4")
@@ -141,6 +140,9 @@ sources/0 = SubResource("TileSetAtlasSource_6su08")
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_t81q4"]
 polygon = PackedVector2Array(-8, 7, -11, -27, 11, -27, 8, 7, 8, -24, -8, -24)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6su08"]
+radius = 6.0
+
 [node name="SafeRoom" type="Node2D"]
 script = ExtResource("1_ckbd2")
 
@@ -191,13 +193,34 @@ open_door_sprite = NodePath("../../Layers/Porta_aberta")
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/HallWay1"]
 occluder = SubResource("OccluderPolygon2D_t81q4")
 
-[node name="Spawners" type="Node2D" parent="."]
-
-[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("12_6su08")]
-position = Vector2(208, 117)
-type_enemie = ExtResource("13_gqryf")
-limit_spawn = 1
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(154, 96)
 zoom = Vector2(3, 3)
+
+[node name="Interative" type="Node2D" parent="."]
+
+[node name="ChestUi" parent="Interative" node_paths=PackedStringArray("popup", "area") instance=ExtResource("15_wllog")]
+texture_filter = 1
+offset_left = 147.0
+offset_top = 97.0
+offset_right = 147.0
+offset_bottom = 97.0
+popup = NodePath("PopUp2")
+area = NodePath("Area2D2")
+
+[node name="Area2D2" type="Area2D" parent="Interative/ChestUi"]
+position = Vector2(33, -24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interative/ChestUi/Area2D2"]
+shape = SubResource("CircleShape2D_6su08")
+
+[node name="PopUp2" type="PanelContainer" parent="Interative/ChestUi"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -40.0
+offset_right = 99.0
+scale = Vector2(0.293563, 0.283642)
+
+[node name="Label" type="Label" parent="Interative/ChestUi/PopUp2"]
+layout_mode = 2
+text = "Abrir Loja"

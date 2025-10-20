@@ -29,6 +29,8 @@ var knockback_force: int
 var knockback_time = 0
 var knockback_duration = 0.5
 
+var is_in_menu = false
+
 @export var player_body: CharacterBody2D
 @export var anim: AnimatedSprite2D
 @export var hit_area: Area2D
@@ -43,6 +45,8 @@ func _ready() -> void:
 	armor.toggle_activate()
 	
 func _process(delta: float) -> void:
+		
+	if is_in_menu: return
 		
 	animation_logic()
 	
@@ -71,6 +75,8 @@ func _exit_enemie(body):
 	ene.atack_player = false
 		
 func _physics_process(delta: float) -> void:
+	
+	if is_in_menu: return
 	
 	if is_on_knockback:
 		if knockback_time >= knockback_duration:

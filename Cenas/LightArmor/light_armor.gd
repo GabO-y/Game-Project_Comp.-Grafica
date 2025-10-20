@@ -12,6 +12,8 @@ var mouse_move = false
 
 func _process(delta: float) -> void:
 	
+	if Globals.player.is_in_menu: return
+	
 	if Input.is_action_just_pressed("ui_toggle_armor"):
 		print("asd")
 		toggle_activate()
