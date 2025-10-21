@@ -132,7 +132,7 @@ horizontal_mid_spawn_1 = NodePath("CharacterBody2D/PointsMidSpwan/Horizontal1")
 horizontal_mid_spawn_2 = NodePath("CharacterBody2D/PointsMidSpwan/Horizontal2")
 locals = NodePath("Locals")
 speed = 50
-damage = 50
+damage = 2
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 

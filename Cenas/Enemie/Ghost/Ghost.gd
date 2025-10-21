@@ -6,15 +6,30 @@ var animation_type: int
 var mouse_pos: Vector2
 
 # Variaveis referentes ao ataque
-var is_attacking = false
 var time_attack = 0.5;
 var timer_attack = 0
-var speed_when_attack = 2
 var last_dir_player: Vector2
-var check_on_collision = false
-var is_continue_toward = false
+var is_continue_toward := false
+
+var is_dashing := false
+var dash_dir: Vector2
+var dash_duration := 0.4
+var dash_timer = 0
+var dash_speed := 200
+var is_prepare_attack = false
+
+var wait_timer = 0
+var wait_duration = 1.2
 
 var special_attack = ""
+
+enum State {
+	CHASE,
+	PREPARE_ATTACKING,
+	DASHING
+}
+
+var current_state: State
 
 func _ready() -> void:
 		
@@ -25,136 +40,114 @@ func _ready() -> void:
 							
 	anim.show()
 	
-	damage = 5
 	life = 5
 		
 	super._ready()
 	
 	player = get_tree().get_first_node_in_group("player") 
+	
+	body.collision_layer = Globals.layers["enemy"]
+	body.collision_mask = Globals.layers["wall_current_room"]
 
 func _process(delta: float) -> void:
 	
 	if is_stop: return
 	
+	var dist = body.global_position.distance_to(Globals.player_pos)
+			
 	if not special_attack.is_empty():
 		match special_attack:
 			"ghosts_run":
 				ghosts_run_move()
 		return
-	
-	var dist = body.global_position.distance_to(player.player_body.global_position)
-	
-	if dist < 30:
-		await Globals.time(0.5)
-		is_attacking = true
-		body.collision_layer = Globals.collision_map["no_player_but_damage"]
-		
-	if check_on_collision:
-		if dist >= 30:
-			refrash()
-			check_on_collision = false
-		
+				
+	match current_state:
+		State.CHASE:
+			chase_player(dist)
+		State.PREPARE_ATTACKING:
+			prepare_attack(delta)
+		State.DASHING:
+			dash(delta)
+			
 	animation_logic()
-	
-	if is_attacking:
-		dash_slash(delta)
-		
-	if is_running_attack:
-		running_player()
-	else:
-		chase_player()
 		
 	super._process(delta)
+
+func prepare_attack(delta):
+	
+	wait_timer += delta
+
+	if wait_timer >= wait_duration:
+		current_state = State.DASHING
+		is_dashing = true
+		wait_timer = 0
+		dash_dir = body.global_position.direction_to(Globals.player_pos)
+		last_dir = dash_dir
+		body.collision_mask = 0
+				
+func dash(delta):
+		
+	body.velocity = dash_dir * dash_speed
+	body.move_and_slide()
+		
+	dash_timer += delta
+		
+	if dash_timer >= dash_duration:
+		dash_timer = 0
+		current_state = State.CHASE
+		is_dashing = false		
+		body.collision_mask = Globals.layers["enemy"]
 	
 func animation_logic():
 	
-	if atack_player: return
+	if is_dead: return
 	
-	var play := ""
+	var play = "type_" + str(animation_type)
+	if dir.y < 0:
+		play = "back" + str("" if(
+			animation_type % 2 != 0
+		) else "_bald") 
 	
-	var dir_anim: Vector2
-
-	if dir == Vector2.ZERO: 
-		dir_anim = last_dir
-	else: 
-		dir_anim = dir
-	
-	if dir_anim.x > 0:
-		play = "right"
-	else:
-		play = "left"
-	
-	if dir_anim.y < 0:
-		play += "_back"
-		
-	if play.contains("back"):
-		if (animation_type == 2 || animation_type == 4) and play.contains("back"):
-			play += "_bald"
-	else:
-		play += str(animation_type)
-					
+	anim.flip_h = dir.x > 0
 	anim.play(play)
-
-func dash_slash(delta: float):
 	
-	var ene_pos = body.global_position
-	var pla_pos = player.player_body.global_position
-
-	if (timer_attack >= time_attack):
-		await Globals.time(0.5)
-		is_attacking = false
-		timer_attack = 0
-		check_on_collision = true
+func set_active(mode: bool):
+	super.set_active(mode)
+	
+	var layer = Globals.layers["ghost"] if mode else 0
+	
+	body.collision_layer = layer
+	body.collision_mask = layer
+	
+func chase_player(dist):
+	
+	if (dist < 40):
+		current_state = State.PREPARE_ATTACKING
 		return
-	
-	var dir
-	
-	if ene_pos.distance_to(pla_pos) < 15:
-		dir = last_dir_player
-	else:
-		dir = ene_pos.direction_to(pla_pos).normalized()
-		last_dir_player = dir
-		
-	body.velocity += dir * speed_when_attack
-	body.move_and_slide()
-	
-	timer_attack += delta
-	
-func chase_player():
 	
 	if is_attacking: return
 	
-	var ene_pos = body.global_position
-	var pla_pos = player.player_body.global_position
-	
-	var distance = ene_pos.distance_to(pla_pos)
-	
-	if !is_active or player == null:
-		dir = Vector2.ZERO
-	else:
-		dir = (pla_pos - ene_pos).normalized()
-		last_dir = dir
-		
+	dir = Globals.dir_to(body.global_position, Globals.player_pos)
+
 	body.velocity = dir * speed
-	
 	body.move_and_slide()
 	
 func enable():
 	show()
 	is_active = true
 	refrash()
-	
-func running_player():
-	pass
 
 func _player_enter_hit(body: Node2D) -> void:
 	var player = body.get_parent() as Player
 	if player == null: return
+	
+	player.take_knockback(dir, 10)
 	player.take_damage(damage)
+	
 
 func refrash():
-	body.collision_layer = Globals.collision_map["enemy"]
-	body.collision_mask = Globals.collision_map["enemy"]
+	body.collision_layer = Globals.layers["enemy"]
+	body.collision_mask = Globals.layers["wall_current_room"]
 	
 func ghosts_run_move():
 	

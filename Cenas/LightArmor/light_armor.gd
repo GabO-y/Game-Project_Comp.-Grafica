@@ -10,6 +10,9 @@ class_name LightArmor
 var enemies_on_light: Dictionary[Enemy, float] = {}
 var mouse_move = false
 
+func _ready() -> void:
+	area.collision_mask = Globals.layers["enemy"]
+
 func _process(delta: float) -> void:
 	
 	if Globals.player.is_in_menu: return

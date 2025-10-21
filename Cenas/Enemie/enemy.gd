@@ -15,8 +15,7 @@ var is_stop = false
 var player: Player #Proprio jogador
 
 var position_target #Para onde ele deve andar
-var atack_player = false #para verificar se esta atacando o player para ter que ficar parado
-var dir: Vector2 = Vector2.ZERO #direção do inimigo, fiz pra facilitar com as animações
+var is_attacking = false #para verificar se esta atacando o player para ter que ficar parado
 var is_active: bool = false
 var knockback_force: float = 500.0
 var is_dead: bool = false
@@ -54,18 +53,18 @@ func update_bar():
 		return
 	bar.value = life
 
-func disable():
-	hide()
-	is_active = false
-	body.collision_layer = 0
-	body.collision_mask = 0
+func set_active(mode: bool):
 	
-func enable():
-	show()
-	is_active = true
-	body.collision_layer = Globals.collision_map["zombie"]
-	body.collision_mask = Globals.collision_map["zombie"]
+	set_process(mode)
+	set_physics_process(mode)
 	
+	show() if mode else hide()
+	
+	var layer = Globals.layers["enemy"] if mode else 0
+	
+	body.collision_layer = layer
+	body.collision_mask = layer
+
 func take_damage(damage: int):
 	
 	if is_dead: return
@@ -84,7 +83,7 @@ func knockback_logic():
 func die():
 	
 	if is_dead: return
-		
+			
 	is_dead = true
 	
 	drop_logic()	
@@ -99,9 +98,7 @@ func die():
 	anim.flip_h = last_dir.x > 0
 	
 	await anim.animation_finished
-	
-	print("a")
-	
+		
 	enemy_die.emit(self)
 	queue_free()
 
@@ -134,12 +131,6 @@ func change_color_damage():
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
 	
-	
-func set_active(mode: bool):
-	if mode:
-		enable()
-	else:
-		disable()
-	is_active = mode
+
 	
 signal enemy_die(ene: Enemy)

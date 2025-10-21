@@ -5,26 +5,15 @@ var rooms: Array[Room]
 
 func _ready() -> void:		
 
-	var hall
-	var hall1
-
 	for room in roomsNode.get_children():
 		if room is Room:
-			
-			if room.name == "Hall":
-				hall = room
-			if room.name == "Hallway1":
-				hall1 = room
-			
+						
 			room.add_to_group("rooms")
 			room.desable()
 			rooms.append(room)
 			
 			for door in room.doors:
 				door.player_in.connect(_teleport)
-			
-	var doors1 = get_doors(hall)
-	var doors2 = get_doors(hall1)
 
 	Globals.generate_new_key.connect(_unlock_doors)
 	changed_room.connect(Globals.change_room)

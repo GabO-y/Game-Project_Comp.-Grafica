@@ -130,5 +130,5 @@ func _exit_player_area_attack(body: Node2D) -> void:
 		is_player_in_attack_range = false
 
 func _update_agent() -> void:
-	agent.target_position = Globals.player.player_body.global_position
+	agent.target_position = Globals.player.body.global_position
 	pass

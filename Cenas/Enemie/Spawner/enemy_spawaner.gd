@@ -90,11 +90,7 @@ func disable():
 	
 func switch(mode: bool):
 	for enemy in enemies:
-		if mode:
-			enemy.enable()
-		else: 
-			enemy.hide()
-			enemy.disable()
+		enemy.set_active(mode)
 			
 	is_active = mode
 				

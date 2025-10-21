@@ -22,6 +22,7 @@ color = Color(0.258125, 0.1475, 0.59, 1)
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
 
 [node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]
+position = Vector2(688, -22)
 
 [node name="Hall" parent="Rooms" instance=ExtResource("5_ow6w0")]
 texture_filter = 1

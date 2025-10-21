@@ -12,6 +12,9 @@ var time_to_shoting = 2
 var can_shot_timer = 0
 var bullets = 5
 
+func _ready() -> void:
+	super._ready()
+
 func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_toggle_armor"):

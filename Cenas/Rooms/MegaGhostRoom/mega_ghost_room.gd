@@ -32,7 +32,6 @@ func refrash_setup():
 	time_can_go = 3
 	fantasm_on_attack.clear()
 	
-		
 func _last_update_damage_bar(ene: Enemy) -> void:
 	$DamageBar/LifeBar.value = 0
 	await get_tree().create_timer(2).timeout

@@ -8,6 +8,9 @@ class_name Room
 @export var spread: bool = false
 @export var doors: Array[Door]
 @export var camera: Camera2D
+@export var layer_node: Node2D
+
+var layers: Array[TileMapLayer]
 
 var spread_one = false
 var total_enemies: int = 0
@@ -28,6 +31,11 @@ func _ready() -> void:
 			for door in child.get_children():
 				if door is Door:
 					doors.append(door)
+					
+		if child.name == "Layers":
+			for layer in child.get_children():
+				if layer is TileMapLayer:
+					layers.append(layer)
 			
 	clear.connect(_clear_effects)
 					
@@ -63,7 +71,7 @@ func desable():
 			
 func enable():
 	switch_process(true)
-			
+
 func switch_process(mode: bool):
 	
 	if mode: show()
@@ -83,18 +91,17 @@ func switch_process(mode: bool):
 	for spawn in spaweners:
 		if spawn is Spawn:
 			spawn.switch(mode)
-	
-	for layers in get_children():
-		if layers is TileMapLayer:
-			layers.collision_enabled = mode
-		if layers.name == "Layers":
-			for layer in layers.get_children():
-				layer = layer as TileMapLayer
-				layer.collision_enabled = mode
-				layer.navigation_enabled = mode
-				layer.set_process(mode)
-				layer.set_physics_process(mode)
-						
+			
+	for layer in layers:
+		layer.collision_enabled = mode
+		layer.navigation_enabled = mode
+		layer.set_process(mode)
+		layer.set_physics_process(mode)
+		var lar = Globals.layers["wall_current_room"] if mode else 0
+		
+		layer.tile_set.set_physics_layer_collision_layer(0, lar)
+		layer.tile_set.set_physics_layer_collision_mask(0, lar)
+
 func _items_go_player():
 	for item in get_children():
 		if item is Item:
@@ -115,6 +122,9 @@ func get_door(door_name: String) -> Door:
 	return null
 	
 func setup():
+	pass
+	
+func update_layers():
 	pass
 	
 signal clear

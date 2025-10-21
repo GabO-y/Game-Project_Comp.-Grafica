@@ -13,6 +13,8 @@ func _ready() -> void:
 	
 	area.body_entered.connect(_ene_join_light)
 	area.body_exited.connect(_ene_exit_light)
+	
+	super._ready()
 
 func _process(delta):
 	

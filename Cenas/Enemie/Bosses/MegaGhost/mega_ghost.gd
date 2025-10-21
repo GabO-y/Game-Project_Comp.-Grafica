@@ -29,9 +29,6 @@ var amount_spawn_ghost = 10
 var count_ghosts = 0
 var is_emerge_boss_ghost_run = false
 
-var BOSS_LAYER = Globals.collision_map["no_player_but_damage"]
-var WALL_LAYER = 1 << 7
-
 #pra verificar se esta dando o ataque especial
 var on_special_attack = false
 # quando um ataque especial começa, e para que certas funcs nao sejam chamadas diversas vezes
@@ -80,6 +77,7 @@ var all_special_attacks = [
 ]
 
 var available_special_attacks: Array[String]
+var area
 
 func _ready() -> void:
 			
@@ -91,12 +89,15 @@ func _ready() -> void:
 	for attack in all_special_attacks:
 		available_special_attacks.append(attack)
 
-	for area in walls_area_room.get_children():
+	for area in walls_area_room.get_children():		
 		area = area as Area2D
-		area.collision_layer = WALL_LAYER
-		area.collision_mask = WALL_LAYER | BOSS_LAYER
+		
+		area.collision_layer = Globals.layers["out_room_boss"]
+		area.collision_mask = Globals.layers["boss"]
+	
 		area.body_entered.connect(boss_touch_area)
 		
+	area = walls_area_room.get_children()[0]
 	super._ready()
 	
 func _process(delta: float) -> void:
@@ -157,7 +158,6 @@ func prepare_slash():
 		
 	slash()
 	
-	
 func slash():	
 	
 	if not finish_attack: return
@@ -176,8 +176,6 @@ func slash():
 	form_attack.hide()
 	finish_attack = true
 	
-	
-			
 func _entrered_attack_area(body):
 	if body.get_parent() is not Player: return
 	is_player_on_attack_area_1 = true
@@ -206,6 +204,7 @@ func start_special_attack():
 	on_special_attack = true
 
 	current_special_attack = get_random_special_attack()
+	current_special_attack = "ghosts_run"
 		
 	match current_special_attack:
 		"ghosts_run":
@@ -215,8 +214,8 @@ func start_special_attack():
 	
 func attack_ghost_run():
 	
-	body.collision_layer = BOSS_LAYER
-	body.collision_mask = WALL_LAYER
+	body.collision_layer = Globals.layers["boss"]
+	body.collision_mask = Globals.layers["wall_boss"]
 
 	is_running_attack = true
 
@@ -357,8 +356,11 @@ func refrash_setup():
 	
 	if not is_active: return
 
-	body.collision_layer = BOSS_LAYER
-	body.collision_mask = WALL_LAYER
+	
+
+	body.collision_layer = Globals.layers["boss"]
+	body.collision_mask = Globals.layers["wall_boss"]
+	
 	start_special = false
 	on_special_attack = false
 	special_attack_timer.stop()
@@ -476,38 +478,42 @@ signal _take_damages
 
 # Gera x fantamas em cantos aleatorios
 func step_1_ghost_run():
-	
 	for i in range(amount_spawn_ghost):
 		generate_ghost_random_point(get_random_point())
-		
 
 func boss_touch_area(body: Node2D):
 	
 	if body.get_parent() is MegaGhost:
 		is_stop = true
 		step_1_ghost_run()
+		
 	elif body.get_parent() is Ghost:
 		body.get_parent().die()
 	
 func generate_ghost_random_point(point: Vector2):
 	
 	var gho = load("res://Cenas/Enemie/Ghost/Ghost.tscn").instantiate() as Ghost
-	Globals.current_room.call_deferred("add_child", gho)
 	
+	if not gho.is_inside_tree():
+		Globals.call_deferred("add_child", gho)
+		await get_tree().process_frame
+
 	gho.special_attack = current_special_attack
+	gho.z_index = 1
 	
-	gho.body.collision_mask = WALL_LAYER
-	gho.body.collision_layer = BOSS_LAYER
-	
+	gho.body.collision_layer = Globals.layers["boss"]
+	gho.body.collision_mask = Globals.layers["out_room_boss"]
+			
 	gho.body.global_position = point
 	gho.speed = 120
-	
+			
 	gho.enemy_die.connect(_check_amount_die)
-	
+		
 	gho.is_stop = true
+
 	await Globals.time(Globals.get_special_time_ghost_run())
 	gho.is_stop = false
-
+	
 func get_random_point() -> Vector2:
 	
 	var line = lines_to_spawn.pick_random() as Line2D

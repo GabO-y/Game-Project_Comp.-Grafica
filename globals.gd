@@ -18,13 +18,14 @@ var dir_possibles_crash_wall = {
 		Vector2(-1,  -1)  : {"left"  : Vector2( 1, -1), "up"   : Vector2(-1,  1)}
 	}
 	
-var collision_map = {
-	"no_player_but_damage" : 1 << 3,
-	"enemy" : 1 | 1 << 1,
-	"special_attack_area_megaghost" : 1 << 7,
-	"zombie": 1 | 1 << 1,
-	"player_dash" : 1 << 2,
-	"player_normal": 1 
+var layers = {
+	"player" : 1 << 0,
+	"enemy" : 1 << 1,
+	"boss": 1 << 2,
+	"wall_boss": 1 << 3,
+	"wall_current_room": 1 << 4,
+	"out_room_boss": 1 << 5,
+	"ghost": 1 << 6
 }
 	
 var ene_in_crash_attack: Array[Enemy]
@@ -38,7 +39,7 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	
-	player_pos = player.player_body.global_position
+	player_pos = player.body.global_position
 
 	if die:
 		if Input.is_key_label_pressed(KEY_SPACE):
@@ -119,6 +120,7 @@ func update_room_light():
 	
 func change_room():
 	current_room._update_doors_light()
+	current_room.update_layers()
 	if current_room.finish: return
 
 func set_initial_room(name: String):
@@ -141,6 +143,9 @@ func get_special_time_ghost_run():
 	special_time_ghost_run *= 1.1
 	return special_time_ghost_run
 
+func dir_to(current: Vector2, target: Vector2):
+	return current.direction_to(target)
+	
 #Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
 #Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
 #chave for finalizada 
