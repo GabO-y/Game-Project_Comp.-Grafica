@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 		#if ene.life <= 0:
 			#enemies.erase(ene)
 
+#	TODO: por um timer
 	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
 		time = 0
 		enemies.append(spawanEmenie())
@@ -69,6 +70,7 @@ func spawanEmenie() -> Enemy:
 	
 	ene.enemy_die.connect(_free_enemy)
 	ene.enemy_die.connect(room._check_clear_by_ene_die)
+	ene.enemy_die.connect(room.manager.item_manager.try_drop)
 	
 	add_child(ene)
 		

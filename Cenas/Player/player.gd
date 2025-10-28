@@ -9,6 +9,8 @@ class_name Player
 @export var hit_area: Area2D
 @export var knockback_anim: AnimationPlayer
 @export var coins: int = 0
+@export var hud: CanvasLayer
+@export var label_coins: Label
 
 var original_modulate = self.modulate
 var modulate_timer = 0
@@ -19,8 +21,6 @@ var hearts = 3
 var is_invencible = false
 var invencible_duration = 1.2
 var invencible_timer = 0
-
-var items: Array[Item]
 
 var input_vector
 
@@ -61,6 +61,8 @@ func _ready() -> void:
 	armor.toggle_activate()
 	
 	body.collision_mask |= Globals.layers["wall_current_room"]
+	
+	update_label_coins()
 	
 func _process(delta: float) -> void:
 	
@@ -281,7 +283,10 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	if ene == null: return
 	if hit_kill:
 		ene.take_damage(ene.life)
-		
+
+func update_label_coins():
+	label_coins.text = str(coins)
+
 signal player_die(player: Player)
 
 signal get_new_key(key: Key)

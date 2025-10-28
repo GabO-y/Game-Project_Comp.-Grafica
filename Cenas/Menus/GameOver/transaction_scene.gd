@@ -1,6 +1,9 @@
 extends Node2D
 
+class_name TransitionScene
+
 @onready var game_over_anim := $GameOver/AnimationPlayer
+
 
 func _finish_round(player: Player):
 				

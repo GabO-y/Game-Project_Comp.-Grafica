@@ -102,9 +102,7 @@ func die():
 	await anim.animation_finished
 
 	enemy_die.emit(self)
-	
-	Globals.try_drop(body.global_position)
-	
+		
 	queue_free()
 
 func drop_logic():
@@ -114,9 +112,7 @@ func drop_logic():
 			var item = drop["item"]
 			#Globals.current_scene.add_child(item)
 			#item.global_position = global_position
-			
-	print("asjkfhksdj")
-			
+					
 	var key = Globals.drop_key()
 	
 	if key != null:
@@ -124,7 +120,6 @@ func drop_logic():
 		key.global_position = body.global_position
 	else:
 		Globals.generate_new_key.emit(null)
-
 
 func change_color_damage():
 	body.move_and_slide()

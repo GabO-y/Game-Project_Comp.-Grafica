@@ -9,6 +9,7 @@ class_name Room
 @export var doors: Array[Door]
 @export var camera: Camera2D
 @export var layer_node: Node2D
+@export var manager: RoomManager
 
 var layers: Array[TileMapLayer]
 
@@ -17,7 +18,6 @@ var total_enemies: int = 0
 var already_drop_key = false
 
 func _ready() -> void:
-	
 	for child in get_children():
 		
 		if child is Camera2D:
@@ -37,7 +37,7 @@ func _ready() -> void:
 			for layer in child.get_children():
 				if layer is TileMapLayer:
 					layers.append(layer)
-													
+
 func calculate_total_enemies() -> int:	
 	total_enemies = 0
 
@@ -54,7 +54,6 @@ func enable():
 	_check_clear()
 
 func switch_process(mode: bool):
-	
 	visible = mode
 	
 	if camera: camera.enabled = mode
@@ -85,19 +84,15 @@ func switch_process(mode: bool):
 		
 	if mode:
 		_update_doors()
-
-func _items_go_player():
-	for item in get_children():
-		if item is Item:
-			item.is_to_chase_player = true
 			
 func _update_doors():
 	for door in doors:
 		door.set_active(!door.is_locked and finish)
-		
+
+# Para todos os efeitos que devem acontecer quando um quarto é finalizado
 func _clear_effects():
-	_items_go_player()
 	_update_doors()
+	manager.item_manager.make_items_chase_player()
 
 func get_door(door_name: String) -> Door:
 	for door in doors:
@@ -105,19 +100,29 @@ func get_door(door_name: String) -> Door:
 			return door
 	return null
 
+# Como o sinal da morte de um inmigo precisa de um parametro
+# Ent fiz esse pra funcionar, mas é o msm que o "_check_clear"
 func _check_clear_by_ene_die(ene):
 	_check_clear()
+
+func get_is_clear():
+	if not is_clear:
+		_check_clear()
+	return is_clear
 
 func _check_clear():
 		
 	for spawn in spaweners:
-		print(spawn.enemies) 
-		if not spawn.is_clean(): return
+		if not spawn.is_clean(): 
+			is_clear = false
+			finish = false
+			return
 		
+	is_clear = true
 	finish = true
 	_clear_effects()
 	clear.emit()
-			
 	
+# fazendo a parte de items, quando sala limpa, item segue player
 signal clear
  

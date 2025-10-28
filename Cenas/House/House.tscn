@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxexjlkqbs61u"]
+[gd_scene load_steps=7 format=3 uid="uid://cxexjlkqbs61u"]
 
 [ext_resource type="Script" uid="uid://c3svmxorsnj3i" path="res://Cenas/House/house.gd" id="1_rmjq6"]
 [ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/Player/Player.tscn" id="2_iqu7b"]
 [ext_resource type="PackedScene" uid="uid://b0ntae4uqgnun" path="res://Cenas/Rooms/RoomManager/RoomManager.tscn" id="4_6pdaa"]
 [ext_resource type="PackedScene" uid="uid://oapef3dqlad" path="res://Cenas/Menus/GameOver/TransactionScene.tscn" id="4_rmjq6"]
+[ext_resource type="PackedScene" uid="uid://bb4ttu771sbb6" path="res://Cenas/Interfaces/Chest/ChestMenu.tscn" id="5_iqu7b"]
 
-[node name="House" type="Node2D" node_paths=PackedStringArray("room_manager")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_iqu7b"]
+
+[node name="House" type="Node2D" node_paths=PackedStringArray("player", "room_manager", "transiontion_scene")]
 script = ExtResource("1_rmjq6")
+player = NodePath("Player")
 room_manager = NodePath("RoomManager")
+transiontion_scene = NodePath("TransitionScene")
 
 [node name="RoomManager" parent="." instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
@@ -17,3 +22,23 @@ position = Vector2(50, 86)
 
 [node name="TransitionScene" parent="." instance=ExtResource("4_rmjq6")]
 position = Vector2(-111, -80)
+
+[node name="ChestMenuInterativa" type="Node2D" parent="."]
+
+[node name="BearArea" type="Area2D" parent="ChestMenuInterativa"]
+position = Vector2(183, 72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChestMenuInterativa/BearArea"]
+shape = SubResource("CircleShape2D_iqu7b")
+
+[node name="MenuPopUp" type="Label" parent="ChestMenuInterativa"]
+offset_left = 164.0
+offset_top = 46.0
+offset_right = 204.0
+offset_bottom = 69.0
+text = "aaaa"
+metadata/_edit_use_anchors_ = true
+
+[node name="ChestMenu" parent="ChestMenuInterativa" node_paths=PackedStringArray("popup", "area") instance=ExtResource("5_iqu7b")]
+popup = NodePath("../MenuPopUp")
+area = NodePath("../BearArea")

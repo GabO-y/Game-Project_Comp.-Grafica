@@ -19,14 +19,11 @@ static func create(item_name, price, icon: Texture2D) -> ChestItem:
 	
 	item.item_name = item_name
 	item.price = price
-	
-	print(item.accept_button)
-	
+		
 	item.accept_button.icon = icon
 	
 	return item
 	
-
 func _ready() -> void:
 	label_name.text = item_name
 	label_price.text = str(price)

@@ -31,21 +31,7 @@ var layers = {
 	"no_collision_wall": 1 << 7
 }
 
-#var drops = {
-	#"comum": {"chance" : 0.5, "item": [
-		#"heart",
-		#"coin"
-	#]},
-	#"rare": {"chance": 0.7, "item": [
-		#"power"
-	#]}
-#}
 
-var drops = {
-	"comum": {"chance" : 0.0, "item": [
-		"coin"
-	]}
-}
 	
 var ene_in_crash_attack: Array[Enemy]
 var special_ghost_collision = 2
@@ -198,22 +184,7 @@ func create_curve_drop(start: Vector2, right: bool = true, x_scala: float = 1.5,
 		
 	return curve
 	
-func try_drop(pos: Vector2):
-	var p = randf()
 
-	var item: String = ""
-
-	for i in drops.keys():
-		if p > drops[i]["chance"]:
-			item = drops[i]["item"].pick_random()
-			
-	if not item.is_empty():
-		drop(item, pos)
-		
-func drop(item: String, pos: Vector2):
-	var i = Item.create_item(item, pos)
-	add_child(i)
-	
 #Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
 #Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
 #chave for finalizada 

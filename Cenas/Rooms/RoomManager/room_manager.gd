@@ -4,6 +4,7 @@ class_name RoomManager
 var rooms: Array[Room]
 
 @export var roomsNode: Node2D
+@export var item_manager: ItemManager
 
 var current_room: Room
 
@@ -12,10 +13,12 @@ func _ready() -> void:
 	for room in roomsNode.get_children():
 				
 		if room is Room:
-									
+			
 			room.add_to_group("rooms")
 			room.desable()
 			rooms.append(room)
+			
+			room.manager = self
 			
 			for door in room.doors:
 				door = door as Door
@@ -24,7 +27,7 @@ func _ready() -> void:
 	for room in rooms:
 		for door in room.doors:
 			match_doors(room.name, door.name)
-		
+			
 	Globals.generate_new_key.connect(_unlock_doors)
 	
 func get_doors(room: Room) -> Array[Door]:
@@ -34,6 +37,10 @@ func get_doors(room: Room) -> Array[Door]:
 	return doors
 	
 func _change_room(goTo):
+		
+#	Para o caso do player mudar de sala, 
+#   mas ainda haver items que não foram coletados
+	item_manager.get_all_items()
 		
 	current_room.desable()
 	var room_name = current_room.name
@@ -129,7 +136,7 @@ func set_initial_room(room_name: String):
 	print("room: ", room_name, " not found")
 
 func is_clean_room() -> bool:
-	return Globals.current_room.is_clean()
+	return current_room.get_is_clear()
 
 func _unlock_doors(key: Key):
 	

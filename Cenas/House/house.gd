@@ -1,24 +1,19 @@
 extends Node2D
 
-@onready var player := $Player
-@onready var enemies: Array[Enemy]
-
-@onready var transaction_scene := $TransitionScene
-
+@export var player: Player
 @export var room_manager: RoomManager
+@export var transiontion_scene: TransitionScene
 
 func _ready() -> void:
-	
 	room_manager.set_initial_room("SafeRoom")
-	
 	Globals.player = player
 	
+	room_manager.changed_room.connect(active_menu)
+
+# Como o canvasLayer tem que tá na cena main, é ele ativa e desativa o chestMenu 
+# basedo no sinal que o room_manager tem, vendo se é o saferoom
+func active_menu():
+	var is_safe_room = room_manager.current_room.name == "SafeRoom"
+	$ChestMenuInterativa/ChestMenu.set_process(is_safe_room)
+	$ChestMenuInterativa.visible = is_safe_room
 	
-func _physics_process(delta: float) -> void:
-	pass	
-	#for room in room_manager.rooms:
-		#room = room as Room
-		#if room.name == "BossGhostRoom":
-			#for la in room.layers:
-				#la = la as TileMapLayer
-				#print(la.tile_set.get_physics_layer_collision_mask(0))

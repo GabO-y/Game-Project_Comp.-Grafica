@@ -94,6 +94,10 @@ func hide_pop_up():
 	
 func show_menu():
 	if !menu: return
+	
+	Globals.player.hud.visible = false
+	update_label_coins()
+	
 	get_tree().paused = true
 	set_visible_menu(true)
 	menu.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -102,6 +106,10 @@ func show_menu():
 
 func hide_menu():
 	if !menu: return
+	
+	if Globals.player:
+		Globals.player.hud.visible = true
+
 	get_tree().paused = false
 	set_visible_menu(false)
 	menu.process_mode = Node.PROCESS_MODE_INHERIT
@@ -138,6 +146,8 @@ func set_active(mode: bool):
 		hide_menu()
 		
 func _buy_item(item: ChestItem):
+	Globals.player.coins -= item.price
+	update_label_coins()
 	item.queue_free()
 	
 func _insuffient_coisn():
@@ -193,3 +203,7 @@ func _on_wearpons_pressed() -> void:
 
 func _on_power_ups_pressed() -> void:
 	tabCont.current_tab = 1
+
+func update_label_coins():
+	Globals.player.update_label_coins()
+	coins_label.text = str(Globals.player.coins)

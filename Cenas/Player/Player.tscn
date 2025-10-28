@@ -244,7 +244,7 @@ size = Vector2(11.5, 18)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "body", "anim", "hit_area") groups=["player"]]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "body", "anim", "hit_area", "hud", "label_coins") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
 armor = NodePath("Lantern")
@@ -252,6 +252,8 @@ can_die = false
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")
+hud = NodePath("Hud")
+label_coins = NodePath("Hud/Coins")
 life = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
@@ -287,5 +289,15 @@ offset_right = 23.0
 offset_bottom = -6.0
 
 [node name="Lantern" parent="." instance=ExtResource("4_5akqg")]
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Coins" type="Label" parent="Hud"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
 
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]

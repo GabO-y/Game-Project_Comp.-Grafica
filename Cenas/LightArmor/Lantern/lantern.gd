@@ -8,7 +8,6 @@ var ene_on_light = {}
 
 func _ready() -> void:
 	
-	damage = 2
 	energie = 10000
 	
 	area.body_entered.connect(_ene_join_light)
