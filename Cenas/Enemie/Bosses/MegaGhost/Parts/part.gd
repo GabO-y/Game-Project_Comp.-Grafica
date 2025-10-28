@@ -112,8 +112,8 @@ func split():
 		ene.speed_special_attack = speed_special_attack
 		ene.last_wall_collide = last_wall_collide
 		
-		ene.body.collision_layer = 1 << 2
-		ene.body.collision_mask = 1 << 2
+		ene.body.collision_layer = Globals.layers["wall_current_room"] 
+		ene.body.collision_mask = Globals.layers["player"]
 		
 		ene.set_collision_layer_ray(3)
 		

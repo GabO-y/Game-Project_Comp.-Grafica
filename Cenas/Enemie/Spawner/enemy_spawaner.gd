@@ -7,7 +7,7 @@ class_name Spawn
 @export var time_to_spawn = 3.0
 @export var enimies_level = 1
 
-
+var room: Room
 var is_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemy] = []
@@ -62,18 +62,16 @@ func spawanEmenie() -> Enemy:
 	
 	point = $Area2D.to_local(point)/2
 		
-	var ene = type_enemie.instantiate() 
+	var ene = type_enemie.instantiate() as Enemy
 	
 	ene.global_position = point
 	ene.position_target = point
 	
-	ene.enemy_die.connect(Globals.current_room._check_clear_by_signal)
 	ene.enemy_die.connect(_free_enemy)
+	ene.enemy_die.connect(room._check_clear_by_ene_die)
 	
 	add_child(ene)
-	
-	print(ene)
-	
+		
 	ene.set_active(is_active)
 
 		
@@ -83,15 +81,19 @@ func set_enemie(ene: PackedScene):
 	type_enemie = ene
 	
 func enable():
-	switch(true)
+	set_active(true)
 
 func disable():
-	switch(false)
+	set_active(false)
 	
-func switch(mode: bool):
+func set_active(mode: bool):
+	
 	for enemy in enemies:
 		enemy.set_active(mode)
-			
+		
+	set_process(mode)
+	visible = mode
+	
 	is_active = mode
 				
 func is_clean() -> bool:

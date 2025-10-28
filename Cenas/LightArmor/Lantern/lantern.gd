@@ -6,7 +6,7 @@ class_name Lantern
 
 var ene_on_light = {}
 
-func _ready() -> void:	
+func _ready() -> void:
 	
 	damage = 2
 	energie = 10000
@@ -57,8 +57,8 @@ func toggle_activate():
 		
 	if is_active:
 		area.show()
-		area.collision_layer = 1
-		area.collision_mask = (1 << 0) | (1 << 1) | (1 << 2)
+		area.collision_mask = Globals.layers["ghost"] | Globals.layers["enemy"] | Globals.layers["wall_current_room"]
+		area.collision_layer = Globals.layers["enemy"] | Globals.layers["ghost"] | Globals.layers["wall_current_room"]
 	else:
 		area.hide()
 		area.collision_layer = 0

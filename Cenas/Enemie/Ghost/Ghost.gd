@@ -83,7 +83,7 @@ func prepare_attack(delta):
 		wait_timer = 0
 		dash_dir = body.global_position.direction_to(Globals.player_pos)
 		last_dir = dash_dir
-		body.collision_mask = 0
+		body.collision_mask = Globals.layers["wall_current_room"]
 				
 func dash(delta):
 		
@@ -96,7 +96,7 @@ func dash(delta):
 		dash_timer = 0
 		current_state = State.CHASE
 		is_dashing = false		
-		body.collision_mask = Globals.layers["enemy"]
+		body.collision_mask = Globals.layers["ghost"]
 	
 func animation_logic():
 	
@@ -144,7 +144,6 @@ func _player_enter_hit(body: Node2D) -> void:
 	player.take_knockback(dir, 10)
 	player.take_damage(damage)
 	
-
 func refrash():
 	body.collision_layer = Globals.layers["enemy"]
 	body.collision_mask = Globals.layers["wall_current_room"]
@@ -152,7 +151,7 @@ func refrash():
 func ghosts_run_move():
 	
 	var ene_pos = body.global_position
-	var pla_pos = Globals.player.player_body.global_position
+	var pla_pos = Globals.player_pos
 	
 	var dist = ene_pos.distance_to(pla_pos)
 	dir = ene_pos.direction_to(pla_pos)
@@ -165,4 +164,35 @@ func ghosts_run_move():
 	
 	body.velocity = dir * speed
 	body.move_and_slide()
-		
+
+func take_damage(damage: int):
+	super.take_damage(damage)
+	drop_damage_label(damage)
+
+func drop_damage_label(damage: int):
+	var label := Label.new()
+	label.text = str(damage)
+	label.modulate = Color.RED
+	
+	label.label_settings = LabelSettings.new()
+	label.label_settings.font_size = 8
+	
+	call_deferred("add_child", label)
+	
+	var curve = Globals.create_curve_drop(
+		body.global_position,
+		[true, false].pick_random(),
+		1.1,
+		1
+	)
+	
+	var tween = create_tween()
+	tween.tween_method(_drop_damage_animation.bind(curve, label), 0.0, 1.0, 3)
+	
+	tween.tween_callback(label.queue_free)
+	
+func _drop_damage_animation(t: float, curve: Array[Vector2], label: Label):
+	if t == 1: return
+	var p = curve.get(curve.size() * t)
+	label.global_position = p
+	

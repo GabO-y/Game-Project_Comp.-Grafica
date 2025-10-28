@@ -21,8 +21,6 @@ var camare_chase_player = false
 func _process(delta: float) -> void:
 	if camare_chase_player:
 		camera.global_position.y = Globals.player.player_body.global_position.y
-	super._process(delta)
-
 
 func _camara_chase(body: Node2D) -> void:
 	if body.get_parent() is not Player: return

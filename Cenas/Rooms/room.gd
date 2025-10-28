@@ -26,6 +26,7 @@ func _ready() -> void:
 		if child.name == "Spawners":
 			for spawn in child.get_children():
 				spaweners.append(spawn)
+				spawn.room = self
 			
 		if child.name == "Doors":
 			for door in child.get_children():
@@ -36,13 +37,7 @@ func _ready() -> void:
 			for layer in child.get_children():
 				if layer is TileMapLayer:
 					layers.append(layer)
-			
-	clear.connect(_clear_effects)
-					
-func _process(delta: float) -> void:
-	if !finish:
-		is_clean()
-		
+													
 func calculate_total_enemies() -> int:	
 	total_enemies = 0
 
@@ -50,34 +45,20 @@ func calculate_total_enemies() -> int:
 		total_enemies += spa.enemies.size()
 		
 	return total_enemies
-
-func is_clean() -> bool:
-	
-	if finish: return true
-	
-	for spawn in spaweners:
-		if spawn is Spawn:			
-			if !spawn.is_clean(): return false
-			
-	finish = true
-	clear.emit()
-	return true
-
-func _check_clear_by_signal(ene):
-	return is_clean()
 	
 func desable():
 	switch_process(false)
 			
 func enable():
 	switch_process(true)
+	_check_clear()
 
 func switch_process(mode: bool):
 	
-	if mode: show()
-	else: hide()
+	visible = mode
 	
-	camera.enabled = mode
+	if camera: camera.enabled = mode
+	
 	spread = mode
 	
 	set_process(mode)
@@ -85,46 +66,58 @@ func switch_process(mode: bool):
 	
 	for door in doors:
 		if door is Door:
-			door.set_process(mode)
-			door.area.set_deferred("monitoring", mode)
+			door.desable()
 			
 	for spawn in spaweners:
 		if spawn is Spawn:
-			spawn.switch(mode)
+			spawn.set_active(mode)
 			
 	for layer in layers:
+
 		layer.collision_enabled = mode
 		layer.navigation_enabled = mode
 		layer.set_process(mode)
 		layer.set_physics_process(mode)
 		var lar = Globals.layers["wall_current_room"] if mode else 0
-		
+				
 		layer.tile_set.set_physics_layer_collision_layer(0, lar)
 		layer.tile_set.set_physics_layer_collision_mask(0, lar)
+		
+	if mode:
+		_update_doors()
 
 func _items_go_player():
 	for item in get_children():
 		if item is Item:
 			item.is_to_chase_player = true
 			
-func _update_doors_light():
+func _update_doors():
 	for door in doors:
-		door.turn_light(!door.is_locked and finish)
+		door.set_active(!door.is_locked and finish)
 		
 func _clear_effects():
 	_items_go_player()
-	_update_doors_light()
+	_update_doors()
 
 func get_door(door_name: String) -> Door:
 	for door in doors:
 		if door is Door and door.name.to_lower() == door_name.to_lower():
 			return door
 	return null
-	
-func setup():
-	pass
-	
-func update_layers():
-	pass
+
+func _check_clear_by_ene_die(ene):
+	_check_clear()
+
+func _check_clear():
+		
+	for spawn in spaweners:
+		print(spawn.enemies) 
+		if not spawn.is_clean(): return
+		
+	finish = true
+	_clear_effects()
+	clear.emit()
+			
 	
 signal clear
+ 

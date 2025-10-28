@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://busm66rakwld"
-path="res://.godot/imported/power_up_icon.png-139878a24b55a10cf28d1e87d3037fe7.ctex"
+uid="uid://dv03cqj7jg8fg"
+path="res://.godot/imported/images.jpeg-70e4eee6a5427abd0c11ac2ac83248b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interfaces/ChestUI/power_up_icon.png"
-dest_files=["res://.godot/imported/power_up_icon.png-139878a24b55a10cf28d1e87d3037fe7.ctex"]
+source_file="res://Assets/Interfaces/ChestUI/images.jpeg"
+dest_files=["res://.godot/imported/images.jpeg-70e4eee6a5427abd0c11ac2ac83248b1.ctex"]
 
 [params]
 

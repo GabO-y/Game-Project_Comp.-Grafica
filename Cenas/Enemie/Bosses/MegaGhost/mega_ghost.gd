@@ -1,3 +1,5 @@
+#Ajeitar as colisoes do ataque crash_wall
+
 extends Enemy
 
 class_name MegaGhost
@@ -134,7 +136,7 @@ func _physics_process(delta: float) -> void:
 		move_special()
 		return
 
-	var pla_pos = Globals.player.player_body.global_position
+	var pla_pos = Globals.player_pos
 	var ene_pos = body.global_position
 	
 	dir = ene_pos.direction_to(pla_pos).normalized()
@@ -150,7 +152,7 @@ func prepare_slash():
 	if is_running_attack or on_special_attack: return
 
 	var angle = body.global_position.direction_to(
-		Globals.player.player_body.global_position
+		Globals.player_pos
 		).normalized().angle()
 		
 	attack_collision.rotation = (angle - PI/1.5)
@@ -168,9 +170,10 @@ func slash():
 	form_attack.show()
 	
 	if is_player_on_attack_area_1: 
+		var knockback_dir = -(Globals.player_pos.direction_to(body.global_position))
+		Globals.player.take_knockback(knockback_dir , 100)
 		Globals.player.take_damage(damage)
-		var knockback_dir = -(Globals.player.player_body.global_position.direction_to(body.global_position))
-		Globals.player.take_knockback(knockback_dir , 200)
+		
 		
 	await Globals.time(0.4)
 	form_attack.hide()
@@ -193,7 +196,7 @@ func start_special_attack():
 	
 	anim.play("start_special")
 	
-	if body.global_position.direction_to(Globals.player.player_body.global_position).normalized().x < 0:
+	if body.global_position.direction_to(Globals.player_pos).normalized().x < 0:
 		anim.flip_h = true
 	else:
 		anim.flip_h = false
@@ -204,7 +207,6 @@ func start_special_attack():
 	on_special_attack = true
 
 	current_special_attack = get_random_special_attack()
-	current_special_attack = "ghosts_run"
 		
 	match current_special_attack:
 		"ghosts_run":
@@ -223,8 +225,8 @@ func start_attack_crash_wall():
 		
 	speed_special_attack = 100
 	
-	body.collision_layer = 1 << 2
-	body.collision_mask = 1 << 2
+	body.collision_layer = Globals.layers["wall_current_room"] 
+	body.collision_mask = Globals.layers["player"]
 	
 	is_running_attack = true
 	
@@ -244,7 +246,7 @@ func start_attack_crash_wall():
 func move_special():
 	
 	if is_stop: return
-		
+			
 	match current_special_attack:
 		"ghosts_run":
 			move_ghosts_run()
@@ -254,32 +256,33 @@ func move_special():
 func move_ghosts_run():
 						
 	var ene_pos = body.global_position
-	var pla_pos = Globals.player.player_body.global_position
+	var pla_pos = Globals.player_pos
 			
 	var dist = ene_pos.distance_to(pla_pos)
 	dir_special_attack = ene_pos.direction_to(pla_pos)
 
 	if is_emerge_boss_ghost_run:
-		body.velocity = dir_special_attack * speed_special_attack
-		body.move_and_slide()
-		if dist < 60:
-			slash()
-			refrash_setup()
-		return	
+		emerge_boss_ghost_run(dist)
+		return
 
-	if dist < 60:
-		dir_special_attack = Vector2.ZERO
+	if dist < 60 and not is_continue_toward:
 		is_continue_toward = true
-		
-	if dir_special_attack == Vector2.ZERO or is_continue_toward:
-		if last_dir_special == null or last_dir_special == Vector2.ZERO:
-			last_dir_special = ene_pos.direction_to(pla_pos)
-		dir_special_attack = last_dir_special
-	else:
 		last_dir_special = dir_special_attack
 		
+	if is_continue_toward:
+		dir_special_attack = last_dir_special
+			
 	body.velocity = dir_special_attack * speed_special_attack
 	body.move_and_slide()
+	
+func emerge_boss_ghost_run(dist):
+	
+	body.velocity = dir_special_attack * speed_special_attack
+	body.move_and_slide()
+	
+	if dist < 60:
+		slash()
+		refrash_setup()
 	
 func move_crash_wall():
 	
@@ -301,9 +304,7 @@ func move_crash_wall():
 				times_crash_wall += 1
 
 func split_when_crash():
-	
-#		Esse é o split do big (que gera dois mid)
-	
+		
 		var first_part = load("res://Cenas/Enemie/Bosses/MegaGhost/Parts/MidPart/MidPart.tscn").instantiate() as Part
 		var second_part = load("res://Cenas/Enemie/Bosses/MegaGhost/Parts/MidPart/MidPart.tscn").instantiate() as Part
 	
@@ -331,8 +332,8 @@ func split_when_crash():
 			ene.speed_special_attack = speed_special_attack
 			ene.last_wall_collide = last_wall_collide
 			
-			ene.body.collision_mask = 1 << 2
-			ene.body.collision_layer = 1 << 2
+			ene.body.collision_layer = Globals.layers["ghost"] 
+			ene.body.collision_mask = Globals.layers["wall_current_room"]
 			
 			ene.set_collision_layer_ray(3)
 			
@@ -355,8 +356,6 @@ func split_when_crash():
 func refrash_setup():
 	
 	if not is_active: return
-
-	
 
 	body.collision_layer = Globals.layers["boss"]
 	body.collision_mask = Globals.layers["wall_boss"]
@@ -510,7 +509,6 @@ func generate_ghost_random_point(point: Vector2):
 	gho.enemy_die.connect(_check_amount_die)
 		
 	gho.is_stop = true
-
 	await Globals.time(Globals.get_special_time_ghost_run())
 	gho.is_stop = false
 	

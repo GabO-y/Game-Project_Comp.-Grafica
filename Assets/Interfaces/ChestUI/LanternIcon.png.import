@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df12bxe3auu5u"
-path="res://.godot/imported/waerpon_icon.png-76bda7b96d6f24958901bef2cd15888a.ctex"
+uid="uid://ds33n7jap68rc"
+path="res://.godot/imported/LanternIcon.png-2dd3872d863c51920d88cafefc5c1137.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interfaces/ChestUI/waerpon_icon.png"
-dest_files=["res://.godot/imported/waerpon_icon.png-76bda7b96d6f24958901bef2cd15888a.ctex"]
+source_file="res://Assets/Interfaces/ChestUI/LanternIcon.png"
+dest_files=["res://.godot/imported/LanternIcon.png-2dd3872d863c51920d88cafefc5c1137.ctex"]
 
 [params]
 

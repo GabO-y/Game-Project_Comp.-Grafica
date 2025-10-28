@@ -92,4 +92,4 @@ type_enemie = ExtResource("11_8pbou")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(3, 3)

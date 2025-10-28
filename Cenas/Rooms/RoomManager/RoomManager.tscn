@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
-[ext_resource type="PackedScene" uid="uid://dh8cy7t2ceti5" path="res://Cenas/Rooms/MegaGhostRoom/MegaGhostRoom.tscn" id="5_0aayb"]
 [ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="5_0t272"]
 [ext_resource type="PackedScene" uid="uid://dfbt2q3vq6op5" path="res://Cenas/Rooms/Hall/Hall.tscn" id="5_ow6w0"]
+[ext_resource type="PackedScene" uid="uid://bd7aqvuxmuu4r" path="res://Cenas/Rooms/BossGhostRoom/BossGhostRoom.tscn" id="6_ow6w0"]
 
 [node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode")]
 script = ExtResource("1_n2tco")
@@ -18,11 +18,13 @@ color = Color(0.258125, 0.1475, 0.59, 1)
 [node name="Rooms" type="Node2D" parent="."]
 
 [node name="Hallway1" parent="Rooms" instance=ExtResource("5_0t272")]
+visible = false
 
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
 
-[node name="MegaGhostRoom" parent="Rooms" instance=ExtResource("5_0aayb")]
-position = Vector2(688, -22)
-
 [node name="Hall" parent="Rooms" instance=ExtResource("5_ow6w0")]
+visible = false
 texture_filter = 1
+
+[node name="BossGhostRoom" parent="Rooms" instance=ExtResource("6_ow6w0")]
+visible = false

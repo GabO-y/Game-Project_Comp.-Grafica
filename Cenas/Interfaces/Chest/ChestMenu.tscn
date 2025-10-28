@@ -1,0 +1,107 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb4ttu771sbb6"]
+
+[ext_resource type="Script" uid="uid://cxhx4lbgt2i12" path="res://Cenas/Interfaces/Chest/chest_menu.gd" id="1_qanw0"]
+[ext_resource type="Texture2D" uid="uid://ds33n7jap68rc" path="res://Assets/Interfaces/ChestUI/LanternIcon.png" id="2_e48bf"]
+[ext_resource type="Texture2D" uid="uid://i61i268vkyxl" path="res://Assets/Interfaces/ChestUI/PowerUpsIcon.png" id="3_rcjur"]
+
+[node name="ChestMenu" type="CanvasLayer" node_paths=PackedStringArray("menu", "tabCont", "wearpowns_node", "power_ups_node", "inssu_coins_point", "coins_label")]
+process_mode = 3
+script = ExtResource("1_qanw0")
+menu = NodePath("MarginContainer")
+tabCont = NodePath("MarginContainer/VBoxMain/TabContainer")
+wearpowns_node = NodePath("MarginContainer/VBoxMain/TabContainer/Wearpons/HFlowContainer")
+power_ups_node = NodePath("MarginContainer/VBoxMain/TabContainer/Ups/HFlowContainer")
+inssu_coins_point = NodePath("InsufficientCoinsPoint")
+coins_label = NodePath("MarginContainer/VBoxMain/Options/Control/Points")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxMain" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxMain"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxMain/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Wearpons" type="Button" parent="MarginContainer/VBoxMain/Options"]
+texture_filter = 1
+layout_mode = 2
+icon = ExtResource("2_e48bf")
+
+[node name="PowerUps" type="Button" parent="MarginContainer/VBoxMain/Options"]
+layout_mode = 2
+icon = ExtResource("3_rcjur")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxMain/Options"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxMain/Options"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+
+[node name="Points" type="Label" parent="MarginContainer/VBoxMain/Options/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -43.0
+offset_top = -49.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Poins
+"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxMain"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxMain"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
+
+[node name="Wearpons" type="ScrollContainer" parent="MarginContainer/VBoxMain/TabContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/VBoxMain/TabContainer/Wearpons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.4
+theme_override_constants/h_separation = 40
+alignment = 1
+
+[node name="Ups" type="ScrollContainer" parent="MarginContainer/VBoxMain/TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 1
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/VBoxMain/TabContainer/Ups"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="InsufficientCoinsPoint" type="Marker2D" parent="."]
+position = Vector2(575, 680)
+
+[connection signal="pressed" from="MarginContainer/VBoxMain/Options/Wearpons" to="." method="_on_wearpons_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxMain/Options/PowerUps" to="." method="_on_power_ups_pressed"]

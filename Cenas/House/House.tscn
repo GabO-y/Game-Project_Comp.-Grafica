@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://b0ntae4uqgnun" path="res://Cenas/Rooms/RoomManager/RoomManager.tscn" id="4_6pdaa"]
 [ext_resource type="PackedScene" uid="uid://oapef3dqlad" path="res://Cenas/Menus/GameOver/TransactionScene.tscn" id="4_rmjq6"]
 
-[node name="House" type="Node2D"]
+[node name="House" type="Node2D" node_paths=PackedStringArray("room_manager")]
 script = ExtResource("1_rmjq6")
+room_manager = NodePath("RoomManager")
 
 [node name="RoomManager" parent="." instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
@@ -15,4 +16,4 @@ position = Vector2(0, -2)
 position = Vector2(50, 86)
 
 [node name="TransitionScene" parent="." instance=ExtResource("4_rmjq6")]
-position = Vector2(-251, -171)
+position = Vector2(-111, -80)

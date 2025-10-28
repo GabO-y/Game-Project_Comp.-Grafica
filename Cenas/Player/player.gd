@@ -2,13 +2,13 @@ extends Character
 class_name Player
 
 @export var armor: LightArmor
-@export var armor_energie: int
-@export var can_die = true
-@export var hit_kill = false
+@export var can_die: bool = true
+@export var hit_kill: bool = false
 @export var body: CharacterBody2D
 @export var anim: AnimatedSprite2D
 @export var hit_area: Area2D
 @export var knockback_anim: AnimationPlayer
+@export var coins: int = 0
 
 var original_modulate = self.modulate
 var modulate_timer = 0
@@ -46,6 +46,10 @@ var knockback_duration = 0.5
 
 var is_in_menu = false
 
+var wearpowns = [Lantern]
+
+var power_ups = {}
+
 var enemies_touch = {}
 
 func _ready() -> void:
@@ -72,8 +76,9 @@ func _process(delta: float) -> void:
 		player_die.emit(self)
 		
 
-	
 func _on_key_entered(area):
+	
+	if true: return
 	
 	if  !Globals.current_room.finish: return
 
@@ -262,6 +267,8 @@ func to_original_color():
 func take_knockback(direction: Vector2, force: int):
 	
 	if is_invencible: return
+	
+	print("aa")
 	
 	is_on_knockback = true
 	knockback_dir = direction

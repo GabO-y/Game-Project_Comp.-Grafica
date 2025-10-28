@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=3 uid="uid://d1huichr7pt8c"]
+
+[ext_resource type="Script" uid="uid://b2e2n7y0q4emx" path="res://Cenas/Enemie/Bosses/ghost_boss.gd" id="1_21eog"]
+[ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_5a185"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyppu"]
+atlas = ExtResource("2_5a185")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a41hs"]
+atlas = ExtResource("2_5a185")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr7xv"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fjhf"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5a185"]
+atlas = ExtResource("2_5a185")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8po4"]
+atlas = ExtResource("2_5a185")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2v6ms"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_247cf"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c8po4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyppu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a41hs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dr7xv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fjhf")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5a185")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8po4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2v6ms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_247cf")
+}],
+"loop": true,
+"name": &"walk_back",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5a185"]
+radius = 13.0
+
+[node name="GhostBoss" type="Node2D" node_paths=PackedStringArray("body", "anim")]
+script = ExtResource("1_21eog")
+body = NodePath("BossBody")
+anim = NodePath("BossBody/AnimatedSprite2D")
+
+[node name="BossBody" type="CharacterBody2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BossBody"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_c8po4")
+animation = &"walk_back"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
+shape = SubResource("CircleShape2D_5a185")

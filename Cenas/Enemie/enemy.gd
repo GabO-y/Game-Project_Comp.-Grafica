@@ -44,6 +44,8 @@ func _ready() -> void:
 	if bar != null:
 		bar.max_value = life
 		bar.value = life
+
+	enemy_die.connect(drop_logic)
 				
 func _process(_delta: float) -> void:
 	update_bar()
@@ -70,7 +72,7 @@ func take_damage(damage: int):
 	if is_dead: return
 	
 	life -= damage
-	
+		
 	if life <= 0 and !is_dead:
 		die()
 	else:
@@ -98,19 +100,22 @@ func die():
 	anim.flip_h = last_dir.x > 0
 	
 	await anim.animation_finished
-		
+
 	enemy_die.emit(self)
+	
+	Globals.try_drop(body.global_position)
+	
 	queue_free()
 
 func drop_logic():
-	
-	if !is_active: return
 		
 	for drop in drop_table:
 		if randf() >= drop["chance"]:
 			var item = drop["item"]
 			#Globals.current_scene.add_child(item)
 			#item.global_position = global_position
+			
+	print("asjkfhksdj")
 			
 	var key = Globals.drop_key()
 	
@@ -130,7 +135,5 @@ func change_color_damage():
 	sprite.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
-	
-
 	
 signal enemy_die(ene: Enemy)
