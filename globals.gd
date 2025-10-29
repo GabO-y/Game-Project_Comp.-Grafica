@@ -193,5 +193,3 @@ signal generate_new_key(key: Key)
 signal goint_to_center
 
 signal emerge_boss
-
-signal gone_use_array

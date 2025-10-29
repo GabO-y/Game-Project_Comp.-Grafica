@@ -13,6 +13,9 @@ class_name ChestMenu
 @export var inssu_coins_point: Marker2D
 @export var coins_label: Label
 
+var test: Array[Dictionary]
+var is_test = false
+
 var is_visible_pop_up = false
 
 var is_issu_coin = false
@@ -49,6 +52,17 @@ func add_power_up(item_name: String, price: float, icon: Texture2D):
 	power_ups_node.add_child(item)
 	
 func _process(delta: float) -> void:
+	
+	if is_test:
+		for i in test:
+			var l = i["label"] as Label
+			var c = i["curve"] as MyCurve
+			l.position = c.get_point_by_progress()
+			
+		if test.is_empty():
+			is_test = false
+			
+		
 			
 	if not can_shake_coins:
 		shake_coin_timer += delta
@@ -166,21 +180,24 @@ func _insuffient_coisn():
 	label.text = "Pontos insuficientes"
 	label.modulate = Color.ORANGE_RED
 	
-	var curve = Globals.create_curve_drop(
-		inssu_coins_point.global_position,
-		[true, false].pick_random(), 
-		randf_range(1.0, 2.0),
-		randf_range(4.0, 5.0)
-	)
+	var curve = MyCurve.new()
+		
+	curve.set_t(0.005)
+	
+	var heigth = randi_range(500, 1000)
+	var wight = randi_range(0, 1000)
+	var right = [true, false].pick_random()
+	
+	curve.drop_effect(inssu_coins_point.global_position, right, wight, heigth)
+	
 	
 	var tween = create_tween()
-	tween.tween_method(_curve_text.bind(curve, label), 0.0, 1.0, 5.0)
+	tween.tween_method(_curve_text.bind(curve, label), 0.0, 1.0, 2.5)
 	
 	tween.tween_callback(label.queue_free)
 	
-func _curve_text(t: float, curve_param: Array[Vector2], text_label: Label):
-	if t >= 1: return
-	var curve_pos = curve_param.get(int(curve_param.size() * t))
+func _curve_text(t: float, curve_param: MyCurve, text_label: Label):
+	var curve_pos = curve_param.get_point(t)
 	text_label.global_position = curve_pos
 	
 func shake_coins():

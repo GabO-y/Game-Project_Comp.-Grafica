@@ -38,7 +38,6 @@ func start_chase_player():
 	is_to_chase_player = true
 
 	print("start_chase_player: Item, precisa terminar")
-	pass
 	
 func _on_player_body_entered(body: Node2D) -> void:
 	var player = body.get_parent() as Player

@@ -96,6 +96,7 @@ func get_all_items():
 		item.collected.emit(item)
 		
 	items_node.visible = true
+	
 # Chamado no Room
 func make_items_chase_player():
 	for item in items_node.get_children():
