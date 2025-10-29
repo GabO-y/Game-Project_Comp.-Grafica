@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://go8o3056gd8o"]
 
-[ext_resource type="Script" uid="uid://dls5rh7a8wod1" path="res://Cenas/Item/ItemManeger/item_maneger.gd" id="1_iceqi"]
+[ext_resource type="Script" uid="uid://dls5rh7a8wod1" path="res://Cenas/Item/ItemManager/item_manager.gd" id="1_xtc0y"]
 
 [node name="ItemManeger" type="Node2D" node_paths=PackedStringArray("items_node")]
 process_priority = 1
-script = ExtResource("1_iceqi")
+script = ExtResource("1_xtc0y")
 items_node = NodePath("Items")
 
 [node name="Items" type="Node2D" parent="."]

@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cyqdmrgqkxxjb" path="res://Cenas/Rooms/HallWay1/chão_5.tscn" id="5_id"]
 [ext_resource type="PackedScene" uid="uid://bga1bpq25rgf" path="res://Cenas/Rooms/HallWay1/Fundo_6.tscn" id="6_id"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="8_s148i"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="10_8pbou"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Ghost/Ghost.tscn" id="11_8pbou"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="10_8pbou"]
+[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemy/Ghost/Ghost.tscn" id="11_8pbou"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mppsl"]
 polygon = PackedVector2Array(-215, -169, -220, -142, -206, -142, -190, -142, -197, -168, -197, -152, -197, -148, -206, -148, -215, -148, -215, -152)
@@ -89,8 +89,8 @@ texture = SubResource("GradientTexture2D_mppsl")
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("10_8pbou")]
 position = Vector2(-4, 114)
 type_enemie = ExtResource("11_8pbou")
-limit_spawn = 10
+limit_spawn = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)
-zoom = Vector2(3, 3)
+zoom = Vector2(2.5, 2.5)

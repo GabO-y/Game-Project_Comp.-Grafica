@@ -1,16 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0ntae4uqgnun"]
+[gd_scene load_steps=8 format=3 uid="uid://b0ntae4uqgnun"]
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
 [ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="5_0t272"]
 [ext_resource type="PackedScene" uid="uid://dfbt2q3vq6op5" path="res://Cenas/Rooms/Hall/Hall.tscn" id="5_ow6w0"]
-[ext_resource type="PackedScene" uid="uid://go8o3056gd8o" path="res://Cenas/Item/ItemManeger/ItemManeger.tscn" id="6_0t272"]
+[ext_resource type="PackedScene" uid="uid://go8o3056gd8o" path="res://Cenas/Item/ItemManager/ItemManager.tscn" id="6_0t272"]
 [ext_resource type="PackedScene" uid="uid://bd7aqvuxmuu4r" path="res://Cenas/Rooms/BossGhostRoom/BossGhostRoom.tscn" id="6_ow6w0"]
+[ext_resource type="PackedScene" uid="uid://bjyhdo23kbxbt" path="res://Cenas/Keys/KeyManager/KeyManager.tscn" id="7_0t272"]
 
-[node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode", "item_manager")]
+[node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode", "item_manager", "key_manager")]
 script = ExtResource("1_n2tco")
 roomsNode = NodePath("Rooms")
-item_manager = NodePath("ItemManeger")
+item_manager = NodePath("Managers/ItemManeger")
+key_manager = NodePath("Managers/KeyManager")
 metadata/_edit_vertical_guides_ = [-149.0, -529.0]
 metadata/_edit_horizontal_guides_ = [135.0]
 
@@ -31,5 +33,11 @@ texture_filter = 1
 [node name="BossGhostRoom" parent="Rooms" instance=ExtResource("6_ow6w0")]
 visible = false
 
-[node name="ItemManeger" parent="." node_paths=PackedStringArray("room_manager") instance=ExtResource("6_0t272")]
-room_manager = NodePath("..")
+[node name="Managers" type="Node2D" parent="."]
+
+[node name="ItemManeger" parent="Managers" node_paths=PackedStringArray("room_manager", "key_manager") instance=ExtResource("6_0t272")]
+room_manager = NodePath("../..")
+key_manager = NodePath("../KeyManager")
+
+[node name="KeyManager" parent="Managers" node_paths=PackedStringArray("room_manager") instance=ExtResource("7_0t272")]
+room_manager = NodePath("../..")

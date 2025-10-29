@@ -10,8 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cpyhcpfwu3rtp" path="res://Cenas/Rooms/Hall/chão_7.tscn" id="7_id"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/fundo_8.tscn" id="8_id"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="11_bvy5g"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="11_kegp6"]
-[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="12_2wqts"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="11_kegp6"]
+[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemy/Zombie/Zombie.tscn" id="12_2wqts"]
 
 [sub_resource type="GDScript" id="GDScript_16r42"]
 script/source = "extends Room
@@ -20,7 +20,7 @@ var camare_chase_player = false
 
 func _process(delta: float) -> void:
 	if camare_chase_player:
-		camera.global_position.y = Globals.player.player_body.global_position.y
+		camera.global_position.y = Globals.player_pos.y
 
 func _camara_chase(body: Node2D) -> void:
 	if body.get_parent() is not Player: return
@@ -100,7 +100,7 @@ time_to_spawn = 2.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(157, 164)
-zoom = Vector2(3.289, 2.5)
+zoom = Vector2(3, 3)
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false

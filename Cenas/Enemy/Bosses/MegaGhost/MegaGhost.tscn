@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://bts2u7o7pqcl6"]
 
-[ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemie/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
+[ext_resource type="Script" uid="uid://brtdje67lgfn4" path="res://Cenas/Enemy/Bosses/MegaGhost/mega_ghost.gd" id="1_xlh7a"]
 [ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_0lw7i"]
-[ext_resource type="Script" uid="uid://b2pi0hl5dhvrm" path="res://Cenas/Enemie/Bosses/MegaGhost/rays_to_wall.gd" id="2_redsd"]
-[ext_resource type="Script" uid="uid://cawflp5ogyjva" path="res://Cenas/Enemie/Bosses/MegaGhost/locals.gd" id="9_oiqga"]
+[ext_resource type="Script" uid="uid://b2pi0hl5dhvrm" path="res://Cenas/Enemy/Bosses/MegaGhost/rays_to_wall.gd" id="2_redsd"]
+[ext_resource type="Script" uid="uid://cawflp5ogyjva" path="res://Cenas/Enemy/Bosses/MegaGhost/locals.gd" id="9_oiqga"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0lw7i"]
 atlas = ExtResource("2_0lw7i")

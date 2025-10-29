@@ -1,7 +1,7 @@
 extends Node2D
 
 class_name MyCurve
-	
+			
 var p0: Vector2
 var p1: Vector2
 var p2: Vector2	
@@ -14,11 +14,14 @@ var progress:float = 0.0
 var need_calculate = false
 
 var curve: Array[Vector2]
+var curves: Array[MyCurve]
 
 func _init(
+	
 	p0: Vector2 = Vector2.ZERO,
 	p1: Vector2 = Vector2.ZERO, 
 	p2: Vector2 = Vector2.ZERO,
+	
 	t: float = 0.01
 	) -> void:
 	
@@ -26,6 +29,8 @@ func _init(
 	self.p1 = p1
 	self.p2 = p2
 	self.t = t
+	
+	curves.append(self)
 	
 	calculate_curve()
 				
@@ -42,6 +47,7 @@ func set_p1(p1: Vector2):
 func set_p2(p2: Vector2):
 	self.p2 = p2
 	need_calculate = true
+	
 func get_curve() -> Array[Vector2]:
 			
 	if need_calculate:
@@ -50,16 +56,26 @@ func get_curve() -> Array[Vector2]:
 		
 	return curve
 	
-func calculate_curve():
+func calculate_curve() -> Array[Vector2]:
 	
 	curve.clear()
 	var time: float = 0.0
-	while time < 1:
-		time += t
-		var q0 = p0.lerp(p1, time)
-		var q1 = p1.lerp(p2, time)
-		var r = q0.lerp(q1, time)
-		curve.append(r)
+	
+	for curve in curves:
+		time = 0.0
+	
+		while time < 1:
+			
+			var p0 = curve.p0
+			var p1 = curve.p1
+			var p2 = curve.p2
+			
+			time += t
+			var q0 = p0.lerp(p1, time)
+			var q1 = p1.lerp(p2, time)
+			var r = q0.lerp(q1, time)
+			
+			self.curve.append(r)
 		
 	need_calculate = false
 	return curve
@@ -79,7 +95,11 @@ func get_point_by_progress():
 	
 	if progress >= 1:
 		progress_finish.emit()
-		progress = 0
+		
+		var last_point = get_point(progress)
+		progress = 0.0
+		
+		return last_point
 	
 	var p = get_point(progress)
 	progress += t
@@ -116,16 +136,15 @@ func drop_effect(start: Vector2, right: bool, wigth: float = 5.0, heith: float =
 	set_p2(p2)
 	
 	calculate_curve()
-	
-func _draw() -> void:
-	
-	for p in curve:
-		draw_circle(p, 3, Color.GREEN)
-		
-	draw_circle(p0, 3, Color.RED)
-	draw_circle(p1, 3, Color.RED)
-	draw_circle(p2, 3, Color.RED)
 
+func add_more_curve(p1: Vector2, p2: Vector2):		
+	
+	var last_point = get_point(1)
+	
+	var new_curve = MyCurve.new(last_point, p1, p2, t)
+	
+	curves.append(new_curve)
+	need_calculate = true
 		
 	
 signal progress_finish

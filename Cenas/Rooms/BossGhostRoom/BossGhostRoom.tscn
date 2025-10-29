@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://bd7aqvuxmuu4r"]
 
 [ext_resource type="Script" uid="uid://b6y1nic46nhgj" path="res://Cenas/Rooms/BossGhostRoom/boss_ghost_room.gd" id="1_47cy2"]
-[ext_resource type="PackedScene" uid="uid://d1huichr7pt8c" path="res://Cenas/Enemie/Bosses/GhostBoss.tscn" id="1_ff80m"]
+[ext_resource type="PackedScene" uid="uid://d1huichr7pt8c" path="res://Cenas/Enemy/Bosses/GhostBoss.tscn" id="1_ff80m"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="2_k60kb"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="4_dkjpy"]
 

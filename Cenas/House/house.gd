@@ -5,8 +5,11 @@ extends Node2D
 @export var transiontion_scene: TransitionScene
 
 func _ready() -> void:
+	
 	room_manager.set_initial_room("SafeRoom")
+	
 	Globals.player = player
+	Globals.room_manager = room_manager
 	
 	room_manager.changed_room.connect(active_menu)
 

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://d4hb2clm2th1h" path="res://Cenas/Rooms/MiniRoom/mini_room.gd" id="1_gihbt"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="2_716y7"]
-[ext_resource type="PackedScene" uid="uid://b004ceoelpayb" path="res://Cenas/Objects/TileMao/tile_map_main.tscn" id="2_gihbt"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="4_vbf6v"]
-[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemie/Zombie/Zombie.tscn" id="5_2ca0s"]
+[ext_resource type="PackedScene" path="res://Cenas/Objects/TileMao/tile_map_main.tscn" id="2_gihbt"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="4_vbf6v"]
+[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemy/Zombie/Zombie.tscn" id="5_2ca0s"]
 
 [node name="MiniRoom" type="Node2D"]
 script = ExtResource("1_gihbt")

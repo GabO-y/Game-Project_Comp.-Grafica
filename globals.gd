@@ -11,6 +11,7 @@ var center_pos: Vector2
 var special_time_ghost_run = 2
 var player_pos: Vector2
 var curren_menu: Control
+var room_manager: RoomManager
 
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
@@ -31,8 +32,6 @@ var layers = {
 	"no_collision_wall": 1 << 7
 }
 
-
-	
 var ene_in_crash_attack: Array[Enemy]
 var special_ghost_collision = 2
 
@@ -52,10 +51,6 @@ func _process(delta: float) -> void:
 			get_tree().paused = false
 			die = false
 		
-	if is_get_animation:
-		if Input.is_anything_pressed():
-			finish_get_animation()
-		
 func desable_room():
 	current_room.desable()
 	
@@ -71,53 +66,7 @@ func set_teleport(can: bool):
 
 func is_clean_room():
 	return current_room.is_clean()
-	
-func drop_key():
-		
-	if true: return
-		
-	if current_room.already_drop_key: return
-	
-	var is_for_drop = false
-	
-	if current_room.calculate_total_enemies() == 1:
-		is_for_drop = true
-	elif randf() >= 0.5:
-		is_for_drop = true
 
-	if is_for_drop: 
-		current_room.already_drop_key = true
-		var new_key = generate_random_key()
-		return new_key
-		
-	return null
-
-func generate_random_key():
-	
-	var possibles_keys = []
-	
-	for door in current_room.doors:
-		if door is Door:
-			if door.name != "ParentsRoom" and door.is_locked:
-				possibles_keys.append(current_room.name + "," + door.name)
-			
-	var key: Key = null
-	
-	if not possibles_keys.is_empty():
-		key = Key.generate_key(possibles_keys.pick_random())
-
-	return key
-		
-func finish_get_animation():
-	
-	get_tree().paused = false
-	
-	player.anim.process_mode = Node.PROCESS_MODE_INHERIT
-	for key in current_room.get_children():
-		if key is Key:
-			key.queue_free()
-	update_room_light()
-	is_get_animation = false
 	
 func update_room_light():
 	current_room._update_doors_light()
@@ -143,52 +92,7 @@ func get_special_time_ghost_run():
 func dir_to(current: Vector2, target: Vector2):
 	return current.direction_to(target)
 	
-func create_curve(p0: Vector2, p1: Vector2, p2: Vector2, t: float = 0.001) -> Array[Vector2]:
-		
-	var curve: Array[Vector2] = []
-	var time: float = 0
-
-	while time < 1:
-		var q1 = p0.lerp(p1, time)
-		var q2 = p1.lerp(p2, time)
-		var r = q1.lerp(q2, time)
-		curve.append(r)
-		time += t 
-
-	return curve
-	
-func create_curve_drop(start: Vector2, right: bool = true, x_scala: float = 1.5, y_scala: float = 4.5, angle: float = 0, t: float = 0.001) -> Array[Vector2]:
-	var p0: Vector2 = start
-	var p1: Vector2 = start
-	var p2: Vector2 = start
-	
-	p2.x *= x_scala
-	
-	p2.y += 30 * y_scala
-
-	if not right:
-		p2.x = p0.x - (p2.x - p0.x)
-	
-	p1.x = p0.lerp(p2, 0.5).x
-	p1.y -= 100 * y_scala
-	
-	if not right:
-		p1.x = p0.x - (p0.x - p1.x) 
-
-	var curve := create_curve(p0, p1, p2, t)
-		
-	var center = curve[0]
-		
-	for i in curve.size() - 1:
-		curve[i] = (curve[i] - center).rotated(angle) + center
-		
-	return curve
-	
-
-#Usando no room_manager, para quando gerado uma chave, ele desbloquei as portas
-#Esse sinal é emitido pelo player, para emitir so quando a animação de pegar a
-#chave for finalizada 
-signal generate_new_key(key: Key)
+signal test
 
 signal goint_to_center
 

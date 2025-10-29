@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cnd74vp62bkot" path="res://Cenas/Rooms/MegaGhostRoom/mega_ghost_room.gd" id="1_akcp5"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="2_gf7wg"]
-[ext_resource type="PackedScene" uid="uid://bts2u7o7pqcl6" path="res://Cenas/Enemie/Bosses/MegaGhost/MegaGhost.tscn" id="4_busjt"]
+[ext_resource type="PackedScene" uid="uid://bts2u7o7pqcl6" path="res://Cenas/Enemy/Bosses/MegaGhost/MegaGhost.tscn" id="4_busjt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_busjt"]
 texture = ExtResource("2_gf7wg")

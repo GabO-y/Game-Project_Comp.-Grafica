@@ -1,6 +1,6 @@
 [gd_scene load_steps=67 format=3 uid="uid://c5t1rcxsbscp5"]
 
-[ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemie/Zombie/zombie.gd" id="1_21gwn"]
+[ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemy/Zombie/zombie.gd" id="1_21gwn"]
 [ext_resource type="Texture2D" uid="uid://b7j2tgblr1apf" path="res://Assets/Enemies/Zombie/spr_zumbi.png" id="2_q1jsx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cx5sw"]

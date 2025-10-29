@@ -13,5 +13,3 @@ area = NodePath("Area2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_lon0t")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_player_body_entered"]

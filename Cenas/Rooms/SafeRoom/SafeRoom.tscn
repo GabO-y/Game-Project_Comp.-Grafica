@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c42kqnewe2l" path="res://Cenas/Rooms/SafeRoom/Fundo_7.tscn" id="7_id"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="7_t81q4"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="10_ko388"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemie/Spawner/EnemySpawner.tscn" id="13_jkyqi"]
-[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemie/Ghost/Ghost.tscn" id="14_wllog"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="13_jkyqi"]
+[ext_resource type="PackedScene" uid="uid://25uf0g24cox" path="res://Cenas/Enemy/Ghost/Ghost.tscn" id="14_wllog"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6su08"]
 texture = ExtResource("7_t81q4")

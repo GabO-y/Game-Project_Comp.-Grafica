@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cqnvvwacmjve1"]
 
-[ext_resource type="Script" uid="uid://eudcak7eov1g" path="res://Cenas/Enemie/Bosses/MegaGhost/Parts/part.gd" id="1_ijm23"]
+[ext_resource type="Script" uid="uid://eudcak7eov1g" path="res://Cenas/Enemy/Bosses/MegaGhost/Parts/part.gd" id="1_ijm23"]
 
 [node name="Part" type="Node2D" node_paths=PackedStringArray("random_dir_timer")]
 script = ExtResource("1_ijm23")

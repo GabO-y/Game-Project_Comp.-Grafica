@@ -3,10 +3,13 @@ extends Node2D
 class_name ItemManager
 
 @export var room_manager: RoomManager
+@export var key_manager: KeyManager
 # É para armazenar todos os items dropados numa sala
 @export var items_node: Node2D
 
-enum item_type {COIN}
+enum item_type {COIN, KEY}
+
+var key_to_free: Key
 
 #var drops = {
 	#"comum": {"chance" : 0.5, "item": [
@@ -18,11 +21,23 @@ enum item_type {COIN}
 	#]}
 #}
 
+var is_finish_get_key: bool = false
+
 var drops = {
 	"comum": {"chance" : 0.0, "item": [
 		"coin"
 	]}
 }
+
+func _process(delta: float) -> void:
+	if is_finish_get_key:
+		if Input.is_anything_pressed():
+			room_manager.current_room._clear_effects()
+			Globals.player.is_getting_key = false
+			Globals.player.set_process(true)
+			Globals.player.set_physics_process(true)
+			is_finish_get_key = false
+			key_to_free.queue_free()
 
 func _ready() -> void:
 	
@@ -31,18 +46,18 @@ func _ready() -> void:
 		get_tree().quit()
 		return
 		
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	
-static func create_item(item_name: String, pos: Vector2) -> Item:
+			
+func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	var item: Item
 	
 	match item_name:
 		"coin":  item = create_coin(pos)
+		"key": item = create_key(key_manager.create_key())
 				
 	return item
 	
-static func create_coin(pos: Vector2) -> Item:
+func create_coin(pos: Vector2) -> Item:
 	var item = load("res://Cenas/Item/Item.tscn").instantiate() as Item
 	
 	item.global_position = pos
@@ -55,6 +70,22 @@ static func create_coin(pos: Vector2) -> Item:
 	spr.global_position = pos
 	
 	return item
+
+func create_key(key: Key) -> Item:
+		
+	if !key: return
+	
+	call_deferred("add_child", key)
+	
+	key.collected.connect(_collect_item)
+	
+	key.type = item_type.KEY
+	key.global_position = key.door1.area.global_position
+	key.start_chase_player()
+	return key
+	
+func create_key_auto():
+	create_item("key")
 	
 # Tenta dropar baseado no sinal que o inimigo emite quando morre
 func try_drop(ene: Enemy):
@@ -72,10 +103,13 @@ func try_drop(ene: Enemy):
 		drop(item, pos)
 		
 func drop(item: String, pos: Vector2):
+	
 	var i = create_item(item, pos)
 	
 	i.manager = self
 	i.collected.connect(_collect_item)
+		
+	i.start_drop_down()
 		
 	items_node.add_child(i)
 	
@@ -104,10 +138,24 @@ func make_items_chase_player():
 		item.start_chase_player()	
 		
 func _collect_item(item: Item):
+	
+	print("item: ", item.type)
 		
 	match item.type:
 		item_type.COIN:
 			Globals.player.coins += 1
 			Globals.player.update_label_coins()
+			item.queue_free()
+		item_type.KEY:
+						
+			item = item as Key
+			item.door1.is_locked = false
+			item.door2.is_locked = false
 			
-	item.queue_free()
+			key_to_free = item
+			
+			await Globals.player.get_key_animation(item)
+			is_finish_get_key = true
+
+
+		

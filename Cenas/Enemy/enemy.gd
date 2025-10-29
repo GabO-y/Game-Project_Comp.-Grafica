@@ -44,9 +44,7 @@ func _ready() -> void:
 	if bar != null:
 		bar.max_value = life
 		bar.value = life
-
-	enemy_die.connect(drop_logic)
-				
+	
 func _process(_delta: float) -> void:
 	update_bar()
 	
@@ -72,7 +70,9 @@ func take_damage(damage: int):
 	if is_dead: return
 	
 	life -= damage
-		
+	
+	drop_damage_label(damage)
+
 	if life <= 0 and !is_dead:
 		die()
 	else:
@@ -87,8 +87,6 @@ func die():
 	if is_dead: return
 			
 	is_dead = true
-	
-	drop_logic()	
 	
 	set_physics_process(false)
 	set_process(false)
@@ -105,22 +103,6 @@ func die():
 		
 	queue_free()
 
-func drop_logic():
-		
-	for drop in drop_table:
-		if randf() >= drop["chance"]:
-			var item = drop["item"]
-			#Globals.current_scene.add_child(item)
-			#item.global_position = global_position
-					
-	var key = Globals.drop_key()
-	
-	if key != null:
-		Globals.current_room.call_deferred("add_child", key)
-		key.global_position = body.global_position
-	else:
-		Globals.generate_new_key.emit(null)
-
 func change_color_damage():
 	body.move_and_slide()
 	
@@ -130,5 +112,35 @@ func change_color_damage():
 	sprite.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
+	
+
+func drop_damage_label(damage: int):
+	var label := Label.new()
+	label.text = str("-", damage)
+	label.modulate = Color.RED
+	
+	label.label_settings = LabelSettings.new()
+	label.label_settings.font_size = 8
+	
+	call_deferred("add_child", label)
+	
+	var p0 = body.global_position
+	var p1 = p0
+	var p2 = p0
+	
+	p1.y -= 20
+	p2.y -= 15
+	
+	var curve: MyCurve = MyCurve.new(p0, p1, p2)
+	
+	var tween = create_tween()
+	tween.tween_method(_drop_damage_animation.bind(curve, label), 0.0, 1.0, 2)
+	
+	tween.tween_callback(label.queue_free)
+	
+func _drop_damage_animation(t: float, curve: MyCurve, label: Label):
+	var p = curve.get_point(t)
+	label.global_position = p
+	
 	
 signal enemy_die(ene: Enemy)

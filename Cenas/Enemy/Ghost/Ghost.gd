@@ -167,32 +167,3 @@ func ghosts_run_move():
 
 func take_damage(damage: int):
 	super.take_damage(damage)
-	drop_damage_label(damage)
-
-func drop_damage_label(damage: int):
-	var label := Label.new()
-	label.text = str(damage)
-	label.modulate = Color.RED
-	
-	label.label_settings = LabelSettings.new()
-	label.label_settings.font_size = 8
-	
-	call_deferred("add_child", label)
-	
-	var curve = Globals.create_curve_drop(
-		body.global_position,
-		[true, false].pick_random(),
-		1.1,
-		1
-	)
-	
-	var tween = create_tween()
-	tween.tween_method(_drop_damage_animation.bind(curve, label), 0.0, 1.0, 3)
-	
-	tween.tween_callback(label.queue_free)
-	
-func _drop_damage_animation(t: float, curve: Array[Vector2], label: Label):
-	if t == 1: return
-	var p = curve.get(curve.size() * t)
-	label.global_position = p
-	

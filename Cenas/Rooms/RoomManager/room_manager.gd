@@ -5,6 +5,7 @@ var rooms: Array[Room]
 
 @export var roomsNode: Node2D
 @export var item_manager: ItemManager
+@export var key_manager: KeyManager
 
 var current_room: Room
 
@@ -28,7 +29,6 @@ func _ready() -> void:
 		for door in room.doors:
 			match_doors(room.name, door.name)
 			
-	Globals.generate_new_key.connect(_unlock_doors)
 	
 func get_doors(room: Room) -> Array[Door]:
 	var doors: Array[Door]
@@ -41,13 +41,20 @@ func _change_room(goTo):
 #	Para o caso do player mudar de sala, 
 #   mas ainda haver items que não foram coletados
 	item_manager.get_all_items()
+	
 		
 	current_room.desable()
+	current_room.clear.disconnect(item_manager.create_item)
+
 	var room_name = current_room.name
 	
 	current_room = goTo
 	current_room.enable()
 	
+	key_manager.check_doors()
+	current_room.clear.connect(item_manager.create_key_auto)
+	
+
 	var door_target = current_room.get_door(room_name)
 
 	Globals.player.body.global_position = door_target.area.global_position

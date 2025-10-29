@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://25uf0g24cox"]
 
-[ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemie/Ghost/Ghost.gd" id="1_8icm7"]
+[ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemy/Ghost/Ghost.gd" id="1_8icm7"]
 [ext_resource type="Texture2D" uid="uid://ba5o5r15gpsgu" path="res://Assets/Enemies/Fantasm/spr_ghost_tileset.png" id="2_ucp1k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8ghm"]

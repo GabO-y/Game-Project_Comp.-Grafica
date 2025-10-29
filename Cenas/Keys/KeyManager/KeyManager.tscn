@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjyhdo23kbxbt"]
+
+[ext_resource type="Script" uid="uid://dylagdhwx4t3m" path="res://Cenas/Keys/KeyManager/key_manager.gd" id="1_sy77f"]
+
+[node name="KeyManager" type="Node2D"]
+script = ExtResource("1_sy77f")

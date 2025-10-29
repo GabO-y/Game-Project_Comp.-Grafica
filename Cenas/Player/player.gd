@@ -45,6 +45,7 @@ var knockback_time = 0
 var knockback_duration = 0.5
 
 var is_in_menu = false
+var is_getting_key: bool = false
 
 var wearpowns = [Lantern]
 
@@ -54,9 +55,7 @@ var enemies_touch = {}
 
 func _ready() -> void:
 			
-	hit_area.area_entered.connect(_on_key_entered)
 	hit_area.body_exited.connect(_exit_enemie)
-	get_new_key.connect(_unlocked_doors)
 	
 	armor.toggle_activate()
 	
@@ -77,19 +76,6 @@ func _process(delta: float) -> void:
 	if hearts <= 0 and can_die:
 		player_die.emit(self)
 		
-
-func _on_key_entered(area):
-	
-	if true: return
-	
-	if  !Globals.current_room.finish: return
-
-	var key = area.get_parent()
-		
-	if key is not Key: return
-	
-	get_key_animation(key)
-
 func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
 	if !(body.get_parent() is Enemy): return
@@ -168,7 +154,7 @@ func move_logic():
 
 func animation_logic():
 	
-	if is_on_knockback: return
+	if is_on_knockback or is_getting_key: return
 	
 	var play = ""
 	
@@ -197,29 +183,29 @@ func knockback_animation(dir: Vector2):
 	
 func get_key_animation(key: Key):
 	
+	key.is_move = false
+	
 	if armor.is_active:
 		armor.toggle_activate()
-			
-	get_tree().paused = true
 	
-	anim.process_mode = Node.PROCESS_MODE_ALWAYS
-	key.process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process(false)
+	set_physics_process(false)
+		
+	var tween = create_tween()
 	
-	anim.sprite_frames.set_animation_loop("get_item", false)
-	
+	is_getting_key = true
 	anim.play("get_item")
 	
-	key.global_position = body.global_position
-	key.global_position.y -= 10
+	var final_pos = body.global_position
+	final_pos.y -= 20
 	
-	key.label.visible = true
-		
-	await key.play_scale_key()
-	Globals.is_get_animation = true
-	get_new_key.emit(key)
+	tween.tween_property(key, "global_position", final_pos, 2)
 	
-func _unlocked_doors(key: Key):
-	Globals.generate_new_key.emit(key)
+	return tween.finished
+
+
+func _unlocked_doors():
+	pass
 	
 func take_damage(damage: int):
 	
@@ -269,9 +255,7 @@ func to_original_color():
 func take_knockback(direction: Vector2, force: int):
 	
 	if is_invencible: return
-	
-	print("aa")
-	
+		
 	is_on_knockback = true
 	knockback_dir = direction
 	knockback_force = force
@@ -288,5 +272,3 @@ func update_label_coins():
 	label_coins.text = str(coins)
 
 signal player_die(player: Player)
-
-signal get_new_key(key: Key)
