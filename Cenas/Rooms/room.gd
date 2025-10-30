@@ -75,6 +75,7 @@ func switch_process(mode: bool):
 
 		layer.collision_enabled = mode
 		layer.navigation_enabled = mode
+		
 		layer.set_process(mode)
 		layer.set_physics_process(mode)
 		var lar = Globals.layers["wall_current_room"] if mode else 0

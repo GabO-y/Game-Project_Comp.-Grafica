@@ -13,7 +13,7 @@ var dash_duration = 0.5
 var dash_direction: Vector2
 var dash_speed = 100
 
-var animation_tipy: int
+var animation_type: int
 
 var attack_cooldown = 0.0
 var attack_rate = 1.5
@@ -23,7 +23,7 @@ var is_player_in_attack_range = false
 func _ready() -> void:
 	
 	z_index = 1
-	animation_tipy = get_aniamtion_tipy()
+	animation_type = get_aniamtion_tipy()
 
 	super._ready()
 
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	if !is_active or is_stop:
 		return
 				
-	var player_pos = Globals.player.player_body.global_position
+	var player_pos = Globals.player_pos
 	var distance_to_player = body.global_position.distance_to(player_pos)
 		
 	match current_state:
@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 			handle_attacking_state(delta)
 
 func handle_chasing_state(distance_to_player: float, player_pos: Vector2):
-
+	
 	var next_point = agent.get_next_path_position() 
 	dir = body.global_position.direction_to(next_point).normalized()
 	body.velocity = dir * speed
@@ -56,7 +56,7 @@ func handle_chasing_state(distance_to_player: float, player_pos: Vector2):
 	
 	if distance_to_player < 40:
 		is_stop = true
-		await Globals.time(0.2)
+		await Globals.time(0.5)
 		is_stop = false
 		
 		current_state = State.DASHING
@@ -88,6 +88,7 @@ func handle_attacking_state(delta: float):
 	# Ataque cooldown
 	attack_cooldown -= delta
 	if attack_cooldown <= 0 and is_player_in_attack_range:
+		player.take_knockback(last_dir, 10)
 		player.take_damage(damage)
 		attack_cooldown = attack_rate
 	
@@ -112,7 +113,7 @@ func animation_logic():
 	if dir.y < 0:
 		play += "_back"
 		
-	play += "_" + str(animation_tipy)
+	play += "_" + str(animation_type)
 		
 	anim.flip_h = dir.x > 0
 	

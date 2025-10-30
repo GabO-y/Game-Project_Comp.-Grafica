@@ -74,9 +74,9 @@ func spawanEmenie() -> Enemy:
 	
 	add_child(ene)
 		
+	print(is_active)
 	ene.set_active(is_active)
 
-		
 	return ene
 	
 func set_enemie(ene: PackedScene):

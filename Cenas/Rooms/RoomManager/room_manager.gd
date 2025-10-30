@@ -42,9 +42,12 @@ func _change_room(goTo):
 #   mas ainda haver items que não foram coletados
 	item_manager.get_all_items()
 	
-		
+	# Caso vc passe pela porta e não tenha tocado na chave
+	
+	item_manager.finish_get_key()
+	
 	current_room.desable()
-	current_room.clear.disconnect(item_manager.create_item)
+	current_room.clear.disconnect(item_manager.create_key_auto)
 
 	var room_name = current_room.name
 	

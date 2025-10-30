@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d1huichr7pt8c"]
+[gd_scene load_steps=16 format=3 uid="uid://d1huichr7pt8c"]
 
 [ext_resource type="Script" uid="uid://b2e2n7y0q4emx" path="res://Cenas/Enemy/Bosses/ghost_boss.gd" id="1_21eog"]
 [ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_5a185"]
@@ -75,8 +75,21 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_5a185"]
 radius = 13.0
 
-[node name="GhostBoss" type="Node2D" node_paths=PackedStringArray("body", "anim")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_cu7t7"]
+radius = 41.0122
+
+[sub_resource type="Gradient" id="Gradient_cu7t7"]
+offsets = PackedFloat32Array(0.942029, 1)
+colors = PackedColorArray(1, 0, 0, 0.239216, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t6okw"]
+gradient = SubResource("Gradient_cu7t7")
+fill = 1
+
+[node name="GhostBoss" type="Node2D" node_paths=PackedStringArray("slash_node", "slash_node_timer", "body", "anim")]
 script = ExtResource("1_21eog")
+slash_node = NodePath("BossBody/SlashNode")
+slash_node_timer = NodePath("BossBody/SlashNode/SlashView/TimerToHideView")
 body = NodePath("BossBody")
 anim = NodePath("BossBody/AnimatedSprite2D")
 
@@ -89,3 +102,24 @@ animation = &"walk_back"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
 shape = SubResource("CircleShape2D_5a185")
+
+[node name="SlashNode" type="Node2D" parent="BossBody"]
+
+[node name="SlashArea" type="Area2D" parent="BossBody/SlashNode"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody/SlashNode/SlashArea"]
+shape = SubResource("CircleShape2D_cu7t7")
+debug_color = Color(0.995262, 0, 0.208311, 0.42)
+
+[node name="SlashView" type="TextureRect" parent="BossBody/SlashNode"]
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.67, 0.67)
+texture = SubResource("GradientTexture2D_t6okw")
+
+[node name="TimerToHideView" type="Timer" parent="BossBody/SlashNode/SlashView"]
+wait_time = 0.1
+
+[connection signal="body_entered" from="BossBody/SlashNode/SlashArea" to="." method="_on_slash_player_body_entered"]
+[connection signal="body_exited" from="BossBody/SlashNode/SlashArea" to="." method="_on_slash_area_player_body_exited"]
+[connection signal="timeout" from="BossBody/SlashNode/SlashView/TimerToHideView" to="." method="_on_timer_to_hide_view_timeout"]

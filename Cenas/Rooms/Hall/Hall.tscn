@@ -90,20 +90,21 @@ collision_enabled = true
 [node name="Hallway1" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(279, 184)
 
+[node name="BossGhostRoom" parent="Doors" instance=ExtResource("11_bvy5g")]
+position = Vector2(152, 57)
+
 [node name="Spawners" type="Node2D" parent="."]
 
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("11_kegp6")]
 position = Vector2(60, 186)
 type_enemie = ExtResource("12_2wqts")
-limit_spawn = 1
-time_to_spawn = 2.0
+limit_spawn = 100
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(157, 164)
 zoom = Vector2(3, 3)
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 position = Vector2(157, 164)
 collision_layer = 7
 collision_mask = 7

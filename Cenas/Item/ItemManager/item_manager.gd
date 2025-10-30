@@ -30,14 +30,10 @@ var drops = {
 }
 
 func _process(delta: float) -> void:
+	
 	if is_finish_get_key:
 		if Input.is_anything_pressed():
-			room_manager.current_room._clear_effects()
-			Globals.player.is_getting_key = false
-			Globals.player.set_process(true)
-			Globals.player.set_physics_process(true)
-			is_finish_get_key = false
-			key_to_free.queue_free()
+			finish_get_key()
 
 func _ready() -> void:
 	
@@ -46,14 +42,15 @@ func _ready() -> void:
 		get_tree().quit()
 		return
 		
-			
 func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	var item: Item
 	
 	match item_name:
 		"coin":  item = create_coin(pos)
-		"key": item = create_key(key_manager.create_key())
+		"key": item = setup_key(key_manager.create_key())
+				
+	item.manager = self
 				
 	return item
 	
@@ -71,7 +68,7 @@ func create_coin(pos: Vector2) -> Item:
 	
 	return item
 
-func create_key(key: Key) -> Item:
+func setup_key(key: Key) -> Item:
 		
 	if !key: return
 	
@@ -82,6 +79,9 @@ func create_key(key: Key) -> Item:
 	key.type = item_type.KEY
 	key.global_position = key.door1.area.global_position
 	key.start_chase_player()
+	
+	key_to_free = key
+
 	return key
 	
 func create_key_auto():
@@ -138,24 +138,21 @@ func make_items_chase_player():
 		item.start_chase_player()	
 		
 func _collect_item(item: Item):
-	
-	print("item: ", item.type)
-		
+			
 	match item.type:
 		item_type.COIN:
 			Globals.player.coins += 1
 			Globals.player.update_label_coins()
 			item.queue_free()
 		item_type.KEY:
-						
-			item = item as Key
-			item.door1.is_locked = false
-			item.door2.is_locked = false
-			
-			key_to_free = item
-			
 			await Globals.player.get_key_animation(item)
 			is_finish_get_key = true
-
-
-		
+			
+func finish_get_key():
+	room_manager.current_room._clear_effects()
+	Globals.player.is_getting_key = false
+	Globals.player.set_process(true)
+	Globals.player.set_physics_process(true)
+	is_finish_get_key = false
+	if key_to_free:
+		key_to_free.use()

@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw3qalysdkhwx"]
+[gd_scene load_steps=6 format=3 uid="uid://dw3qalysdkhwx"]
 
 [ext_resource type="Script" uid="uid://dihntck648mlm" path="res://Cenas/Keys/key.gd" id="1_ah1dp"]
 [ext_resource type="Texture2D" uid="uid://diy5gp5mllksu" path="res://Assets/Keys/key_common.png" id="2_gac03"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ccyvf"]
 radius = 4.12311
+
+[sub_resource type="Gradient" id="Gradient_ccyvf"]
+offsets = PackedFloat32Array(0, 0.666667)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ouih"]
+gradient = SubResource("Gradient_ccyvf")
+fill = 1
+fill_from = Vector2(0.507123, 0.51567)
 
 [node name="Key" type="Node2D" node_paths=PackedStringArray("area")]
 script = ExtResource("1_ah1dp")
@@ -20,3 +29,6 @@ texture = ExtResource("2_gac03")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_ccyvf")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_3ouih")

@@ -57,13 +57,14 @@ func set_active(mode: bool):
 	
 	set_process(mode)
 	set_physics_process(mode)
-	
-	show() if mode else hide()
+	visible = mode
+	is_active = mode
 	
 	var layer = Globals.layers["enemy"] if mode else 0
+	var mask = Globals.layers["player"] if mode else 0
 	
 	body.collision_layer = layer
-	body.collision_mask = layer
+	body.collision_mask = mask
 
 func take_damage(damage: int):
 	
@@ -141,6 +142,12 @@ func drop_damage_label(damage: int):
 func _drop_damage_animation(t: float, curve: MyCurve, label: Label):
 	var p = curve.get_point(t)
 	label.global_position = p
+	
+func dir_to_player() -> Vector2:
+	return body.global_position.direction_to(Globals.player_pos)
+	
+func dist_to_player() -> float: 
+	return body.global_position.distance_to(Globals.player_pos)
 	
 	
 signal enemy_die(ene: Enemy)

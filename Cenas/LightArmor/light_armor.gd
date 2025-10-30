@@ -11,7 +11,7 @@ var enemies_on_light: Dictionary[Enemy, float] = {}
 var mouse_move = false
 
 func _ready() -> void:
-	area.collision_mask = Globals.layers["enemy"]
+	area.collision_mask = Globals.layers["enemy"] | Globals.layers["boss"]
 
 func _process(delta: float) -> void:
 	
