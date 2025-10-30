@@ -250,8 +250,9 @@ radius = 5.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5v7o7"]
 radius = 8.0
 
-[node name="Ghost" type="Node2D" node_paths=PackedStringArray("body", "anim")]
+[node name="Ghost" type="Node2D" node_paths=PackedStringArray("area_hit", "body", "anim")]
 script = ExtResource("1_8icm7")
+area_hit = NodePath("CharacterBody2D/Areas/HitArea")
 speed = 100
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animation")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1huichr7pt8c"]
+[gd_scene load_steps=17 format=3 uid="uid://d1huichr7pt8c"]
 
 [ext_resource type="Script" uid="uid://b2e2n7y0q4emx" path="res://Cenas/Enemy/Bosses/ghost_boss.gd" id="1_21eog"]
 [ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_5a185"]
@@ -86,10 +86,14 @@ colors = PackedColorArray(1, 0, 0, 0.239216, 1, 1, 1, 0)
 gradient = SubResource("Gradient_cu7t7")
 fill = 1
 
-[node name="GhostBoss" type="Node2D" node_paths=PackedStringArray("slash_node", "slash_node_timer", "body", "anim")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6okw"]
+radius = 13.0384
+
+[node name="GhostBoss" type="Node2D" node_paths=PackedStringArray("slash_node", "slash_node_timer", "area_attack_ghosts_run", "body", "anim")]
 script = ExtResource("1_21eog")
 slash_node = NodePath("BossBody/SlashNode")
 slash_node_timer = NodePath("BossBody/SlashNode/SlashView/TimerToHideView")
+area_attack_ghosts_run = NodePath("BossBody/SpecialUtils/AreaAttackToGhostsRun")
 body = NodePath("BossBody")
 anim = NodePath("BossBody/AnimatedSprite2D")
 
@@ -120,6 +124,14 @@ texture = SubResource("GradientTexture2D_t6okw")
 [node name="TimerToHideView" type="Timer" parent="BossBody/SlashNode/SlashView"]
 wait_time = 0.1
 
+[node name="SpecialUtils" type="Node2D" parent="BossBody"]
+
+[node name="AreaAttackToGhostsRun" type="Area2D" parent="BossBody/SpecialUtils"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody/SpecialUtils/AreaAttackToGhostsRun"]
+shape = SubResource("CircleShape2D_t6okw")
+
 [connection signal="body_entered" from="BossBody/SlashNode/SlashArea" to="." method="_on_slash_player_body_entered"]
 [connection signal="body_exited" from="BossBody/SlashNode/SlashArea" to="." method="_on_slash_area_player_body_exited"]
 [connection signal="timeout" from="BossBody/SlashNode/SlashView/TimerToHideView" to="." method="_on_timer_to_hide_view_timeout"]
+[connection signal="body_entered" from="BossBody/SpecialUtils/AreaAttackToGhostsRun" to="." method="_on_area_attack_to_ghosts_run_player_body_entered"]
