@@ -155,6 +155,7 @@ zoom = Vector2(2.5, 2.5)
 
 [node name="Hall" parent="Doors" instance=ExtResource("4_es5nb")]
 position = Vector2(193, 179)
+is_locked = false
 
 [node name="Exports" type="Node2D" parent="."]
 

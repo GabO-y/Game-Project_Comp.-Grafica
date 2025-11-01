@@ -80,7 +80,7 @@ func _process(delta: float) -> void:
 		timer_issu_coin += delta
 			
 	if Globals.player == null: return
-	var dist = area.global_position.distance_to(Globals.player_pos)
+	var dist = area.global_position.distance_to(Globals.player_pos())
 			
 	if dist < 30 and not is_visible_pop_up:
 		show_popup()

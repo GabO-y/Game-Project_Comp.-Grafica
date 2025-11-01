@@ -7,6 +7,9 @@ var rooms: Array[Room]
 @export var item_manager: ItemManager
 @export var key_manager: KeyManager
 
+# para posicionar as chaves geradas onde o ultimo inimigo morreu
+var last_ene_pos: Vector2
+
 var current_room: Room
 
 func _ready() -> void:		

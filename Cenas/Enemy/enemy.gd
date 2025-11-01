@@ -146,10 +146,10 @@ func _drop_damage_animation(t: float, curve: MyCurve, label: Label):
 	label.global_position = p
 	
 func dir_to_player() -> Vector2:
-	return body.global_position.direction_to(Globals.player_pos)
+	return body.global_position.direction_to(Globals.player_pos())
 	
 func dist_to_player() -> float: 
-	return body.global_position.distance_to(Globals.player_pos)
+	return body.global_position.distance_to(Globals.player_pos())
 	
 	
 signal enemy_die(ene: Enemy)

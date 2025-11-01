@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw3qalysdkhwx"]
+[gd_scene load_steps=8 format=3 uid="uid://dw3qalysdkhwx"]
 
 [ext_resource type="Script" uid="uid://dihntck648mlm" path="res://Cenas/Keys/key.gd" id="1_ah1dp"]
 [ext_resource type="Texture2D" uid="uid://diy5gp5mllksu" path="res://Assets/Keys/key_common.png" id="2_gac03"]
@@ -15,14 +15,23 @@ gradient = SubResource("Gradient_ccyvf")
 fill = 1
 fill_from = Vector2(0.507123, 0.51567)
 
-[node name="Key" type="Node2D" node_paths=PackedStringArray("area")]
+[sub_resource type="Gradient" id="Gradient_3ouih"]
+offsets = PackedFloat32Array(0, 0.0217391, 0.304348)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.192157, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q44xp"]
+gradient = SubResource("Gradient_3ouih")
+fill = 1
+fill_from = Vector2(0.472934, 0.464387)
+
+[node name="Key" type="Node2D" node_paths=PackedStringArray("particles_node", "area")]
 script = ExtResource("1_ah1dp")
+particles_node = NodePath("CPUParticles2D")
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-9.53674e-07, 9.53674e-07)
-scale = Vector2(0.544922, 0.544922)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_gac03")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -32,3 +41,14 @@ shape = SubResource("CircleShape2D_ccyvf")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture = SubResource("GradientTexture2D_3ouih")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 50
+texture = SubResource("GradientTexture2D_q44xp")
+lifetime = 10.0
+preprocess = 3.1
+emission_shape = 2
+emission_sphere_radius = 39.45
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+radial_accel_min = -100.0

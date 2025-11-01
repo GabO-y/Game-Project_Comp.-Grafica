@@ -288,7 +288,7 @@ offset_right = 23.0
 offset_bottom = -6.0
 
 [node name="Lantern" parent="." instance=ExtResource("4_5akqg")]
-damage = 2
+damage = 1000
 
 [node name="Hud" type="CanvasLayer" parent="."]
 

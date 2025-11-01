@@ -1,7 +1,7 @@
 extends Boss
 class_name GhostBoss
 
-enum State {CHASING, SPECIAL, STOPED, PREPERE_ATTACK}
+enum State {CHASING, SPECIAL, STOPED, PREPERE_ATTACK, DYING}
 enum Specials {GHOSTS_RUN, CRASH_WALL}
 
 var current_state: State
@@ -48,6 +48,13 @@ var timer_special = 0
 var stop_timer: float = 0.0
 var stop_duration: float = 2.0
 
+var is_dying: bool = false
+
+var count_drops: int = 0
+var total_drops: int = 1
+var timer_to_drop: float = 0.0
+var coldown_to_drop: float = 0.1
+
 func _ready() -> void:
 	set_process(false)
 	set_physics_process(false)
@@ -62,11 +69,7 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_active: return
 		
-	timer_special += delta
-	
-	if timer_special >= special_coldown and not is_on_special:
-		start_special()
-		
+
 	match current_state:
 		State.CHASING:
 			chase_move()
@@ -81,6 +84,36 @@ func _physics_process(delta: float) -> void:
 				
 		State.STOPED:
 			pass
+		State.DYING:
+			
+			if is_stop: 
+				timer_to_drop = 0.0
+				return
+			
+			if timer_to_drop >= coldown_to_drop:
+				Globals.item_manager.drop("coin", body.global_position)
+				count_drops += 1
+				timer_to_drop = 0.0
+				
+			timer_to_drop += delta
+				
+			if count_drops >= total_drops:
+				anim.play("die")
+				is_dead = true
+				is_stop = true
+				await anim.animation_finished
+				is_stop = false
+				Globals.room_manager.current_room.finish = true
+				Globals.room_manager.current_room._clear_effects()
+				queue_free()
+			
+			return
+			
+	timer_special += delta
+	
+	if timer_special >= special_coldown and not is_on_special:
+		start_special()
+		
 
 func special_move():
 	match current_special:
@@ -246,7 +279,7 @@ func emerge_boss_ghosts_run_move():
 	
 func _animation_logic():
 	
-	if is_laugh_animation: return
+	if is_laugh_animation or is_dying: return
 	
 	var play: String = "walk"
 	
@@ -406,12 +439,16 @@ func _ghost_out(body: Node2D):
 		body.get_parent().die()
 
 func die():
-	
-	if not is_active or is_dead: return
 	is_dead = true
+	is_dying = true
+	start_die()
 	
-	room._check_clear()
-	enemy_die.emit(self)
+func start_die():
 	
-	queue_free()
+	current_state = State.DYING
+	anim.play("partial_die")
 	
+	await anim.animation_finished
+	z_index = 10000
+	anim.play("loop_partial_die")
+	is_stop = false

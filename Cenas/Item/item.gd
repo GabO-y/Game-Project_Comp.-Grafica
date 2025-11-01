@@ -16,9 +16,13 @@ var curve: MyCurve
 
 func _ready() -> void:
 	
-
 	area.collision_mask = Globals.layers["player"]
 	area.body_entered.connect(_on_player_body_entered)
+	
+	curve.progress_finish.connect(
+		func():
+			is_move = false
+	)
 	
 	z_index = 100
 	
@@ -26,11 +30,17 @@ func _process(delta: float) -> void:
 	
 	if is_move:
 		match type_move:
+			"curve_move":
+				curve_move()
 			"chase_player":
 				chase_player()
 			"drop_down":
 				drop_down()
-		
+				
+				
+func curve_move():
+	global_position = curve.get_point_by_progress()
+	
 func start_drop_down():
 		
 	is_move = true
@@ -47,7 +57,8 @@ func start_drop_down():
 	var x = 10
 	if not right: x *= -1
 	
-	p2.x += x
+	p2.x += x + ( randi_range(-50, 50) )
+	p2.y += randi_range(-50, 50)
 	
 	var drop_curve = MyCurve.new(p0, p1, p2, t)
 	
@@ -77,8 +88,32 @@ func drop_down():
 # Pega um ponto da curva e atualiza para a nova pos do player
 func chase_player():
 	var p = curve.get_point_by_progress()
-	position = p
-	curve.set_p2(Globals.player_pos)
+	global_position = p
+	curve.set_p2(Globals.player_pos())
+	
+func set_go_to(pos: Vector2):
+	var p1 = global_position
+	p1.y += randi_range(-10, -20)
+	
+	curve = MyCurve.new(global_position, p1, pos)
+	
+	type_move = "curve_move"
+	is_move = true
+	
+	var key = self as Key
+	if key:
+		
+		key.is_going_to_door = true
+		Globals.house.set_camare_in(key, Vector2(3.5, 3.5))
+				
+		curve.progress_finish.connect(
+			func():
+						
+				key.is_going_to_door = false
+				is_move = false
+				key.use_when_arrieve.emit()
+				
+		)
 	
 # Gera a curva que o item vai seguir ate o player
 func start_chase_player():
@@ -88,7 +123,7 @@ func start_chase_player():
 	
 	var p0 = global_position
 	var p1 = p0
-	var p2 = Globals.player_pos
+	var p2 = Globals.player_pos()
 	
 	var dir: Vector2 = p0.direction_to(p2) * 80
 	
@@ -110,5 +145,6 @@ func _on_player_body_entered(body: Node2D) -> void:
 	
 	
 	collected.emit(self)
+			
 			
 signal collected(item: Item)

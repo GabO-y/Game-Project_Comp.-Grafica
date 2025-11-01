@@ -8,11 +8,12 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iqu7b"]
 
-[node name="House" type="Node2D" node_paths=PackedStringArray("player", "room_manager", "transiontion_scene")]
+[node name="House" type="Node2D" node_paths=PackedStringArray("player", "room_manager", "transiontion_scene", "camera")]
 script = ExtResource("1_rmjq6")
 player = NodePath("Player")
 room_manager = NodePath("RoomManager")
 transiontion_scene = NodePath("TransitionScene")
+camera = NodePath("Camera2D")
 
 [node name="RoomManager" parent="." instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
@@ -42,3 +43,6 @@ metadata/_edit_use_anchors_ = true
 [node name="ChestMenu" parent="ChestMenuInterativa" node_paths=PackedStringArray("popup", "area") instance=ExtResource("5_iqu7b")]
 popup = NodePath("../MenuPopUp")
 area = NodePath("../BearArea")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false

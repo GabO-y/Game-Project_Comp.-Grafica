@@ -2,8 +2,9 @@ extends Node2D
 
 class_name Door
 
+@export var my_room: Room
 @export var area: Area2D;
-var goTo #Room que ele deve ir
+var goTo: Room #Room que ele deve ir
 
 @export var is_locked: bool			
 @export var light: PointLight2D 
@@ -43,5 +44,18 @@ func set_active(mode: bool):
 	area.set_deferred("monitoring", mode)
 	set_process(mode)
 	turn_light(mode)
+	
+func all_lock():
+	
+	print("my room: ", my_room.name)
+	print("my name: ", name)
+
+	is_locked = true
+	
+	for door in goTo.doors:
+		print("\t", door.name)
+		if door.name == my_room.name:
+			door.is_locked = true
+			return
 		
 signal enter_door(goTo)

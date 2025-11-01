@@ -19,6 +19,11 @@ func find_doors(room: Room):
 	var doors: Array[Door]
 	
 	for door in room.doors:
+		
+		if door.goTo is BossRoom:
+			if door.goTo.finish:
+				continue
+		
 		if door.is_locked:
 			doors.append(door)
 	

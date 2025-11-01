@@ -1,8 +1,44 @@
-[gd_scene load_steps=28 format=3 uid="uid://d1huichr7pt8c"]
+[gd_scene load_steps=43 format=3 uid="uid://d1huichr7pt8c"]
 
 [ext_resource type="Script" uid="uid://b2e2n7y0q4emx" path="res://Cenas/Enemy/Bosses/ghost_boss.gd" id="1_21eog"]
 [ext_resource type="Texture2D" uid="uid://bqh5hf6cggxvu" path="res://Assets/Enemies/MegaGhost (Boss))/spr_boss_modelo.png" id="2_5a185"]
 [ext_resource type="Script" uid="uid://bnmqjw0nwa0nl" path="res://Cenas/Enemy/Bosses/dinamic_life_bar.gd" id="3_t6okw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qm0in"]
+atlas = ExtResource("2_5a185")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmp6d"]
+atlas = ExtResource("2_5a185")
+region = Rect2(32, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4e127"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48nrl"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8584"]
+atlas = ExtResource("2_5a185")
+region = Rect2(0, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4pj2"]
+atlas = ExtResource("2_5a185")
+region = Rect2(32, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2ids"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdx6n"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seypm"]
+atlas = ExtResource("2_5a185")
+region = Rect2(128, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r7115"]
 atlas = ExtResource("2_5a185")
@@ -27,6 +63,30 @@ region = Rect2(32, 128, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_cu7t7"]
 atlas = ExtResource("2_5a185")
 region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2c4w"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m74vh"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e24ac"]
+atlas = ExtResource("2_5a185")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx16w"]
+atlas = ExtResource("2_5a185")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a8e4"]
+atlas = ExtResource("2_5a185")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pa63i"]
+atlas = ExtResource("2_5a185")
+region = Rect2(96, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nyppu"]
 atlas = ExtResource("2_5a185")
@@ -62,6 +122,38 @@ region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c8po4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qm0in")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmp6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4e127")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48nrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8584")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4pj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2ids")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdx6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seypm")
+}],
+"loop": false,
+"name": &"die",
+"speed": 9.0
+}, {
 "frames": [{
 "duration": 0.6,
 "texture": SubResource("AtlasTexture_r7115")
@@ -113,6 +205,34 @@ animations = [{
 }],
 "loop": false,
 "name": &"laugh",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2c4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m74vh")
+}],
+"loop": true,
+"name": &"loop_partial_die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e24ac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx16w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a8e4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pa63i")
+}],
+"loop": false,
+"name": &"partial_die",
 "speed": 5.0
 }, {
 "frames": [{
@@ -202,12 +322,14 @@ scale = Vector2(1.3, 1.3)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BossBody"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_c8po4")
-animation = &"laugh"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
+visible = false
 shape = SubResource("CircleShape2D_5a185")
 
 [node name="SlashNode" type="Node2D" parent="BossBody"]
+visible = false
 
 [node name="SlashArea" type="Area2D" parent="BossBody/SlashNode"]
 
@@ -225,6 +347,7 @@ texture = SubResource("GradientTexture2D_t6okw")
 wait_time = 0.1
 
 [node name="SpecialUtils" type="Node2D" parent="BossBody"]
+visible = false
 
 [node name="AreaAttackToGhostsRun" type="Area2D" parent="BossBody/SpecialUtils"]
 
@@ -234,7 +357,7 @@ shape = SubResource("CircleShape2D_t6okw")
 [node name="DinamicLifeBar" type="CanvasLayer" parent="." node_paths=PackedStringArray("boss", "timer")]
 script = ExtResource("3_t6okw")
 boss = NodePath("..")
-timer = NodePath("../Timer")
+timer = NodePath("UpdateLifeTimer")
 
 [node name="DamageBar" type="ProgressBar" parent="DinamicLifeBar"]
 visible = false
@@ -264,7 +387,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_r7115")
 value = 50.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="."]
+[node name="UpdateLifeTimer" type="Timer" parent="DinamicLifeBar"]
 wait_time = 2.0
 autostart = true
 
@@ -273,4 +396,4 @@ autostart = true
 [connection signal="timeout" from="BossBody/SlashNode/SlashView/TimerToHideView" to="." method="_on_timer_to_hide_view_timeout"]
 [connection signal="body_entered" from="BossBody/SpecialUtils/AreaAttackToGhostsRun" to="." method="_on_area_attack_to_ghosts_run_player_body_entered"]
 [connection signal="body_exited" from="BossBody/SpecialUtils/AreaAttackToGhostsRun" to="." method="_on_area_attack_to_ghosts_run_player_body_exited"]
-[connection signal="timeout" from="Timer" to="DinamicLifeBar" method="_on_timer_to_update_life"]
+[connection signal="timeout" from="DinamicLifeBar/UpdateLifeTimer" to="DinamicLifeBar" method="_on_timer_to_update_life"]

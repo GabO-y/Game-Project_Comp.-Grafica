@@ -36,8 +36,8 @@ func _physics_process(delta: float) -> void:
 	if !is_active or is_stop:
 		return
 				
-	var player_pos = Globals.player_pos
-	var distance_to_player = body.global_position.distance_to(player_pos)
+	var player_pos = Globals.player_pos()
+	var distance_to_player = dist_to_player()
 		
 	match current_state:
 		State.CHASING:

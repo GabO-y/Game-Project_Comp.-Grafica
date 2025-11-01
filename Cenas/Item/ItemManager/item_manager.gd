@@ -29,11 +29,6 @@ var drops = {
 	]}
 }
 
-func _process(delta: float) -> void:
-	
-	if is_finish_get_key:
-		if Input.is_anything_pressed():
-			finish_get_key()
 
 func _ready() -> void:
 	if room_manager == null:
@@ -48,6 +43,11 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	match item_name:
 		"coin":  item = create_coin(pos)
 		"key": item = setup_key(key_manager.create_key(room_manager.get_room_logic()))
+				
+	if item_name == "key":
+		if !item:
+			print("chave não gerada")
+			return
 				
 	item.manager = self
 				
@@ -76,7 +76,12 @@ func setup_key(key: Key) -> Item:
 	key.collected.connect(_collect_item)
 	
 	key.type = item_type.KEY
-	key.global_position = key.door1.area.global_position
+	
+	if room_manager.last_ene_pos == Vector2.ZERO:
+		key.global_position = key.door1.area.global_position
+	else:
+		key.global_position = room_manager.last_ene_pos
+
 	key.start_chase_player()
 	
 	key_to_free = key
@@ -144,14 +149,14 @@ func _collect_item(item: Item):
 			Globals.player.update_label_coins()
 			item.queue_free()
 		item_type.KEY:
+			# caso a chave esteja indo em direçao a porta
+			if item.is_going_to_door: return
+			key_to_free = item
 			await Globals.player.get_key_animation(item)
-			is_finish_get_key = true
+			item.is_getting_key = true
+			item.is_in_open_door = true
+
 			
 func finish_get_key():
-	Globals.player.is_getting_key = false
-	Globals.player.set_process(true)
-	Globals.player.set_physics_process(true)
-	is_finish_get_key = false
 	if key_to_free:
-		key_to_free.use()
-	room_manager.current_room._clear_effects()
+		key_to_free.finish_get_key()

@@ -32,6 +32,7 @@ func _ready() -> void:
 			for door in child.get_children():
 				if door is Door:
 					doors.append(door)
+					door.my_room = self
 					
 		if child.name == "Layers":
 			for layer in child.get_children():
@@ -104,6 +105,7 @@ func get_door(door_name: String) -> Door:
 # Como o sinal da morte de um inmigo precisa de um parametro
 # Ent fiz esse pra funcionar, mas é o msm que o "_check_clear"
 func _check_clear_by_ene_die(ene):
+	manager.last_ene_pos = ene.body.global_position
 	_check_clear()
 
 func get_is_clear():
@@ -117,6 +119,7 @@ func _check_clear():
 		if not spawn.is_clean(): 
 			is_clear = false
 			finish = false
+			manager.last_ene_pos = Vector2(0,0)
 			return
 		
 	is_clear = true

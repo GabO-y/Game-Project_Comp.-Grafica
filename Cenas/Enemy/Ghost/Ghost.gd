@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 		
 	if is_stop: return
 	
-	var dist = body.global_position.distance_to(Globals.player_pos)
+	var dist = dist_to_player()
 			
 	#if not special_attack.is_empty():
 		#match special_attack:
@@ -114,7 +114,7 @@ func prepare_attack(delta):
 		current_state = State.DASHING
 		is_dashing = true
 		wait_timer = 0
-		dash_dir = body.global_position.direction_to(Globals.player_pos)
+		dash_dir = dir_to_player()
 		last_dir = dash_dir
 		body.collision_mask = Globals.layers["wall_current_room"]
 				
@@ -161,7 +161,7 @@ func chase_player(dist):
 	
 	if is_attacking: return
 	
-	dir = Globals.dir_to(body.global_position, Globals.player_pos)
+	dir = dir_to_player()
 
 	body.velocity = dir * speed
 	body.move_and_slide()

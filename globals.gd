@@ -9,9 +9,12 @@ var already_keys = []
 var is_get_animation = false
 var center_pos: Vector2
 var special_time_ghost_run = 2
-var player_pos: Vector2
 var curren_menu: Control
+
 var room_manager: RoomManager
+var item_manager: ItemManager
+var key_manager: KeyManager
+var house: House
 
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
@@ -43,9 +46,6 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	
-	if player == null: return
-	player_pos = player.body.global_position
-
 	if die:
 		if Input.is_key_label_pressed(KEY_SPACE):
 			get_tree().reload_current_scene()
@@ -85,6 +85,12 @@ func _on_goint_to_center():
 	if already_center >= 8:
 		emerge_boss.emit()
 		already_center = 0
+
+func player_pos(): 
+	if !player:
+		print("PLAYER NULL")
+		return Vector2(0, 0)
+	return player.body.global_position
 
 func get_special_time_ghost_run():
 	special_time_ghost_run += 0.5
