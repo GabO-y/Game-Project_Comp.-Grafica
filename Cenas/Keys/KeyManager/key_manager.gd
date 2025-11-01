@@ -13,36 +13,22 @@ var current_door_can_open: Array[Door]
 # vai guardar se tem uma chave pro item manager criar
 var has_key: bool = false
 var key: Key
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
-func check_doors():
+func find_doors(room: Room):
 	
-	var current_room = room_manager.current_room
+	var doors: Array[Door]
 	
-	current_door_can_open.clear()
-	
-	for door in current_room.doors:
+	for door in room.doors:
 		if door.is_locked:
-			current_door_can_open.append(door)
-			
-			
-func find_doors():
+			doors.append(door)
 	
-#	Sorte a porta que vai abrir
-	var door_current = current_door_can_open.pick_random() as Door
+#	Sorteia a porta que vai abrir
+	var drawn_door = doors.pick_random() as Door
 	
-	if !door_current: return
+	if !drawn_door: return
 	
 #	Pega o quarto que a porta leva
-	var room_target = door_current.goTo as Room
+	var room_target = drawn_door.goTo as Room
 #	Variavel que vai pegar a porta correspondente ao quarto atual
 	var door_target: Door
 			
@@ -57,19 +43,18 @@ func find_doors():
 		return null
 		
 	return {
-		"door_current": door_current,
+		"door_current": drawn_door,
 		"door_target": door_target
 	}
 		
-func create_key() -> Key:
+func create_key(room: Room) -> Key:
 	
-	var doors = find_doors()
-	
+	var doors = find_doors(room)
+		
 	if !doors: return null
 	
 	var key: Key = load("res://Cenas/Keys/Key.tscn").instantiate() 
 
-		
 	key.door1 = doors["door_current"]
 	key.door2 = doors["door_target"]
 	

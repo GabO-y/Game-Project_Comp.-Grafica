@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="5_0t272"]
 [ext_resource type="PackedScene" uid="uid://dfbt2q3vq6op5" path="res://Cenas/Rooms/Hall/Hall.tscn" id="5_ow6w0"]
 [ext_resource type="PackedScene" uid="uid://go8o3056gd8o" path="res://Cenas/Item/ItemManager/ItemManager.tscn" id="6_0t272"]
-[ext_resource type="PackedScene" uid="uid://bd7aqvuxmuu4r" path="res://Cenas/Rooms/BossGhostRoom/GhostBoosRoom.tscn" id="6_ow6w0"]
+[ext_resource type="PackedScene" uid="uid://bd7aqvuxmuu4r" path="res://Cenas/Rooms/GhostBossRoom/GhostBossRoom.tscn" id="6_ow6w0"]
 [ext_resource type="PackedScene" uid="uid://bjyhdo23kbxbt" path="res://Cenas/Keys/KeyManager/KeyManager.tscn" id="7_0t272"]
 
 [node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode", "item_manager", "key_manager")]

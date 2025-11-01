@@ -5,11 +5,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghg2t"]
 radius = 10.0499
 
-[node name="EnemieSpawaner" type="Node2D"]
+[node name="EnemieSpawaner" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_si6ev")
-time_to_spawn = 0.1
+timer = NodePath("TimerToSpawn")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_ghg2t")
+
+[node name="TimerToSpawn" type="Timer" parent="."]
+
+[connection signal="timeout" from="TimerToSpawn" to="." method="_on_timer_to_spawn_a_enemy"]

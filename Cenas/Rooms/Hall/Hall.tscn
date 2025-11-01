@@ -18,7 +18,7 @@ script/source = "extends Room
 
 var camare_chase_player = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if camare_chase_player:
 		camera.global_position.y = Globals.player_pos.y
 
@@ -32,7 +32,7 @@ func _not_camera_chase(body: Node2D) -> void:
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kegp6"]
-size = Vector2(220, 139)
+size = Vector2(220, 92)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_kegp6"]
 vertices = PackedVector2Array(259.906, 293.906, 43.0781, 292.078, 44.9062, 72.9531, 258.078, 72.0391)
@@ -90,19 +90,24 @@ collision_enabled = true
 [node name="Hallway1" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(279, 184)
 
-[node name="BossGhostRoom" parent="Doors" instance=ExtResource("11_bvy5g")]
+[node name="GhostBossRoom" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(152, 57)
 
 [node name="Spawners" type="Node2D" parent="."]
 
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("11_kegp6")]
-position = Vector2(60, 186)
+position = Vector2(67, 248)
 type_enemie = ExtResource("12_2wqts")
-limit_spawn = 100
+limit_spawn = 3
+
+[node name="EnemieSpawaner2" parent="Spawners" instance=ExtResource("11_kegp6")]
+position = Vector2(70, 108)
+type_enemie = ExtResource("12_2wqts")
+limit_spawn = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(157, 164)
-zoom = Vector2(3, 3)
+zoom = Vector2(2.5, 2.5)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(157, 164)
@@ -110,7 +115,7 @@ collision_layer = 7
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4, 14.5)
+position = Vector2(-4, 12)
 shape = SubResource("RectangleShape2D_kegp6")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]

@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		State.CHASING:
 			handle_chasing_state(distance_to_player, player_pos)
 		State.DASHING:
-			handle_dashing_state(delta, distance_to_player)
+			handle_dashing_state(delta)
 		State.ATTACKING:
 			handle_attacking_state(delta)
 
@@ -63,7 +63,7 @@ func handle_chasing_state(distance_to_player: float, player_pos: Vector2):
 		dash_direction = dir
 		dash_timer = 0.0
 
-func handle_dashing_state(delta: float, distance_to_player: float):
+func handle_dashing_state(delta: float):
 	dash_timer += delta
 	
 	# Executar dash
@@ -119,14 +119,14 @@ func animation_logic():
 	
 	anim.play(play)
 	
-func _hit_play(body: Node2D) -> void:
-	var player_area = body.get_parent() as Player
+func _hit_play(player_body: Node2D) -> void:
+	var player_area = player_body.get_parent() as Player
 	if player_area:
 		is_player_in_attack_range = true
 		player = player_area
 
-func _exit_player_area_attack(body: Node2D) -> void:
-	var player_area = body.get_parent() as Player
+func _exit_player_area_attack(player_body: Node2D) -> void:
+	var player_area = player_body.get_parent() as Player
 	if player_area:
 		is_player_in_attack_range = false
 

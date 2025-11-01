@@ -10,7 +10,7 @@ var rooms: Array[Room]
 var current_room: Room
 
 func _ready() -> void:		
-	
+		
 	for room in roomsNode.get_children():
 				
 		if room is Room:
@@ -24,7 +24,7 @@ func _ready() -> void:
 			for door in room.doors:
 				door = door as Door
 				door.enter_door.connect(_change_room)
-				
+		
 	for room in rooms:
 		for door in room.doors:
 			match_doors(room.name, door.name)
@@ -47,17 +47,15 @@ func _change_room(goTo):
 	item_manager.finish_get_key()
 	
 	current_room.desable()
-	current_room.clear.disconnect(item_manager.create_key_auto)
 
 	var room_name = current_room.name
 	
 	current_room = goTo
 	current_room.enable()
 	
-	key_manager.check_doors()
 	current_room.clear.connect(item_manager.create_key_auto)
+	current_room._check_clear()
 	
-
 	var door_target = current_room.get_door(room_name)
 
 	Globals.player.body.global_position = door_target.area.global_position
@@ -148,27 +146,9 @@ func set_initial_room(room_name: String):
 func is_clean_room() -> bool:
 	return current_room.get_is_clear()
 
-func _unlock_doors(key: Key):
-	
-	if key == null: return
-	
-	var door_1: Door
-	var door_2: Door
-	
-	for room in rooms:
-		if room.name == key.what_open[0]:
-			door_1 = room.get_door(key.what_open[1])
-		if room.name == key.what_open[1]:
-			door_2 = room.get_door(key.what_open[0])
-
-					
-	if door_1 != null and door_2 != null:
-		door_1.is_locked = false
-		door_2.is_locked = false
-	else:
-		if door_1 == null:
-			print("porta: ", key.what_open[1], " nao encontrada no quarto: ", key.what_open[0])
-		if door_2 == null:
-			print("porta: ", key.what_open[0], " nao encontrada no quarto: ", key.what_open[1])
+# Aqui é pra ficar a logica para ele retornar um quarto que haja portas 
+# para serem abertas
+func get_room_logic() -> Room:
+	return current_room
 
 signal changed_room

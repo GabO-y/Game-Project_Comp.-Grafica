@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvlsvai6wx0m1"]
+
+[ext_resource type="Script" uid="uid://cs4qvenmouica" path="res://Cenas/Enemy/Bosses/boss.gd" id="1_cqobs"]
+
+[node name="Boss" type="Node2D"]
+script = ExtResource("1_cqobs")

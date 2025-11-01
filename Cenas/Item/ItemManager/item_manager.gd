@@ -36,7 +36,6 @@ func _process(delta: float) -> void:
 			finish_get_key()
 
 func _ready() -> void:
-	
 	if room_manager == null:
 		push_error("ROOM MANAGER CAN'T BE NULL: ", get_path())
 		get_tree().quit()
@@ -48,7 +47,7 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	match item_name:
 		"coin":  item = create_coin(pos)
-		"key": item = setup_key(key_manager.create_key())
+		"key": item = setup_key(key_manager.create_key(room_manager.get_room_logic()))
 				
 	item.manager = self
 				
@@ -149,10 +148,10 @@ func _collect_item(item: Item):
 			is_finish_get_key = true
 			
 func finish_get_key():
-	room_manager.current_room._clear_effects()
 	Globals.player.is_getting_key = false
 	Globals.player.set_process(true)
 	Globals.player.set_physics_process(true)
 	is_finish_get_key = false
 	if key_to_free:
 		key_to_free.use()
+	room_manager.current_room._clear_effects()

@@ -24,16 +24,6 @@ func _player_enter(body):
 	if is_locked:
 		return
 				
-	#for i in player.items:
-		#if i is Key:
-			#if name in i.what_open:
-				#contains_key = true
-				#break
-				
-	#for i in get_children():
-		#if i is Area2D:
-			#i.set_deferred("monitoring", false)	
-				
 	enter_door.emit(goTo)
 	
 func turn_light(turn: bool):

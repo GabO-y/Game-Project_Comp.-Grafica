@@ -13,3 +13,4 @@ func use():
 	door1.is_locked = false
 	door2.is_locked = false
 	queue_free()
+	

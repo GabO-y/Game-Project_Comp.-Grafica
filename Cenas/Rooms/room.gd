@@ -55,22 +55,22 @@ func enable():
 
 func switch_process(mode: bool):
 	visible = mode
-	
+		
 	if camera: camera.enabled = mode
 	
 	spread = mode
 	
 	set_process(mode)
 	set_physics_process(mode)
-	
+
 	for door in doors:
 		if door is Door:
-			door.desable()
+			door.set_active(mode)
 			
 	for spawn in spaweners:
 		if spawn is Spawn:
 			spawn.set_active(mode)
-			
+
 	for layer in layers:
 
 		layer.collision_enabled = mode

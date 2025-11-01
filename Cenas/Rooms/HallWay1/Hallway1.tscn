@@ -89,7 +89,7 @@ texture = SubResource("GradientTexture2D_mppsl")
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("10_8pbou")]
 position = Vector2(-4, 114)
 type_enemie = ExtResource("11_8pbou")
-limit_spawn = 1
+limit_spawn = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(153, 109)

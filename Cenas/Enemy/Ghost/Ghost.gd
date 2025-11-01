@@ -82,26 +82,29 @@ func _process(delta: float) -> void:
 	
 func special_move():
 		
+	body.collision_layer = Globals.layers["boss"] 
+	body.collision_mask = 0
+		
 	match type_special:
 		1: 
-			body.collision_layer = Globals.layers["boss"] 
-			body.collision_mask = 0
-			
 			move_special_1()
-	
-
+		2:
+			body.velocity = dir * speed
+			body.move_and_slide()
+		
 func move_special_1():
 	if is_continue_toward:
 		body.velocity = dir * speed
 		body.move_and_slide()
 		return
 			
-	if dist_to_player() < 10:
+	if dist_to_player() < 70:
 		is_continue_toward = true
 		return
 			
 	chase_player(41)
 	last_dir = dir
+	
 
 func prepare_attack(delta):
 	

@@ -20,7 +20,7 @@ var dir_possibles_crash_wall = {
 		Vector2(-1,   1)  : {"left"  : Vector2( 1,  1), "down" : Vector2(-1, -1)},
 		Vector2(-1,  -1)  : {"left"  : Vector2( 1, -1), "up"   : Vector2(-1,  1)}
 	}
-	
+		
 var layers = {
 	"player" : 1 << 0,
 	"enemy" : 1 << 1,
@@ -29,7 +29,8 @@ var layers = {
 	"wall_current_room": 1 << 4,
 	"out_room_boss": 1 << 5,
 	"ghost": 1 << 6,
-	"no_collision_wall": 1 << 7
+	"no_collision_wall": 1 << 7,
+	"armor": 1 << 8
 }
 
 var ene_in_crash_attack: Array[Enemy]
@@ -92,8 +93,6 @@ func get_special_time_ghost_run():
 func dir_to(current: Vector2, target: Vector2):
 	return current.direction_to(target)
 	
-signal test
-
 signal goint_to_center
 
 signal emerge_boss

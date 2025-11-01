@@ -7,16 +7,10 @@ class_name Lantern
 var ene_on_light = {}
 
 func _ready() -> void:
-	
-	energie = 10000
-	
-	area.body_entered.connect(_ene_join_light)
-	area.body_exited.connect(_ene_exit_light)
-	
 	super._ready()
 
 func _process(delta):
-	
+		
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	var y_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 
@@ -29,36 +23,4 @@ func _process(delta):
 		dir = (mouse_pos - global_position).normalized()
 		rotation = dir.angle() - PI/2 
 		
-	damage_logig(delta)
 	super._process(delta)
-			
-func damage_logig(delta: float):
-	
-	for key in ene_on_light:
-		if ene_on_light[key] >= 1.5:
-			key.take_damage(damage)	
-			ene_on_light[key] = 0		
-		ene_on_light[key] += delta		
-
-func _ene_join_light(body: Node2D) -> void:
-	var ene = body.get_parent()
-	if ene is not Enemy: return
-	ene_on_light[ene] = 0.0
-
-func _ene_exit_light(body: Node2D) -> void:
-	var ene = body.get_parent() as Enemy
-	if ene == null: return
-	ene_on_light.erase(ene)
-
-func toggle_activate():
-	
-	is_active = !is_active
-		
-	if is_active:
-		area.show()
-		area.collision_mask = Globals.layers["ghost"] | Globals.layers["enemy"] | Globals.layers["wall_current_room"]
-		area.collision_layer = Globals.layers["enemy"] | Globals.layers["ghost"] | Globals.layers["wall_current_room"]
-	else:
-		area.hide()
-		area.collision_layer = 0
-		area.collision_mask = 0

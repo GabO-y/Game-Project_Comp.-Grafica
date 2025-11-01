@@ -24,7 +24,7 @@ var invencible_timer = 0
 
 var input_vector
 
-var speed: float = 140
+var speed: float = 100
 var dash_speed: float = 600
 var dash_duration = 0.1
 var can_dash = true

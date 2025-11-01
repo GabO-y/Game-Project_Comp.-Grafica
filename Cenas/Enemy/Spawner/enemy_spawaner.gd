@@ -3,32 +3,19 @@ extends Node2D
 class_name Spawn
 
 @export var type_enemie: PackedScene
-@export var limit_spawn = 5
+@export var limit_spawn = 0
 @export var time_to_spawn = 3.0
 @export var enimies_level = 1
+@export var timer: Timer
 
 var room: Room
 var is_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemy] = []
-var time = 0
 	
-func _process(delta: float) -> void:
+func _ready() -> void:
+	timer.wait_time = time_to_spawn
 	
-	time += delta
-			
-	#for ene in enemies:	
-		#if not is_instance_valid(ene): continue
-		#
-		#if ene.life <= 0:
-			#enemies.erase(ene)
-
-#	TODO: por um timer
-	if(time >= time_to_spawn && enemies_already_spawner < limit_spawn):
-		time = 0
-		enemies.append(spawanEmenie())
-		enemies_already_spawner += 1
-		
 func get_random_point_in_area(area: Area2D) -> Vector2:
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
 	
@@ -74,7 +61,6 @@ func spawanEmenie() -> Enemy:
 	
 	add_child(ene)
 		
-	print(is_active)
 	ene.set_active(is_active)
 
 	return ene
@@ -93,27 +79,31 @@ func set_active(mode: bool):
 	for enemy in enemies:
 		enemy.set_active(mode)
 		
+	if mode:
+		timer.start()
+	else:
+		timer.stop()
+		
 	set_process(mode)
 	visible = mode
 	
 	is_active = mode
 				
-func is_clean() -> bool:
+func is_clean() -> bool:	
 	if enemies.size() > 0: return false
 	if enemies_already_spawner < limit_spawn: return false
+	
 	return true
 				
 func _free_enemy(ene: Enemy):
 	enemies.erase(ene)
-	ene.is_active = false
-	ene.queue_free()
+	ene.die()
 
-				
-	
-			
-	
-	
-	
+func _on_timer_to_spawn_a_enemy() -> void:
+	if enemies_already_spawner < limit_spawn:
+		enemies.append(spawanEmenie())
+		enemies_already_spawner += 1
+	else:
+		timer.stop()
 		
 		
-	

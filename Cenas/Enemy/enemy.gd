@@ -61,7 +61,7 @@ func set_active(mode: bool):
 	is_active = mode
 	
 	var layer = Globals.layers["enemy"] if mode else 0
-	var mask = Globals.layers["player"] if mode else 0
+	var mask = Globals.layers["player"] | Globals.layers["enemy"] if mode else 0
 	
 	body.collision_layer = layer
 	body.collision_mask = mask
@@ -73,6 +73,7 @@ func take_damage(damage: int):
 	life -= damage
 	
 	drop_damage_label(damage)
+	print(damage)
 
 	if life <= 0 and !is_dead:
 		die()
@@ -88,14 +89,15 @@ func die():
 	if is_dead: return
 			
 	is_dead = true
+	is_active = false
 	
 	set_physics_process(false)
 	set_process(false)
 	
 	body.collision_layer = 0
 	body.collision_mask = 0
-	
-	anim.play("die")
+	if not self is Boss:	
+		anim.play("die")
 	anim.flip_h = last_dir.x > 0
 	
 	await anim.animation_finished

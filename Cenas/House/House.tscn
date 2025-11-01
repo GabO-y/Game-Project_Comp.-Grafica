@@ -18,7 +18,7 @@ transiontion_scene = NodePath("TransitionScene")
 position = Vector2(0, -2)
 
 [node name="Player" parent="." instance=ExtResource("2_iqu7b")]
-position = Vector2(228, 82)
+position = Vector2(59, 105)
 
 [node name="TransitionScene" parent="." instance=ExtResource("4_rmjq6")]
 position = Vector2(-111, -80)

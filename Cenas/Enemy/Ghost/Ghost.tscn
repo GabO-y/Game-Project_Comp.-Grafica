@@ -253,7 +253,7 @@ radius = 8.0
 [node name="Ghost" type="Node2D" node_paths=PackedStringArray("area_hit", "body", "anim")]
 script = ExtResource("1_8icm7")
 area_hit = NodePath("CharacterBody2D/Areas/HitArea")
-speed = 100
+speed = 80
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animation")
 
