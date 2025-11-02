@@ -23,9 +23,7 @@ func _ready() -> void:
 		func():
 			is_move = false
 	)
-	
-	z_index = 100
-	
+		
 func _process(delta: float) -> void:
 	
 	if is_move:
@@ -41,46 +39,19 @@ func _process(delta: float) -> void:
 func curve_move():
 	global_position = curve.get_point_by_progress()
 	
-func start_drop_down():
+func start_drop_down(item_curve: MyCurve):
 		
 	is_move = true
 	type_move = "drop_down"
-	
-	var p0 = global_position
-	var p1 = p0
-	var p2 = p0
-	var t = 0.03
-	
-	p1.y -= 30
-	
-	var right: bool = [true, false].pick_random()
-	var x = 10
-	if not right: x *= -1
-	
-	p2.x += x + ( randi_range(-50, 50) )
-	p2.y += randi_range(-50, 50)
-	
-	var drop_curve = MyCurve.new(p0, p1, p2, t)
-	
-	p1 = p2
-	p1.y -= 10
-	
-	x = 10
-	if not right: x *= -1
-	
-	p1.x += x * 0.25
-	p2.x += x * 0.5
-	
-	drop_curve.add_more_curve(p1, p2)
-	
-	curve = drop_curve
+		
+	curve = item_curve
 	curve.progress = 0.0
 	
-	curve.progress_finish.connect(
-		func():
-			is_move = false
-			global_position = curve.get_point(1)
-	)	
+	#curve.progress_finish.connect(
+		#func():
+			#is_move = false
+			#global_position = curve.get_point(1)
+	#)	
 
 func drop_down():
 	global_position = curve.get_point_by_progress()
@@ -145,6 +116,5 @@ func _on_player_body_entered(body: Node2D) -> void:
 	
 	
 	collected.emit(self)
-			
 			
 signal collected(item: Item)

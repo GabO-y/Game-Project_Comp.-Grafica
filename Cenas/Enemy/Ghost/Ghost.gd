@@ -38,21 +38,11 @@ var current_state: State
 
 func _ready() -> void:
 		
-	animation_type = int(randf() * 4) + 1
-	
-	if animation_type == 4:
-		animation_type = 3
+	animation_type = randi_range(1, 4)
 							
-	anim.show()
-	
-	life = 5
+	#anim.show()
 		
 	super._ready()
-	
-	player = get_tree().get_first_node_in_group("player") 
-	
-	body.collision_layer = Globals.layers["enemy"]
-	body.collision_mask = Globals.layers["wall_current_room"]
 
 func _process(delta: float) -> void:
 		
@@ -116,7 +106,6 @@ func prepare_attack(delta):
 		wait_timer = 0
 		dash_dir = dir_to_player()
 		last_dir = dash_dir
-		body.collision_mask = Globals.layers["wall_current_room"]
 				
 func dash(delta):
 		

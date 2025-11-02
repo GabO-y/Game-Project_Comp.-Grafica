@@ -9,7 +9,7 @@ class_name ItemManager
 
 enum item_type {COIN, KEY}
 
-var key_to_free: Key
+var key_in_scene: Key
 
 #var drops = {
 	#"comum": {"chance" : 0.5, "item": [
@@ -48,7 +48,12 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 		if !item:
 			print("chave não gerada")
 			return
-				
+			
+	if item is Key:
+		if Globals.only_use_key:
+			item.use()
+			return
+
 	item.manager = self
 				
 	return item
@@ -84,8 +89,8 @@ func setup_key(key: Key) -> Item:
 
 	key.start_chase_player()
 	
-	key_to_free = key
-
+	key_in_scene = key
+	
 	return key
 	
 func create_key_auto():
@@ -109,11 +114,11 @@ func try_drop(ene: Enemy):
 func drop(item: String, pos: Vector2):
 	
 	var i = create_item(item, pos)
-	
+		
 	i.manager = self
 	i.collected.connect(_collect_item)
 		
-	i.start_drop_down()
+	i.start_drop_down(create_defalt_drop_curve(i.global_position))
 		
 	items_node.add_child(i)
 	
@@ -137,6 +142,7 @@ func get_all_items():
 	
 # Chamado no Room
 func make_items_chase_player():
+	
 	for item in items_node.get_children():
 		item = item as Item 
 		item.start_chase_player()	
@@ -144,6 +150,7 @@ func make_items_chase_player():
 func _collect_item(item: Item):
 			
 	match item.type:
+		
 		item_type.COIN:
 			Globals.player.coins += 1
 			Globals.player.update_label_coins()
@@ -151,12 +158,45 @@ func _collect_item(item: Item):
 		item_type.KEY:
 			# caso a chave esteja indo em direçao a porta
 			if item.is_going_to_door: return
-			key_to_free = item
-			await Globals.player.get_key_animation(item)
-			item.is_getting_key = true
-			item.is_in_open_door = true
-
 			
+			await Globals.player.get_key_animation(item)
+			item.is_key_moment = true
+
+# caso o player atravesse a porta, mas não tenha pegado a chave
 func finish_get_key():
-	if key_to_free:
-		key_to_free.finish_get_key()
+	if key_in_scene:
+		key_in_scene.use()
+		
+func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
+	
+	var p0: Vector2 = item_pos
+	var p1: Vector2 = p0
+	var p2: Vector2 = p0
+	var t: float = 0.03
+	
+	var right: bool = [true, false].pick_random()
+	
+	var x = randi_range(0, 20)
+	if not right: x *= -1
+	
+	p1.y -= randi_range(30, 50)
+	p2.x += x
+
+	
+	var drop_curve = MyCurve.new(p0, p1, p2, t)
+	
+	p1 = p2
+	p1.y -= randi_range(10, 20)
+	
+	x = randi_range(10, 20)
+	if not right: x *= -1
+	
+	p1.x += x * 0.25
+	p2.x += x * 0.5
+	
+	p2.y += randi_range(0, 10)
+	
+	drop_curve.add_more_curve(p1, p2)
+	
+	return drop_curve
+	

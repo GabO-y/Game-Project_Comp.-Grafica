@@ -59,7 +59,7 @@ func _ready() -> void:
 	
 	armor.toggle_activate()
 	
-	body.collision_mask |= Globals.layers["wall_current_room"]
+	body.collision_mask |= Globals.layers["current_wall"]
 	
 	update_label_coins()
 	
@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 		body.velocity = knockback_dir * knockback_force
 		body.move_and_slide()
 		return
-#		O knockback vai acabar quando a animação de knockback acabar
+#	O knockback vai acabar quando a animação de knockback acabar
 	
 	dir = move_logic()
 	dash_logic(delta)
@@ -223,7 +223,6 @@ func flick_invensible():
 	else:
 		to_original_color()
 		
-
 func to_white_color():
 		
 	var tween = create_tween()

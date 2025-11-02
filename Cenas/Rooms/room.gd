@@ -79,7 +79,7 @@ func switch_process(mode: bool):
 		
 		layer.set_process(mode)
 		layer.set_physics_process(mode)
-		var lar = Globals.layers["wall_current_room"] if mode else 0
+		var lar = Globals.layers["current_wall"] if mode else 0
 				
 		layer.tile_set.set_physics_layer_collision_layer(0, lar)
 		layer.tile_set.set_physics_layer_collision_mask(0, lar)

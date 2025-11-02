@@ -56,11 +56,11 @@ func handle_chasing_state(distance_to_player: float, player_pos: Vector2):
 	
 	if distance_to_player < 40:
 		is_stop = true
-		await Globals.time(0.5)
+		await Globals.time(0.3)
 		is_stop = false
 		
 		current_state = State.DASHING
-		dash_direction = dir
+		dash_direction = dir_to_player()
 		dash_timer = 0.0
 
 func handle_dashing_state(delta: float):

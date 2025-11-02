@@ -51,11 +51,16 @@ var stop_duration: float = 2.0
 var is_dying: bool = false
 
 var count_drops: int = 0
-var total_drops: int = 1
+var total_drops: int = 50
 var timer_to_drop: float = 0.0
 var coldown_to_drop: float = 0.1
 
+var is_flicking: bool = false
+
 func _ready() -> void:
+	
+	z_index = 2
+	
 	set_process(false)
 	set_physics_process(false)
 	
@@ -98,14 +103,7 @@ func _physics_process(delta: float) -> void:
 			timer_to_drop += delta
 				
 			if count_drops >= total_drops:
-				anim.play("die")
-				is_dead = true
-				is_stop = true
-				await anim.animation_finished
-				is_stop = false
-				Globals.room_manager.current_room.finish = true
-				Globals.room_manager.current_room._clear_effects()
-				queue_free()
+				finish_die()
 			
 			return
 			
@@ -415,7 +413,6 @@ func _on_slash_area_player_body_exited(body: Node2D) -> void:
 	if !player: return
 	
 	is_player_area_attack = false
-	print("saiu")
 
 	if is_on_special: return
 
@@ -427,6 +424,9 @@ func _on_slash_area_player_body_exited(body: Node2D) -> void:
 func _on_area_attack_to_ghosts_run_player_body_entered(body: Node2D) -> void:	
 	var player = body.get_parent() as Player
 	if !player: return
+	
+	if is_dying: return
+	
 	player.take_knockback(dir, 20)
 	player.take_damage(damage)
 	
@@ -447,8 +447,46 @@ func start_die():
 	
 	current_state = State.DYING
 	anim.play("partial_die")
+	start_flicks()
 	
 	await anim.animation_finished
-	z_index = 10000
+	
 	anim.play("loop_partial_die")
 	is_stop = false
+	
+func finish_die():
+	
+	anim.play("die")
+	is_dead = true
+	is_stop = true
+		
+	await anim.animation_finished
+	
+	is_stop = false
+	Globals.room_manager.current_room.finish = true
+	Globals.room_manager.current_room._clear_effects()
+	queue_free()
+	
+func start_flicks():
+	is_flicking = true
+	color_to_white()
+	
+func color_to_white():
+	
+	if not is_flicking:
+		color_to_normal()
+		return
+		
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.RED, 0.2)
+	tween.finished.connect(color_to_normal)
+	
+	
+	
+func color_to_normal():
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.WHITE, 0.2)
+	
+	if is_flicking:
+		tween.finished.connect(color_to_white)
+	

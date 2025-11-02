@@ -553,12 +553,12 @@ sprite_frames = SubResource("SpriteFrames_ck86d")
 animation = &"die"
 
 [node name="CollisionBody" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_xejvs")
 
 [node name="AttackArea" type="Area2D" parent="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]
+visible = false
 shape = SubResource("CircleShape2D_q1jsx")
 debug_color = Color(0.99862, 0, 0.137187, 0.42)
 

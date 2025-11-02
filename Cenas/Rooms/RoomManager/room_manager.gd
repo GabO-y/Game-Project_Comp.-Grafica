@@ -46,7 +46,6 @@ func _change_room(goTo):
 	item_manager.get_all_items()
 	
 	# Caso vc passe pela porta e não tenha tocado na chave
-	
 	item_manager.finish_get_key()
 	
 	current_room.desable()

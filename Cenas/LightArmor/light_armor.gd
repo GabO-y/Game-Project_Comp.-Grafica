@@ -35,7 +35,7 @@ func toggle_activate():
 		
 	if is_active:
 		area.collision_mask = Globals.layers["ghost"] | Globals.layers["enemy"] | Globals.layers["boss"]
-		area.collision_layer = Globals.layers["player"] | Globals.layers["armor"] | Globals.layers["wall_current_room"]
+		area.collision_layer = Globals.layers["player"] | Globals.layers["armor"] | Globals.layers["current_wall"]
 	else:
 		area.collision_layer = 0
 		area.collision_mask = 0

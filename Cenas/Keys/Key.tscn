@@ -43,6 +43,7 @@ shape = SubResource("CircleShape2D_ccyvf")
 texture = SubResource("GradientTexture2D_3ouih")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+visible = false
 amount = 50
 texture = SubResource("GradientTexture2D_q44xp")
 lifetime = 10.0

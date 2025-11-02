@@ -256,6 +256,7 @@ area_hit = NodePath("CharacterBody2D/Areas/HitArea")
 speed = 80
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animation")
+life = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 collision_layer = 0
@@ -264,7 +265,7 @@ collision_mask = 0
 [node name="Animation" type="AnimatedSprite2D" parent="CharacterBody2D"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
-animation = &"type_1"
+animation = &"type_4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_6p1tk")

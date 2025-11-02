@@ -322,7 +322,9 @@ scale = Vector2(1.3, 1.3)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BossBody"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_c8po4")
-animation = &"die"
+animation = &"laugh"
+frame = 15
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
 visible = false

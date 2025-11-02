@@ -7,34 +7,13 @@ class_name Key
 var door1: Door
 var door2: Door
 
-
-var is_in_open_door: bool = false
-
 var is_going_to_door: bool = false
-var is_particles_active: bool = false
 
-var is_getting_key: bool = false
+var is_key_moment: bool = false
+var is_particles_moment: bool = false
 
 func _ready() -> void:
 	super._ready()
-	particles_node.amount = 0
-
-func _process(delta: float) -> void:
-	
-	if is_in_open_door:
-		
-		if is_getting_key:
-			if Input.is_anything_pressed():
-				finish_get_key()
-			return
-			
-		if is_particles_active: 
-			if Input.is_anything_pressed():
-				finish_particles()
-			return
-				
-		
-	super._process(delta)
 
 func start_chase_player():
 	super.start_chase_player()
@@ -47,35 +26,51 @@ func use():
 	queue_free()
 	
 func finish_get_key():
-		
-	is_getting_key = false
-	
 	set_go_to(door1.position)
-	use_when_arrieve.connect(start_particles)
+	use_when_arrieve.connect(_open_door_and_wait)
 
 func start_particles():
 	
 	var tween = create_tween()
 	particles_node.visible = true
 
-	tween.tween_property(particles_node, "amount", 50, 0.001)
-	
+	tween.tween_property(particles_node, "amount", 100, 0.001)
 	tween.tween_property($Sprite2D, "modulate:a", 0.0, 2.0)
 	
-	is_getting_key = false
+	is_key_moment = false
 		
 	await tween.finished
-	is_particles_active = true
-	
+	is_particles_moment = true
 	
 func finish_particles():
 	
 	Globals.player.is_getting_key = false
+	
 	Globals.player.set_process(true)
 	Globals.player.set_physics_process(true)
 	
 	Globals.house.desable_camera()
 	use()		
+	
+func _open_door_and_wait():
+	
+	visible = false
+	
+	door1.is_locked = false
+	door2.is_locked = false
+	Globals.room_manager.current_room._clear_effects()
+	
+	is_particles_moment = true
+	is_key_moment =  false
+	
+func _input(event: InputEvent) -> void:
+	
+	if is_going_to_door or event is InputEventMouse	: return
+	
+	if is_key_moment:
+		finish_get_key()		
+	elif is_particles_moment:
+		finish_particles()
 	
 signal use_when_arrieve
 	

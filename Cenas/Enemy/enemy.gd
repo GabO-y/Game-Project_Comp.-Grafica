@@ -22,13 +22,7 @@ var is_dead: bool = false
 var last_dir: Vector2
 #exclusivo dos fantasmas
 var is_running_attack = false
-var is_wrapped = false
 
-var drop_table = [
-	{"item": "Energy", "chance": 0.5},
-	{"item": "Life", "chance": 0.3}
-]
-	
 func _ready() -> void:
 	
 	player = Globals.player
@@ -61,7 +55,7 @@ func set_active(mode: bool):
 	is_active = mode
 	
 	var layer = Globals.layers["enemy"] if mode else 0
-	var mask = Globals.layers["player"] | Globals.layers["enemy"] if mode else 0
+	var mask = Globals.layers["player"] | Globals.layers["enemy"] | Globals.layers["current_wall"] if mode else 0
 	
 	body.collision_layer = layer
 	body.collision_mask = mask
@@ -116,7 +110,6 @@ func change_color_damage():
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
 	
-
 func drop_damage_label(damage: int):
 	var label := Label.new()
 	label.text = str("-", damage)
@@ -150,6 +143,5 @@ func dir_to_player() -> Vector2:
 	
 func dist_to_player() -> float: 
 	return body.global_position.distance_to(Globals.player_pos())
-	
 	
 signal enemy_die(ene: Enemy)

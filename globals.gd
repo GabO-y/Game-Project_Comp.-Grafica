@@ -16,6 +16,8 @@ var item_manager: ItemManager
 var key_manager: KeyManager
 var house: House
 
+var only_use_key: bool = false
+
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
 		Vector2( 1,   1)  : {"right" : Vector2(-1,  1), "down" : Vector2( 1, -1)},
@@ -29,7 +31,7 @@ var layers = {
 	"enemy" : 1 << 1,
 	"boss": 1 << 2,
 	"wall_boss": 1 << 3,
-	"wall_current_room": 1 << 4,
+	"current_wall": 1 << 4,
 	"out_room_boss": 1 << 5,
 	"ghost": 1 << 6,
 	"no_collision_wall": 1 << 7,
