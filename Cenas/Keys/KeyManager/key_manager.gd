@@ -53,7 +53,7 @@ func find_doors(room: Room):
 	}
 		
 func create_key(room: Room) -> Key:
-	
+		
 	var doors = find_doors(room)
 		
 	if !doors: return null

@@ -15,20 +15,6 @@
 
 [sub_resource type="GDScript" id="GDScript_16r42"]
 script/source = "extends Room
-
-var camare_chase_player = false
-
-func _process(_delta: float) -> void:
-	if camare_chase_player:
-		camera.global_position.y = Globals.player_pos().y
-
-func _camara_chase(body: Node2D) -> void:
-	if body.get_parent() is not Player: return
-	camare_chase_player = true
-	
-func _not_camera_chase(body: Node2D) -> void:
-	if body.get_parent() is not Player: return
-	camare_chase_player = false
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kegp6"]
@@ -39,9 +25,11 @@ vertices = PackedVector2Array(259.906, 293.906, 43.0781, 292.078, 44.9062, 72.95
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(35, 63, 268, 62, 270, 304, 33, 302)])
 
-[node name="Hall" type="Node2D" node_paths=PackedStringArray("camera")]
+[node name="Hall" type="Node2D" node_paths=PackedStringArray("camera", "door_node")]
 script = SubResource("GDScript_16r42")
 camera = NodePath("Camera2D")
+door_node = NodePath("Doors")
+is_camera_chase_mode = true
 
 [node name="Layers" type="Node2D" parent="."]
 
@@ -87,23 +75,24 @@ collision_enabled = true
 
 [node name="Doors" type="Node2D" parent="."]
 
-[node name="Hallway1" parent="Doors" instance=ExtResource("11_bvy5g")]
+[node name="HallwayRooms" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(279, 184)
 
-[node name="GhostBossRoom" parent="Doors" instance=ExtResource("11_bvy5g")]
-position = Vector2(152, 57)
+[node name="HallwayLadder" parent="Doors" instance=ExtResource("11_bvy5g")]
+position = Vector2(27, 183)
+
+[node name="ToyLibrary" parent="Doors" instance=ExtResource("11_bvy5g")]
+position = Vector2(152, 312)
 
 [node name="Spawners" type="Node2D" parent="."]
 
 [node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("11_kegp6")]
 position = Vector2(67, 248)
 type_enemie = ExtResource("12_2wqts")
-limit_spawn = 3
 
 [node name="EnemieSpawaner2" parent="Spawners" instance=ExtResource("11_kegp6")]
 position = Vector2(70, 108)
 type_enemie = ExtResource("12_2wqts")
-limit_spawn = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(157, 164)

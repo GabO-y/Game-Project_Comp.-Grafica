@@ -6,6 +6,9 @@ var rooms: Array[Room]
 @export var roomsNode: Node2D
 @export var item_manager: ItemManager
 @export var key_manager: KeyManager
+@export var round_manager: RoundManagar
+
+var can_create_key: bool = true
 
 # para posicionar as chaves geradas onde o ultimo inimigo morreu
 var last_ene_pos: Vector2
@@ -25,13 +28,66 @@ func _ready() -> void:
 			room.manager = self
 			
 			for door in room.doors:
+		
+				match_doors(room.name, door.name)
+				
 				door = door as Door
 				door.enter_door.connect(_change_room)
-		
-	for room in rooms:
-		for door in room.doors:
-			match_doors(room.name, door.name)
-			
+
+#	NAO ESQUEÇA A VIRGULA NO FINAL
+
+	#round_manager.add_round(
+		#"HallwayRooms",
+		#"
+		#horder {Zombie, 10, 0.1},
+		#horder {Ghost, 10, 0.1},
+		#await {3.0},
+		#horder {Ghost, 2, 2},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#horder {Zombie, 1, 0.1},
+		#horder {Ghost, 1, 0.1},
+		#"
+	#)
+	
+	round_manager.add_round(
+		"Hall",
+		"
+		await { 1.0 },
+		horder {Ghost, 1, 1},
+		"
+	)
+	
+	round_manager.add_round(
+		"Hall",
+		"
+		await { 1.0 },
+		horder {Ghost, 1, 1},
+		"
+	)
+	
+	# Segunda horda nao vem, ver pq
+	
 	
 func get_doors(room: Room) -> Array[Door]:
 	var doors: Array[Door]
@@ -43,7 +99,7 @@ func _change_room(goTo):
 		
 #	Para o caso do player mudar de sala, 
 #   mas ainda haver items que não foram coletados
-	item_manager.get_all_items()
+	item_manager.get_all_items(null)
 	
 	# Caso vc passe pela porta e não tenha tocado na chave
 	item_manager.finish_get_key()
@@ -66,7 +122,15 @@ func _change_room(goTo):
 	await get_tree().create_timer(0.2).timeout
 	Globals.can_teleport = true
 	
-	changed_room.emit()
+	changed_room.emit(current_room)
+
+func find_room(room_name: String) -> Room:
+		
+	for room in rooms:
+		if room.name.to_lower() == room_name.to_lower():
+			return room
+	print("Room: ", room_name, " not be found")
+	return null
 
 func match_doors(r_current: String, r_target: String):
 
@@ -152,5 +216,10 @@ func is_clean_room() -> bool:
 # para serem abertas
 func get_room_logic() -> Room:
 	return current_room
+	
+func show_rounds():
+	for room in rooms:
+		if room.has_rounds():
+			room.show_rounds()
 
-signal changed_room
+signal changed_room(room: Room)

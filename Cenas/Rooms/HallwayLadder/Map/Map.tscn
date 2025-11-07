@@ -1,0 +1,34 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0s8yy3iee7gb"]
+
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/teto_0.tscn" id="0_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/moveis_1.tscn" id="1_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/janela_2.tscn" id="2_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/corrimão_3.tscn" id="3_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/tapete_4.tscn" id="4_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/parede_2_5.tscn" id="5_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/parede_6.tscn" id="6_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/chão_7.tscn" id="7_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/parede_escada_8.tscn" id="8_id"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/bg_9.tscn" id="9_id"]
+
+[node name="map" type="Node2D"]
+
+[node name="bg_9" parent="." instance=ExtResource("9_id")]
+
+[node name="parede_escada_8" parent="." instance=ExtResource("8_id")]
+
+[node name="chão_7" parent="." instance=ExtResource("7_id")]
+
+[node name="parede_6" parent="." instance=ExtResource("6_id")]
+
+[node name="parede_2_5" parent="." instance=ExtResource("5_id")]
+
+[node name="tapete_4" parent="." instance=ExtResource("4_id")]
+
+[node name="corrimão_3" parent="." instance=ExtResource("3_id")]
+
+[node name="janela_2" parent="." instance=ExtResource("2_id")]
+
+[node name="moveis_1" parent="." instance=ExtResource("1_id")]
+
+[node name="teto_0" parent="." instance=ExtResource("0_id")]

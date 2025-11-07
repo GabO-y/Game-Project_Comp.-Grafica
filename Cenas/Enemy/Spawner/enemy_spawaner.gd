@@ -7,6 +7,7 @@ class_name Spawn
 @export var time_to_spawn = 3.0
 @export var enimies_level = 1
 @export var timer: Timer
+@export var spawn_area: Area2D
 
 var room: Room
 var is_active = false
@@ -100,10 +101,40 @@ func _free_enemy(ene: Enemy):
 	ene.die()
 
 func _on_timer_to_spawn_a_enemy() -> void:
+	
 	if enemies_already_spawner < limit_spawn:
 		enemies.append(spawanEmenie())
 		enemies_already_spawner += 1
 	else:
 		timer.stop()
 		
+func spawn(ene_name: String) -> Enemy:
+	var ene = load("res://Cenas/Enemy/" + ene_name + "/" + ene_name + ".tscn").instantiate() as Enemy
+				
+	call_deferred("add_child", ene)
+				
+	ene.global_position = get_random_circle_point()
+	
+	ene.enemy_die.connect(_free_enemy)
+	ene.enemy_die.connect(room._check_clear_by_ene_die)
+	ene.enemy_die.connect(room.manager.item_manager.try_drop)
+	
+	enemies.append(ene)
+	
+	ene.set_active(true)
 		
+	return ene
+	
+
+func get_random_circle_point() -> Vector2:
+	
+	var circle: CircleShape2D
+	
+	for child in spawn_area.get_children():
+		if child is CollisionShape2D:
+			circle = child.shape 
+	
+	var r_ = circle.radius * sqrt(randf())
+	var t_ = randi_range(0, 360)
+	
+	return Vector2(r_ * cos(t_), r_ * sin(t_))

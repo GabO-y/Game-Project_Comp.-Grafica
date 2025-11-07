@@ -81,7 +81,7 @@ func knockback_logic():
 func die():
 	
 	if is_dead: return
-			
+				
 	is_dead = true
 	is_active = false
 	

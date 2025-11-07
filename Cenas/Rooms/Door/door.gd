@@ -18,7 +18,6 @@ func _player_enter(body):
 	var player = body.get_parent() as Player
 	if player == null: return
 
-		
 	if !Globals.can_teleport:
 		return
 		

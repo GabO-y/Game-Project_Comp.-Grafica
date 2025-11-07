@@ -40,6 +40,10 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	var item: Item
 	
+	if item_name == "key":
+		if room_manager.current_room.already_drop_key:
+			return
+	
 	match item_name:
 		"coin":  item = create_coin(pos)
 		"key": item = setup_key(key_manager.create_key(room_manager.get_room_logic()))
@@ -131,7 +135,7 @@ func drop(item: String, pos: Vector2):
 
 # Fiz no caso do player trocar de sala, mas nem todos os items foram coletados
 # É ativado com "changed_room" do RoomManager
-func get_all_items():
+func get_all_items(room: Room):
 	
 	items_node.visible = false
 	

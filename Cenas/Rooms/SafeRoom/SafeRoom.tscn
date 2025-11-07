@@ -143,7 +143,11 @@ polygon = PackedVector2Array(-8, 7, -11, -27, 11, -27, 8, 7, 8, -24, -8, -24)
 
 [node name="SafeRoom" type="Node2D" node_paths=PackedStringArray("layer_node")]
 script = ExtResource("1_ckbd2")
+is_clear = null
+finish = null
+spread = null
 layer_node = NodePath("Layers")
+is_camera_chase_mode = null
 
 [node name="Layers" type="Node2D" parent="."]
 
@@ -184,12 +188,12 @@ collision_enabled = true
 
 [node name="Doors" type="Node2D" parent="."]
 
-[node name="Hallway1" parent="Doors" node_paths=PackedStringArray("open_door_sprite") instance=ExtResource("10_ko388")]
+[node name="HallwayRooms" parent="Doors" node_paths=PackedStringArray("open_door_sprite") instance=ExtResource("10_ko388")]
 position = Vector2(232, 56)
 is_locked = false
 open_door_sprite = NodePath("../../Layers/Porta_aberta")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/Hallway1"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Doors/HallwayRooms"]
 occluder = SubResource("OccluderPolygon2D_t81q4")
 
 [node name="Spawners" type="Node2D" parent="."]

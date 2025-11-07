@@ -1,0 +1,54 @@
+[gd_scene load_steps=12 format=3 uid="uid://oe80bdy752yx"]
+
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/bg_8.tscn" id="1_kyad7"]
+[ext_resource type="Script" uid="uid://cfq6qu8scqt8r" path="res://Cenas/Rooms/ToyLibrary/toy_library.gd" id="1_vl68h"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/chão_7.tscn" id="2_vl68h"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/parede_6.tscn" id="3_wsxpe"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/parede_2_5.tscn" id="4_3p2ht"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/porta_4.tscn" id="5_pt0bw"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/tapete_3.tscn" id="6_j4mxj"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/moveis_baixos_2.tscn" id="7_7cs2c"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/moveis_alto_1.tscn" id="8_pfksf"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/teto_0.tscn" id="9_pmooj"]
+[ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="11_wsxpe"]
+
+[node name="ToyLibrary" type="Node2D"]
+script = ExtResource("1_vl68h")
+
+[node name="Layers" type="Node2D" parent="."]
+
+[node name="bg_8" parent="Layers" instance=ExtResource("1_kyad7")]
+texture_filter = 1
+
+[node name="chão_7" parent="Layers" instance=ExtResource("2_vl68h")]
+texture_filter = 1
+
+[node name="parede_6" parent="Layers" instance=ExtResource("3_wsxpe")]
+texture_filter = 1
+
+[node name="parede_2_5" parent="Layers" instance=ExtResource("4_3p2ht")]
+texture_filter = 1
+
+[node name="porta_4" parent="Layers" instance=ExtResource("5_pt0bw")]
+texture_filter = 1
+
+[node name="tapete_3" parent="Layers" instance=ExtResource("6_j4mxj")]
+texture_filter = 1
+
+[node name="moveis_baixos_2" parent="Layers" instance=ExtResource("7_7cs2c")]
+texture_filter = 1
+
+[node name="moveis_alto_1" parent="Layers" instance=ExtResource("8_pfksf")]
+texture_filter = 1
+
+[node name="teto_0" parent="Layers" instance=ExtResource("9_pmooj")]
+texture_filter = 1
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="Hall" parent="Doors" instance=ExtResource("11_wsxpe")]
+position = Vector2(200, 57)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(161, 93)
+zoom = Vector2(2.5, 2.5)

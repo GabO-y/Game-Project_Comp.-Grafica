@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8pmycrg74u1x"]
+
+[ext_resource type="Script" uid="uid://dccrwr71sgn2w" path="res://Cenas/Round/RoundManager/round_managar.gd" id="1_ts3xs"]
+
+[node name="RoundManagar" type="Node2D"]
+script = ExtResource("1_ts3xs")

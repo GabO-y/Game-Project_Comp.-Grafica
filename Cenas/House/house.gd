@@ -11,7 +11,7 @@ var follow: Node2D
 func _ready() -> void:
 	
 	room_manager.set_initial_room("SafeRoom")
-	
+
 	Globals.house = self
 	Globals.player = player
 	Globals.room_manager = room_manager
@@ -26,8 +26,10 @@ func _process(delta: float) -> void:
 
 # Como o canvasLayer tem que tá na cena main, é ele ativa e desativa o chestMenu 
 # basedo no sinal que o room_manager tem, vendo se é o saferoom
-func active_menu():
-	var is_safe_room = room_manager.current_room.name == "SafeRoom"
+func active_menu(room: Room):
+	
+	var is_safe_room = room.name == "SafeRoom"
+	
 	$ChestMenuInterativa/ChestMenu.set_process(is_safe_room)
 	$ChestMenuInterativa.visible = is_safe_room
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=4 uid="uid://pt1wv8nf3rfj"]
+
+[ext_resource type="TileSet" uid="uid://beitqqbn2empt" path="res://Cenas/Rooms/HallWayRooms/tileset.tres" id="tileset_id"]
+
+[node name="roda_pé_3" type="TileMapLayer"]
+collision_enabled = false
+tile_set = ExtResource("tileset_id")
+tile_map_data = PackedByteArray("AAABAAYAAAAGAAQAAAACAAQAAAAGAAQAAAADAAQAAAAGAAQAAAAEAAQAAAAGAAQAAAAFAAQAAAAGAAQAAAAGAAQAAAAGAAQAAAAHAAQAAAAGAAQAAAAIAAQAAAAGAAQAAAAJAAQAAAAGAAQAAAAKAAQAAAAGAAQAAAALAAQAAAAGAAQAAAAMAAQAAAAGAAQAAAANAAQAAAAGAAQAAAAOAAQAAAAGAAQAAAAPAAQAAAAGAAQAAAAQAAQAAAAGAAQAAAARAAQAAAAGAAQAAAASAAQAAAAGAAQAAAA=")

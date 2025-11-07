@@ -41,13 +41,13 @@ func _physics_process(delta: float) -> void:
 		
 	match current_state:
 		State.CHASING:
-			handle_chasing_state(distance_to_player, player_pos)
+			handle_chasing_state(distance_to_player)
 		State.DASHING:
 			handle_dashing_state(delta)
 		State.ATTACKING:
 			handle_attacking_state(delta)
 
-func handle_chasing_state(distance_to_player: float, player_pos: Vector2):
+func handle_chasing_state(distance_to_player: float):
 	
 	var next_point = agent.get_next_path_position() 
 	dir = body.global_position.direction_to(next_point).normalized()

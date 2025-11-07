@@ -1,18 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0ntae4uqgnun"]
+[gd_scene load_steps=11 format=3 uid="uid://b0ntae4uqgnun"]
 
 [ext_resource type="Script" uid="uid://dfmjhfvr5f5kx" path="res://Cenas/Rooms/RoomManager/room_manager.gd" id="1_n2tco"]
 [ext_resource type="PackedScene" uid="uid://cirgr2k7g1tgi" path="res://Cenas/Rooms/SafeRoom/SafeRoom.tscn" id="2_rqem0"]
-[ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWay1/Hallway1.tscn" id="5_0t272"]
 [ext_resource type="PackedScene" uid="uid://dfbt2q3vq6op5" path="res://Cenas/Rooms/Hall/Hall.tscn" id="5_ow6w0"]
 [ext_resource type="PackedScene" uid="uid://go8o3056gd8o" path="res://Cenas/Item/ItemManager/ItemManager.tscn" id="6_0t272"]
+[ext_resource type="PackedScene" uid="uid://map" path="res://Cenas/Rooms/HallWayRooms/HallwayRooms.tscn" id="6_o0csn"]
 [ext_resource type="PackedScene" uid="uid://bd7aqvuxmuu4r" path="res://Cenas/Rooms/GhostBossRoom/GhostBossRoom.tscn" id="6_ow6w0"]
+[ext_resource type="PackedScene" uid="uid://dx3muepll3ebb" path="res://Cenas/Rooms/HallwayLadder/HallwayLadder.tscn" id="6_sq71m"]
 [ext_resource type="PackedScene" uid="uid://bjyhdo23kbxbt" path="res://Cenas/Keys/KeyManager/KeyManager.tscn" id="7_0t272"]
+[ext_resource type="PackedScene" uid="uid://oe80bdy752yx" path="res://Cenas/Rooms/ToyLibrary/ToyLibrary.tscn" id="7_sq71m"]
+[ext_resource type="PackedScene" uid="uid://c8pmycrg74u1x" path="res://Cenas/Round/RoundManager/RoundManagar.tscn" id="8_e6a6c"]
 
-[node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode", "item_manager", "key_manager")]
+[node name="RoomManager" type="Node2D" node_paths=PackedStringArray("roomsNode", "item_manager", "key_manager", "round_manager")]
 script = ExtResource("1_n2tco")
 roomsNode = NodePath("Rooms")
 item_manager = NodePath("Managers/ItemManeger")
 key_manager = NodePath("Managers/KeyManager")
+round_manager = NodePath("Managers/RoundManagar")
 metadata/_edit_vertical_guides_ = [-149.0, -529.0]
 metadata/_edit_horizontal_guides_ = [135.0]
 
@@ -21,10 +25,11 @@ color = Color(0.258125, 0.1475, 0.59, 1)
 
 [node name="Rooms" type="Node2D" parent="."]
 
-[node name="Hallway1" parent="Rooms" instance=ExtResource("5_0t272")]
-visible = false
-
 [node name="SafeRoom" parent="Rooms" instance=ExtResource("2_rqem0")]
+is_clear = false
+finish = false
+spread = false
+is_camera_chase_mode = false
 
 [node name="Hall" parent="Rooms" instance=ExtResource("5_ow6w0")]
 visible = false
@@ -32,6 +37,14 @@ texture_filter = 1
 
 [node name="GhostBossRoom" parent="Rooms" instance=ExtResource("6_ow6w0")]
 visible = false
+
+[node name="HallwayRooms" parent="Rooms" instance=ExtResource("6_o0csn")]
+visible = false
+
+[node name="HallwayLadder" parent="Rooms" instance=ExtResource("6_sq71m")]
+visible = false
+
+[node name="ToyLibrary" parent="Rooms" instance=ExtResource("7_sq71m")]
 
 [node name="Managers" type="Node2D" parent="."]
 
@@ -41,3 +54,6 @@ key_manager = NodePath("../KeyManager")
 
 [node name="KeyManager" parent="Managers" node_paths=PackedStringArray("room_manager") instance=ExtResource("7_0t272")]
 room_manager = NodePath("../..")
+
+[node name="RoundManagar" parent="Managers" node_paths=PackedStringArray("room_managar") instance=ExtResource("8_e6a6c")]
+room_managar = NodePath("../..")

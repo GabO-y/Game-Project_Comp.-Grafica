@@ -13,30 +13,30 @@ class_name Player
 @export var label_coins: Label
 
 var original_modulate = self.modulate
-var modulate_timer = 0
-var white_time := true
-var is_flicking = false
+var modulate_timer: float = 0.0
+var white_time: bool = true
+var is_flicking: bool = false
 
-var hearts = 3
-var is_invencible = false
-var invencible_duration = 1.2
-var invencible_timer = 0
+var hearts: int = 3
+var is_invencible: bool = false
+var invencible_duration: float = 1.2
+var invencible_timer: float = 0
 
-var input_vector
+var input_vector: Vector2
 
 var speed: float = 100
 var dash_speed: float = 600
-var dash_duration = 0.1
+var dash_duration: float = 0.1
 var can_dash = true
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
-var dash_cooldown = 0.4
+var dash_cooldown:float = 0.4
 var last_direction: Vector2 = Vector2.RIGHT
 var dash_dir: Vector2
+var dash_target_pos: Vector2
 
-var can_teleport = true
-var last_direction_right
+var can_teleport: bool = true
 
 var is_on_knockback = false
 var knockback_dir: Vector2
@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 	
 	dir = move_logic()
 	dash_logic(delta)
-
+	
 	body.velocity = dir * speed
 
 	if is_invencible:
@@ -110,7 +110,7 @@ func _physics_process(delta: float) -> void:
 	body.move_and_slide()  
 
 func dash_logic(delta):
-	
+				
 	if Input.is_action_just_pressed("dash") and not is_dashing and can_dash:
 		can_dash = false
 		is_dashing = true
@@ -202,7 +202,6 @@ func get_key_animation(key: Key):
 	tween.tween_property(key, "global_position", final_pos, 2)
 	
 	return tween.finished
-
 
 func _unlocked_doors():
 	pass
