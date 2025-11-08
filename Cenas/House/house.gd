@@ -19,10 +19,17 @@ func _ready() -> void:
 	Globals.key_manager = room_manager.key_manager
 	
 	room_manager.changed_room.connect(active_menu)
+	
+	if room_manager.current_room.name == "SafeRoom":
+		for door in room_manager.current_room.doors:
+			door.open()
 
 func _process(delta: float) -> void:
 	if camera.enabled:
-		camera.global_position = follow.global_position
+		if is_instance_valid(follow):
+			camera.global_position = follow.global_position
+		else:
+			camera.enabled = false
 
 # Como o canvasLayer tem que tá na cena main, é ele ativa e desativa o chestMenu 
 # basedo no sinal que o room_manager tem, vendo se é o saferoom

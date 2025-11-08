@@ -4,6 +4,9 @@ class_name ItemManager
 
 @export var room_manager: RoomManager
 @export var key_manager: KeyManager
+@export var round_manager: RoundManagar
+
+
 # É para armazenar todos os items dropados numa sala
 @export var items_node: Node2D
 
@@ -36,6 +39,8 @@ func _ready() -> void:
 		get_tree().quit()
 		return
 		
+	round_manager = room_manager.round_manager
+		
 func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	var item: Item
@@ -46,7 +51,7 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	
 	match item_name:
 		"coin":  item = create_coin(pos)
-		"key": item = setup_key(key_manager.create_key(room_manager.get_room_logic()))
+		"key": item = setup_key(key_manager.create_key_logic())
 				
 	if item_name == "key":
 		if !item:
@@ -57,8 +62,6 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 		if Globals.only_use_key:
 			item.use()
 			return
-
-	item.manager = self
 				
 	return item
 	
@@ -113,9 +116,10 @@ func try_drop(ene: Enemy):
 			item = drops[i]["item"].pick_random()
 			
 	if not item.is_empty():
-		drop(item, pos)
+		drop_by_name(item, pos)
 		
-func drop(item: String, pos: Vector2):
+
+func drop_by_name(item: String, pos: Vector2):
 	
 	var i = create_item(item, pos)
 		
@@ -130,7 +134,7 @@ func drop(item: String, pos: Vector2):
 	# há chance do sinal que é emitido para verificar se
 	# a sala atual está limpa, sejá associonado, antes do
 	# item entrar na cena, ai ele não percegue, ent verifaca aqui tbm
-	if room_manager.current_room.get_is_clear():
+	if not round_manager.is_playing_round:
 		i.start_chase_player()
 
 # Fiz no caso do player trocar de sala, mas nem todos os items foram coletados
@@ -163,13 +167,23 @@ func _collect_item(item: Item):
 			# caso a chave esteja indo em direçao a porta
 			if item.is_going_to_door: return
 			
+			
 			await Globals.player.get_key_animation(item)
+			
+			if not is_instance_valid(item): return
 			item.is_key_moment = true
 
 # caso o player atravesse a porta, mas não tenha pegado a chave
 func finish_get_key():
+	
 	if key_in_scene:
 		key_in_scene.use()
+		Globals.player.is_getting_key = false
+	
+		Globals.player.set_process(true)
+		Globals.player.set_physics_process(true)
+	
+		Globals.house.desable_camera()
 		
 func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
 	

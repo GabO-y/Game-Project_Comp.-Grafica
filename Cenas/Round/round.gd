@@ -30,7 +30,7 @@ func _ready() -> void:
 	set_process(false)
 
 func _process(delta: float) -> void:
-		
+				
 	match type_exe:
 		"await":			
 			if await_timer >= await_duration:
@@ -52,8 +52,8 @@ func _process(delta: float) -> void:
 			
 			if delay_timer >= delay:
 				for s in spawners:
-					var ene = s.spawn(ene_name)
-					ene.enemy_die.connect(_check_finish_round)
+					
+					var ene = s.spawn(ene_name, self)
 					
 				count_ene += 1
 				delay_timer = 0.0
@@ -62,6 +62,11 @@ func _process(delta: float) -> void:
 			
 		_: 
 			exe()
+
+func set_room(room: Room):
+	self.room = room
+	for spawn in room.spaweners:
+		spawners.append(spawn)
 
 func _check_finish_round(ene: Enemy):
 	
@@ -77,17 +82,6 @@ func _check_finish_round(ene: Enemy):
 func start():
 	set_process(true)
 	exe()
-	
-func set_room(room_set: Room):
-	
-	room_set.call_deferred("add_child", self)
-	room_set.rounds.append(self)
-	room_set.add_round(self)
-
-	room = room_set
-	
-	for spawn in room.spaweners:
-		spawners.append(spawn)
 	 
 func exe():
 		
@@ -95,6 +89,7 @@ func exe():
 		type_exe = ""
 		has_instructions = false
 		return
+		
 		
 	is_playing = true
 					
@@ -116,7 +111,7 @@ func exe():
 			count_ene = 0
 				
 
-func await_time(time: float):
+func add_await(time: float):
 	instruction.append({
 		"type": "await",
 		"duration": time
@@ -145,7 +140,6 @@ func finish_round():
 	await get_tree().process_frame
 
 	is_playing = false
-	room._check_clear()
 	finished.emit()
 	
 	queue_free()

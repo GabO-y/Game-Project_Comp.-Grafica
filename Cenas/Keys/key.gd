@@ -19,10 +19,10 @@ func start_chase_player():
 	super.start_chase_player()
 	curve.set_t(0.007)
 	
+# Fazer a parte de quando a sala nao finalizadas pra que ele crie uma chave
+	
 func use():
-	door1.is_locked = false
-	door2.is_locked = false
-	Globals.room_manager.current_room._clear_effects()
+	door1.open()
 	queue_free()
 	
 func finish_get_key():
@@ -56,9 +56,7 @@ func _open_door_and_wait():
 	
 	visible = false
 	
-	door1.is_locked = false
-	door2.is_locked = false
-	Globals.room_manager.current_room._clear_effects()
+	door1.open()
 	
 	is_particles_moment = true
 	is_key_moment =  false

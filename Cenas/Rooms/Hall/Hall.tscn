@@ -30,6 +30,7 @@ script = SubResource("GDScript_16r42")
 camera = NodePath("Camera2D")
 door_node = NodePath("Doors")
 is_camera_chase_mode = true
+can_return = true
 
 [node name="Layers" type="Node2D" parent="."]
 
@@ -77,6 +78,9 @@ collision_enabled = true
 
 [node name="HallwayRooms" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(279, 184)
+
+[node name="BathRoom" parent="Doors" instance=ExtResource("11_bvy5g")]
+position = Vector2(151, 56)
 
 [node name="HallwayLadder" parent="Doors" instance=ExtResource("11_bvy5g")]
 position = Vector2(27, 183)

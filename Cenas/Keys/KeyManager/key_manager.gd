@@ -3,6 +3,7 @@ extends Node2D
 class_name KeyManager
 
 @export var room_manager: RoomManager
+@export var item_manager: ItemManager
 
 # A cada troca de sala, ele verifica se há portas que podem ser abertas,
 # caso haja, ele guarda nessa variavel
@@ -13,6 +14,9 @@ var current_door_can_open: Array[Door]
 # vai guardar se tem uma chave pro item manager criar
 var has_key: bool = false
 var key: Key
+
+func _ready() -> void:
+	item_manager = room_manager.item_manager
 	
 func find_doors(room: Room):
 	
@@ -52,6 +56,11 @@ func find_doors(room: Room):
 		"door_target": door_target
 	}
 		
+func create_key_by_door(door: Door):
+	var key = load("res://Cenas/Keys/Key.tscn").instantiate() as Key
+	key.door1 = door
+	return key
+
 func create_key(room: Room) -> Key:
 		
 	var doors = find_doors(room)
@@ -65,9 +74,64 @@ func create_key(room: Room) -> Key:
 	
 	return key
 	
-
+func try_open_door():
 	
+	var available_doors: Array[Door] = []
+	var retured_doors: Array[Door]
 	
+	for door in room_manager.current_room.doors:
+		
+		var goTo = door.goTo
+		
+		if (not goTo.can_return and goTo.finish):
+			continue
 			
+		if goTo.can_return:
+			retured_doors.append(door)
+			continue
+		
+		available_doors.append(door)
+				
+	if available_doors.is_empty():
+		open_random_door(retured_doors)
+	else:
+		open_random_door(available_doors)
+		
+func open_random_door(doors: Array[Door]):
+	var door = doors.pick_random() as Door
+	if door.is_locked:
+		setup_key(create_key_by_door(door))
+		return
+	door.open()
+	
+func try_open_normal_room(doors: Array[Door]):
+	pass
+			
+func setup_key(key: Key) -> Item:
+		
+	if !key: return
+	
+	call_deferred("add_child", key)
+	
+	key.collected.connect(item_manager._collect_item)
+	
+	key.type = item_manager.item_type.KEY
+	
+	if room_manager.last_ene_pos == Vector2.ZERO:
+		key.global_position = key.door1.area.global_position
+	else:
+		key.global_position = room_manager.last_ene_pos
+
+	key.manager = item_manager
+
+	key.start_chase_player()
+	
+	item_manager.key_in_scene = key
+	item_manager.items_node.add_child(key)
+	
+	return key
+	
+		
+	
 	
 		

@@ -14,6 +14,8 @@ class_name Room
 
 @export var is_camera_chase_mode: bool = false
 
+@export var can_return: bool = false
+
 var is_camera_chase: bool = true
 var last_dir: Vector2 = Vector2.ZERO
 
@@ -74,7 +76,6 @@ func desable():
 			
 func enable():
 	switch_process(true)
-	_check_clear()
 
 func switch_process(mode: bool):
 	visible = mode
@@ -115,14 +116,8 @@ func _update_doors():
 
 # Para todos os efeitos que devem acontecer quando um quarto é finalizado
 func _clear_effects():
-	
 	is_clear = true
 	finish = true
-	
-	_update_doors()
-	manager.item_manager.make_items_chase_player()
-	
-	clear.emit()
 
 func get_door(door_name: String) -> Door:
 	for door in doors:
@@ -130,64 +125,50 @@ func get_door(door_name: String) -> Door:
 			return door
 	return null
 
-# Como o sinal da morte de um inmigo precisa de um parametro
-# Ent fiz esse pra funcionar, mas é o msm que o "_check_clear"
-func _check_clear_by_ene_die(ene):
-	manager.last_ene_pos = ene.body.global_position
-	_check_clear()
 
-func get_is_clear():
-	if not is_clear:
-		_check_clear()
-	return is_clear
 
-func _check_clear():
-
-	if has_rounds() or is_round_playing():
-		is_clear = false
-		finish = false
-		return 
-		
-	for spawn in spaweners:
-		if not spawn.is_clean(): 
-			manager.last_ene_pos = Vector2(0,0)
-			return
-		
-	_clear_effects()
+func open_door(door_name: String):
+	for door in doors:
+		if door.name == door_name:
+			door.open()
+			
+func lock_all_doors():
+	for door in doors:
+		door.set_active(false)
 	
-func is_round_playing():
-	
-	if !current_round: return false
-	
-	return current_round.is_playing
-	
-func add_round(round: Round):
-	rounds.append(round)
-	round.finished.connect(_clear_effects)
-
-func has_rounds():
-	for i in rounds:
-		return true
-	return false
-	
-func start_round():
-	
-	if not has_rounds(): return
-		
-	for r in rounds:
-		if is_instance_valid(r):
-			r.start()
-			current_round = r
-		else:
-			rounds.erase(r)
-			continue
-		return
-
-func show_rounds():
-	print(name, ":")
-	for r in rounds:
-		r.show_exe()
-		print("----------")
+#func is_round_playing():
+	#
+	#if !current_round: return false
+	#
+	#return current_round.is_playing
+	#
+#func add_round(round: Round):
+	#rounds.append(round)
+	#round.finished.connect(_clear_effects)
+#
+#func has_rounds():
+	#for i in rounds:
+		#return true
+	#return false
+	#
+#func start_round():
+	#
+	#if not has_rounds(): return
+		#
+	#for r in rounds:
+		#if is_instance_valid(r):
+			#r.start()
+			#current_round = r
+		#else:
+			#rounds.erase(r)
+			#continue
+		#return
+#
+#func show_rounds():
+	#print(name, ":")
+	#for r in rounds:
+		#r.show_exe()
+		#print("----------")
 	
 # fazendo a parte de items, quando sala limpa, item segue player
 signal clear

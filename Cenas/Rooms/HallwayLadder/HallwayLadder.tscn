@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dx3muepll3ebb"]
+[gd_scene load_steps=16 format=4 uid="uid://dx3muepll3ebb"]
 
 [ext_resource type="Script" uid="uid://da4o2uqsfwbq0" path="res://Cenas/Rooms/HallwayLadder/hallway_ladder.gd" id="1_tgvn6"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/bg_9.tscn" id="2_pr8dl"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/moveis_1.tscn" id="10_pi7p5"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/teto_0.tscn" id="11_cf3ly"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="12_0er1k"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="13_2uq8x"]
 [ext_resource type="Texture2D" uid="uid://cybjamgolcp2e" path="res://icon.svg" id="13_ep3q4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ep3q4"]
@@ -21,6 +22,7 @@ size = Vector2(267, 273)
 script = ExtResource("1_tgvn6")
 camera = NodePath("Camera2D")
 is_camera_chase_mode = true
+can_return = true
 
 [node name="Layers" type="Node2D" parent="."]
 
@@ -61,7 +63,19 @@ texture_filter = 1
 position = Vector2(183, 311)
 is_locked = false
 
+[node name="DeskRoom" parent="Doors" instance=ExtResource("12_0er1k")]
+position = Vector2(23, 311)
+
 [node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("13_2uq8x")]
+position = Vector2(42, 108)
+
+[node name="EnemieSpawaner2" parent="Spawners" instance=ExtResource("13_2uq8x")]
+position = Vector2(166, 66)
+
+[node name="EnemieSpawaner3" parent="Spawners" instance=ExtResource("13_2uq8x")]
+position = Vector2(43, 406)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(103, 313)

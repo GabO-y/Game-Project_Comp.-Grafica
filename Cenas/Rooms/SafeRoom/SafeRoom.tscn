@@ -143,11 +143,9 @@ polygon = PackedVector2Array(-8, 7, -11, -27, 11, -27, 8, 7, 8, -24, -8, -24)
 
 [node name="SafeRoom" type="Node2D" node_paths=PackedStringArray("layer_node")]
 script = ExtResource("1_ckbd2")
-is_clear = null
-finish = null
-spread = null
+is_clear = true
+finish = true
 layer_node = NodePath("Layers")
-is_camera_chase_mode = null
 
 [node name="Layers" type="Node2D" parent="."]
 

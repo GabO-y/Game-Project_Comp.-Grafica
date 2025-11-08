@@ -67,7 +67,7 @@ func take_damage(damage: int):
 	life -= damage
 	
 	drop_damage_label(damage)
-	print(damage)
+	print(name, ": ", damage)
 
 	if life <= 0 and !is_dead:
 		die()

@@ -96,7 +96,7 @@ func _physics_process(delta: float) -> void:
 				return
 			
 			if timer_to_drop >= coldown_to_drop:
-				Globals.item_manager.drop("coin", body.global_position)
+				Globals.item_manager.drop_by_name("coin", body.global_position)
 				count_drops += 1
 				timer_to_drop = 0.0
 				
@@ -128,12 +128,6 @@ func setup_ghost_run():
 	
 	area_attack_ghosts_run.collision_layer = Globals.layers["boss"]
 	area_attack_ghosts_run.collision_mask = Globals.layers["player"]
-	
-	print("a: ", area_attack_ghosts_run.collision_layer)
-	print("a: ", area_attack_ghosts_run.collision_mask)
-	
-	print("p: ", Globals.player.body.collision_layer)
-	print("p: ", Globals.player.body.collision_mask)
 	
 	area_to_ghost_run.collision_mask = Globals.layers["boss"]
 	
@@ -303,6 +297,8 @@ func set_active(mode: bool):
 	
 func setup():
 	
+	print("asas")
+	
 	set_process(true)
 	set_physics_process(true)
 	
@@ -464,7 +460,7 @@ func finish_die():
 	
 	is_stop = false
 	Globals.room_manager.current_room.finish = true
-	Globals.room_manager.current_room._clear_effects()
+	Globals.room_manager._clear_effects()
 	queue_free()
 	
 func start_flicks():

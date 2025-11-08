@@ -34,61 +34,15 @@ func _ready() -> void:
 				door = door as Door
 				door.enter_door.connect(_change_room)
 
-#	NAO ESQUEÇA A VIRGULA NO FINAL
+	round_manager.round_finished.connect(
+		func():
+			
+			if not current_room.can_return:
+				current_room.finish = true
+				
+			_clear_effects()
+	)
 
-	#round_manager.add_round(
-		#"HallwayRooms",
-		#"
-		#horder {Zombie, 10, 0.1},
-		#horder {Ghost, 10, 0.1},
-		#await {3.0},
-		#horder {Ghost, 2, 2},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#horder {Zombie, 1, 0.1},
-		#horder {Ghost, 1, 0.1},
-		#"
-	#)
-	
-	round_manager.add_round(
-		"Hall",
-		"
-		await { 1.0 },
-		horder {Ghost, 1, 1},
-		"
-	)
-	
-	round_manager.add_round(
-		"Hall",
-		"
-		await { 1.0 },
-		horder {Ghost, 1, 1},
-		"
-	)
-	
-	# Segunda horda nao vem, ver pq
-	
-	
 func get_doors(room: Room) -> Array[Door]:
 	var doors: Array[Door]
 	for door in room.doors:
@@ -111,14 +65,16 @@ func _change_room(goTo):
 	current_room = goTo
 	current_room.enable()
 	
-	current_room.clear.connect(item_manager.create_key_auto)
-	current_room._check_clear()
-	
 	var door_target = current_room.get_door(room_name)
 
 	Globals.player.body.global_position = door_target.area.global_position
 	
 	Globals.can_teleport = false
+	
+	#round_manager.make_ramdom_round(1)
+	#
+	round_manager.play_round()  
+	
 	await get_tree().create_timer(0.2).timeout
 	Globals.can_teleport = true
 	
@@ -209,17 +165,20 @@ func set_initial_room(room_name: String):
 			
 	print("room: ", room_name, " not found")
 
-func is_clean_room() -> bool:
-	return current_room.get_is_clear()
-
 # Aqui é pra ficar a logica para ele retornar um quarto que haja portas 
 # para serem abertas
 func get_room_logic() -> Room:
 	return current_room
+
 	
 func show_rounds():
 	for room in rooms:
 		if room.has_rounds():
 			room.show_rounds()
+			
+func _clear_effects():
+	key_manager.try_open_door()
+	item_manager.make_items_chase_player()
+	round_manager.is_playing_round = false
 
 signal changed_room(room: Room)

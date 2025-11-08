@@ -13,6 +13,8 @@ var room: Room
 var is_active = false
 var enemies_already_spawner = 0
 var enemies: Array[Enemy] = []
+
+var round: Round
 	
 func _ready() -> void:
 	timer.wait_time = time_to_spawn
@@ -108,15 +110,15 @@ func _on_timer_to_spawn_a_enemy() -> void:
 	else:
 		timer.stop()
 		
-func spawn(ene_name: String) -> Enemy:
+func spawn(ene_name: String, round: Round) -> Enemy:
 	var ene = load("res://Cenas/Enemy/" + ene_name + "/" + ene_name + ".tscn").instantiate() as Enemy
 				
 	call_deferred("add_child", ene)
-				
+			
 	ene.global_position = get_random_circle_point()
 	
 	ene.enemy_die.connect(_free_enemy)
-	ene.enemy_die.connect(room._check_clear_by_ene_die)
+	ene.enemy_die.connect(round._check_finish_round)
 	ene.enemy_die.connect(room.manager.item_manager.try_drop)
 	
 	enemies.append(ene)

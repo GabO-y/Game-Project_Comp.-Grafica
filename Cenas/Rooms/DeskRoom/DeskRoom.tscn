@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://rj84xueqnc2o"]
+
+[ext_resource type="Script" uid="uid://cjo77higqac4r" path="res://Cenas/Rooms/DeskRoom/desk_room.gd" id="1_ghd7m"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/bg_8.tscn" id="2_gkk3p"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/chão_7.tscn" id="3_rj30k"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/parede_6.tscn" id="4_2ylxn"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/parede_2_5.tscn" id="5_r87xl"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/janela_4.tscn" id="6_7vfqx"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/tapete_3.tscn" id="7_cqfn2"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/moveis_baixo_2.tscn" id="8_2h67t"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/moveis_alto_1.tscn" id="9_d13wv"]
+[ext_resource type="PackedScene" path="res://Cenas/Rooms/DeskRoom/Map/teto_0.tscn" id="10_5lvyd"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="11_q46pm"]
+[ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="12_qlwsa"]
+
+[node name="DeskRoom" type="Node2D" node_paths=PackedStringArray("camera")]
+script = ExtResource("1_ghd7m")
+camera = NodePath("Camera2D")
+
+[node name="Layers" type="Node2D" parent="."]
+
+[node name="bg_8" parent="Layers" instance=ExtResource("2_gkk3p")]
+texture_filter = 1
+
+[node name="chão_7" parent="Layers" instance=ExtResource("3_rj30k")]
+texture_filter = 1
+
+[node name="parede_6" parent="Layers" instance=ExtResource("4_2ylxn")]
+texture_filter = 1
+
+[node name="parede_2_5" parent="Layers" instance=ExtResource("5_r87xl")]
+texture_filter = 1
+
+[node name="janela_4" parent="Layers" instance=ExtResource("6_7vfqx")]
+texture_filter = 1
+
+[node name="tapete_3" parent="Layers" instance=ExtResource("7_cqfn2")]
+texture_filter = 1
+
+[node name="moveis_baixo_2" parent="Layers" instance=ExtResource("8_2h67t")]
+texture_filter = 1
+
+[node name="moveis_alto_1" parent="Layers" instance=ExtResource("9_d13wv")]
+texture_filter = 1
+
+[node name="teto_0" parent="Layers" instance=ExtResource("10_5lvyd")]
+texture_filter = 1
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("11_q46pm")]
+position = Vector2(49, 111)
+
+[node name="EnemieSpawaner2" parent="Spawners" instance=ExtResource("11_q46pm")]
+position = Vector2(189, 111)
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="HallwayLadder" parent="Doors" instance=ExtResource("12_qlwsa")]
+position = Vector2(216, 262)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(128, 176)
+zoom = Vector2(2.5, 2.5)

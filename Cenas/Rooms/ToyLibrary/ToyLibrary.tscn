@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://oe80bdy752yx"]
+[gd_scene load_steps=13 format=3 uid="uid://oe80bdy752yx"]
 
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/bg_8.tscn" id="1_kyad7"]
 [ext_resource type="Script" uid="uid://cfq6qu8scqt8r" path="res://Cenas/Rooms/ToyLibrary/toy_library.gd" id="1_vl68h"]
@@ -11,9 +11,11 @@
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/moveis_alto_1.tscn" id="8_pfksf"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/ToyLibrary/Map/teto_0.tscn" id="9_pmooj"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="11_wsxpe"]
+[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="12_3p2ht"]
 
-[node name="ToyLibrary" type="Node2D"]
+[node name="ToyLibrary" type="Node2D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_vl68h")
+camera = NodePath("Camera2D")
 
 [node name="Layers" type="Node2D" parent="."]
 
@@ -48,6 +50,14 @@ texture_filter = 1
 
 [node name="Hall" parent="Doors" instance=ExtResource("11_wsxpe")]
 position = Vector2(200, 57)
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="EnemieSpawaner" parent="Spawners" instance=ExtResource("12_3p2ht")]
+position = Vector2(31, 162)
+
+[node name="EnemieSpawaner2" parent="Spawners" instance=ExtResource("12_3p2ht")]
+position = Vector2(275, 164)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(161, 93)

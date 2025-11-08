@@ -41,13 +41,9 @@ func set_active(mode: bool):
 	visible = mode
 	area.set_deferred("monitorable", mode)
 	area.set_deferred("monitoring", mode)
-	set_process(mode)
 	turn_light(mode)
 	
 func all_lock():
-	
-	print("my room: ", my_room.name)
-	print("my name: ", name)
 
 	is_locked = true
 	
@@ -56,5 +52,15 @@ func all_lock():
 		if door.name == my_room.name:
 			door.is_locked = true
 			return
+			
+func open():
+		
+	is_locked = false
+	set_active(true)
+		
+	for door in goTo.doors:
+		if door.name == my_room.name:
+			door.is_locked = false
+			break
 		
 signal enter_door(goTo)
