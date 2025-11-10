@@ -12,6 +12,9 @@ var enemies_on_light: Dictionary[Enemy, float] = {}
 var mouse_move = false
 var time_to_damage: float = 1.5
 
+
+var armor_dir: Vector2 = Vector2.ZERO
+
 func _ready() -> void:
 	area.collision_layer = Globals.layers["armor"] | Globals.layers["player"]
 	area.collision_mask = Globals.layers["enemy"] | Globals.layers["boss"]
@@ -22,7 +25,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	
 	if Globals.player.is_in_menu: return
-	
+		
 	damager_ene(delta)
 	
 	if Input.is_action_just_pressed("ui_toggle_armor"):

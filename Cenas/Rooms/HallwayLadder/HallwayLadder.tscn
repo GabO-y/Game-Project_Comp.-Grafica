@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dx3muepll3ebb"]
+[gd_scene load_steps=15 format=4 uid="uid://dx3muepll3ebb"]
 
 [ext_resource type="Script" uid="uid://da4o2uqsfwbq0" path="res://Cenas/Rooms/HallwayLadder/hallway_ladder.gd" id="1_tgvn6"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/HallwayLadder/Map/bg_9.tscn" id="2_pr8dl"]
@@ -14,9 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="12_0er1k"]
 [ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="13_2uq8x"]
 [ext_resource type="Texture2D" uid="uid://cybjamgolcp2e" path="res://icon.svg" id="13_ep3q4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ep3q4"]
-size = Vector2(267, 273)
 
 [node name="HallwayLadder" type="Node2D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_tgvn6")
@@ -85,14 +82,3 @@ zoom = Vector2(2.5, 2.5)
 visible = false
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("13_ep3q4")
-
-[node name="Utils" type="Node2D" parent="."]
-
-[node name="ChaseCameraArea" type="Area2D" parent="Utils"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Utils/ChaseCameraArea"]
-position = Vector2(123.5, 240.5)
-shape = SubResource("RectangleShape2D_ep3q4")
-
-[connection signal="body_entered" from="Utils/ChaseCameraArea" to="." method="_camera_chase_playerbody_entered"]
-[connection signal="body_exited" from="Utils/ChaseCameraArea" to="." method="_camera_not_chase_player__body_exited"]

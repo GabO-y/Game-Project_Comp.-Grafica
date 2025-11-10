@@ -17,7 +17,8 @@ var modulate_timer: float = 0.0
 var white_time: bool = true
 var is_flicking: bool = false
 
-var hearts: int = 3
+var max_heart: int = 3
+var hearts: int = 2
 var is_invencible: bool = false
 var invencible_duration: float = 1.2
 var invencible_timer: float = 0
@@ -53,8 +54,13 @@ var power_ups = {}
 
 var enemies_touch = {}
 
+@export var heart_conteiner: HBoxContainer
+var hearts_control: Array[TextureRect] = []
+
 func _ready() -> void:
-			
+	
+	hearts = max_heart
+	
 	hit_area.body_exited.connect(_exit_enemie)
 	
 	armor.toggle_activate()
@@ -62,6 +68,7 @@ func _ready() -> void:
 	body.collision_mask |= Globals.layers["current_wall"]
 	
 	update_label_coins()
+	update_hearts()
 	
 func _process(delta: float) -> void:
 	
@@ -158,14 +165,20 @@ func animation_logic():
 	
 	var play = ""
 	
-	if dir == Vector2.ZERO:
+	var is_moving = dir != Vector2.ZERO
+	
+	if armor.is_active:
+		dir = armor.armor_dir
+		
+	if not is_moving:
 		play = "idle"
-		dir = last_direction
+		if not armor.is_active:
+			dir = last_direction
 	else:
 		play = "walk"
 		
-	if dir.y < 0:
-		play += "_back"
+	play += "_back" if dir.y < 0 else ""
+	
 		
 	anim.flip_h = dir.x > 0
 	anim.play(play)
@@ -212,6 +225,7 @@ func take_damage(damage: int):
 	is_invencible = true
 	
 	hearts -= damage;
+	update_hearts()
 	
 func flick_invensible():
 		
@@ -265,8 +279,54 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	if ene == null: return
 	if hit_kill:
 		ene.take_damage(ene.life)
+		
+func _kill_entered(area: Area2D) -> void:
+	var ene = area.get_parent() as Enemy
+	if ene == null: return
+	if hit_kill:
+		ene.take_damage(ene.life)
+
 
 func update_label_coins():
 	label_coins.text = str(coins)
+
+func upgrade_heart(amount: int):
+	hearts = amount
+	
+func update_hearts():
+	
+	var heart_model = load("res://Assets/Player/Heats/heart.png")
+	var broken_heart = load("res://Assets/Player/Heats/broken_heart.png")
+	
+	print(heart_model)
+	print(broken_heart)
+	
+	for child in heart_conteiner.get_children():
+		heart_conteiner.call_deferred("remove_child", child)
+	
+	if hearts == max_heart:
+			
+		var text = TextureRect.new()
+		text.texture = heart_model
+		text.expand_mode = TextureRect.EXPAND_FIT_WIDTH
+		
+		for i in range(max_heart):
+			heart_conteiner.call_deferred("add_child", text.duplicate())
+		
+		return
+			
+	for i in range(max_heart):
+						
+		var text = TextureRect.new()
+		text.expand_mode = TextureRect.EXPAND_FIT_WIDTH
+
+		if i <= hearts - 1:
+			text.texture = heart_model
+		else:
+			text.texture = broken_heart
+			
+		if text.texture:
+			heart_conteiner.call_deferred("add_child", text)
+				
 
 signal player_die(player: Player)

@@ -244,17 +244,16 @@ size = Vector2(11.5, 11.2222)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "body", "anim", "hit_area", "hud", "label_coins") groups=["player"]]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "body", "anim", "hit_area", "hud", "label_coins", "heart_conteiner") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
 armor = NodePath("Lantern")
-can_die = false
-hit_kill = true
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")
 hud = NodePath("Hud")
 label_coins = NodePath("Hud/Coins")
+heart_conteiner = NodePath("Hud/HBoxContainer")
 life = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
@@ -290,6 +289,10 @@ offset_right = 23.0
 offset_bottom = -6.0
 
 [node name="Lantern" parent="." instance=ExtResource("4_5akqg")]
+rotation_speed = 5.0
+damage = 2
+energie = 0
+is_active = true
 
 [node name="Hud" type="CanvasLayer" parent="."]
 
@@ -301,4 +304,19 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Hud"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 17.0
+offset_right = -644.0
+offset_bottom = -566.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Hud/HBoxContainer"]
+layout_mode = 2
+
+[connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_kill_entered"]
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]

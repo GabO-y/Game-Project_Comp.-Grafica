@@ -16,6 +16,7 @@
 [node name="DeskRoom" type="Node2D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_ghd7m")
 camera = NodePath("Camera2D")
+is_camera_chase_mode = true
 
 [node name="Layers" type="Node2D" parent="."]
 

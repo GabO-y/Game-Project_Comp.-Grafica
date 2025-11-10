@@ -81,6 +81,17 @@ func _check_finish_round(ene: Enemy):
 
 func start():
 	set_process(true)
+	
+	var total_quanty: int = 0
+	
+	for i in instruction:
+		i = i as Dictionary
+		if i.has("horder"):
+			total_quanty += i["quantity"]
+			
+	for s in spawners:
+		s.limit_spawn = total_quanty
+	
 	exe()
 	 
 func exe():

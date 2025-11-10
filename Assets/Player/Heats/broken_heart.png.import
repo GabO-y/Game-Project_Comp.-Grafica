@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7daj5pugw3ai"
-path="res://.godot/imported/pngtree-red-square-seal-png-image_2441737.jpg-936756adfe49d1fba0efbb3fb81b5579.ctex"
+uid="uid://eujq8sx5qg8j"
+path="res://.godot/imported/broken_heart.png-6637f1b104dd6f4f8ed63656c1a4a6a4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Player/Sprites/pngtree-red-square-seal-png-image_2441737.jpg"
-dest_files=["res://.godot/imported/pngtree-red-square-seal-png-image_2441737.jpg-936756adfe49d1fba0efbb3fb81b5579.ctex"]
+source_file="res://Assets/Player/Heats/broken_heart.png"
+dest_files=["res://.godot/imported/broken_heart.png-6637f1b104dd6f4f8ed63656c1a4a6a4.ctex"]
 
 [params]
 

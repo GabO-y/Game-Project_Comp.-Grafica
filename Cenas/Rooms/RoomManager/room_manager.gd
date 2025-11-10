@@ -71,7 +71,7 @@ func _change_room(goTo):
 	
 	Globals.can_teleport = false
 	
-	#round_manager.make_ramdom_round(1)
+	round_manager.make_ramdom_round(1)
 	#
 	round_manager.play_round()  
 	

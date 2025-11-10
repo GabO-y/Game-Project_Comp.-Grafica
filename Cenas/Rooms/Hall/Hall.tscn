@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dfbt2q3vq6op5"]
+[gd_scene load_steps=15 format=4 uid="uid://dfbt2q3vq6op5"]
 
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/teto_0.tscn" id="0_id"]
 [ext_resource type="PackedScene" path="res://Cenas/Rooms/Hall/moveis_cima_1.tscn" id="1_id"]
@@ -16,9 +16,6 @@
 [sub_resource type="GDScript" id="GDScript_16r42"]
 script/source = "extends Room
 "
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kegp6"]
-size = Vector2(220, 92)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_kegp6"]
 vertices = PackedVector2Array(259.906, 293.906, 43.0781, 292.078, 44.9062, 72.9531, 258.078, 72.0391)
@@ -102,18 +99,6 @@ type_enemie = ExtResource("12_2wqts")
 position = Vector2(157, 164)
 zoom = Vector2(2.5, 2.5)
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(157, 164)
-collision_layer = 7
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4, 12)
-shape = SubResource("RectangleShape2D_kegp6")
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_kegp6")
 navigation_layers = 8
-
-[connection signal="body_entered" from="Area2D" to="." method="_camara_chase"]
-[connection signal="body_exited" from="Area2D" to="." method="_not_camera_chase"]
