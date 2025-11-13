@@ -10,6 +10,7 @@ gradient = SubResource("Gradient_57ktk")
 [node name="FairyLight" type="Node2D" node_paths=PackedStringArray("aim_sprite")]
 script = ExtResource("1_57ktk")
 aim_sprite = NodePath("aim")
+damage = 2
 
 [node name="aim" type="Sprite2D" parent="."]
 position = Vector2(2.38419e-07, 0)

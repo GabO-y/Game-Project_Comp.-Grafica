@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgvqvypw3s860"]
+
+[ext_resource type="Script" uid="uid://boc6c1potitmj" path="res://Cenas/Menus/MenuManager/menu_manager.gd" id="1_ogr2p"]
+
+[node name="MenuManager" type="Node2D"]
+script = ExtResource("1_ogr2p")

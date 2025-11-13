@@ -10,12 +10,15 @@ class_name LightArmor
 
 var enemies_on_light: Dictionary[Enemy, float] = {}
 var mouse_move = false
-var time_to_damage: float = 1.5
+var time_to_damage: float = 0.0
 
 
 var armor_dir: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+	
+	if !area: return
+	
 	area.collision_layer = Globals.layers["armor"] | Globals.layers["player"]
 	area.collision_mask = Globals.layers["enemy"] | Globals.layers["boss"]
 	

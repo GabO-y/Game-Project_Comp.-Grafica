@@ -22,6 +22,7 @@ var is_dead: bool = false
 var last_dir: Vector2
 #exclusivo dos fantasmas
 var is_running_attack = false
+var is_wrapped: bool = false
 
 func _ready() -> void:
 	
@@ -33,7 +34,7 @@ func _ready() -> void:
 			
 	for i in body.get_children():
 		if i is ProgressBar:
-			bar = i			
+			bar = i
 
 	if bar != null:
 		bar.max_value = life
@@ -48,12 +49,12 @@ func update_bar():
 	bar.value = life
 
 func set_active(mode: bool):
-	
+		
 	set_process(mode)
 	set_physics_process(mode)
 	visible = mode
 	is_active = mode
-	
+		
 	var layer = Globals.layers["enemy"] if mode else 0
 	var mask = Globals.layers["player"] | Globals.layers["enemy"] | Globals.layers["current_wall"] if mode else 0
 	
@@ -67,8 +68,7 @@ func take_damage(damage: int):
 	life -= damage
 	
 	drop_damage_label(damage)
-	print(name, ": ", damage)
-
+	
 	if life <= 0 and !is_dead:
 		die()
 	else:

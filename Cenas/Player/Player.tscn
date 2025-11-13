@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://cd4to1qh32730" path="res://Assets/Player/Animations/knockback_animaiton.png" id="3_5akqg"]
 [ext_resource type="Texture2D" uid="uid://8qj0ov3p7avy" path="res://Assets/Player/Animations/spr_player_assets.png" id="4_4o7c8"]
-[ext_resource type="PackedScene" uid="uid://b0ycmxpkip27y" path="res://Cenas/LightArmor/Lantern/Lantern.tscn" id="4_5akqg"]
+[ext_resource type="PackedScene" uid="uid://cuin301acfa3g" path="res://Cenas/LightArmor/Lighter/Lighter.tscn" id="4_5akqg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ryd"]
 atlas = ExtResource("4_4o7c8")
@@ -132,9 +132,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4o7c8")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -247,7 +247,7 @@ size = Vector2(11.5, 11.2222)
 [node name="Player" type="Node2D" node_paths=PackedStringArray("armor", "body", "anim", "hit_area", "hud", "label_coins", "heart_conteiner") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
-armor = NodePath("Lantern")
+armor = NodePath("Armors/Lighter")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")
@@ -257,6 +257,7 @@ heart_conteiner = NodePath("Hud/HBoxContainer")
 life = 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+z_index = 1000
 position = Vector2(4, -2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
@@ -264,7 +265,7 @@ texture_filter = 1
 position = Vector2(1, -3)
 scale = Vector2(1.125, 1.125)
 sprite_frames = SubResource("SpriteFrames_htvwm")
-animation = &"get_item"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(1, 0.05)
@@ -288,11 +289,10 @@ offset_top = -29.0
 offset_right = 23.0
 offset_bottom = -6.0
 
-[node name="Lantern" parent="." instance=ExtResource("4_5akqg")]
-rotation_speed = 5.0
-damage = 2
-energie = 0
-is_active = true
+[node name="Armors" type="Node2D" parent="."]
+
+[node name="Lighter" parent="Armors" instance=ExtResource("4_5akqg")]
+damage = 100
 
 [node name="Hud" type="CanvasLayer" parent="."]
 

@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Menu
 
 class_name ChestMenu
 
@@ -40,7 +40,10 @@ func _ready() -> void:
 		load("res://Assets/Interfaces/ChestUI/Icons/heart_icon.png")
 	)
 	
-	hide_menu()
+	menu.process_mode = Node.PROCESS_MODE_ALWAYS
+
+	await get_tree().process_frame
+	set_active(false)
 	hide_pop_up()
 	
 func add_power_up(item_name: String, price: float, icon: Texture2D):
@@ -61,8 +64,6 @@ func _process(delta: float) -> void:
 			
 		if test.is_empty():
 			is_test = false
-			
-		
 			
 	if not can_shake_coins:
 		shake_coin_timer += delta
@@ -91,14 +92,12 @@ func _process(delta: float) -> void:
 		is_visible_pop_up = false
 		
 	if is_visible_pop_up and Input.is_action_just_pressed("ui_menu"):
-		if Globals.player.is_in_menu: return
+		if manager.is_in_menu: return
 		hide_pop_up()
 		enable()
-		Globals.player.is_in_menu = true
 				
 	if Globals.player.is_in_menu and Input.is_action_just_pressed("ui_exit_menu"):
 		disable()
-		Globals.player.is_in_menu = false
 
 func show_popup():	
 	set_visible_pop_up(true)
@@ -108,25 +107,25 @@ func hide_pop_up():
 	
 func show_menu():
 	if !menu: return
-	
-	Globals.player.hud.visible = false
-	update_label_coins()
-	
-	get_tree().paused = true
-	set_visible_menu(true)
-	menu.process_mode = Node.PROCESS_MODE_ALWAYS
-	set_process_input(true)
-	set_process_unhandled_input(true)
+	set_active(true)
+	#Globals.player.hud.visible = false
+	#update_label_coins()
+	#
+	#get_tree().paused = true
+	#set_visible_menu(true)
+	#set_process_input(true)
+	#set_process_unhandled_input(true)
 
 func hide_menu():
 	if !menu: return
+	set_active(false)
 	
-	if Globals.player:
-		Globals.player.hud.visible = true
-
-	get_tree().paused = false
-	set_visible_menu(false)
-	menu.process_mode = Node.PROCESS_MODE_INHERIT
+	#if Globals.player:
+		#Globals.player.hud.visible = true
+#
+	#get_tree().paused = false
+	#set_visible_menu(false)
+	#menu.process_mode = Node.PROCESS_MODE_INHERIT
 	
 func set_visible_pop_up(mode: bool):
 	if popup == null: return
@@ -151,21 +150,22 @@ func enable():
 	set_active(true)
 	
 func set_active(mode: bool):
-	set_process_input(mode)
-	set_process_unhandled_input(mode)
-	if mode:
-		show_menu()
-		$MarginContainer/VBoxMain/Options/Wearpons.grab_focus()
-	else:
-		hide_menu()
-		
+	super.set_active(mode)
+	set_visible_menu(mode)
+	update_label_coins()
+
 func _buy_item(item: ChestItem):
 	Globals.player.coins -= item.price
 	update_label_coins()
+	
+	match item.name:
+		"vida":
+			Globals.player.update_hearts()
+	
 	item.queue_free()
 	
 func _insuffient_coisn():
-	
+		
 	shake_coins()
 	
 	if is_issu_coin:
@@ -189,7 +189,6 @@ func _insuffient_coisn():
 	var right = [true, false].pick_random()
 	
 	curve.drop_effect(inssu_coins_point.global_position, right, wight, heigth)
-	
 	
 	var tween = create_tween()
 	tween.tween_method(_curve_text.bind(curve, label), 0.0, 1.0, 2.5)

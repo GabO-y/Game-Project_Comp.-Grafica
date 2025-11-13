@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://f8wn68c73ads"]
+
+[ext_resource type="Script" uid="uid://bescn3vpqqiql" path="res://Cenas/Menus/PauseMenu/menu_pause.gd" id="1_bo35q"]
+
+[node name="MenuPause" type="CanvasLayer"]
+script = ExtResource("1_bo35q")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Resume" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Continuar
+"
+
+[node name="FinishRound" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Finalizar Partida"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sair do Jogo"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_button_pressed"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_button_down"]

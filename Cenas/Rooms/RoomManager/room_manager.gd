@@ -36,9 +36,9 @@ func _ready() -> void:
 
 	round_manager.round_finished.connect(
 		func():
-			
-			if not current_room.can_return:
+			if not current_room.can_return and not Globals.is_reseting:
 				current_room.finish = true
+				print("entrouAAAAAAAAAAAAAAAAAAAAAAAAA")
 				
 			_clear_effects()
 	)
@@ -74,6 +74,8 @@ func _change_room(goTo):
 	round_manager.make_ramdom_round(1)
 	#
 	round_manager.play_round()  
+	
+	print("current room: ", current_room.finish)
 	
 	await get_tree().create_timer(0.2).timeout
 	Globals.can_teleport = true
@@ -153,23 +155,32 @@ func set_mode_room(room_name: String, mode: bool):
 	print("room: ", room_name, " not found")
 	return
 
+func get_room(room_name: String):
+	for room in rooms:
+		if room.name == room_name:
+			print("quarto: ", room_name, ", encontrado")
+			return room
+			
+	print("room: ", room_name, ", não encontrado")
+	
+func teleport_to_room(room_name: String):
+	var room = get_room(room_name)
+	Globals.player.body.global_position = room.camera.global_position
+	
 func set_initial_room(room_name: String):
+	
 	if current_room:
 		current_room.desable()
 		
-	for room in rooms:
-		if room.name == room_name:
-			current_room = room
-			current_room.enable()
-			return
-			
-	print("room: ", room_name, " not found")
+	var room = get_room(room_name)
+	
+	if !room: print("falha ao por quarto inicial")
+	
+	current_room = room
+	room.enable()
 
-# Aqui é pra ficar a logica para ele retornar um quarto que haja portas 
-# para serem abertas
 func get_room_logic() -> Room:
 	return current_room
-
 	
 func show_rounds():
 	for room in rooms:
@@ -181,4 +192,15 @@ func _clear_effects():
 	item_manager.make_items_chase_player()
 	round_manager.is_playing_round = false
 
+func reset():
+	
+	for room in rooms: 
+		room.reset()
+		
+	current_room.desable()
+	current_room = get_room("SafeRoom")
+	current_room.enable()
+	
+	current_room.finish = true
+	
 signal changed_room(room: Room)

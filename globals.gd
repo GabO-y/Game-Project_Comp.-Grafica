@@ -11,6 +11,9 @@ var center_pos: Vector2
 var special_time_ghost_run = 2
 var curren_menu: Control
 
+var enemies_defalted: int = 0
+var conquited_coins: int = 0
+
 var room_manager: RoomManager
 var item_manager: ItemManager
 var key_manager: KeyManager
@@ -42,6 +45,8 @@ var ene_in_crash_attack: Array[Enemy]
 var special_ghost_collision = 2
 
 var already_center = 0
+
+var is_reseting: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -93,6 +98,7 @@ func player_pos():
 		print("PLAYER NULL")
 		return Vector2(0, 0)
 	return player.body.global_position
+
 
 func get_special_time_ghost_run():
 	special_time_ghost_run += 0.5

@@ -27,7 +27,7 @@ var key_in_scene: Key
 var is_finish_get_key: bool = false
 
 var drops = {
-	"comum": {"chance" : 0.0, "item": [
+	"comum": {"chance" : 0.3, "item": [
 		"coin"
 	]}
 }
@@ -50,7 +50,9 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 			return
 	
 	match item_name:
-		"coin":  item = create_coin(pos)
+		"coin": 
+			item = create_coin(pos)
+			
 		"key": item = setup_key(key_manager.create_key_logic())
 				
 	if item_name == "key":
@@ -160,9 +162,12 @@ func _collect_item(item: Item):
 	match item.type:
 		
 		item_type.COIN:
+			
+			Globals.conquited_coins += 1
 			Globals.player.coins += 1
 			Globals.player.update_label_coins()
 			item.queue_free()
+			
 		item_type.KEY:
 			# caso a chave esteja indo em direçao a porta
 			if item.is_going_to_door: return
@@ -185,6 +190,16 @@ func finish_get_key():
 	
 		Globals.house.desable_camera()
 		
+func reset():
+	for child in items_node.get_children():
+		if is_instance_valid(child):
+			items_node.get_children().erase(child)
+		child.queue_free()
+		
+	is_finish_get_key = false
+	key_in_scene = null
+	Globals.player.is_getting_key = false
+		
 func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
 	
 	var p0: Vector2 = item_pos
@@ -200,7 +215,6 @@ func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
 	p1.y -= randi_range(30, 50)
 	p2.x += x
 
-	
 	var drop_curve = MyCurve.new(p0, p1, p2, t)
 	
 	p1 = p2

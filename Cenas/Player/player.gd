@@ -17,7 +17,7 @@ var modulate_timer: float = 0.0
 var white_time: bool = true
 var is_flicking: bool = false
 
-var max_heart: int = 3
+var max_heart: int = 1
 var hearts: int = 2
 var is_invencible: bool = false
 var invencible_duration: float = 1.2
@@ -54,6 +54,8 @@ var power_ups = {}
 
 var enemies_touch = {}
 
+var is_dead: bool = false
+
 @export var heart_conteiner: HBoxContainer
 var hearts_control: Array[TextureRect] = []
 
@@ -66,9 +68,11 @@ func _ready() -> void:
 	armor.toggle_activate()
 	
 	body.collision_mask |= Globals.layers["current_wall"]
-	
+		
 	update_label_coins()
 	update_hearts()
+	
+	
 	
 func _process(delta: float) -> void:
 	
@@ -80,9 +84,11 @@ func _process(delta: float) -> void:
 	
 	armor.global_position = body.global_position
 	
-	if hearts <= 0 and can_die:
-		player_die.emit(self)
 		
+func _input(event: InputEvent) -> void:
+	if Input.is_key_label_pressed(KEY_0) and not is_dead:
+		take_damage(1000)
+	
 func _exit_enemie(body):
 	#pra pegar o corpo e verificar se é enemie
 	if !(body.get_parent() is Enemy): return
@@ -114,7 +120,7 @@ func _physics_process(delta: float) -> void:
 			return
 		invencible_timer += delta
 
-	body.move_and_slide()  
+	body.move_and_slide()
 
 func dash_logic(delta):
 				
@@ -227,6 +233,9 @@ func take_damage(damage: int):
 	hearts -= damage;
 	update_hearts()
 	
+	if hearts <= 0:
+		die.emit()
+	
 func flick_invensible():
 		
 	if is_flicking: return
@@ -289,18 +298,12 @@ func _kill_entered(area: Area2D) -> void:
 
 func update_label_coins():
 	label_coins.text = str(coins)
-
-func upgrade_heart(amount: int):
-	hearts = amount
 	
 func update_hearts():
 	
 	var heart_model = load("res://Assets/Player/Heats/heart.png")
 	var broken_heart = load("res://Assets/Player/Heats/broken_heart.png")
-	
-	print(heart_model)
-	print(broken_heart)
-	
+		
 	for child in heart_conteiner.get_children():
 		heart_conteiner.call_deferred("remove_child", child)
 	
@@ -329,4 +332,24 @@ func update_hearts():
 			heart_conteiner.call_deferred("add_child", text)
 				
 
-signal player_die(player: Player)
+func upgrade_heart(amount: int):
+	max_heart += amount
+	
+	
+
+func reset():
+	
+	Globals.player.set_process(true)
+	Globals.player.set_physics_process(true)
+	
+	Globals.player.armor.set_process(true)
+	Globals.player.armor.set_physics_process(true)
+	
+	Globals.player.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	scale = Vector2(1, 1)
+	
+	z_index = 0
+	is_dead = false
+	
+signal die

@@ -3,14 +3,13 @@ extends LightArmor
 class_name FairyLight
 
 @export var aim_sprite: Sprite2D
-@export var bullet: Node2D
 
 var can_shot = true
 var bullets_moving: Array[Dictionary]
 var last_dir: Vector2
-var time_to_shoting = 2
+var time_to_shoting = 0
 var can_shot_timer = 0
-var bullets = 5
+var bullets = 50
 
 func _ready() -> void:
 	super._ready()
@@ -49,7 +48,10 @@ func toggle_activate():
 func shot(angle):
 	
 	var bullet = load("res://Cenas/LightArmor/Bullet/Bullet.tscn").instantiate() as Bullet
-	Globals.current_room.add_child(bullet)
+	
+	print(bullet)
+	
+	Globals.room_manager.call_deferred("add_child", bullet)
 	
 	bullet.global_position = global_position
 	

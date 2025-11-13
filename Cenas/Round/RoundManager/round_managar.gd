@@ -129,8 +129,10 @@ func add_round(round: Round):
 func play_round():
 	
 	if is_playing_round: return
+	
 	if not has_rounds():
 		round_finished.emit()
+		print("round_finished emitido")
 		return
 	
 	is_playing_round = true
@@ -139,8 +141,9 @@ func play_round():
 	var round = round_queue.get(0) as Round
 	
 	call_deferred("add_child", round)
+	
 	await get_tree().process_frame
-			
+	
 	round.finished.connect(
 		func():
 			is_playing_round = false
@@ -166,11 +169,16 @@ func make_ramdom_round(size: int):
 		
 		match type:
 			"horder": 
+				
 				var ene_name = ["Zombie", "Ghost"].pick_random()
+				ene_name = "Ghost"
 				var quantity = randi_range(int(expected_quantity * 0.5), expected_quantity)
+				quantity = 100
 				var time_spawn = randf_range(0.5, 2.0)
+				time_spawn = 0.0
 				round.add_horder(ene_name, quantity, time_spawn)
 				size -= 1
+				
 			"await": 
 				var time = randf_range(3.0, 5.0)
 				round.add_await(time)
@@ -179,5 +187,9 @@ func make_ramdom_round(size: int):
 		
 	add_round(round)
 		
-	
+func reset():
+	is_playing_round = false
+	round_queue.clear()
+	expecific_round.clear()
+		
 signal round_finished

@@ -77,6 +77,7 @@ func enable():
 func disable():
 	set_active(false)
 	
+	
 func set_active(mode: bool):
 	
 	for enemy in enemies:
@@ -112,22 +113,33 @@ func _on_timer_to_spawn_a_enemy() -> void:
 		
 func spawn(ene_name: String, round: Round) -> Enemy:
 	var ene = load("res://Cenas/Enemy/" + ene_name + "/" + ene_name + ".tscn").instantiate() as Enemy
-				
+		
 	call_deferred("add_child", ene)
+	
+	Globals.house.reseted.connect(
+		func():
+			if ene:
+				enemies.erase(ene)
+				ene.queue_free()
+	)
 			
 	ene.global_position = get_random_circle_point()
 	
 	ene.enemy_die.connect(_free_enemy)
 	ene.enemy_die.connect(round._check_finish_round)
 	ene.enemy_die.connect(room.manager.item_manager.try_drop)
+	ene.enemy_die.connect(
+		func(ene):
+			print(Globals.enemies_defalted)
+			Globals.enemies_defalted += 1
+	)
+
+	ene.set_active(true)
 	
 	enemies.append(ene)
-	
-	ene.set_active(true)
 		
 	return ene
 	
-
 func get_random_circle_point() -> Vector2:
 	
 	var circle: CircleShape2D

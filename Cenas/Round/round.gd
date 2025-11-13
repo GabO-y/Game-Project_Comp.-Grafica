@@ -128,6 +128,12 @@ func add_await(time: float):
 		"duration": time
 	})
 	
+func reset():
+	for spawn in spawners:
+		spawn.reset()
+	instruction.clear()
+	queue_free()
+	
 func add_horder(ene_name: String, quantity: int, delay: float = 0.5):
 	instruction.append({
 		"type": "horder",

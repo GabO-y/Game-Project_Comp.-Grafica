@@ -45,6 +45,9 @@ func _ready() -> void:
 	super._ready()
 
 func _process(delta: float) -> void:
+	
+	#print("g layer: ", body.collision_layer)
+	#print("g mask: ", body.collision_mask)
 		
 	if is_stop: return
 	
@@ -118,7 +121,7 @@ func dash(delta):
 		dash_timer = 0
 		current_state = State.CHASE
 		is_dashing = false		
-		body.collision_mask = Globals.layers["ghost"]
+		body.collision_mask = Globals.layers["player"]
 	
 func animation_logic():
 	
@@ -141,6 +144,9 @@ func set_active(mode: bool):
 	
 	body.collision_layer = layer
 	body.collision_mask = mask
+	
+	area_hit.monitorable = mode
+	area_hit.monitoring = mode
 	
 func chase_player(dist):
 	
@@ -168,7 +174,7 @@ func _player_enter_hit(body: Node2D) -> void:
 	player.take_damage(damage)
 	
 func refrash():
-	body.collision_layer = Globals.layers["enemy"]
+	body.collision_layer = Globals.layers["enemy"] | Globals.layers["ghost"]
 	body.collision_mask = Globals.layers["player"]
 	
 func ghosts_run_move():

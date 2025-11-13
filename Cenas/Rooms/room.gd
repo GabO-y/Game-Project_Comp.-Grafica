@@ -102,10 +102,11 @@ func switch_process(mode: bool):
 		
 		layer.set_process(mode)
 		layer.set_physics_process(mode)
+		
 		var lar = Globals.layers["current_wall"] if mode else 0
 				
-		layer.tile_set.set_physics_layer_collision_layer(0, lar)
-		layer.tile_set.set_physics_layer_collision_mask(0, lar)
+		#layer.tile_set.set_physics_layer_collision_layer(1, lar)
+		#layer.tile_set.set_physics_layer_collision_mask(1, lar)
 		
 	if mode:
 		_update_doors()
@@ -125,13 +126,11 @@ func get_door(door_name: String) -> Door:
 			return door
 	return null
 
-
-
 func open_door(door_name: String):
 	for door in doors:
 		if door.name == door_name:
 			door.open()
-			
+
 func lock_all_doors():
 	for door in doors:
 		door.set_active(false)
@@ -170,6 +169,18 @@ func lock_all_doors():
 		#r.show_exe()
 		#print("----------")
 	
+func reset():
+	finish = false
+	already_drop_key = false
+	is_clear = false
+	
+	for spawn in spaweners:		
+			spawn.set_active(false)
+			
+	for door in doors:
+		door.is_locked = true
+		door.set_active(false)
+
 # fazendo a parte de items, quando sala limpa, item segue player
 signal clear
  

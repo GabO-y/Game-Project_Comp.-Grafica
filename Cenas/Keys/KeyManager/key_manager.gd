@@ -78,30 +78,33 @@ func try_open_door():
 	
 	var available_doors: Array[Door] = []
 	var retured_doors: Array[Door]
-	
+		
 	for door in room_manager.current_room.doors:
 		
 		var goTo = door.goTo
-		
+
 		if (not goTo.can_return and goTo.finish):
 			continue
-			
+									
 		if goTo.can_return:
 			retured_doors.append(door)
 			continue
-		
+			
 		available_doors.append(door)
-				
+							
 	if available_doors.is_empty():
 		open_random_door(retured_doors)
 	else:
 		open_random_door(available_doors)
 		
 func open_random_door(doors: Array[Door]):
+	
 	var door = doors.pick_random() as Door
+	
 	if door.is_locked:
 		setup_key(create_key_by_door(door))
 		return
+		
 	door.open()
 	
 func try_open_normal_room(doors: Array[Door]):

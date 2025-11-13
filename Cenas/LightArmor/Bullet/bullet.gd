@@ -16,14 +16,25 @@ var time_remain = 5
 
 func _ready() -> void:
 	
-	collision_layer = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
-	collision_mask = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]	
-	light.collision_layer = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
-	light.collision_mask = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
+	#collision_layer = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
+	#collision_mask = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]	
+	#
+	#light.collision_layer = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
+	#light.collision_mask = Globals.collision_map["no_player_but_damage"] | Globals.collision_map["enemy"]
+	#
+	
+	collision_layer = Globals.layers["player"] | Globals.layers["enemy"]
+	collision_mask = Globals.layers["enemy"] | Globals.layers["player"] | Globals.layers["ghost"]
+	
+	light.collision_layer = Globals.layers["player"] | Globals.layers["enemy"]
+	light.collision_mask = Globals.layers["enemy"] | Globals.layers["player"] | Globals.layers["ghost"]
 	
 	light.set_process(false)
 	
 func _process(delta: float) -> void:
+	
+	#print("b layer: ", light.collision_layer)
+	#print("b mask: ", light.collision_mask)
 	
 	for ene in all_ene_on_light:
 		if ene["time"] >= time_to_take_damage:
