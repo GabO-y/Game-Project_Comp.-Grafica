@@ -10,6 +10,7 @@ var is_get_animation = false
 var center_pos: Vector2
 var special_time_ghost_run = 2
 var curren_menu: Control
+var backlayer_filter: CanvasModulate
 
 var current_level:int = 0
 var quantity_ene:  float = 1

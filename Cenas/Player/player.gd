@@ -2,6 +2,7 @@ extends Character
 class_name Player
 
 @export var armor: LightArmor
+
 @export var can_die: bool = true
 @export var hit_kill: bool = false
 @export var body: CharacterBody2D
@@ -14,14 +15,15 @@ class_name Player
 @export var armor_node: Node2D
 @export var armor_manager: ArmorManager
 @export var dash_audio: AudioStreamPlayer
+@export var raycast2d_node: Node2D
 
 var original_modulate = self.modulate
 var modulate_timer: float = 0.0
 var white_time: bool = true
 var is_flicking: bool = false
 
-var max_heart: int = 2
-var hearts: int = 2
+var max_heart: int = 10
+var hearts: int = 10
 
 var is_invencible: bool = false
 var invencible_duration: float = 1.2
@@ -71,7 +73,9 @@ func _ready() -> void:
 	
 	#hit_area.body_exited.connect(_exit_enemie)
 	#
-	armor.toggle_activate()
+	
+	# mudanca aqui e em set_active()
+	#armor.toggle_activate()
 	
 	#body.collision_mask |= Globals.layers["current_wall"]
 		
@@ -103,13 +107,12 @@ func _spend_coins(amount: int):
 	coins -= amount
 	update_label_coins()
 	
-
 func _process(delta: float) -> void:
 			
 	if is_in_menu: return
 	
 	if coins < 0:
-		print("NEgativo")
+		print("Negativo")
 		
 	animation_logic()
 	
@@ -333,11 +336,8 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	if ene == null: return
 	
 func _kill_entered(area: Area2D) -> void:
-	var ene = area.get_parent() as Enemy
-	if ene == null: return
-	if hit_kill:
-		ene.take_damage(ene.life)
-
+	pass
+	
 func update_label_coins():
 	label_coins.text = str(coins)
 	
@@ -417,6 +417,13 @@ func set_active(mode: bool):
 func set_collision_ene(mode: bool):
 	var mask = Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["ghost"] if mode else Globals.layers["current_wall"]
 	body.collision_mask = mask
+	
+# problema: ao entrar em algum quarto, ocorre um chance do player nascer dentro 
+# de uma parede e nao conseguir se mover
+# solução: um raycast vai rotacionar em volta do player, caso o ray achei uma colisao
+# ele empurra o player para o lado contrário
+func test_wall_stuck():
+	raycast2d_node.test_wall_stuck()
 	
 signal _die
 

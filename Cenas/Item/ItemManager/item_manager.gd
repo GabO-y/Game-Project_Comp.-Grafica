@@ -134,17 +134,13 @@ func drop_by_name(item: String, pos: Vector2):
 # Fiz no caso do player trocar de sala, mas nem todos os items foram coletados
 # É ativado com "changed_room" do RoomManager
 func get_all_items(room: Room):
-	
 	items_node.visible = false
-	
 	for item in items_node.get_children():
 		item.collected.emit(item)
-		
 	items_node.visible = true
 	
 # Chamado no Room
 func make_items_chase_player():
-	
 	for item in items_node.get_children():
 		item = item as Item 
 		item.start_chase_player()	
@@ -186,7 +182,7 @@ func finish_get_key():
 	
 		Globals.player.set_process(true)
 		Globals.player.set_physics_process(true)
-	
+
 		Globals.house.desable_camera()
 		
 func reset():

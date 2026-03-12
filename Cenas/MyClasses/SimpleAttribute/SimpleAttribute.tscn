@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ccj830dshdk7c"]
+
+[ext_resource type="Script" uid="uid://dbkti3lla2vuk" path="res://Cenas/MyClasses/SimpleAttribute/simple_attribute.gd" id="1_3svep"]
+
+[node name="SimpleAttribute" type="Node2D" unique_id=1722233150]
+script = ExtResource("1_3svep")

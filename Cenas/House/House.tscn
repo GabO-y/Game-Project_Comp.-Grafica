@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cxexjlkqbs61u"]
+[gd_scene format=3 uid="uid://cxexjlkqbs61u"]
 
 [ext_resource type="Script" uid="uid://c3svmxorsnj3i" path="res://Cenas/House/house.gd" id="1_rmjq6"]
 [ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/Player/Player.tscn" id="2_iqu7b"]
@@ -14,71 +14,72 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iqu7b"]
 
-[node name="House" type="Node2D" node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "die_menu", "finish_menu", "inital_menu", "tutorial_menu")]
+[node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu")]
 script = ExtResource("1_rmjq6")
 player = NodePath("Player")
 room_manager = NodePath("RoomManager")
 camera = NodePath("Camera2D")
 menu_manager = NodePath("MenuManager")
 initial_position = NodePath("InitialPosition")
+backlayer_filter = NodePath("Filter")
 die_menu = NodePath("MenuManager/Menus/DieMenu")
 finish_menu = NodePath("MenuManager/Menus/FinishMenu")
 inital_menu = NodePath("MenuManager/Menus/InitialMenu")
 tutorial_menu = NodePath("MenuManager/Menus/Tutorial")
 
-[node name="RoomManager" parent="." instance=ExtResource("4_6pdaa")]
+[node name="RoomManager" parent="." unique_id=2145467993 instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
 
-[node name="Player" parent="." instance=ExtResource("2_iqu7b")]
+[node name="Player" parent="." unique_id=302443957 instance=ExtResource("2_iqu7b")]
 position = Vector2(297, 79)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1014524603]
 enabled = false
 
-[node name="MenuManager" parent="." instance=ExtResource("6_1jfoj")]
+[node name="MenuManager" parent="." unique_id=872859067 instance=ExtResource("6_1jfoj")]
 
-[node name="Menus" type="Node2D" parent="MenuManager"]
+[node name="Menus" type="Node2D" parent="MenuManager" unique_id=33060059]
 
-[node name="DieMenu" parent="MenuManager/Menus" node_paths=PackedStringArray("house", "manager") instance=ExtResource("7_k5gof")]
+[node name="DieMenu" parent="MenuManager/Menus" unique_id=59713538 node_paths=PackedStringArray("house", "manager") instance=ExtResource("7_k5gof")]
 visible = false
 house = NodePath("../../..")
 manager = NodePath("../..")
 
-[node name="FinishMenu" parent="MenuManager/Menus" node_paths=PackedStringArray("manager") instance=ExtResource("8_k5gof")]
+[node name="FinishMenu" parent="MenuManager/Menus" unique_id=881516418 node_paths=PackedStringArray("manager") instance=ExtResource("8_k5gof")]
 visible = false
 manager = NodePath("../..")
 
-[node name="MenuPause" parent="MenuManager/Menus" node_paths=PackedStringArray("manager") instance=ExtResource("7_6pdaa")]
+[node name="MenuPause" parent="MenuManager/Menus" unique_id=1684499713 node_paths=PackedStringArray("manager") instance=ExtResource("7_6pdaa")]
 visible = false
 manager = NodePath("../..")
 
-[node name="Tutorial" parent="MenuManager/Menus" node_paths=PackedStringArray("manager") instance=ExtResource("10_knsum")]
+[node name="Tutorial" parent="MenuManager/Menus" unique_id=1534490429 node_paths=PackedStringArray("manager") instance=ExtResource("10_knsum")]
 visible = false
 manager = NodePath("../..")
 
-[node name="ChestMenu" parent="MenuManager/Menus" node_paths=PackedStringArray("popup", "area", "player", "manager") instance=ExtResource("7_1rbih")]
+[node name="ChestMenu" parent="MenuManager/Menus" unique_id=2039214310 node_paths=PackedStringArray("popup", "area", "player", "manager") instance=ExtResource("7_1rbih")]
 visible = false
 popup = NodePath("../../Interatives/ChestMenu/PopUp")
 area = NodePath("../../Interatives/ChestMenu/AreaBear")
 player = NodePath("../../../Player")
 manager = NodePath("../..")
 
-[node name="InitialMenu" parent="MenuManager/Menus" node_paths=PackedStringArray("manager") instance=ExtResource("9_1rbih")]
+[node name="InitialMenu" parent="MenuManager/Menus" unique_id=1373198782 node_paths=PackedStringArray("manager") instance=ExtResource("9_1rbih")]
 visible = false
 manager = NodePath("../..")
 
-[node name="Interatives" type="Node2D" parent="MenuManager"]
+[node name="Interatives" type="Node2D" parent="MenuManager" unique_id=1403220471]
 visible = false
 
-[node name="ChestMenu" type="Node2D" parent="MenuManager/Interatives"]
+[node name="ChestMenu" type="Node2D" parent="MenuManager/Interatives" unique_id=1748998382]
 
-[node name="AreaBear" type="Area2D" parent="MenuManager/Interatives/ChestMenu"]
+[node name="AreaBear" type="Area2D" parent="MenuManager/Interatives/ChestMenu" unique_id=462073891]
 position = Vector2(185, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuManager/Interatives/ChestMenu/AreaBear"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuManager/Interatives/ChestMenu/AreaBear" unique_id=37829423]
 shape = SubResource("CircleShape2D_iqu7b")
 
-[node name="PopUp" type="Label" parent="MenuManager/Interatives/ChestMenu"]
+[node name="PopUp" type="Label" parent="MenuManager/Interatives/ChestMenu" unique_id=1169807164]
 offset_left = 144.0
 offset_top = 41.0
 offset_right = 223.0
@@ -86,14 +87,14 @@ offset_bottom = 64.0
 text = "Conversar"
 metadata/_edit_use_anchors_ = true
 
-[node name="InitialPosition" type="Marker2D" parent="."]
+[node name="InitialPosition" type="Marker2D" parent="." unique_id=146841559]
 position = Vector2(69, 98)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1198707548]
 stream = ExtResource("10_k1pxl")
 volume_db = -10.0
 autoplay = true
 parameters/looping = true
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="Filter" type="CanvasModulate" parent="." unique_id=1931587469]
 color = Color(0.258125, 0.1475, 0.59, 1)

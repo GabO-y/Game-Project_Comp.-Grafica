@@ -125,12 +125,12 @@ func _on_timer_to_spawn_a_enemy() -> void:
 	
 	if enemies_already_spawner < limit_spawn:
 		enemies.append(spawanEmenie())
-		enemies_already_spawner += 1
+		enemies_already_spawner += 1 
 	else:
 		timer.stop()
 
 func spawn(ene_name: String, level: int) -> Enemy:
-
+	
 	var path = str("res://Cenas/Enemy/", ene_name, "/", ene_name, ".tscn")
 	var ene = load(path).instantiate() as Enemy
 	
@@ -138,6 +138,8 @@ func spawn(ene_name: String, level: int) -> Enemy:
 	
 	ene.default_setup()
 	ene.set_level(level, "current")
+	
+	ene.level = level
 	ene.setup()
 	
 	ene.enemy_die.connect(

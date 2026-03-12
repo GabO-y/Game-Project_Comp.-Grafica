@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://btw3m3mlgpdcr"]
+[gd_resource type="TileSet" format=3 uid="uid://btw3m3mlgpdcr"]
 
 [ext_resource type="Texture2D" uid="uid://bp41r1ame512m" path="res://Cenas/Rooms/ToyLibrary/Map/tileset.png" id="1"]
 

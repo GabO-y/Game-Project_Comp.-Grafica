@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://c1ckxwnsgb28m"]
+[gd_resource type="TileSet" format=3 uid="uid://c1ckxwnsgb28m"]
 
 [ext_resource type="Texture2D" uid="uid://dgartgdvb1yi4" path="res://Cenas/Rooms/HallwayLadder/Map/tileset.png" id="1"]
 

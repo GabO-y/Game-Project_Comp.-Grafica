@@ -48,8 +48,6 @@ func _ready() -> void:
 				if layer is TileMapLayer:
 					layers.append(layer)
 
-	
-
 func _process(delta: float) -> void:
 	if is_camera_chase_mode:
 		camara_chase(delta)
@@ -134,40 +132,6 @@ func open_door(door_name: String):
 func lock_all_doors():
 	for door in doors:
 		door.set_active(false)
-	
-#func is_round_playing():
-	#
-	#if !current_round: return false
-	#
-	#return current_round.is_playing
-	#
-#func add_round(round: Round):
-	#rounds.append(round)
-	#round.finished.connect(_clear_effects)
-#
-#func has_rounds():
-	#for i in rounds:
-		#return true
-	#return false
-	#
-#func start_round():
-	#
-	#if not has_rounds(): return
-		#
-	#for r in rounds:
-		#if is_instance_valid(r):
-			#r.start()
-			#current_round = r
-		#else:
-			#rounds.erase(r)
-			#continue
-		#return
-#
-#func show_rounds():
-	#print(name, ":")
-	#for r in rounds:
-		#r.show_exe()
-		#print("----------")
 	
 func reset():
 	finish = false

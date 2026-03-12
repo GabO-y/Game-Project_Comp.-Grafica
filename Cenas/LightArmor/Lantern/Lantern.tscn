@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0ycmxpkip27y"]
+[gd_scene format=3 uid="uid://b0ycmxpkip27y"]
 
 [ext_resource type="Script" uid="uid://endjb4wi0jx7" path="res://Cenas/LightArmor/Lantern/lantern.gd" id="1_ix4eb"]
 
-[sub_resource type="Gradient" id="Gradient_ix4eb"]
+[sub_resource type="Gradient" id="Gradient_k3727"]
 offsets = PackedFloat32Array(0, 0.633333, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.0333333, 0.0333333, 0.0333333, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lxmur"]
-gradient = SubResource("Gradient_ix4eb")
+gradient = SubResource("Gradient_k3727")
 fill = 1
 fill_from = Vector2(0.490029, 0.504274)
 fill_to = Vector2(0, 0)
@@ -15,28 +15,28 @@ fill_to = Vector2(0, 0)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ix4eb"]
 polygon = PackedVector2Array(0.897777, 0.947762, 0.552335, 0.202961, -3.81885, -9.97247, 0.37278, 0.013409, -0.0136688, 0.365696, -9.12312, -4.71649)
 
-[node name="Lantern" type="Node2D" node_paths=PackedStringArray("area")]
+[node name="Lantern" type="Node2D" unique_id=1173940783 node_paths=PackedStringArray("area")]
 light_mask = 3
 visibility_layer = 3
 script = ExtResource("1_ix4eb")
 area = NodePath("Light")
 
-[node name="Light" type="Area2D" parent="."]
+[node name="Light" type="Area2D" parent="." unique_id=727962459]
 collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light" unique_id=996983122]
 position = Vector2(-5.7764, -50.7681)
 scale = Vector2(0.68662, 0.634868)
 polygon = PackedVector2Array(-27.9974, 174.474, 38.9974, 174.474, 8.41282, 75.2409)
 
-[node name="PointLight2D" type="PointLight2D" parent="Light"]
+[node name="PointLight2D" type="PointLight2D" parent="Light" unique_id=177092703]
 rotation = 3.89034
 scale = Vector2(2.25576, 2.29946)
 shadow_enabled = true
 shadow_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_lxmur")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Light/PointLight2D"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Light/PointLight2D" unique_id=200944546]
 occluder = SubResource("OccluderPolygon2D_ix4eb")
 occluder_light_mask = 2

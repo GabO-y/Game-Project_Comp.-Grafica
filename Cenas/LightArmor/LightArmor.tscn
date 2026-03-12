@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6bqv4u0hchsw"]
+[gd_scene format=3 uid="uid://c6bqv4u0hchsw"]
 
 [ext_resource type="Script" uid="uid://br0fr43xp1mkk" path="res://Cenas/LightArmor/light_armor.gd" id="1_j0ri1"]
 
-[node name="LightArmor" type="Node2D"]
+[node name="LightArmor" type="Node2D" unique_id=1525702921]
 script = ExtResource("1_j0ri1")

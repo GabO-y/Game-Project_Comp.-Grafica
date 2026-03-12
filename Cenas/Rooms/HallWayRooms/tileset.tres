@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://beitqqbn2empt"]
+[gd_resource type="TileSet" format=3 uid="uid://beitqqbn2empt"]
 
 [ext_resource type="Texture2D" uid="uid://dro6cmns1usf5" path="res://Cenas/Rooms/HallWayRooms/tileset.png" id="1"]
 

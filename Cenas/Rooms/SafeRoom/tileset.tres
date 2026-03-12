@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=37 format=3 uid="uid://brdd4bkrqvvka"]
+[gd_resource type="TileSet" format=3 uid="uid://brdd4bkrqvvka"]
 
 [ext_resource type="Texture2D" uid="uid://7p5286wn2dk0" path="res://Cenas/Rooms/SafeRoom/tileset.png" id="1"]
 
@@ -58,6 +58,12 @@ polygon = PackedVector2Array(-4.92399, 8, -4.92399, -0.964493, 8, -1.06602, 8, -
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0ah8w"]
 polygon = PackedVector2Array(4.92399, -8, 4.92399, -8, 5.0145, 6.87702, 4.09756, 6.87702, 4.11178, -8)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0gq4f"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_yh88f"]
 polygon = PackedVector2Array(-8, 6.93433, 8, 6.93433, 8, 8, -8, 8)
@@ -257,6 +263,7 @@ texture = ExtResource("1")
 2:8/0 = 0
 2:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1.88852, -8, -2.06838)
 3:8/0 = 0
+3:8/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_0gq4f")
 4:8/0 = 0
 4:8/0/z_index = 1
 4:8/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_dc5c3")
@@ -265,4 +272,5 @@ texture = ExtResource("1")
 [resource]
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 133
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_c3iAynBArQ6")

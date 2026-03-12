@@ -58,7 +58,7 @@ func _change_room(goTo):
 	
 #	Para o caso do player mudar de sala, 
 #   mas ainda haver items que não foram coletados
-	item_manager.get_all_items(null)
+	item_manager.get_all_items(current_room)
 
 	# Caso vc passe pela porta e não tenha tocado na chave
 	item_manager.finish_get_key()
@@ -69,10 +69,12 @@ func _change_room(goTo):
 	
 	current_room.enable()
 	
-	var door_target = current_room.get_door(room_name)
 	
-	Globals.player.body.global_position = door_target.area.global_position
-
+	var door_target: Door = current_room.get_door(room_name)
+	
+	Globals.player.body.global_position = door_target.global_position
+	Globals.player.test_wall_stuck()
+	
 	Globals.can_teleport = false
 
 	round_manager.setup_next_level()

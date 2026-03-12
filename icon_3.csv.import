@@ -15,3 +15,5 @@ dest_files=["res://icon_3. TVPaint.translation", "res://icon_3. CSV 1.0.translat
 
 compress=true
 delimiter=0
+unescape_keys=false
+unescape_translations=true

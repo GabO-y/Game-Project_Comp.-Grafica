@@ -284,7 +284,6 @@ class Horder extends Exe:
 		
 		_timer += delta
 		
-		
 class Await extends Exe:
 	var time: float
 	var _timer: float = 0.0

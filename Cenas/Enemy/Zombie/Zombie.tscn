@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://c5t1rcxsbscp5"]
+[gd_scene format=3 uid="uid://c5t1rcxsbscp5"]
 
 [ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemy/Zombie/zombie.gd" id="1_21gwn"]
 [ext_resource type="Texture2D" uid="uid://b7j2tgblr1apf" path="res://Assets/Enemies/Zombie/spr_zumbi.png" id="2_q1jsx"]
@@ -525,24 +525,24 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_q1jsx"]
 radius = 14.0
 
-[node name="Zombie" type="Node2D" node_paths=PackedStringArray("agent", "time", "body", "anim")]
+[node name="Zombie" type="Node2D" unique_id=985319853 node_paths=PackedStringArray("agent", "time", "body", "anim")]
 script = ExtResource("1_21gwn")
 agent = NodePath("CharacterBody2D/NavigationAgent2D")
 time = NodePath("Timer")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1602503414]
 motion_mode = 1
 wall_min_slide_angle = 0.00174533
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=1217191862]
 path_desired_distance = 3.0
 target_desired_distance = 3.0
 path_postprocessing = 1
 radius = 30.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1036049505]
 texture_filter = 1
 position = Vector2(1.19209e-07, 2.38419e-07)
 scale = Vector2(1.05982, 1.06882)
@@ -550,17 +550,17 @@ sprite_frames = SubResource("SpriteFrames_ck86d")
 animation = &"walk_4"
 frame_progress = 0.805388
 
-[node name="CollisionBody" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionBody" type="CollisionShape2D" parent="CharacterBody2D" unique_id=968920000]
 shape = SubResource("CapsuleShape2D_xejvs")
 
-[node name="AttackArea" type="Area2D" parent="CharacterBody2D"]
+[node name="AttackArea" type="Area2D" parent="CharacterBody2D" unique_id=546302422]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea" unique_id=1364304713]
 visible = false
 shape = SubResource("CircleShape2D_q1jsx")
 debug_color = Color(0.99862, 0, 0.137187, 0.42)
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=2120149456]
 wait_time = 0.1
 autostart = true
 

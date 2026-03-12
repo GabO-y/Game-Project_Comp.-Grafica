@@ -13,11 +13,12 @@ var armors: Array[LightArmor]
 var index = 0
 var a = ["Lantern", "Lighter", "FairyLight"]
 
-func _ready() -> void:
-	
+func _ready() -> void:	
 	for name in ["Lantern", "Lighter", "FairyLight"]:
 		var path: String = str("res://Cenas/LightArmor/", name, "/", name, ".tscn")
 		var armor = load(path).instantiate() as LightArmor
+		
+		if not armor: continue
 
 		armor._ready()
 
@@ -65,10 +66,8 @@ func select_armor(armor_name: String) -> LightArmor:
 func change_to_select():
 	for child in player.armor_node.get_children():
 		player.armor_node.remove_child(child)
-		
 	if !selected_armor:
 		selected_armor = get_armor("Lantern")
-		
 	player.set_armor(selected_armor)
 	
 func try_buy(armor_name: String) -> bool:

@@ -94,15 +94,11 @@ func damager_ene(delta: float):
 		enemies_on_light[ene] += delta
 	
 func _ene_on_light_area(ene_body):
-		
 	var ene = ene_body.get_parent() as Enemy
-	
 	if !ene: return
-	
 	enemies_on_light[ene] = 0.0
 	
 func _ene_exit_light_area(ene_body):
-	
 	var ene = ene_body.get_parent() as Enemy
 	if !ene: return
 	for key in enemies_on_light.keys():

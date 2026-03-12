@@ -1,12 +1,15 @@
-[gd_scene load_steps=39 format=3 uid="uid://clp3coh5mf60x"]
+[gd_scene format=3 uid="uid://clp3coh5mf60x"]
 
 [ext_resource type="Script" uid="uid://cyt1w5e4h0e4" path="res://Cenas/Player/player.gd" id="1_yjlpd"]
 [ext_resource type="Texture2D" uid="uid://cd4to1qh32730" path="res://Assets/Player/Animations/knockback_animaiton.png" id="3_5akqg"]
 [ext_resource type="Texture2D" uid="uid://8qj0ov3p7avy" path="res://Assets/Player/Animations/spr_player_assets.png" id="4_4o7c8"]
 [ext_resource type="Script" uid="uid://chamii6y3xgja" path="res://Cenas/Player/ghost_dash_effect.gd" id="4_6ihxy"]
+[ext_resource type="Script" uid="uid://bal4r08u27v5j" path="res://Cenas/Player/ray_casts.gd" id="5_bsnao"]
 [ext_resource type="PackedScene" uid="uid://mcuhgoenbx6w" path="res://Cenas/Player/WearponsInfos/WearponsInfos.tscn" id="6_4o7c8"]
+[ext_resource type="Script" uid="uid://dww1rkje5k6ih" path="res://Cenas/Player/dynamic_background.gd" id="6_qhdav"]
 [ext_resource type="AudioStream" uid="uid://csl4jnmpwav2c" path="res://Assets/Sound/dash_sound.mp3" id="7_bsnao"]
 [ext_resource type="PackedScene" uid="uid://df6rl28qpnweo" path="res://Cenas/LightArmor/ArmorManager/ArmorManager.tscn" id="7_xjvfg"]
+[ext_resource type="PackedScene" uid="uid://ca54rmw5u6b36" path="res://Cenas/NewImplementations/NewLightArmor/newArmorManager/ArmorManager.tscn" id="10_dah5n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ryd"]
 atlas = ExtResource("4_4o7c8")
@@ -247,7 +250,7 @@ size = Vector2(11.5, 12.2222)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("body", "anim", "hit_area", "hud", "label_coins", "armor_node", "armor_manager", "dash_audio", "heart_conteiner") groups=["player"]]
+[node name="Player" type="Node2D" unique_id=1788556315 node_paths=PackedStringArray("body", "anim", "hit_area", "hud", "label_coins", "armor_node", "armor_manager", "dash_audio", "raycast2d_node", "heart_conteiner") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
 body = NodePath("CharacterBody2D")
@@ -258,43 +261,58 @@ label_coins = NodePath("Hud/Coins")
 armor_node = NodePath("CharacterBody2D/Armors")
 armor_manager = NodePath("ArmorManager")
 dash_audio = NodePath("DashSound")
+raycast2d_node = NodePath("CharacterBody2D/RayCasts")
 heart_conteiner = NodePath("Hud/HBoxContainer")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=944877724 groups=["player"]]
 position = Vector2(4, -2)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1351681554]
 texture_filter = 1
 position = Vector2(1, -3)
 scale = Vector2(1.125, 1.125)
 sprite_frames = SubResource("SpriteFrames_htvwm")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=829775109]
 position = Vector2(1, 0.500005)
 scale = Vector2(0.9, 0.9)
 shape = SubResource("RectangleShape2D_pmvhq")
 
-[node name="HitArea" type="Area2D" parent="CharacterBody2D"]
+[node name="HitArea" type="Area2D" parent="CharacterBody2D" unique_id=116667837]
 position = Vector2(4, -5)
 collision_mask = 7
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitArea" unique_id=314005563]
 visibility_layer = 2
 position = Vector2(-3, 2)
 shape = SubResource("CircleShape2D_yjlpd")
 debug_color = Color(0.992689, 0, 0.248493, 0.42)
 
-[node name="GhostDashEffect" type="Node2D" parent="CharacterBody2D" node_paths=PackedStringArray("player")]
+[node name="GhostDashEffect" type="Node2D" parent="CharacterBody2D" unique_id=1091842191 node_paths=PackedStringArray("player")]
 script = ExtResource("4_6ihxy")
 player = NodePath("../..")
 
-[node name="Armors" type="Node2D" parent="CharacterBody2D"]
+[node name="Armors" type="Node2D" parent="CharacterBody2D" unique_id=2038585287]
 position = Vector2(-4, 2)
 
-[node name="Hud" type="CanvasLayer" parent="."]
+[node name="RayCasts" type="Node2D" parent="CharacterBody2D" unique_id=370275412 node_paths=PackedStringArray("player", "ray_stuck_wall_handler")]
+script = ExtResource("5_bsnao")
+player = NodePath("../..")
+ray_stuck_wall_handler = NodePath("RayHandleStuckCollision")
 
-[node name="Coins" type="Label" parent="Hud"]
+[node name="RayHandleStuckCollision" type="RayCast2D" parent="CharacterBody2D/RayCasts" unique_id=67831394]
+target_position = Vector2(0, 8)
+
+[node name="Utils" type="Node2D" parent="CharacterBody2D" unique_id=1009943897]
+
+[node name="DynamicBackground" type="Sprite2D" parent="CharacterBody2D/Utils" unique_id=1965836771]
+z_index = -10
+script = ExtResource("6_qhdav")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=928206949]
+
+[node name="Coins" type="Label" parent="Hud" unique_id=700337594]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -302,17 +320,19 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Hud"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Hud" unique_id=468109084]
 offset_right = 100.0
 offset_bottom = 100.0
 
-[node name="WearponsInfos" parent="." instance=ExtResource("6_4o7c8")]
+[node name="WearponsInfos" parent="." unique_id=42238393 instance=ExtResource("6_4o7c8")]
 
-[node name="ArmorManager" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_xjvfg")]
+[node name="ArmorManager" parent="." unique_id=1059082480 node_paths=PackedStringArray("player") instance=ExtResource("7_xjvfg")]
 player = NodePath("..")
 
-[node name="DashSound" type="AudioStreamPlayer" parent="."]
+[node name="DashSound" type="AudioStreamPlayer" parent="." unique_id=1345629383]
 stream = ExtResource("7_bsnao")
+
+[node name="ArmorManager2" parent="." unique_id=1516897872 instance=ExtResource("10_dah5n")]
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_kill_entered"]
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]
