@@ -4,10 +4,10 @@ class_name Enemy
 
 var damage_att: Attribute = Attribute.new()
 var speed_att: Attribute = Attribute.new()
-var heath_att: Attribute = Attribute.new()
+var health_att: Attribute = Attribute.new()
 
 @export var speed: float = 0.0
-@export var heath: float = 0.0
+@export var health: float = 0.0
 @export var damage: float = 0.0
 
 var atributes: Array[Attribute]
@@ -52,7 +52,7 @@ func _ready() -> void:
 	player = Globals.player
 	
 	atributes.append_array([
-		damage_att, speed_att, heath_att
+		damage_att, speed_att, health_att
 	])
 		
 	for i in body.get_children():
@@ -60,8 +60,8 @@ func _ready() -> void:
 			bar = i
 
 	if bar != null:
-		bar.max_value = heath
-		bar.value = heath
+		bar.max_value = health
+		bar.value = health
 		
 	damage_audio = AudioStreamPlayer.new()
 	
@@ -98,6 +98,10 @@ func _process(delta: float) -> void:
 		stun_timer += delta
 		
 func _physics_process(delta: float) -> void:
+	
+	if Globals.player.is_dead:
+		setup_state(EnemyState.WAITING)
+	
 	match current_state:
 		EnemyState.WAITING:
 			waiting_state(delta)
@@ -130,13 +134,16 @@ func stuned_state(delta: float):
 func custom_state(delta: float):
 	pass
 	
+func setup_custom_state(custom_idx: int):
+	pass
+	
 func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	pass
 	
 func update_bar():
 	if bar == null:
 		return
-	bar.value = heath
+	bar.value = health
 
 func set_level(lv: int, what):
 	for att in atributes:
@@ -160,20 +167,20 @@ func set_active(mode):
 	body.collision_mask = mask
 
 func take_damage(damage: float):
-	
+
 	if is_dead: return
-	
+		
 	is_stop = true
 	is_stuned = true
 	
-	heath -= damage
+	health -= damage
 	
 	if damage_audio:
 		damage_audio.play()
 
 	drop_damage_label(damage)
 	
-	if heath <= 0:
+	if health <= 0:
 		die()
 	else:
 		change_color_damage()
@@ -251,8 +258,15 @@ func dir_to_player() -> Vector2:
 func dist_to_player() -> float: 
 	return body.global_position.distance_to(Globals.player_pos())
 	
+func chase_player(dist_limit: float = 0.0, speed_multplier: float = 1.0) -> bool:
+	if dist_to_player() <= dist_limit:
+		return true
+	body.velocity = dir_to_player() * speed * speed_multplier
+	body.move_and_slide()
+	return false
+	
 func setup():
-	heath = heath_att.get_value()
+	health = health_att.get_value()
 	speed = speed_att.get_value()
 	damage = damage_att.get_value()
 

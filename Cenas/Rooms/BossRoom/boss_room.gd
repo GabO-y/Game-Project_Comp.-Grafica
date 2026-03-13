@@ -6,26 +6,25 @@ class_name BossRoom
 @export var spot_boss_spawn: Marker2D
 
 func _ready() -> void:
-	#boss.room = self
-	boss.body.global_position = spot_boss_spawn.global_position
+	# boss.room = self
 	super._ready()
 
 func desable():
-		
 	if finish:
 		for door in doors:
 			door.all_lock()
-	
 	if is_instance_valid(boss):
 		boss.desable()
 
 	super.desable()
 	
 func enable():
+	spawn_boss()
+	boss.global_position = spot_boss_spawn.global_position
 	boss.enable()
 	super.enable()
 	
-func set_active(mode: bool):	
+func set_active(mode: bool):
 	super.set_active(mode)
 	if is_instance_valid(boss):
 		boss.set_active(mode)
@@ -35,3 +34,6 @@ func set_active(mode: bool):
 	#
 	#print("BOSSSSSSS RESETADO")
 	#boss.global_position = spot_boss_spawn.global_position - global_position
+
+func spawn_boss():
+	pass

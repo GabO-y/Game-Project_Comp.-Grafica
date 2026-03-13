@@ -6,20 +6,27 @@ class_name GhostBossRoom
 
 func _ready() -> void:
 	super._ready()
-	boss.room = self
 	
 func reset():
 	super.reset()
-	
-	if is_instance_valid(boss):
+	if boss:
+		if boss in get_children():
+			remove_child(boss)
 		boss.queue_free()
-		
-	boss = load("res://Cenas/Enemy/Bosses/GhostBoss.tscn").instantiate() as GhostBoss
+	
+	#if is_instance_valid(boss):
+		#boss.queue_free()
+		#
+	#boss = load("res://Cenas/Enemy/Bosses/newGhostBoss/GhostBoss.tscn").instantiate() as GhostBoss
+	#add_child(boss)
+	
+	#boss.room = self
+	#boss.reset()
+	
+	#boss.global_position = spot_boss_spawn.global_position
+
+func spawn_boss():
+	if boss in get_children():
+		remove_child(boss)
+	boss = load("res://Cenas/Enemy/Bosses/newGhostBoss/GhostBoss.tscn").instantiate()
 	add_child(boss)
-	
-	boss.room = self
-	
-	boss.reset()
-	
-	boss.global_position = spot_boss_spawn.global_position
-	

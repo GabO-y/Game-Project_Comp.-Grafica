@@ -744,11 +744,11 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func default_setup():
 	
 	atributes.append_array([
-		heath_att, speed_att, damage_att
+		health_att, speed_att, damage_att
 	])
 				
 	speed_att.setup(80, 80, "value")
 	damage_att.setup(2, 2, "value")
-	heath_att.setup(100, 100, "value")
+	health_att.setup(100, 100, "value")
 	
 	set_level(9, "max")

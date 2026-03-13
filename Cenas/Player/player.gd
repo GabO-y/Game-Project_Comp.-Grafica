@@ -10,7 +10,7 @@ class_name Player
 @export var hit_area: Area2D
 @export var knockback_anim: AnimationPlayer
 @export var coins: int = 0
-@export var hud: CanvasLayer
+@export var hud_node: CanvasLayer
 @export var label_coins: Label
 @export var armor_node: Node2D
 @export var armor_manager: ArmorManager
@@ -22,7 +22,7 @@ var modulate_timer: float = 0.0
 var white_time: bool = true
 var is_flicking: bool = false
 
-var max_heart: int = 10
+var max_heart: int = 5
 var hearts: int = 3
 
 var is_invencible: bool = false
@@ -64,7 +64,7 @@ var current_ene_defalut: int = 0
 
 var is_dead: bool = false
 
-@export var heart_conteiner: HBoxContainer
+@export var heart_node: Control
 var hearts_control: Array[TextureRect] = []
 
 func _ready() -> void:
@@ -80,8 +80,7 @@ func _ready() -> void:
 	#body.collision_mask |= Globals.layers["current_wall"]
 		
 	update_label_coins()
-	update_hearts()
-	
+
 	_die.connect(
 		func():
 			if armor.is_active: 
@@ -90,6 +89,7 @@ func _ready() -> void:
 	)
 		
 	spend_coins.connect(_spend_coins)
+	get_window().size_changed.connect(update_hearts)
 	
 func set_armor(armor: LightArmor):
 	for child in armor_node.get_children():
@@ -342,36 +342,50 @@ func update_label_coins():
 	label_coins.text = str(coins)
 	
 func update_hearts():
+	set_heart_hud(hearts, max_heart)
+	
+	#for child in heart_conteiner.get_children():
+		#if is_instance_valid(child):
+			#heart_conteiner.remove_child(child)
+			#child.queue_free()
+	#if hearts == max_heart:
+		#var text = TextureRect.new()
+		#text.texture = heart_model
+		#for i in range(max_heart):
+			#heart_conteiner.add_child(text.duplicate())
+		#return
+	#for i in range(max_heart):
+		#var text = TextureRect.new()
+		#if i <= hearts - 1:
+			#text.texture = heart_model
+		#else:
+			#text.texture = broken_heart
+		#heart_conteiner.add_child(text)
+		
+func set_heart_hud(value: int, max: int):
+	
+	for c in heart_node.get_children():
+		heart_node.remove_child(c)
 	
 	var heart_model = load("res://Assets/Player/Heats/heart.png")
 	var broken_heart = load("res://Assets/Player/Heats/broken_heart.png")
-		
-	for child in heart_conteiner.get_children():
-		if is_instance_valid(child):
-			heart_conteiner.remove_child(child)
-			child.queue_free()
 	
-	if hearts == max_heart:
-			
-		var text = TextureRect.new()
-		text.texture = heart_model
+	var s_size: Vector2 = get_viewport_rect().size
+	var delta_x: float = s_size.x * 0.08
+	var delta_y: float = s_size.y * 0.01
+	var x_start: float = s_size.x * 0.01
+	
+	for i in range(max):
 		
-		for i in range(max_heart):
-			heart_conteiner.add_child(text.duplicate())
+		var icon: TextureRect = TextureRect.new()
 		
-		return
-			
-	for i in range(max_heart):
-						
-		var text = TextureRect.new()		
-
-		if i <= hearts - 1:
-			text.texture = heart_model
+		if i >= value:
+			icon.texture = broken_heart.duplicate()
 		else:
-			text.texture = broken_heart
-			
-		heart_conteiner.add_child(text)
-						
+			icon.texture = heart_model.duplicate()
+		heart_node.add_child(icon)
+		icon.global_position = Vector2(x_start + delta_x * i, delta_y)
+		
 func upgrade_heart(amount: int):
 	max_heart += amount
 	

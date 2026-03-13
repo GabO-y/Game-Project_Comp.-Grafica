@@ -203,7 +203,7 @@ func get_aniamtion_tipy():
 	#anim.play(play)
 	
 func animation_logic():
-	if heath <= 0: return
+	if health <= 0: return
 	var play: String = ("idle" if current_state == EnemyState.WAITING else "walk") + "_"
 	var dir: Vector2 = dir_to_player()
 	play += ("back_" if dir.y < 0 else "") + str(animation_type)
@@ -212,12 +212,12 @@ func animation_logic():
 	
 func default_setup():
 	atributes.append_array([
-		damage_att, speed_att, heath_att
+		damage_att, speed_att, health_att
 	])
 	
 	damage_att.setup(1, 1, "value")
 	speed_att.setup(100, 150, "value")
-	heath_att.setup(5, 15, "value")
+	health_att.setup(5, 15, "value")
 	
 	set_level(9, "max")
 

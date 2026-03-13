@@ -20,9 +20,7 @@ var t: float = 0.0
 var d: float = 0.0
 
 func _physics_process(delta: float) -> void:
-	
 	if life <= 0: return
-	
 	animation_logic()
 	match current_state:
 		EnemyState.WAITING:

@@ -141,6 +141,12 @@ func debug_area(area: Area2D):
 	print(area.get_path())
 	print("\tlayer: ", area.collision_layer)
 	print("\tmask: ", area.collision_mask)
+	
+func get_random_dir() -> Vector2:
+	return Vector2(
+		randf_range(-1.0, 1.0),
+		randf_range(-1.0, 1.0)
+	).normalized()
 
 signal goint_to_center
 

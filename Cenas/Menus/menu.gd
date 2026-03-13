@@ -10,7 +10,7 @@ class_name Menu
 func set_active(mode: bool, principal: bool = true):
 		
 	if Globals.player:
-		Globals.player.hud.visible = not mode
+		Globals.player.hud_node.visible = not mode
 	
 	if mode and need_focus:	
 		focus_button.grab_focus()

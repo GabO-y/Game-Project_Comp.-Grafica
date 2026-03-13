@@ -24,6 +24,8 @@ func _ready() -> void:
 				
 		if room is Room:
 			
+			print(room.name)
+			
 			room.add_to_group("rooms")
 			room.desable()
 			rooms.append(room)
@@ -68,7 +70,6 @@ func _change_room(goTo):
 	current_room = goTo
 	
 	current_room.enable()
-	
 	
 	var door_target: Door = current_room.get_door(room_name)
 	

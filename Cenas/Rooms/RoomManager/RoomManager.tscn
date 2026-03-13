@@ -51,11 +51,6 @@ visible = false
 
 [node name="GhostBossRoom" parent="Rooms" unique_id=807123181 instance=ExtResource("6_ow6w0")]
 visible = false
-is_clear = false
-finish = false
-spread = false
-is_camera_chase_mode = false
-can_return = false
 
 [node name="TutorialRoom" parent="Rooms" unique_id=1246722971 instance=ExtResource("10_gc0uj")]
 visible = false

@@ -45,11 +45,12 @@ var type_special: int
 @export var animated_slash_attck: AnimatedSprite2D
 @export var slash_attack_area: Area2D
 
+var current_custom_state: CustomState = CustomState.SPECIAL
+var special_stage: int = 1
+
 func _ready() -> void:
 	animation_type = randi_range(1, 4)
-	
 	super._ready()
-	
 	default_setup()
 	
 func _process(delta: float) -> void:
@@ -94,7 +95,30 @@ func attacking_state(delta: float):
 		setup_state(EnemyState.WAITING)
 		return
 	t += delta
-	
+
+func custom_state(delta: float):
+	match current_custom_state:
+		CustomState.SPECIAL:
+			match special_stage:
+				1:
+					t += delta
+					if t > d:
+						special_stage += 1
+				2:
+					if chase_player(70.0, 1.2):
+						t = 0.0
+						d = 3.0
+						last_dir_player = dir_to_player()
+						special_stage += 1
+				3: 
+					t += delta
+					if t > d:
+						queue_free()
+					body.velocity = last_dir_player * speed * 1.2
+					body.move_and_slide()
+					
+					
+
 func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	match state:
 		EnemyState.WAITING:
@@ -103,6 +127,10 @@ func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 		EnemyState.ATTACKING:
 			self.t = 0.0
 			self.d = 0.3
+		EnemyState.CUSTOM:
+			special_stage = 1
+			t = 0.0
+			# d é modificado no boss
 	if t > -1: self.t = t
 	if d > -1: self.d = d
 		
@@ -204,18 +232,18 @@ func set_active(mode: bool):
 	area_hit.monitorable = mode
 	area_hit.monitoring = mode
 	
-func chase_player(dist):
-	
-	if (dist < 25):
-		#current_state = State.PREPARE_ATTACKING
-		return
-	
-	if is_attacking: return
-	
-	dir = dir_to_player()
-
-	body.velocity = dir * speed
-	body.move_and_slide()
+#func chase_player(dist):
+	#
+	#if (dist < 25):
+		##current_state = State.PREPARE_ATTACKING
+		#return
+	#
+	#if is_attacking: return
+	#
+	#dir = dir_to_player()
+#
+	#body.velocity = dir * speed
+	#body.move_and_slide()
 	
 func enable():
 	show()
@@ -260,15 +288,15 @@ func die():
 func default_setup():
 	
 	atributes.append_array([
-		heath_att, speed_att, damage_att
+		health_att, speed_att, damage_att
 	])
 				
 	speed_att.setup(80, 150, "value")
 	damage_att.setup(1, 1, "value")
-	heath_att.setup(5, 15, "value")
+	health_att.setup(5, 15, "value")
 	
 	set_level(9, "max")
 
-	
+enum CustomState {SPECIAL}
 
 	

@@ -249,19 +249,19 @@ size = Vector2(11.5, 12.2222)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" unique_id=1788556315 node_paths=PackedStringArray("body", "anim", "hit_area", "hud", "label_coins", "armor_node", "armor_manager", "dash_audio", "raycast2d_node", "heart_conteiner") groups=["player"]]
+[node name="Player" type="Node2D" unique_id=1788556315 node_paths=PackedStringArray("body", "anim", "hit_area", "hud_node", "label_coins", "armor_node", "armor_manager", "dash_audio", "raycast2d_node", "heart_node") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 hit_area = NodePath("CharacterBody2D/HitArea")
-hud = NodePath("Hud")
+hud_node = NodePath("Hud")
 label_coins = NodePath("Hud/Coins")
 armor_node = NodePath("CharacterBody2D/Armors")
 armor_manager = NodePath("ArmorManager")
 dash_audio = NodePath("DashSound")
 raycast2d_node = NodePath("CharacterBody2D/RayCasts")
-heart_conteiner = NodePath("Hud/HBoxContainer")
+heart_node = NodePath("Hud/HeartsNode")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=944877724 groups=["player"]]
 position = Vector2(4, -2)
@@ -319,9 +319,11 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Hud" unique_id=468109084]
-offset_right = 100.0
-offset_bottom = 100.0
+[node name="HeartsNode" type="Control" parent="Hud" unique_id=709482794]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="WearponsInfos" parent="." unique_id=42238393 instance=ExtResource("6_4o7c8")]
 
@@ -330,8 +332,6 @@ player = NodePath("..")
 
 [node name="DashSound" type="AudioStreamPlayer" parent="." unique_id=1345629383]
 stream = ExtResource("7_bsnao")
-
-[node name="ArmorManager2" parent="." unique_id=1516897872]
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_kill_entered"]
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]
