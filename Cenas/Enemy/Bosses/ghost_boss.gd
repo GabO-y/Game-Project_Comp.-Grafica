@@ -4,7 +4,7 @@ class_name GhostBoss
 enum State {CHASING, SPECIAL, STOPED, PREPERE_ATTACK, DYING}
 enum Specials {GHOSTS_RUN, CRASH_WALL, SHOOTING}
 
-var current_state: State
+# var current_state: State
 var current_special: Specials
 
 var is_on_special: bool = false
@@ -101,8 +101,8 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_active: return
 	
-	if is_dying:
-		current_state = State.DYING
+	#if is_dying:
+		#current_state = State.DYING
 		
 	match current_state:
 		State.CHASING:
@@ -111,8 +111,8 @@ func _physics_process(delta: float) -> void:
 			if is_prepere_attack:
 				prepere_attack_logic(delta)
 				return
-			if dist_to_player() > 40 and not is_laugh_animation:
-				current_state = State.CHASING
+			#if dist_to_player() > 40 and not is_laugh_animation:
+				#current_state = State.CHASING
 		State.SPECIAL:
 			special_move(delta)
 		State.STOPED:
@@ -403,7 +403,7 @@ func create_ghosts():
 	var ghost: Ghost = load("res://Cenas/Enemy/Ghost/Ghost.tscn").instantiate()
 	
 	ghost.is_stop = true
-	ghost.current_state = Ghost.State.SPECIAL
+	#ghost.current_state = Ghost.State.SPECIAL
 	
 	ghost.speed = 300
 
@@ -540,7 +540,7 @@ func setup():
 	is_active = true
 	body.collision_layer = Globals.layers["boss"]
 	body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
-	current_state = State.CHASING
+	#current_state = State.CHASING
 	slash_node.visible = false
 	timer_special = 0.0
 	time_await_ghost_run = 1.0
@@ -573,7 +573,7 @@ func chase_move():
 	body.move_and_slide()
 
 func prepare_attack():
-	current_state = State.PREPERE_ATTACK
+	#current_state = State.PREPERE_ATTACK
 	is_prepere_attack = true
 	prepere_attack_timer = 0
 	wait_attack_finish = true
@@ -618,14 +618,14 @@ func start_special():
 	
 	anim.play("laugh")
 	
-	current_state = State.STOPED
+	#current_state = State.STOPED
 	is_laugh_animation = true
 	is_on_special = true
 
 	await anim.animation_finished
 	
 	is_laugh_animation = false
-	current_state = State.SPECIAL
+	#current_state = State.SPECIAL
 	
 	current_special = get_random_special()
 	
@@ -664,8 +664,8 @@ func _on_slash_area_player_body_exited(body: Node2D) -> void:
 
 	if is_on_special: return
 
-	if not wait_attack_finish:
-		current_state = State.CHASING
+	#if not wait_attack_finish:
+		#current_state = State.CHASING
 		
 # quando o fantasma esta correndo, se ele atravessar vc, vc toma dano
 func _on_area_attack_to_ghosts_run_player_body_entered(body: Node2D) -> void:	
@@ -695,7 +695,7 @@ func die():
 	
 func start_die():
 	
-	current_state = State.DYING
+	#current_state = State.DYING
 	anim.play("partial_die")
 	start_flicks()
 	

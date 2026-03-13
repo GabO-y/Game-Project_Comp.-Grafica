@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://dww1rkje5k6ih" path="res://Cenas/Player/dynamic_background.gd" id="6_qhdav"]
 [ext_resource type="AudioStream" uid="uid://csl4jnmpwav2c" path="res://Assets/Sound/dash_sound.mp3" id="7_bsnao"]
 [ext_resource type="PackedScene" uid="uid://df6rl28qpnweo" path="res://Cenas/LightArmor/ArmorManager/ArmorManager.tscn" id="7_xjvfg"]
-[ext_resource type="PackedScene" uid="uid://ca54rmw5u6b36" path="res://Cenas/NewImplementations/NewLightArmor/newArmorManager/ArmorManager.tscn" id="10_dah5n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ryd"]
 atlas = ExtResource("4_4o7c8")
@@ -332,7 +331,7 @@ player = NodePath("..")
 [node name="DashSound" type="AudioStreamPlayer" parent="." unique_id=1345629383]
 stream = ExtResource("7_bsnao")
 
-[node name="ArmorManager2" parent="." unique_id=1516897872 instance=ExtResource("10_dah5n")]
+[node name="ArmorManager2" parent="." unique_id=1516897872]
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_kill_entered"]
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]

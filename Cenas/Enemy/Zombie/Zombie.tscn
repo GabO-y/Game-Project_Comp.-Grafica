@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0yy3ivpljqrn" path="res://Cenas/Enemy/Zombie/zombie.gd" id="1_21gwn"]
 [ext_resource type="Texture2D" uid="uid://b7j2tgblr1apf" path="res://Assets/Enemies/Zombie/spr_zumbi.png" id="2_q1jsx"]
+[ext_resource type="Texture2D" uid="uid://7wfqx7fbfubp" path="res://Assets/NewEnemies/Ghost/simple-slash.png" id="3_ft1h0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cx5sw"]
 atlas = ExtResource("2_q1jsx")
@@ -525,10 +526,51 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_q1jsx"]
 radius = 14.0
 
-[node name="Zombie" type="Node2D" unique_id=985319853 node_paths=PackedStringArray("agent", "time", "body", "anim")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc8fy"]
+atlas = ExtResource("3_ft1h0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qeybx"]
+atlas = ExtResource("3_ft1h0")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdsyj"]
+atlas = ExtResource("3_ft1h0")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0okyv"]
+atlas = ExtResource("3_ft1h0")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_il384"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc8fy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qeybx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdsyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0okyv")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ft1h0"]
+radius = 14.035668
+
+[node name="Zombie" type="Node2D" unique_id=985319853 node_paths=PackedStringArray("agent", "time", "animated_slash_attack", "slash_hit_area", "body", "anim")]
 script = ExtResource("1_21gwn")
 agent = NodePath("CharacterBody2D/NavigationAgent2D")
 time = NodePath("Timer")
+animated_slash_attack = NodePath("CharacterBody2D/Animateds/AnimatedSlashAttack")
+slash_hit_area = NodePath("CharacterBody2D/Areas/SlashHitArea")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 
@@ -559,6 +601,24 @@ shape = SubResource("CapsuleShape2D_xejvs")
 visible = false
 shape = SubResource("CircleShape2D_q1jsx")
 debug_color = Color(0.99862, 0, 0.137187, 0.42)
+
+[node name="Animateds" type="Node2D" parent="CharacterBody2D" unique_id=593153825]
+
+[node name="AnimatedSlashAttack" type="AnimatedSprite2D" parent="CharacterBody2D/Animateds" unique_id=836414990]
+visible = false
+texture_filter = 1
+position = Vector2(-5.9604645e-08, 0)
+scale = Vector2(1.2, 1.5)
+sprite_frames = SubResource("SpriteFrames_il384")
+animation = &"attack"
+
+[node name="Areas" type="Node2D" parent="CharacterBody2D" unique_id=1265929735]
+
+[node name="SlashHitArea" type="Area2D" parent="CharacterBody2D/Areas" unique_id=1907292260]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Areas/SlashHitArea" unique_id=1320809478]
+shape = SubResource("CircleShape2D_ft1h0")
+debug_color = Color(0.93333334, 0, 0, 0.41960785)
 
 [node name="Timer" type="Timer" parent="." unique_id=2120149456]
 wait_time = 0.1

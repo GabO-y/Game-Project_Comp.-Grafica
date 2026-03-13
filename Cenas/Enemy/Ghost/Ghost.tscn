@@ -1,7 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://25uf0g24cox"]
+[gd_scene format=3 uid="uid://25uf0g24cox"]
 
 [ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemy/Ghost/Ghost.gd" id="1_8icm7"]
 [ext_resource type="Texture2D" uid="uid://ba5o5r15gpsgu" path="res://Assets/Enemies/Fantasm/spr_ghost_tileset.png" id="2_ucp1k"]
+[ext_resource type="Texture2D" uid="uid://7wfqx7fbfubp" path="res://Assets/NewEnemies/Ghost/simple-slash.png" id="3_6jl8n"]
 [ext_resource type="AudioStream" uid="uid://ntbk785g70rv" path="res://Assets/Sound/ghost_voice.mp3" id="3_636iv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8ghm"]
@@ -251,43 +252,99 @@ radius = 5.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5v7o7"]
 radius = 8.0
 
-[node name="Ghost" type="Node2D" node_paths=PackedStringArray("area_hit", "screen_notifier", "body", "anim", "gnaw_audio")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jl8n"]
+radius = 18.027756
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc8fy"]
+atlas = ExtResource("3_6jl8n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qeybx"]
+atlas = ExtResource("3_6jl8n")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdsyj"]
+atlas = ExtResource("3_6jl8n")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0okyv"]
+atlas = ExtResource("3_6jl8n")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ryt00"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc8fy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qeybx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdsyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0okyv")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}]
+
+[node name="Ghost" type="Node2D" unique_id=1054010247 node_paths=PackedStringArray("area_hit", "screen_notifier", "animated_slash_attck", "slash_attack_area", "body", "anim", "gnaw_audio")]
 script = ExtResource("1_8icm7")
 area_hit = NodePath("CharacterBody2D/Areas/HitArea")
 screen_notifier = NodePath("CharacterBody2D/ToBoss/VisibleOnScreenNotifier2D")
+animated_slash_attck = NodePath("CharacterBody2D/Animated/AnimatedSlashAttack")
+slash_attack_area = NodePath("CharacterBody2D/Areas/SlashAttackArea")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animation")
 gnaw_audio = NodePath("GwanAudio")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=466160859]
 collision_layer = 0
 collision_mask = 0
 
-[node name="Animation" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Animation" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1273898182]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fuhhv")
 animation = &"type_4"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1142994310]
 shape = SubResource("CircleShape2D_6p1tk")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=2141502976]
 
-[node name="Areas" type="Node2D" parent="CharacterBody2D"]
+[node name="Areas" type="Node2D" parent="CharacterBody2D" unique_id=1352089711]
 
-[node name="HitArea" type="Area2D" parent="CharacterBody2D/Areas"]
+[node name="HitArea" type="Area2D" parent="CharacterBody2D/Areas" unique_id=815043265]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Areas/HitArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Areas/HitArea" unique_id=658246423]
 visible = false
 shape = SubResource("CircleShape2D_5v7o7")
 debug_color = Color(0.999259, 0, 0.118767, 0.42)
 
-[node name="ToBoss" type="Node2D" parent="CharacterBody2D"]
+[node name="SlashAttackArea" type="Area2D" parent="CharacterBody2D/Areas" unique_id=1983759851]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D/ToBoss"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Areas/SlashAttackArea" unique_id=1839026007]
+shape = SubResource("CircleShape2D_6jl8n")
+
+[node name="ToBoss" type="Node2D" parent="CharacterBody2D" unique_id=2109550307]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D/ToBoss" unique_id=1721021884]
 scale = Vector2(0.6, 0.65)
 
-[node name="GwanAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="Animated" type="Node2D" parent="CharacterBody2D" unique_id=1114281912]
+
+[node name="AnimatedSlashAttack" type="AnimatedSprite2D" parent="CharacterBody2D/Animated" unique_id=445725931]
+visible = false
+texture_filter = 1
+position = Vector2(-5.9604645e-08, 0)
+scale = Vector2(1.2, 1.5)
+sprite_frames = SubResource("SpriteFrames_ryt00")
+animation = &"attack"
+
+[node name="GwanAudio" type="AudioStreamPlayer2D" parent="." unique_id=1838264745]
 stream = ExtResource("3_636iv")
 
 [connection signal="body_entered" from="CharacterBody2D/Areas/HitArea" to="." method="_player_enter_hit"]

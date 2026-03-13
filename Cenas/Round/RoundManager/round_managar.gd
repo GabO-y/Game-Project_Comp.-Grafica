@@ -44,6 +44,7 @@ func get_random_round(size: int) -> Round:
 		
 		if is_horder:
 			var ene_name = ["Ghost", "Zombie", "Skeleton"].pick_random()
+			ene_name = "Skeleton"
 			exe = create_horder(ene_name, quantity, time_spawn, current_lv, spawns)
 			size -= 1
 		else:
@@ -248,54 +249,40 @@ class Horder extends Exe:
 	var _ene_spawned: Array[Enemy]
 	
 	func play(delta):
-
 		if quantity <= 0:
 			is_finished = true
-		
 		if is_finished: return
-		
 		if _timer >= time_spawn:
-			
 			for s in spawns:
 				var ene = s.spawn(ene_name, level)
-				
 				_ene_spawned.append(ene)
 				ene._update_sound(_ene_spawned)
-				
 				ene.enemy_die.connect(
 					func(ene: Enemy):
 						Globals.player.current_ene_defalut += 1
 						Globals.enemies_defalted += 1
 						round._check_finish()
 				)
-				
 				round.finished.connect(
 					ene.queue_free
 				)
-				
 				round.manager.reset_rounds.connect(
 					func():
 						if ene:
 							ene.queue_free()
 				)
-				
 			_timer = 0.0
 			quantity -= 1
-		
 		_timer += delta
 		
 class Await extends Exe:
 	var time: float
 	var _timer: float = 0.0
-	
 	func play(delta):
-		
 		if _timer >= time:
 			is_finished = true
-		
 		if is_finished:
 			return
-			
 		_timer += delta
 		
 	

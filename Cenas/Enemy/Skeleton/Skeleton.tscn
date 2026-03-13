@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dm34ujuspebkt"]
+[gd_scene format=3 uid="uid://dm34ujuspebkt"]
 
 [ext_resource type="Script" uid="uid://bwbbqw6fgx44d" path="res://Cenas/Enemy/Skeleton/skeleton.gd" id="1_8f034"]
 [ext_resource type="Texture2D" uid="uid://do3ugpivktylt" path="res://Assets/Enemies/Skeleton/spr_skeleton_tileset.png" id="2_ivyt6"]
@@ -222,27 +222,27 @@ animations = [{
 radius = 5.0
 height = 16.0
 
-[node name="Skeleton" type="Node2D" node_paths=PackedStringArray("ray", "ray_marker", "body", "anim")]
+[node name="Skeleton" type="Node2D" unique_id=160217779 node_paths=PackedStringArray("ray", "ray_marker", "body", "anim")]
 script = ExtResource("1_8f034")
 ray = NodePath("CharacterBody2D/RollRay/RayCast2D")
 ray_marker = NodePath("CharacterBody2D/RollRay/RayCast2D/Marker2D")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1900806029]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=256178772]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_wd3q4")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=874026065]
 shape = SubResource("CapsuleShape2D_ivyt6")
 
-[node name="RollRay" type="Node2D" parent="CharacterBody2D"]
+[node name="RollRay" type="Node2D" parent="CharacterBody2D" unique_id=1740814047]
 
-[node name="RayCast2D" type="RayCast2D" parent="CharacterBody2D/RollRay"]
+[node name="RayCast2D" type="RayCast2D" parent="CharacterBody2D/RollRay" unique_id=1080156782]
 target_position = Vector2(0, 23)
 
-[node name="Marker2D" type="Marker2D" parent="CharacterBody2D/RollRay/RayCast2D"]
+[node name="Marker2D" type="Marker2D" parent="CharacterBody2D/RollRay/RayCast2D" unique_id=1743508897]
 position = Vector2(0, 23)

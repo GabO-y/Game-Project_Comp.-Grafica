@@ -61,11 +61,9 @@ func _ready() -> void:
 		
 	if false:
 		var room = "GhostBossRoom"
-		
 		for door in room_manager.get_room("SafeRoom").doors:
 			door.name = room
 			break
-			
 		for door in room_manager.get_room(room).doors:
 			door.name = "SafeRoom"
 			break

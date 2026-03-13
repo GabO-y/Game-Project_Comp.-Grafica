@@ -23,7 +23,7 @@ var white_time: bool = true
 var is_flicking: bool = false
 
 var max_heart: int = 10
-var hearts: int = 10
+var hearts: int = 3
 
 var is_invencible: bool = false
 var invencible_duration: float = 1.2

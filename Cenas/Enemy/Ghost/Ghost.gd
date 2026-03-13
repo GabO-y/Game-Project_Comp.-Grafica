@@ -35,10 +35,15 @@ enum State {
 
 var type_special: int
 
-var current_state: State
+#var current_state: State
 
 @export var area_hit: Area2D
 @export var screen_notifier: VisibleOnScreenNotifier2D
+
+# new 
+
+@export var animated_slash_attck: AnimatedSprite2D
+@export var slash_attack_area: Area2D
 
 func _ready() -> void:
 	animation_type = randi_range(1, 4)
@@ -52,20 +57,78 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	
 func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
 	
-	if not is_active or is_stop: return
+	#if not is_active or is_stop: return
+	#
+	#match current_state:
+		#State.CHASE:
+			#chase_player(dist_to_player())
+		#State.PREPARE_ATTACKING:
+			#prepare_attack(delta)
+		#State.DASHING:
+			#dash(delta)
+		#State.SPECIAL:
+			#print("especial")
+			#special_move()
 	
-	match current_state:
-		State.CHASE:
-			chase_player(dist_to_player())
-		State.PREPARE_ATTACKING:
-			prepare_attack(delta)
-		State.DASHING:
-			dash(delta)
-		State.SPECIAL:
-			print("especial")
-			special_move()
+func waiting_state(delta: float):
+	if t > d:
+		setup_state(EnemyState.CHESING)
+		return
+	t += delta
 	
+func chesing_state(delta: float):
+	if dist_to_player() < 15.0:
+		setup_state(EnemyState.ATTACKING)
+		return
+	body.velocity = dir_to_player() * speed
+	body.move_and_slide()
+		
+func attacking_state(delta: float):
+	if t > d: 
+		play_attack_animation()		
+		for body in slash_attack_area.get_overlapping_bodies():
+			if body.get_parent() is Player:
+				Globals.player.take_damage(damage)
+		setup_state(EnemyState.WAITING)
+		return
+	t += delta
+	
+func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
+	match state:
+		EnemyState.WAITING:
+			self.t = 0.0
+			self.d = 0.5
+		EnemyState.ATTACKING:
+			self.t = 0.0
+			self.d = 0.3
+	if t > -1: self.t = t
+	if d > -1: self.d = d
+		
+	current_state = state
+
+func play_attack_animation():
+		
+	if animated_slash_attck.visible: return
+
+	animated_slash_attck.visible = true
+	
+	var dir: Vector2 = dir_to_player()
+	
+	animated_slash_attck.rotation = 0.0
+	animated_slash_attck.rotation = dir.angle()
+
+	animated_slash_attck.global_position += dir * 10
+		
+	animated_slash_attck.play("attack")
+	setup_state(EnemyState.WAITING)
+
+	await animated_slash_attck.animation_finished
+	
+	animated_slash_attck.visible = false
+	animated_slash_attck.global_position = body.global_position
+
 func special_move():
 				
 	body.collision_layer = Globals.layers["boss"] 
@@ -92,13 +155,12 @@ func move_special_1():
 	chase_player(41)
 	last_dir = dir
 	
-
 func prepare_attack(delta):
 	
 	wait_timer += delta
 
 	if wait_timer >= wait_duration:
-		current_state = State.DASHING
+		#current_state = State.DASHING
 		is_dashing = true
 		wait_timer = 0
 		dash_dir = dir_to_player()
@@ -113,7 +175,7 @@ func dash(delta):
 		
 	if dash_timer >= dash_duration:
 		dash_timer = 0
-		current_state = State.CHASE
+		#current_state = State.CHASE
 		is_dashing = false		
 		body.collision_mask = Globals.layers["player"]
 	
@@ -145,7 +207,7 @@ func set_active(mode: bool):
 func chase_player(dist):
 	
 	if (dist < 25):
-		current_state = State.PREPARE_ATTACKING
+		#current_state = State.PREPARE_ATTACKING
 		return
 	
 	if is_attacking: return
@@ -161,13 +223,14 @@ func enable():
 	refrash()
 
 func _player_enter_hit(body: Node2D) -> void:
+	
+	return
+	
 	var player = body.get_parent() as Player
 	if player == null: return
-	
 	player.take_knockback(dir, 10)
 	player.take_damage(damage)
 
-	
 func refrash():
 	body.collision_layer = Globals.layers["enemy"] | Globals.layers["ghost"]
 	body.collision_mask = Globals.layers["player"]

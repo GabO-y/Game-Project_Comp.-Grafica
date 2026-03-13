@@ -42,6 +42,11 @@ var stun_timer: float = 0.0
 var stun_coldown: float = 0.3
 var can_stun: bool = true
 
+var current_state: EnemyState = EnemyState.WAITING
+# variaveis genericas para servir como timer e duration
+var t: float = 0.0
+var d: float = 0.0
+
 func _ready() -> void:
 	
 	player = Globals.player
@@ -65,20 +70,17 @@ func _ready() -> void:
 	damage_audio.stream = load("res://Assets/Sound/ene_damage.mp3")
 	damage_audio.pitch_scale = 1.5
 	damage_audio.volume_db = -10
-
-		
-func _process(delta: float) -> void:
 	
+
+func _process(delta: float) -> void:
+		
 	update_bar()
 	
 	if gnaw_audio:
-	
 		if audio_timer >= audio_time_play:
-			
 			audio_time_play = randf_range(2.0, 3.0)
 			gnaw_audio.play()
 			audio_timer = 0.0
-			
 		audio_timer += delta
 	
 	if is_stuned and can_stun:
@@ -95,7 +97,41 @@ func _process(delta: float) -> void:
 			can_stun = true
 		stun_timer += delta
 		
+func _physics_process(delta: float) -> void:
+	match current_state:
+		EnemyState.WAITING:
+			waiting_state(delta)
+		EnemyState.CHESING:
+			chesing_state(delta)
+		EnemyState.DASHING:
+			dashing_state(delta)
+		EnemyState.ATTACKING:
+			attacking_state(delta)
+		EnemyState.STUNED:
+			stuned_state(delta)
+		EnemyState.CUSTOM:
+			custom_state(delta)
 			
+func chesing_state(delta: float):
+	pass
+
+func waiting_state(delta: float):
+	pass
+	
+func dashing_state(delta: float):
+	pass
+	
+func attacking_state(delta: float):
+	pass
+	
+func stuned_state(delta: float): 
+	pass
+	
+func custom_state(delta: float):
+	pass
+	
+func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
+	pass
 	
 func update_bar():
 	if bar == null:
@@ -268,3 +304,4 @@ class HasRange:
 	var min = 0
 	var max = 1
 	
+enum EnemyState {WAITING, CHESING, DASHING, ATTACKING, STUNED, CUSTOM}

@@ -6,7 +6,8 @@ class_name BossRoom
 @export var spot_boss_spawn: Marker2D
 
 func _ready() -> void:
-	boss.room = self
+	#boss.room = self
+	boss.body.global_position = spot_boss_spawn.global_position
 	super._ready()
 
 func desable():
