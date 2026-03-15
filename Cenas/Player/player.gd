@@ -17,10 +17,7 @@ class_name Player
 @export var dash_audio: AudioStreamPlayer
 @export var raycast2d_node: Node2D
 
-var original_modulate = self.modulate
-var modulate_timer: float = 0.0
-var white_time: bool = true
-var is_flicking: bool = false
+var flick_aux: int = 0
 
 var max_heart: int = 5
 var hearts: int = 3
@@ -67,6 +64,14 @@ var is_dead: bool = false
 @export var heart_node: Control
 var hearts_control: Array[TextureRect] = []
 
+# new 
+
+enum PlayerState {MOVING, DASHING, KNOCKBACK, MENU, ANIMATION}
+var current_state: PlayerState = PlayerState.MOVING
+
+var d: float = 0.0
+var t: float = 0.0
+
 func _ready() -> void:
 	
 	hearts = max_heart
@@ -89,7 +94,9 @@ func _ready() -> void:
 	)
 		
 	spend_coins.connect(_spend_coins)
+	
 	get_window().size_changed.connect(update_hearts)
+	update_hearts()
 	
 func set_armor(armor: LightArmor):
 	for child in armor_node.get_children():
@@ -99,23 +106,16 @@ func set_armor(armor: LightArmor):
 	self.armor = armor
 		
 func _spend_coins(amount: int):
-		
 	if amount > coins:
 		print("quantidade a ser gasta, execede a quantidade de moedas: Player/spend_coins()")
 		return
-				
 	coins -= amount
 	update_label_coins()
 	
 func _process(delta: float) -> void:
-			
 	if is_in_menu: return
-	
 	if coins < 0:
 		print("Negativo")
-		
-	animation_logic()
-	
 	armor.global_position = body.global_position
 	
 	
@@ -126,11 +126,48 @@ func _process(delta: float) -> void:
 	#enemies_touch.erase(ene)
 		
 func _physics_process(delta: float) -> void:
+	match current_state:
+		PlayerState.MOVING:
+			var dir = get_dir_move()
+			if dir != Vector2.ZERO:
+				last_direction = dir
+			body.velocity = dir * speed
+			body.move_and_slide()
+			if Input.is_action_just_pressed("ui_dash"):
+				setup_state(PlayerState.DASHING)
+			animation_logic()
+		PlayerState.DASHING:
+			dash_state(delta)
+			animation_logic()
+		PlayerState.KNOCKBACK:
+			body.velocity = knockback_dir * knockback_force
+			body.move_and_slide()
+		PlayerState.MENU:
+			pass
+		PlayerState.ANIMATION:
+			pass
+			
+	if not can_dash and current_state != PlayerState.DASHING:
+		dash_cooldown_timer += delta
+		if dash_cooldown_timer > dash_cooldown:
+			can_dash = true
+	if is_invencible:
+		invencible_timer += delta
+		flick()
+
+		if invencible_timer > invencible_duration:
+			is_invencible = false
+			invencible_timer = 0.0
+			flick_aux = 0
+		
+		
+			
+	return
 	
 	if is_in_menu: return
 		
 	if is_invencible:
-		flick_invensible()
+		flick()
 	
 	if is_on_knockback:			
 		body.velocity = knockback_dir * knockback_force
@@ -138,8 +175,8 @@ func _physics_process(delta: float) -> void:
 		return
 #	O knockback vai acabar quando a animação de knockback acabar
 	
-	dir = move_logic()
-	dash_logic(delta)
+	dir = get_dir_move()
+	dash_state(delta)
 	
 	body.velocity = dir * (speed * speed_bonus) 
 
@@ -152,15 +189,49 @@ func _physics_process(delta: float) -> void:
 
 	body.move_and_slide()
 
-func dash_logic(delta):
-				
+func setup_state(state: PlayerState):
+	match state:
+		PlayerState.MOVING:
+			body.collision_layer = Globals.layers["player"]
+			body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["ghost"]
+		PlayerState.DASHING:
+			if not can_dash: 
+				return
+			can_dash = false
+			dash_timer = 0.0
+			dash_dir = last_direction
+			body.collision_layer = 0
+			body.collision_mask = Globals.layers["current_wall"]
+		PlayerState.KNOCKBACK:
+			knockback_time = 0.0
+			anim.play("knockback")
+			anim.animation_finished.connect(
+				func(): 
+					setup_state(PlayerState.MOVING)
+					for i in anim.animation_finished.get_connections():
+						anim.animation_finished.disconnect(i["callable"])
+			)
+	current_state = state
+
+func dash_state(delta):
+	
+	body.velocity = dash_dir * dash_speed
+	body.move_and_slide()
+	
+	dash_timer += delta
+	
+	if dash_timer > dash_duration:
+		setup_state(PlayerState.MOVING)
+		dash_cooldown_timer = 0.0
+	
+	return
+	
 	if Input.is_action_just_pressed("dash") and not is_dashing and can_dash:
 		dash_audio.play()
 		can_dash = false
 		is_dashing = true
 		dash_dir = last_direction if dir == Vector2.ZERO else dir
 		set_collision_ene(false)
-		
 	if is_dashing:
 		dash_timer += delta
 		if dash_timer >= dash_duration:
@@ -177,7 +248,7 @@ func dash_logic(delta):
 			can_dash = true
 			dash_cooldown_timer = 0
 			
-func move_logic():
+func get_dir_move() -> Vector2:
 	input_vector = Vector2.ZERO
 	
 	input_vector.x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
@@ -200,27 +271,41 @@ func move_logic():
 
 func animation_logic():
 	
-	if is_on_knockback or is_getting_key or is_dead: return
-	
-	var play = ""
-	
-	var is_moving = dir != Vector2.ZERO
-	
-	if armor.is_active:
-		dir = armor.armor_dir
-		
-	if not is_moving:
-		play = "idle"
-		if not armor.is_active:
-			dir = last_direction
+	var play: String = ""
+	var dir: Vector2 = body.velocity
+	if dir == Vector2.ZERO:
+		play += "idle"
+		dir = last_direction
 	else:
-		play = "walk"
+		play += "walk"
 		
-	play += "_back" if dir.y < 0 else ""
-	
+	if dir.y < 0:
+		play += "_back"
 		
 	anim.flip_h = dir.x > 0
 	anim.play(play)
+		
+	#if is_on_knockback or is_getting_key or is_dead: return
+	
+	#var play = ""
+	
+	#var is_moving = dir != Vector2.ZERO
+	#
+	#if armor.is_active:
+		#dir = armor.armor_dir
+		#
+	#if not is_moving:
+		#play = "idle"
+		#if not armor.is_active:
+			#dir = last_direction
+	#else:
+		#play = "walk"
+		#
+	#play += "_back" if dir.y < 0 else ""
+	#
+		#
+	#anim.flip_h = dir.x > 0
+	#anim.play(play)
 
 func knockback_animation(dir: Vector2):
 	
@@ -260,11 +345,12 @@ func _unlocked_doors():
 	
 func take_damage(damage: int):
 	
-	if is_invencible or is_dashing: return
+	if is_invencible or current_state == PlayerState.DASHING: return
 	is_invencible = true
 	
+	setup_state(PlayerState.KNOCKBACK)
+	
 	if not can_die: return
-
 	hearts -= damage;
 	update_hearts()
 	
@@ -284,43 +370,13 @@ func die():
 	
 	_die.emit()
 	
-func flick_invensible():
-		
-	if is_flicking: return
-	
-	if white_time:
-		to_white_color()
+func flick():
+	if flick_aux % 10 == 0:
+		anim.modulate = Color(3, 3, 3)
 	else:
-		to_original_color()
-		
-func to_white_color():
-		
-	var tween = create_tween()
-	tween.tween_property(anim, "modulate", Color(2, 2, 2), 0.1)
-	is_flicking = true
-		
-	await tween.finished
-	
-	white_time = false
-	is_flicking = false
-	
-	if not is_invencible:
-		anim.modulate = Color.WHITE
-	
-func to_original_color():
-		
-	var tween = create_tween()
-	tween.tween_property(anim, "modulate", Color.WHITE, 0.1)
-		
-	is_flicking = true
-	await tween.finished
-		
-	white_time = true
-	is_flicking = false
-	
-	if not is_invencible:
-		anim.modulate = Color.WHITE
-	
+		anim.modulate = Color(1, 1, 1)
+	flick_aux += 1
+
 func take_knockback(direction: Vector2, force: int):
 	
 	if is_invencible or is_dashing: return
@@ -334,9 +390,6 @@ func take_knockback(direction: Vector2, force: int):
 func _on_hit_area_body_entered(body: Node2D) -> void:
 	var ene = body.get_parent() as Enemy
 	if ene == null: return
-	
-func _kill_entered(area: Area2D) -> void:
-	pass
 	
 func update_label_coins():
 	label_coins.text = str(coins)

@@ -31,8 +31,9 @@ func _ready() -> void:
 	z_index = 1
 	animation_type = get_aniamtion_tipy()
 	super._ready()
+	
 
-func _process(delta: float) -> void:	
+func _process(delta: float) -> void:
 	animation_logic()
 	super._process(delta)
 
@@ -118,7 +119,7 @@ func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 		EnemyState.DASHING:
 			last_dir_player = dir_to_player()
 			self.t = 0.0
-			self.d = 0.4
+			self.d = 0.3
 		EnemyState.ATTACKING:
 			self.t = 0.0
 			self.d = 0.0

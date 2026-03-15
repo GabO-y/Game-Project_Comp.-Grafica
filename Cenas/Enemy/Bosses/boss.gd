@@ -26,7 +26,6 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	super._process(delta)
-	
 	if wating_drop_health and timer_to_drop_health > time_to_drop_health:
 		is_to_update_bar = true
 		wating_drop_health = false

@@ -35,24 +35,18 @@ func _ready() -> void:
 	_update()
 
 func _process(delta: float) -> void:
-
 	if Globals.player.is_in_menu: return	
-	
 	damager_ene(delta)
-	
 	if Input.is_action_just_pressed("shoot_bullet"):
 		try_shoot()
-		
 	if Input.is_action_just_pressed("ui_toggle_armor"):
 		toggle_activate()
-		
 	if not can_shot:
 		timer += delta
 		if timer >= duration:
 			can_shot = true
 			timer = 0.0
-		
-	
+
 func _physics_process(delta: float) -> void:
 	
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
@@ -78,12 +72,12 @@ func try_shoot():
 	if not can_shot or not is_active: return
 	can_shot = false
 	
-	var b = load("res://Assets/LightArmor/FairyLight/FLBullet.tscn").instantiate() as Bullet
+	var b: FairyLightBullet = load("res://Cenas/LightArmor/FairyLight/BulletFairyLight/FairyLightBullet.tscn").instantiate() as FairyLightBullet
 	Globals.room_manager.current_room.add_child(b)
 	
 	b.dir = armor_dir
 	b.global_position = global_position
-	b.armor = self
+	b.fairy_light = self
 	b.start()
 	
 	b.scale = distance

@@ -289,7 +289,7 @@ region = Rect2(48, 0, 16, 16)
 [sub_resource type="SpriteFrames" id="SpriteFrames_mx0kj"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_oc8fy")
 }, {
 "duration": 1.0,
@@ -327,8 +327,8 @@ script = ExtResource("1_2v53c")
 animated_slash_attack = NodePath("CharacterBody2D/Animated/AnimatedSlashAttack")
 slash_attack_area = NodePath("CharacterBody2D/Areas/SlashAttackArea")
 touch_attack_area = NodePath("CharacterBody2D/Areas/TouchAttackArea")
-health_bar = NodePath("CanvasLayer/HealthProgressBar")
-damage_bar = NodePath("CanvasLayer/DamageProgressBar")
+health_bar = NodePath("hud/HealthProgressBar")
+damage_bar = NodePath("hud/DamageProgressBar")
 speed = 100.0
 health = 100.0
 damage = 1.0
@@ -350,8 +350,6 @@ texture_filter = 1
 scale = Vector2(2, 3)
 sprite_frames = SubResource("SpriteFrames_mx0kj")
 animation = &"attack"
-frame = 2
-frame_progress = 1.0
 
 [node name="Areas" type="Node2D" parent="CharacterBody2D" unique_id=741793322]
 
@@ -374,9 +372,9 @@ shape = SubResource("CircleShape2D_uteiw")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CharacterBody2D/Utils" unique_id=924272338]
 rect = Rect2(-18.333332, -19.166666, 37.5, 39.166664)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1863702381]
+[node name="hud" type="CanvasLayer" parent="." unique_id=1863702381]
 
-[node name="DamageProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=139592171]
+[node name="DamageProgressBar" type="ProgressBar" parent="hud" unique_id=139592171]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -391,7 +389,7 @@ size_flags_vertical = 4
 theme_override_styles/fill = SubResource("StyleBoxFlat_mx0kj")
 show_percentage = false
 
-[node name="HealthProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=1829442573]
+[node name="HealthProgressBar" type="ProgressBar" parent="hud" unique_id=1829442573]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

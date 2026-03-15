@@ -8,7 +8,6 @@ var menus: Array[Menu] = []
 var current_menu: Menu
 
 func _ready() -> void:
-	
 	for child in get_children():
 		if child.name == "Menus":
 			for menu in child.get_children():
@@ -16,7 +15,6 @@ func _ready() -> void:
 				menu.manager = self
 				menu.process_mode = Node.PROCESS_MODE_ALWAYS
 				
-
 func show_menus():
 	print("current menu: ", current_menu)
 	print("sinapse: ")
@@ -24,9 +22,7 @@ func show_menus():
 		print("\t", menu.name, ": ", menu.is_active)
 				
 func reset():
-	
 	for menu in menus:
 		menu.reset()
-		
 	is_in_menu = false
 	current_menu = null

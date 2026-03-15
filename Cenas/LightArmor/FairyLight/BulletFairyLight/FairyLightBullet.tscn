@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://x756llifwka4"]
+
+[ext_resource type="Texture2D" uid="uid://cgb467h0a8e2c" path="res://Assets/Objects/Bullet/FairyLight/fairy_light_bullet.png" id="1_ok7kv"]
+[ext_resource type="Script" uid="uid://clqd1u201nxfp" path="res://Cenas/LightArmor/FairyLight/BulletFairyLight/fairy_light_bullet.gd" id="1_vhc02"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vhc02"]
+radius = 39.012817
+
+[sub_resource type="Gradient" id="Gradient_ok7kv"]
+offsets = PackedFloat32Array(0, 0.6653226)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ul7wl"]
+gradient = SubResource("Gradient_ok7kv")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="FairyLightBullet" type="Sprite2D" unique_id=941890829 node_paths=PackedStringArray("light_area", "collision_area")]
+texture_filter = 1
+texture = ExtResource("1_ok7kv")
+script = ExtResource("1_vhc02")
+light_area = NodePath("Light")
+collision_area = NodePath("CollisionTouch")
+
+[node name="Light" type="Area2D" parent="." unique_id=1714208640]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Light" unique_id=1511809755]
+shape = SubResource("CircleShape2D_vhc02")
+debug_color = Color(0.81960785, 1, 0, 0.41960785)
+
+[node name="CollisionTouch" type="Area2D" parent="." unique_id=1929713174]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionTouch" unique_id=1868513317]
+polygon = PackedVector2Array(-5, 3, -15, 13, -3, 5, -1, -4, 7, -5, 13, -10, 10, -13, 6, -8, -2, -7)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1025628149]
+rect = Rect2(-8, -8, 17, 16)
+
+[node name="LightEffect" type="Node2D" parent="." unique_id=647178305]
+
+[node name="PointLight2D" type="PointLight2D" parent="LightEffect" unique_id=754902399]
+scale = Vector2(1.59375, 1.59375)
+texture = SubResource("GradientTexture2D_ul7wl")
+
+[connection signal="body_entered" from="CollisionTouch" to="." method="_on_collision_touch_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

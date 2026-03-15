@@ -69,7 +69,6 @@ func take_damage(d: int):
 		return
 
 	var tween: Tween = create_tween()
-	print("a")
 	var original_color = modulate
 	tween.tween_method(
 		func(d):

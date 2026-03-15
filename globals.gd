@@ -49,8 +49,9 @@ var layers = {
 	"ghost": 1 << 6,
 	"no_collision_wall": 1 << 7,
 	"armor": 1 << 8,
+	"dash_moment": 1 << 9,
 	# Para uns obstaculos nos quartos (toy_library)
-	"utils_wall": 1 << 9
+	"utils_wall": 1 << 10
 }
 
 var ene_in_crash_attack: Array[Enemy]
@@ -148,6 +149,16 @@ func get_random_dir() -> Vector2:
 		randf_range(-1.0, 1.0)
 	).normalized()
 
+func test_collsion(c: CollisionObject2D):
+	print("--------------------------------")
+	print("name: ", c.get_parent().name)
+	print("layer: ", c.collision_layer)
+	print("mask: ", c.collision_mask)
+	print("--------------------------------")
+
+func get_current_room_name():
+	return room_manager.current_room.name
+	
 signal goint_to_center
 
 signal emerge_boss

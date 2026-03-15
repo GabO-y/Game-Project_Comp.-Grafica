@@ -29,10 +29,12 @@ var quant_ghosts: int = 10
 
 func _ready() -> void:
 	super._ready()
+
 	body.collision_layer = Globals.layers["boss"]
 	body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
 	touch_attack_area.collision_layer = Globals.layers["boss"]
 	touch_attack_area.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
+	
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -54,17 +56,17 @@ func waiting_state(delta: float):
 	t += delta
 	
 func chesing_state(delta: float):
-	if dist_to_player() < 25.0:
+	if chase_player(30.0):
 		setup_state(EnemyState.ATTACKING)
 		return
-	body.velocity = dir_to_player() * speed
-	body.move_and_slide()
+	
 	
 func attacking_state(delta: float):
 	if t > d:
 		play_attack_animation()
 		for body in slash_attack_area.get_overlapping_bodies():
 			if body.get_parent() is Player:
+				Globals.player.take_knockback(dir_to_player(), 20.0)
 				Globals.player.take_damage(damage)
 				break
 		setup_state(EnemyState.WAITING)
@@ -89,7 +91,7 @@ func ghost_run(stage: int, delta: float):
 			special_stage = 2
 			animation_logic()
 		2:
-			if chase_player(50.0, 1.3):
+			if chase_player(70.0, 1.3):
 				special_stage += 1
 				last_player_dir = dir_to_player()
 		3:
@@ -125,6 +127,7 @@ func ghost_run(stage: int, delta: float):
 					func(body):
 						var player: Player = body.get_parent() as Player
 						if player:
+							player.take_knockback(g.dir_to_player(), 10.0)
 							player.take_damage(1)
 				)
 			special_stage += 1
@@ -141,7 +144,7 @@ func ghost_run(stage: int, delta: float):
 				is_in_special = false
 				timer_special = 0.0
 				body.collision_layer = Globals.layers["boss"]
-				body.collision_mask = Globals.layers["player"]
+				body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
 				return
 
 func dying_state(stage: int, delta: float):
@@ -241,9 +244,13 @@ func _when_boss_exit_screen() -> void:
 		
 func _on_touch_attack_area_body_entered(body: Node2D) -> void:
 	var player: Player = body.get_parent() as Player
-	if player:
+	if player:		
+		player.take_knockback(dir_to_player(), 20.0)
 		player.take_damage(1)
 
+func test_collision():
+	print("layer: ", body.collision_layer)
+	print("mask: ", body.collision_mask)
 
 enum CustomState {SPECIAL, DYING}
 enum SpecialState {GHOST_RUN}

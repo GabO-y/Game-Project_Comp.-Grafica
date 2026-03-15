@@ -1,24 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://3qty1do0dlpw"]
+[gd_scene format=3 uid="uid://3qty1do0dlpw"]
 
 [ext_resource type="Script" uid="uid://daqm8a8xt1j4w" path="res://Cenas/Enemy/Skeleton/SkeletonBullet/skeleton_bullet.gd" id="1_lkupx"]
 [ext_resource type="Texture2D" uid="uid://bggdi4e6nip0j" path="res://Assets/Enemies/Skeleton/Arrow/arrow.png" id="2_kpfyk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpfyk"]
-size = Vector2(30, 4)
+size = Vector2(14.954546, 5.199999)
 
-[node name="SkeletonBullet" type="Node2D" node_paths=PackedStringArray("area")]
-script = ExtResource("1_lkupx")
-area = NodePath("Area2D")
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1, 0)
-shape = SubResource("RectangleShape2D_kpfyk")
-
-[node name="Arrow" type="Sprite2D" parent="."]
+[node name="SkeletonBullet" type="Sprite2D" unique_id=738991780 node_paths=PackedStringArray("collision_area")]
 texture_filter = 1
-scale = Vector2(2, 0.5)
+scale = Vector2(1.3125001, 0.29829547)
 texture = ExtResource("2_kpfyk")
+script = ExtResource("1_lkupx")
+collision_area = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1413896114]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1440891518]
+position = Vector2(0.52272654, 0.60000116)
+scale = Vector2(0.9999999, 0.9999998)
+shape = SubResource("RectangleShape2D_kpfyk")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_player_entered"]

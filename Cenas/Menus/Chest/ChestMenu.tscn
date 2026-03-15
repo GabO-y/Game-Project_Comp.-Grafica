@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb4ttu771sbb6"]
+[gd_scene format=3 uid="uid://bb4ttu771sbb6"]
 
 [ext_resource type="Script" uid="uid://cxhx4lbgt2i12" path="res://Cenas/Menus/Chest/chest_menu.gd" id="1_qanw0"]
 [ext_resource type="Texture2D" uid="uid://ds33n7jap68rc" path="res://Assets/Interfaces/ChestUI/LanternIcon.png" id="2_e48bf"]
@@ -11,7 +11,7 @@
 font = ExtResource("4_qanw0")
 font_size = 40
 
-[node name="ChestMenu" type="CanvasLayer" node_paths=PackedStringArray("armor_menu", "menu", "tabCont", "inssu_coins_point", "coins_label", "focus_button")]
+[node name="ChestMenu" type="CanvasLayer" unique_id=1174797014 node_paths=PackedStringArray("armor_menu", "menu", "tabCont", "inssu_coins_point", "coins_label", "focus_button")]
 process_mode = 3
 script = ExtResource("1_qanw0")
 armor_menu = NodePath("MarginContainer/VBoxMain/TabContainer/WearponChestMenu")
@@ -21,7 +21,7 @@ inssu_coins_point = NodePath("InsufficientCoinsPoint")
 coins_label = NodePath("MarginContainer/VBoxMain/Options/Control/Points")
 focus_button = NodePath("MarginContainer/VBoxMain/Options/Wearpons")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=133692279]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,35 +32,35 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxMain" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxMain" type="VBoxContainer" parent="MarginContainer" unique_id=869443020]
 layout_mode = 2
 
-[node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxMain"]
+[node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxMain" unique_id=433137884]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Control2" type="Control" parent="MarginContainer/VBoxMain/Options"]
+[node name="Control2" type="Control" parent="MarginContainer/VBoxMain/Options" unique_id=1056941689]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Wearpons" type="Button" parent="MarginContainer/VBoxMain/Options"]
+[node name="Wearpons" type="Button" parent="MarginContainer/VBoxMain/Options" unique_id=1592400438]
 texture_filter = 1
 layout_mode = 2
 icon = ExtResource("2_e48bf")
 
-[node name="PowerUps" type="Button" parent="MarginContainer/VBoxMain/Options"]
+[node name="PowerUps" type="Button" parent="MarginContainer/VBoxMain/Options" unique_id=4472254]
 layout_mode = 2
 icon = ExtResource("3_rcjur")
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxMain/Options"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxMain/Options" unique_id=2130274451]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxMain/Options"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxMain/Options" unique_id=1441517284]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 8
 
-[node name="Points" type="Label" parent="MarginContainer/VBoxMain/Options/Control"]
+[node name="Points" type="Label" parent="MarginContainer/VBoxMain/Options/Control" unique_id=1378133801]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -77,30 +77,30 @@ text = "Poins
 "
 label_settings = SubResource("LabelSettings_e48bf")
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxMain"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxMain" unique_id=256388302]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxMain"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxMain" unique_id=1038703551]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 tabs_visible = false
 
-[node name="WearponChestMenu" parent="MarginContainer/VBoxMain/TabContainer" node_paths=PackedStringArray("chess_menu") instance=ExtResource("4_nnnol")]
+[node name="WearponChestMenu" parent="MarginContainer/VBoxMain/TabContainer" unique_id=1691758984 node_paths=PackedStringArray("chess_menu") instance=ExtResource("4_nnnol")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 chess_menu = NodePath("../../../..")
 metadata/_tab_index = 0
 
-[node name="PowerUpSize" parent="MarginContainer/VBoxMain/TabContainer" node_paths=PackedStringArray("chest_menu") instance=ExtResource("6_k4u0l")]
+[node name="PowerUpSize" parent="MarginContainer/VBoxMain/TabContainer" unique_id=33005650 node_paths=PackedStringArray("chest_menu") instance=ExtResource("6_k4u0l")]
 visible = false
 layout_mode = 2
 chest_menu = NodePath("../../../..")
 metadata/_tab_index = 1
 
-[node name="InsufficientCoinsPoint" type="Marker2D" parent="."]
+[node name="InsufficientCoinsPoint" type="Marker2D" parent="." unique_id=912380870]
 position = Vector2(575, 680)
 
 [connection signal="pressed" from="MarginContainer/VBoxMain/Options/Wearpons" to="." method="_on_wearpons_pressed"]

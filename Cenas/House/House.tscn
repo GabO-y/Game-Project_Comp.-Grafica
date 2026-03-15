@@ -11,8 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://bobuc127k7o1n" path="res://Cenas/Menus/InitialMenu/InitialMenu.tscn" id="9_1rbih"]
 [ext_resource type="AudioStream" uid="uid://dbirbkng1xhcs" path="res://Assets/Sound/main_tema.mp3" id="10_k1pxl"]
 [ext_resource type="PackedScene" uid="uid://dx3nt37r4u3du" path="res://Cenas/Menus/Tutorial/Tutorial.tscn" id="10_knsum"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="11_pabxg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_iqu7b"]
+[sub_resource type="LabelSettings" id="LabelSettings_knsum"]
+font = ExtResource("11_pabxg")
+font_size = 32
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pabxg"]
 
 [node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu")]
 script = ExtResource("1_rmjq6")
@@ -31,7 +36,7 @@ tutorial_menu = NodePath("MenuManager/Menus/Tutorial")
 position = Vector2(0, -2)
 
 [node name="Player" parent="." unique_id=302443957 instance=ExtResource("2_iqu7b")]
-position = Vector2(297, 79)
+position = Vector2(68, 94)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1014524603]
 enabled = false
@@ -57,35 +62,39 @@ manager = NodePath("../..")
 visible = false
 manager = NodePath("../..")
 
-[node name="ChestMenu" parent="MenuManager/Menus" unique_id=2039214310 node_paths=PackedStringArray("popup", "area", "player", "manager") instance=ExtResource("7_1rbih")]
-visible = false
-popup = NodePath("../../Interatives/ChestMenu/PopUp")
-area = NodePath("../../Interatives/ChestMenu/AreaBear")
-player = NodePath("../../../Player")
-manager = NodePath("../..")
-
 [node name="InitialMenu" parent="MenuManager/Menus" unique_id=1373198782 node_paths=PackedStringArray("manager") instance=ExtResource("9_1rbih")]
 visible = false
 manager = NodePath("../..")
 
+[node name="ChestMenu" parent="MenuManager/Menus" unique_id=1174797014 node_paths=PackedStringArray("popup", "area", "player", "pos") instance=ExtResource("7_1rbih")]
+popup = NodePath("../../Interatives/ChestMenu/PopUp")
+area = NodePath("../../Interatives/ChestMenu/Area2D")
+player = NodePath("../../../Player")
+pos = NodePath("../../Interatives/ChestMenu/ChestMarker")
+
 [node name="Interatives" type="Node2D" parent="MenuManager" unique_id=1403220471]
-visible = false
 
 [node name="ChestMenu" type="Node2D" parent="MenuManager/Interatives" unique_id=1748998382]
 
-[node name="AreaBear" type="Area2D" parent="MenuManager/Interatives/ChestMenu" unique_id=462073891]
-position = Vector2(185, 72)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuManager/Interatives/ChestMenu/AreaBear" unique_id=37829423]
-shape = SubResource("CircleShape2D_iqu7b")
-
 [node name="PopUp" type="Label" parent="MenuManager/Interatives/ChestMenu" unique_id=1169807164]
-offset_left = 144.0
-offset_top = 41.0
-offset_right = 223.0
-offset_bottom = 64.0
-text = "Conversar"
+texture_filter = 1
+offset_left = 159.0
+offset_top = 44.0
+offset_right = 269.0
+offset_bottom = 78.0
+scale = Vector2(0.5, 0.5)
+text = "Abrir Baú"
+label_settings = SubResource("LabelSettings_knsum")
 metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="MenuManager/Interatives/ChestMenu" unique_id=438153212]
+position = Vector2(183, 71)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuManager/Interatives/ChestMenu/Area2D" unique_id=2130982810]
+shape = SubResource("CircleShape2D_pabxg")
+
+[node name="ChestMarker" type="Marker2D" parent="MenuManager/Interatives/ChestMenu" unique_id=1841712602]
+position = Vector2(183, 71)
 
 [node name="InitialPosition" type="Marker2D" parent="." unique_id=146841559]
 position = Vector2(69, 98)

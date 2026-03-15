@@ -6,7 +6,6 @@ func _ready() -> void:
 	set_active(false)
 	
 func _process(delta: float) -> void:
-	
 	if Input.is_action_just_pressed("ui_escape"):
 		if !manager.current_menu and not manager.is_in_menu:
 			show_menu()

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cerl2bq3oflgo"]
+[gd_scene format=3 uid="uid://cerl2bq3oflgo"]
 
 [ext_resource type="Script" uid="uid://j1s01smjc3mf" path="res://Cenas/Menus/Chest/PowerUps/power_up_size.gd" id="1_7dwwc"]
 
-[node name="PowerUpSize" type="Control" node_paths=PackedStringArray("perm_node")]
+[node name="PowerUpSize" type="Control" unique_id=68254320 node_paths=PackedStringArray("perm_node")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_7dwwc")
 perm_node = NodePath("HBoxContainer/ScrollContainer2/PermPowerUps")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1787770722]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,11 +20,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer" unique_id=548414556]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PermPowerUps" type="VBoxContainer" parent="HBoxContainer/ScrollContainer2"]
+[node name="PermPowerUps" type="VBoxContainer" parent="HBoxContainer/ScrollContainer2" unique_id=1393160445]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -15,7 +15,6 @@ var atributes: Array[Attribute]
 @export var body: CharacterBody2D 
 @export var anim: AnimatedSprite2D
 
-@export var bar: ProgressBar 
 
 @export var gnaw_audio: AudioStreamPlayer2D	
 var damage_audio: AudioStreamPlayer
@@ -55,14 +54,7 @@ func _ready() -> void:
 		damage_att, speed_att, health_att
 	])
 		
-	for i in body.get_children():
-		if i is ProgressBar:
-			bar = i
 
-	if bar != null:
-		bar.max_value = health
-		bar.value = health
-		
 	damage_audio = AudioStreamPlayer.new()
 	
 	add_child(damage_audio)
@@ -73,16 +65,12 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-		
-	update_bar()
-	
 	if gnaw_audio:
 		if audio_timer >= audio_time_play:
 			audio_time_play = randf_range(2.0, 3.0)
 			gnaw_audio.play()
 			audio_timer = 0.0
 		audio_timer += delta
-	
 	if is_stuned and can_stun:
 		if stun_timer >= stun_duration:
 			is_stop = false
@@ -90,7 +78,6 @@ func _process(delta: float) -> void:
 			can_stun = false
 			stun_coldown = 0.3
 		stun_timer += delta
-		
 	if not can_stun:
 		if stun_timer >= stun_coldown:
 			stun_timer = 0.0
@@ -140,11 +127,6 @@ func setup_custom_state(custom_idx: int):
 func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	pass
 	
-func update_bar():
-	if bar == null:
-		return
-	bar.value = health
-
 func set_level(lv: int, what):
 	for att in atributes:
 		match what:

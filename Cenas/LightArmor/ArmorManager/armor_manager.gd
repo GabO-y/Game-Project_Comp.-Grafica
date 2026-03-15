@@ -17,15 +17,11 @@ func _ready() -> void:
 	for name in ["Lantern", "Lighter", "FairyLight"]:
 		var path: String = str("res://Cenas/LightArmor/", name, "/", name, ".tscn")
 		var armor = load(path).instantiate() as LightArmor
-		
 		if not armor: continue
-
 		armor._ready()
-
 		if name == "Lantern":
 			armor.general_infos.is_locked = false
 			selected_armor = armor
-		
 		armors.append(armor)
 		
 	change_to_select()

@@ -19,23 +19,15 @@ var current_room: Room
 var sounds_to_play: Array[Dictionary] = []
 
 func _ready() -> void:
-		
 	for room in roomsNode.get_children():
-				
-		if room is Room:
-			
-			print(room.name)
-			
+		if room is Room:			
 			room.add_to_group("rooms")
 			room.desable()
 			rooms.append(room)
-			
 			room.manager = self
-			
 			for door in room.doors:
 				door = door as Door
 				door.enter_door.connect(_change_room)
-
 	for room in rooms:
 		for door in room.doors:
 			match_doors(room.name, door.name)
@@ -57,7 +49,6 @@ func get_doors(room: Room) -> Array[Door]:
 	return doors
 	
 func _change_room(goTo):
-	
 #	Para o caso do player mudar de sala, 
 #   mas ainda haver items que não foram coletados
 	item_manager.get_all_items(current_room)

@@ -111,7 +111,6 @@ func try_drop(ene: Enemy):
 	if not item.is_empty():
 		drop_by_name(item, pos)
 		
-
 func drop_by_name(item: String, pos: Vector2):
 	
 	var i = create_item(item, pos)
@@ -146,7 +145,6 @@ func make_items_chase_player():
 		item.start_chase_player()	
 		
 func _collect_item(item: Item):
-						
 	if Globals.player.is_dead:
 		item.queue_free()
 		return

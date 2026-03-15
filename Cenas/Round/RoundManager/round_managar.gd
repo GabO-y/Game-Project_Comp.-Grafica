@@ -44,7 +44,6 @@ func get_random_round(size: int) -> Round:
 		
 		if is_horder:
 			var ene_name = ["Ghost", "Zombie", "Skeleton"].pick_random()
-			ene_name = "Skeleton"
 			exe = create_horder(ene_name, quantity, time_spawn, current_lv, spawns)
 			size -= 1
 		else:

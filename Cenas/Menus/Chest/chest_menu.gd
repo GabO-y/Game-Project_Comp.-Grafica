@@ -31,74 +31,86 @@ var shake_coin_coldown: float = 1
 var shake_coin_timer: float = 0.0
 var label_coin_pos: Vector2
 
-func _ready() -> void:
-	
-	menu.process_mode = Node.PROCESS_MODE_ALWAYS
+# new
 
+@export var pos: Marker2D
+
+func _ready() -> void:
+	menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	await get_tree().process_frame
-	
 	Globals.player.armor_manager.chess_menu = self
-	
 	set_active(false)
 	hide_pop_up()
-	
 	armor_menu.armor_manager = player.armor_manager
-	
 	armor_menu.setup_sizes()
-	
 	armor_menu._update("lantern")
-		
 	player.spend_coins.connect(_update_label_coins)
 	
 func _update_label_coins(amount: int):
 	coins_label.text = str(player.coins)
 	
-	
 func _process(delta: float) -> void:
+	if Globals.get_current_room_name() != "SafeRoom":
+		popup.visible = false
+		return
+	super._process(delta)
+	return
 	
 	if is_test:
 		for i in test:
 			var l = i["label"] as Label
 			var c = i["curve"] as MyCurve
 			l.position = c.get_point_by_progress()
-			
 		if test.is_empty():
 			is_test = false
-			
 	if not can_shake_coins:
 		shake_coin_timer += delta
 		if shake_coin_timer > shake_coin_coldown:
 			can_shake_coins = true
 			shake_coin_timer = 0
-			
 			coins_label.global_position = label_coin_pos
-		
 	if is_issu_coin:
 		if timer_issu_coin > duration_issu_coin:
 			timer_issu_coin = 0
 			is_issu_coin = false
 			return
 		timer_issu_coin += delta
-			
 	if Globals.player == null: return
-	
 	var dist = area.global_position.distance_to(Globals.player_pos())
-			
 	if dist < 30 and not is_visible_pop_up:
 		show_popup()
 		is_visible_pop_up = true
-		
 	if dist > 30 and is_visible_pop_up:
 		hide_pop_up()
 		is_visible_pop_up = false
-		
 	if is_visible_pop_up and Input.is_action_just_pressed("ui_menu"):
 		if manager.is_in_menu: return
 		hide_pop_up()
 		enable()
-				
 	if Globals.player.is_in_menu and Input.is_action_just_pressed("ui_exit_menu"):
 		disable()
+
+func enable_state():
+	if Input.is_action_just_pressed("ui_exit_menu"):
+		setup_state(MenuState.DESABLE)
+	
+func desable_state():
+	var dist: float = pos.global_position.distance_to(Globals.player_pos())
+	popup.visible = dist < 30.0
+	if dist < 30.0:
+		if Input.is_action_just_pressed("ui_menu"):
+			setup_state(MenuState.ENABLE)
+
+func setup_state(state: MenuState):
+	match state:
+		MenuState.ENABLE:
+			visible = true
+			set_active(true)
+		MenuState.DESABLE:
+			visible = false
+			set_active(false)
+	current_state = state
+	setup_player()
 
 func show_popup():	
 	set_visible_pop_up(true)
@@ -138,11 +150,9 @@ func enable():
 	set_active(true)
 	
 func set_active(mode: bool, principal: bool = true):
-	
 	var is_safe_room = Globals.room_manager.current_room.name == "SafeRoom"
 	if not is_safe_room: 
 		mode = false
-	
 	super.set_active(mode, principal)
 	set_visible_menu(mode)
 	update_label_coins()
@@ -159,17 +169,9 @@ func _buy_item(item: ChestItem):
 	item.queue_free()
 	
 func _insuffient_coisn():
-		
 	shake_coins()
-	
-	if is_issu_coin:
-		return
-		
-	is_issu_coin = true
-
 	var label = Label.new()
 	add_child(label)
-	
 	label.global_position = inssu_coins_point.global_position
 	label.text = "Pontos insuficientes"
 	label.modulate = Color.ORANGE_RED
@@ -194,10 +196,9 @@ func _curve_text(t: float, curve_param: MyCurve, text_label: Label):
 	text_label.global_position = curve_pos
 	
 func shake_coins():
-	if can_shake_coins:
-		label_coin_pos = coins_label.global_position
-		shake_object(coins_label)
-		can_shake_coins = false
+	label_coin_pos = coins_label.global_position
+	shake_object(coins_label)
+	can_shake_coins = false
 
 func shake_object(target, duration: float = 0.5, magnitude: float = 10.0) -> void:
 	var tween = create_tween()

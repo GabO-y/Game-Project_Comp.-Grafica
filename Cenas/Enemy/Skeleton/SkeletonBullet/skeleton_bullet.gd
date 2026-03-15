@@ -2,8 +2,8 @@ extends Bullet
 
 func _ready() -> void:
 	super._ready()
-	area.collision_layer = Globals.layers["enemy"]
-	area.collision_mask = Globals.layers["player"]
+	collision_area.collision_layer = Globals.layers["enemy"]
+	collision_area.collision_mask = Globals.layers["player"]
 	
 func _on_area_2d_body_player_entered(body: Node2D) -> void:
 	var player = body.get_parent() as Player
