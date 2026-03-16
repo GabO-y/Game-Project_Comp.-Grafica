@@ -51,6 +51,11 @@ func _on_collision_touch_body_entered(body: Node2D) -> void:
 	if ene_stuck: return
 	var ene: Enemy = body.get_parent() as Enemy
 	if ene.health <= 0: return
+	
+	if Globals.insta_ene_kill:
+		ene.die()
+		return
+	
 	if ene:
 		ene_stuck = ene
 		is_to_move = false

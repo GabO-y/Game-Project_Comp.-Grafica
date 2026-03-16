@@ -157,7 +157,7 @@ func dying_state(stage: int, delta: float):
 			t += delta
 			if t > d:
 				t = 0.0
-				Globals.item_manager.drop_by_name("coin", body.global_position)
+				Globals.item_manager.drop_by_name("Coin", body.global_position)
 				drop_item_count += 1
 				if drop_item_count >= drop_item_max:
 					custom_stage += 1

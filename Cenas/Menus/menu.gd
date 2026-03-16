@@ -14,13 +14,13 @@ var current_state: MenuState = MenuState.DESABLE
 var last_player_state: int
 
 func set_active(mode: bool, principal: bool = true):
+	
 	if Globals.player:
 		Globals.player.hud_node.visible = not mode
-
 		
 	if mode and need_focus:	
 		focus_button.grab_focus()
-	
+		
 	get_tree().paused = mode
 	set_process_unhandled_input(mode)
 	set_process_input(mode)
@@ -49,14 +49,14 @@ func set_active(mode: bool, principal: bool = true):
 func _process(delta: float) -> void:
 	match current_state:
 		MenuState.ENABLE:
-			enable_state()
+			enable_state(delta)
 		MenuState.DESABLE:
-			desable_state()
+			desable_state(delta)
 			
-func enable_state():
+func enable_state(delta: float):
 	pass
 	
-func desable_state():
+func desable_state(delta: float):
 	pass
 			
 func setup_player():
@@ -67,6 +67,7 @@ func setup_player():
 			player.current_state = Globals.player.PlayerState.MENU
 		MenuState.DESABLE:
 			player.current_state = last_player_state
+			print(player.PlayerState.find_key(player.current_state))
 			
 
 func reset():

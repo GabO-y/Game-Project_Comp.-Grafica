@@ -9,6 +9,8 @@ class_name ItemManager
 # É para armazenar todos os items dropados numa sala
 @export var items_node: Node2D
 
+var created_items: Dictionary
+
 enum item_type {COIN, KEY}
 
 var key_in_scene: Key
@@ -27,7 +29,7 @@ var is_finish_get_key: bool = false
 
 var drops = {
 	"comum": {"chance" : 0.0, "item": [
-		"coin"
+		"Coin"
 	]}
 }
 
@@ -40,18 +42,53 @@ func _ready() -> void:
 		
 	round_manager = room_manager.round_manager
 		
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_ctrl"):
+		drop_coin(Globals.player_pos() + Vector2(100, 0))
+	if Input.is_key_pressed(KEY_0):
+		if  created_items.has("coin"): 
+			for c in created_items["coin"]:
+				(c as Coin).setup_state(Item.ItemState.CHASING)
+		
+func drop_coin(pos: Vector2) -> Coin:
+	return drop("Coin", pos)
+	var coin: Coin = load("res://Cenas/Item/Coin/Coin.tscn").instantiate() as Coin
+	Globals.house.add_child(coin)
+	coin.global_position = pos
+	coin.manager = self
+	if not created_items.has("coin"):
+		created_items["coin"] = []
+	created_items["coin"].append(coin)
+	coin.setup_state(Item.ItemState.DROPING)
+	return coin
+	
+func drop(item_name: String, pos: Vector2) -> Item:
+		
+	var path: String = str("res://Cenas/Item/", item_name, "/", item_name, ".tscn")
+	var item: Item = load(path).instantiate() as Item
+	if not item: return null
+	
+	items_node.add_child(item)
+	
+	item.global_position = pos
+	item.manager = self
+	
+	if not created_items.has(item_name):
+		created_items[item_name] = []
+		
+	created_items[item_name].append(item)
+	item.setup_state(Item.ItemState.DROPING)
+	
+	return item
+
 func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
-	
 	var item: Item
-	
 	if item_name == "key":
 		if room_manager.current_room.already_drop_key:
 			return
-	
 	match item_name:
 		"coin": 
 			item = create_coin(pos)
-			
 		"key": item = setup_key(key_manager.create_key_logic())
 				
 	if item_name == "key":
@@ -67,7 +104,6 @@ func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
 	return item
 	
 func create_coin(pos: Vector2) -> Item:
-	
 	var item = load("res://Cenas/Item/Coin/Coin.tscn").instantiate() as Coin
 	item.global_position = pos
 	return item
@@ -75,10 +111,10 @@ func create_coin(pos: Vector2) -> Item:
 func setup_key(key: Key) -> Item:
 		
 	if !key: return
-	
+		
 	call_deferred("add_child", key)
 	
-	key.collected.connect(_collect_item)
+	#key.collected.connect(_collect_item)
 	
 	key.type = item_type.KEY
 	
@@ -98,59 +134,66 @@ func create_key_auto():
 	
 # Tenta dropar baseado no sinal que o inimigo emite quando morre
 func try_drop(ene: Enemy):
-	
 	var pos = ene.body.global_position
 	var p = randf()
-
 	var item: String = ""
-
 	for i in drops.keys():
 		if p > drops[i]["chance"]:
 			item = drops[i]["item"].pick_random()
-			
 	if not item.is_empty():
 		drop_by_name(item, pos)
 		
 func drop_by_name(item: String, pos: Vector2):
+	var i: Item = drop(item, pos)
+	if not Globals.round_manager.current_round:
+		i.setup_state(Item.ItemState.CHASING)
 	
-	var i = create_item(item, pos)
-		
-	i.manager = self
+	#
+	#var i = create_item(item, pos)
+		#
+	#i.manager = self
+	#
+	#i.collected.connect(_collect_item)
+			#
+	#i.start_drop_down(create_defalt_drop_curve(i.global_position))
+		#
+	#items_node.add_child(i)
+	#print(items_node)
 	
-	i.collected.connect(_collect_item)
-			
-	i.start_drop_down(create_defalt_drop_curve(i.global_position))
-		
-	items_node.add_child(i)
-	
-	# Caso vc consiga matar os monstros rapido o suficiente,
-	# há chance do sinal que é emitido para verificar se
-	# a sala atual está limpa, sejá associonado, antes do
-	# item entrar na cena, ai ele não percegue, ent verifaca aqui tbm
-	if not round_manager.is_round_playing:
-		i.start_chase_player()
+	## Caso vc consiga matar os monstros rapido o suficiente,
+	## há chance do sinal que é emitido para verificar se
+	## a sala atual está limpa, sejá associonado, antes do
+	## item entrar na cena, ai ele não percegue, ent verifaca aqui tbm
+	#if not round_manager.is_round_playing:
+		##i.start_chase_player()
+		#i.setup_state(Item.ItemState.CHASING)
 
 # Fiz no caso do player trocar de sala, mas nem todos os items foram coletados
 # É ativado com "changed_room" do RoomManager
 func get_all_items(room: Room):
 	items_node.visible = false
 	for item in items_node.get_children():
-		item.collected.emit(item)
+		item.collect(Globals.player.body)
+		items_node.remove_child(item)
 	items_node.visible = true
 	
 # Chamado no Room
 func make_items_chase_player():
-	for item in items_node.get_children():
-		item = item as Item 
-		item.start_chase_player()	
+	print(created_items)
+	for key in created_items.keys():
+		for item in created_items[key]:
+			if is_instance_valid(item):
+				item.setup_state(Item.ItemState.CHASING)
+				
+	#for item in items_node.get_children():
+		#item = item as Item 
+		#item.start_chase_player()	
 		
 func _collect_item(item: Item):
 	if Globals.player.is_dead:
 		item.queue_free()
 		return
-		
 	if item is Coin:
-			
 		Globals.conquited_coins += item.get_value()
 		Globals.player.coins += item.get_value()
 		Globals.player.update_label_coins()
@@ -184,14 +227,17 @@ func finish_get_key():
 		Globals.house.desable_camera()
 		
 func reset():
+	
 	for child in items_node.get_children():
-		if is_instance_valid(child):
-			items_node.get_children().erase(child)
-		child.queue_free()
-		
+		items_node.remove_child(child)
+	
+	created_items = {}
+
 	is_finish_get_key = false
 	key_in_scene = null
+	
 	Globals.player.is_getting_key = false
+	key_manager.reset()
 		
 func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
 	

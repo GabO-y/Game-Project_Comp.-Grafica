@@ -16,6 +16,8 @@ var need_calculate = false
 var curve: Array[Vector2]
 var curves: Array[MyCurve]
 
+var is_finish: bool = false
+
 func _init(
 	
 	p0: Vector2 = Vector2.ZERO,
@@ -95,10 +97,7 @@ func get_point_by_progress():
 	
 	if progress >= 1:
 		progress_finish.emit()
-		
-		var last_point = get_point(progress)
-		progress = 0.0
-		
+		var last_point = get_point(progress)		
 		return last_point
 	
 	var p = get_point(progress)

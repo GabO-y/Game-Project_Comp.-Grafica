@@ -23,6 +23,7 @@ var conquited_coins: int = 0
 var room_manager: RoomManager
 var item_manager: ItemManager
 var key_manager: KeyManager
+var round_manager: RoundManagar
 var house: House
 
 var only_use_key: bool = false
@@ -30,6 +31,10 @@ var only_use_key: bool = false
 var ene_to_default: int = 0
 
 var is_mute: bool = false
+
+var insta_ene_kill: bool = false
+var can_player_die: bool = true
+var has_key_animation: bool = true
 
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {
@@ -155,9 +160,19 @@ func test_collsion(c: CollisionObject2D):
 	print("layer: ", c.collision_layer)
 	print("mask: ", c.collision_mask)
 	print("--------------------------------")
+	
+func get_player_state() -> String:
+	return Player.PlayerState.find_key(player.current_state)
 
 func get_current_room_name():
 	return room_manager.current_room.name
+	
+func is_player(body: Node2D) -> Player:
+	if body.get_parent():
+		var player: Player = body.get_parent()
+		if player:
+			return player
+	return null
 	
 signal goint_to_center
 

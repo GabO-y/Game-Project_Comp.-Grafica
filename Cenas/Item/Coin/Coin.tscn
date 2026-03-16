@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dxyu7xpokb642"]
+[gd_scene format=3 uid="uid://dxyu7xpokb642"]
 
 [ext_resource type="Script" uid="uid://c7cyn1lxvwq5j" path="res://Cenas/Item/Coin/coin.gd" id="1_25g7a"]
 [ext_resource type="Texture2D" uid="uid://d2fqqaevymt3v" path="res://Assets/Objects/Coins/all_coins_and_boot.png" id="1_cnj4g"]
@@ -198,21 +198,21 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_cnj4g"]
 radius = 4.12311
 
-[node name="Coin" type="Node2D" node_paths=PackedStringArray("anim", "area", "audio")]
+[node name="Coin" type="Node2D" unique_id=1831518036 node_paths=PackedStringArray("anim", "area", "audio")]
 script = ExtResource("1_25g7a")
 anim = NodePath("AnimatedSprite2D")
 area = NodePath("Area2D")
 audio = NodePath("Area2D/AudioStreamPlayer")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=278117791]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_hqy1t")
 animation = &"1"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1132856268]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=835752179]
 shape = SubResource("CircleShape2D_cnj4g")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area2D"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area2D" unique_id=1870875295]
 stream = ExtResource("3_y64d1")

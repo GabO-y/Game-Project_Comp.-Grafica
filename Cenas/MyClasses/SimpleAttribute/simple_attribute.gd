@@ -6,6 +6,7 @@ var max_value: float
 var min_value: float 
 var max_level: int 
 var min_level: int 
+var level: int = -1
 
 func _init(max: float = 1.0, min: float = 1.0, max_l: int = 1, min_l: int = 1) -> void:
 	max_value = max
@@ -13,7 +14,10 @@ func _init(max: float = 1.0, min: float = 1.0, max_l: int = 1, min_l: int = 1) -
 	max_level = max_l
 	min_level = min_l
 	
-func get_value(level: int):
+func get_value(level: int = -1):
+	
+	if level == -1:
+		level = self.level
 	
 	if level <= min_level:
 		return min_value

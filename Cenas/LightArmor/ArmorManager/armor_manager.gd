@@ -19,7 +19,7 @@ func _ready() -> void:
 		var armor = load(path).instantiate() as LightArmor
 		if not armor: continue
 		armor._ready()
-		if name == "Lantern":
+		if name == "FairyLight":
 			armor.general_infos.is_locked = false
 			selected_armor = armor
 		armors.append(armor)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw3qalysdkhwx"]
+[gd_scene format=3 uid="uid://dw3qalysdkhwx"]
 
 [ext_resource type="Script" uid="uid://dihntck648mlm" path="res://Cenas/Keys/key.gd" id="1_ah1dp"]
 [ext_resource type="Texture2D" uid="uid://diy5gp5mllksu" path="res://Assets/Keys/key_common.png" id="2_gac03"]
@@ -25,26 +25,26 @@ gradient = SubResource("Gradient_3ouih")
 fill = 1
 fill_from = Vector2(0.472934, 0.464387)
 
-[node name="Key" type="Node2D" node_paths=PackedStringArray("particles_node", "area", "audio")]
+[node name="Key" type="Node2D" unique_id=247124349 node_paths=PackedStringArray("particles_node", "area", "audio")]
 script = ExtResource("1_ah1dp")
 particles_node = NodePath("CPUParticles2D")
 area = NodePath("Area2D")
 audio = NodePath("AudioStreamPlayer2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=680221379]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_gac03")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=928343179]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1092037548]
 shape = SubResource("CircleShape2D_ccyvf")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1058909613]
 texture = SubResource("GradientTexture2D_3ouih")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1430861663]
 visible = false
 amount = 50
 texture = SubResource("GradientTexture2D_q44xp")
@@ -56,6 +56,6 @@ direction = Vector2(0, 0)
 gravity = Vector2(0, 0)
 radial_accel_min = -100.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=571587820]
 stream = ExtResource("3_3ouih")
 parameters/looping = true

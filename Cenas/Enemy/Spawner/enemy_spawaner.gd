@@ -10,7 +10,6 @@ class_name Spawn
 @export var spawn_area: Area2D
 @export var is_active = false
 
-
 var room: Room
 var enemies_already_spawner = 0
 var enemies: Array[Enemy] = []
@@ -21,11 +20,9 @@ func _ready() -> void:
 	
 func get_random_point_in_area(area: Area2D) -> Vector2:
 	var collision_shape = area.get_node("CollisionShape2D") as CollisionShape2D
-	
 	if not collision_shape or not collision_shape.shape:
 		push_error("Area2D não tem CollisionShape2D ou shape definido!")
 		return area.global_position
-	
 	if collision_shape.shape is CircleShape2D:
 		var circle = collision_shape.shape as CircleShape2D
 		var radius = circle.radius
@@ -93,22 +90,17 @@ func disable():
 		#can_input = false
 	
 func set_active(mode: bool):
-	
 	for enemy in enemies:
-		
 		if is_instance_valid(enemy):
 			enemy.set_active(mode)
 		else:
 			enemies.erase(enemy)
-			
 	if mode:
 		timer.start()
 	else:
 		timer.stop()
-		
 	set_process(mode)
 	visible = mode
-	
 	is_active = mode
 				
 func is_clean() -> bool:	
@@ -133,19 +125,13 @@ func spawn(ene_name: String, level: int) -> Enemy:
 	
 	var path = str("res://Cenas/Enemy/", ene_name, "/", ene_name, ".tscn")
 	var ene = load(path).instantiate() as Enemy
-	
-	add_child(ene)
-	
+		
 	ene.default_setup()
 	ene.set_level(level, "current")
 	
 	ene.level = level
 	ene.setup()
 	
-	ene.enemy_die.connect(
-		room.manager.item_manager.try_drop
-	)
-
 	ene.global_position = global_position 
 	
 	ene.set_active(true)

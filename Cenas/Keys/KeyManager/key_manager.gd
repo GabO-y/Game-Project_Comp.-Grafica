@@ -63,16 +63,11 @@ func create_key_by_door(door: Door):
 	return key
 
 func create_key(room: Room) -> Key:
-		
 	var doors = find_doors(room)
-		
 	if !doors: return null
-	
 	var key: Key = load("res://Cenas/Keys/Key.tscn").instantiate() 
-
 	key.door1 = doors["door_current"]
 	key.door2 = doors["door_target"]
-	
 	return key
 	
 func try_open_door():
@@ -81,8 +76,7 @@ func try_open_door():
 	var retured_doors: Array[Door]
 	var boss_doors: Array[Door]
 		
-	for door in room_manager.current_room.doors:
-		
+	for door in room_manager.current_room.doors:		
 		var goTo = door.goTo
 
 		if (not goTo.can_return and goTo.finish):
@@ -100,17 +94,20 @@ func try_open_door():
 							
 	if not available_doors.is_empty():
 		open_random_door(available_doors)
+		#return available_doors.pick_random()
 	elif not boss_doors.is_empty():
 		open_random_door(boss_doors)
+		#return boss_doors.pick_random()
 	else:
 		open_random_door(retured_doors)
+		#return boss_doors.pick_random()
 		
 func open_random_door(doors: Array[Door]):
 	
 	if doors.is_empty(): return
 	
 	var door = doors.pick_random() as Door
-		
+
 	if door.is_locked:
 		setup_key(create_key_by_door(door))
 		return
@@ -146,7 +143,9 @@ func setup_key(key: Key) -> Item:
 	
 	return key
 	
-		
+#func drop_key():
+	#print(get_random_door())
+		#
 	
-	
-		
+func reset():
+	self.key = null

@@ -5,14 +5,12 @@ class_name Coin
 @export var anim: AnimatedSprite2D
 
 func _ready() -> void:
-	
 	super._ready()
-	
 	type = get_type()
 	anim.play(str(type))
 	is_move = true
+	progress_scale = 100
 	
-
 func get_value() -> int:
 	
 	var value: int = 0
@@ -38,6 +36,23 @@ func get_type():
 
 	return type
 	
+func collect(body: Node2D):
+	if not Globals.is_player(body): return
+	if manager.created_items.has("coin"):
+		manager.created_items["coin"].erase(self)
+		
+	var value: int = get_value()
+		
+	Globals.player.coins += value
+	Globals.conquited_coins += value
+	Globals.player.update_label_coins()
+	
+	audio.play()
+	visible = false
+	
+	await audio.finished
+	
+	queue_free()
 
 
 		

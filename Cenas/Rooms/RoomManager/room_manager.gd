@@ -32,8 +32,11 @@ func _ready() -> void:
 		for door in room.doors:
 			match_doors(room.name, door.name)
 
+	round_manager.room_manager = self
+
 	round_manager.round_finished.connect(
 		func():
+			print("aa")
 			if not current_room.can_return and not Globals.is_reseting:
 				current_room.finish = true
 			_clear_effects()
@@ -49,6 +52,10 @@ func get_doors(room: Room) -> Array[Door]:
 	return doors
 	
 func _change_room(goTo):
+	
+	if Globals.player.current_state == Player.PlayerState.ANIMATION: 
+		return
+	
 #	Para o caso do player mudar de sala, 
 #   mas ainda haver items que não foram coletados
 	item_manager.get_all_items(current_room)
@@ -68,18 +75,19 @@ func _change_room(goTo):
 	Globals.player.test_wall_stuck()
 	
 	Globals.can_teleport = false
-
-	round_manager.setup_next_level()
+	round_manager.start_random_round()
 	
-	if current_room is BossRoom:
-		current_room.boss.setup()
-	else:
-		round_manager.start_random_round()
+	#
+	#round_manager.setup_next_level()
+	#
+	#if current_room is BossRoom:
+		#current_room.boss.setup()
+	#else:
+		#round_manager.start_random_round()
 		
 	await get_tree().create_timer(0.3).timeout
 	
 	Globals.can_teleport = true
-	
 	changed_room.emit(current_room)
 		
 func find_room(room_name: String) -> Room:
@@ -186,14 +194,12 @@ func show_rounds():
 			room.show_rounds()
 			
 func _clear_effects():
-	
 	if current_room is BossRoom:
 		boss_finished.emit()
 		item_manager.get_all_items(current_room)
-		return
-	
-	key_manager.try_open_door()
-	item_manager.make_items_chase_player()
+	else:
+		key_manager.try_open_door()
+		item_manager.make_items_chase_player()
 
 func reset():
 		
@@ -213,9 +219,6 @@ signal changed_room(room: Room)
 
 signal boss_finished
 
-func _input(event: InputEvent) -> void:
-	if Input.is_key_pressed(KEY_1):
-		boss_finished.emit()
 		
 func sound_ene_logic(delta):
 	

@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://exmsdws53g2l" path="res://Cenas/Rooms/BathRoom/BathRoom.tscn" id="8_2fcsa"]
 [ext_resource type="PackedScene" uid="uid://rj84xueqnc2o" path="res://Cenas/Rooms/DeskRoom/DeskRoom.tscn" id="9_oxtvy"]
 [ext_resource type="PackedScene" uid="uid://bykulbxi0xxnq" path="res://Cenas/Rooms/TutorialRoom/TutorialRoom.tscn" id="10_gc0uj"]
-[ext_resource type="Script" uid="uid://dccrwr71sgn2w" path="res://Cenas/Round/RoundManager/round_managar.gd" id="12_oxtvy"]
+[ext_resource type="PackedScene" uid="uid://c8pmycrg74u1x" path="res://Cenas/Round/RoundManager/RoundManagar.tscn" id="13_gc0uj"]
 [ext_resource type="AudioStream" uid="uid://ntbk785g70rv" path="res://Assets/Sound/ghost_voice.mp3" id="13_m3jl5"]
 [ext_resource type="AudioStream" uid="uid://cowqvpvyqhw6i" path="res://Assets/Sound/zombie_sound.mp3" id="14_mx1pn"]
 [ext_resource type="AudioStream" uid="uid://clokbwbb82k82" path="res://Assets/Sound/skeleton_voice.mp3" id="15_ei4sg"]
@@ -64,10 +64,7 @@ key_manager = NodePath("../KeyManager")
 [node name="KeyManager" parent="Managers" unique_id=353451886 node_paths=PackedStringArray("room_manager") instance=ExtResource("7_0t272")]
 room_manager = NodePath("../..")
 
-[node name="RoundManagar" type="Node2D" parent="Managers" unique_id=464982040 node_paths=PackedStringArray("room_manager")]
-script = ExtResource("12_oxtvy")
-room_manager = NodePath("../..")
-metadata/_custom_type_script = "uid://dccrwr71sgn2w"
+[node name="RoundManagar" parent="Managers" unique_id=2028653320 instance=ExtResource("13_gc0uj")]
 
 [node name="EneSounds" type="Node2D" parent="." unique_id=1723378813]
 

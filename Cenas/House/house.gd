@@ -15,6 +15,9 @@ class_name House
 @export var tutorial_menu: TutorialMenu
 
 @export var only_play: bool = false
+@export var instal_ene_kill: bool = false
+@export var can_player_die: bool = true
+@export var has_key_animation: bool = true
 
 var can_reset: bool = false
 
@@ -27,6 +30,10 @@ func _ready() -> void:
 	Globals.house = self
 	Globals.player = player
 	Globals.backlayer_filter = backlayer_filter
+	
+	Globals.insta_ene_kill = instal_ene_kill
+	Globals.can_player_die = can_player_die
+	Globals.has_key_animation = has_key_animation
 		
 	room_manager.set_initial_room("SafeRoom")
 	player.body.global_position = initial_position.global_position
@@ -34,13 +41,16 @@ func _ready() -> void:
 	Globals.room_manager = room_manager
 	Globals.item_manager = room_manager.item_manager
 	Globals.key_manager = room_manager.key_manager
+	Globals.round_manager = room_manager.round_manager
 	
 	die_menu.house = self
 	
 	player._die.connect(
 		func():
+			die_menu.a_coins.text = str(player.coins)
+			die_menu.setup_state(die_menu.MenuState.ENABLE)
 			die_menu.set_active(true)
-			die_menu.start_anim_1()
+			#die_menu.start_anim_1()
 	)
 	
 	room_manager.boss_finished.connect(finish_menu.start)
@@ -71,6 +81,8 @@ func _ready() -> void:
 		room_manager.match_doors("SafeRoom", room)
 		
 	inital_menu.start_play.connect(await_initial_menu)
+	#Globals.conquited_coins = 1000
+	#Globals.enemies_defalted = 500
 	
 func await_initial_menu():
 	player.set_active(true)

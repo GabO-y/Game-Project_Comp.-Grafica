@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhr4yauog3de"]
+[gd_scene format=3 uid="uid://dhr4yauog3de"]
 
 [ext_resource type="Script" uid="uid://beu2v85bs2cra" path="res://Cenas/Item/item.gd" id="1_s8mx0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lon0t"]
 radius = 2.0
 
-[node name="Item" type="Node2D" node_paths=PackedStringArray("area")]
+[node name="Item" type="Node2D" unique_id=1284117272 node_paths=PackedStringArray("area")]
 script = ExtResource("1_s8mx0")
 area = NodePath("Area2D")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1862718756]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1320698132]
 shape = SubResource("CircleShape2D_lon0t")

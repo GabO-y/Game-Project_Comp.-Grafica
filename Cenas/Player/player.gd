@@ -20,7 +20,7 @@ class_name Player
 var flick_aux: int = 0
 
 var max_heart: int = 5
-var hearts: int = 3
+var hearts: int = 0
 
 var is_invencible: bool = false
 var invencible_duration: float = 1.2
@@ -76,13 +76,6 @@ func _ready() -> void:
 	
 	hearts = max_heart
 	
-	#hit_area.body_exited.connect(_exit_enemie)
-	#
-	
-	# mudanca aqui e em set_active()
-	#armor.toggle_activate()
-	
-	#body.collision_mask |= Globals.layers["current_wall"]
 		
 	update_label_coins()
 
@@ -354,7 +347,7 @@ func take_damage(damage: int):
 	hearts -= damage;
 	update_hearts()
 	
-	if hearts <= 0:
+	if hearts <= 0 and Globals.can_player_die:
 		die()
 	
 func die():
@@ -368,6 +361,7 @@ func die():
 	set_process(false)
 	set_physics_process(false)
 	
+
 	_die.emit()
 	
 func flick():
@@ -450,11 +444,13 @@ func reset():
 	#armor.set_physics_process(true)
 	
 	process_mode = Node.PROCESS_MODE_INHERIT
+	current_state = PlayerState.MOVING
 	
 	can_dash = false   
 	armor.can_active = true
 	
-	scale = Vector2(1, 1)
+	body.scale = Vector2(1, 1)
+	anim.z_index = 0
 	
 	hearts = max_heart
 	update_hearts()

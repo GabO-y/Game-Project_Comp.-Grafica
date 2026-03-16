@@ -2,5 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dccrwr71sgn2w" path="res://Cenas/Round/RoundManager/round_managar.gd" id="1_ts3xs"]
 
-[node name="RoundManagar" type="Node2D" unique_id=2028653320]
+[node name="RoundManagar" type="Node2D" unique_id=2028653320 node_paths=PackedStringArray("ene_spawn_node", "timer")]
 script = ExtResource("1_ts3xs")
+ene_spawn_node = NodePath("EnemySpawnNode")
+timer = NodePath("Timer")
+
+[node name="EnemySpawnNode" type="Node2D" parent="." unique_id=1212421419]
+
+[node name="Timer" type="Timer" parent="." unique_id=565401864]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

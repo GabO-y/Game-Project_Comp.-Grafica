@@ -87,6 +87,9 @@ func _input(event: InputEvent) -> void:
 	
 func damager_ene(delta: float):
 	for ene in enemies_on_light.keys():
+		if Globals.insta_ene_kill:
+			ene.die()
+			continue
 		if enemies_on_light[ene] >= time_to_damage:
 			ene.take_damage(damage)
 			enemies_on_light[ene] = 0.0

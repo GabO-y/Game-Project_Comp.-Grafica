@@ -35,7 +35,8 @@ func _ready() -> void:
 	_update()
 
 func _process(delta: float) -> void:
-	if Globals.player.is_in_menu: return	
+	var player: Player = Globals.player
+	if Globals.player.current_state != Player.PlayerState.MOVING: return	
 	damager_ene(delta)
 	if Input.is_action_just_pressed("shoot_bullet"):
 		try_shoot()

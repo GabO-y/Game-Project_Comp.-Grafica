@@ -90,11 +90,12 @@ func _process(delta: float) -> void:
 	if Globals.player.is_in_menu and Input.is_action_just_pressed("ui_exit_menu"):
 		disable()
 
-func enable_state():
+func enable_state(delta: float):
 	if Input.is_action_just_pressed("ui_exit_menu"):
 		setup_state(MenuState.DESABLE)
 	
-func desable_state():
+func desable_state(delta: float):
+	if Globals.player.current_state == Player.PlayerState.MENU: return
 	var dist: float = pos.global_position.distance_to(Globals.player_pos())
 	popup.visible = dist < 30.0
 	if dist < 30.0:
