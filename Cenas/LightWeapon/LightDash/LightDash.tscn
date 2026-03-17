@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bgy6ocqyifrgf"]
+
+[ext_resource type="Script" uid="uid://d047cu3umlal0" path="res://Cenas/LightWeapon/LightDash/light_dash.gd" id="1_1y48o"]
+
+[node name="LightDash" type="Node2D" unique_id=850298755]
+script = ExtResource("1_1y48o")

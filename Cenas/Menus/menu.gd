@@ -7,6 +7,8 @@ class_name Menu
 @export var focus_button: Button
 @export var need_focus: bool = true
 
+var aux_var: Dictionary = {}
+
 enum MenuState {ENABLE, DESABLE}
 
 var current_state: MenuState = MenuState.DESABLE
@@ -22,29 +24,30 @@ func set_active(mode: bool, principal: bool = true):
 		focus_button.grab_focus()
 		
 	get_tree().paused = mode
-	set_process_unhandled_input(mode)
-	set_process_input(mode)
-	set_process_unhandled_key_input(mode)
 	
-	is_active = mode
-	visible = mode
+	#set_process_unhandled_input(mode)
+	#set_process_input(mode)
+	#set_process_unhandled_key_input(mode)
+	
+	#is_active = mode
+	#visible = mode
 
 	if not principal: return
 
-	if mode:
-		manager.current_menu = self
-		manager.is_in_menu = true
-		for menu in manager.menus:
-			if menu != self:
-				menu.set_active(false, false)
-	else:
-		if manager.current_menu == self:
-			manager.current_menu = null
-			manager.is_in_menu = false
-		for menu in manager.menus:
-			if menu is FinishMenu: continue
-			menu.set_process(true)
-			
+	#if mode:
+		#manager.current_menu = self
+		#manager.is_in_menu = true
+		#for menu in manager.menus:
+			#if menu != self:
+				#menu.set_active(false, false)
+	#else:
+		#if manager.current_menu == self:
+			#manager.current_menu = null
+			#manager.is_in_menu = false
+		#for menu in manager.menus:
+			#if menu is FinishMenu: continue
+			#menu.set_process(true)
+			#
 			
 func _process(delta: float) -> void:
 	match current_state:
@@ -67,7 +70,6 @@ func setup_player():
 			player.current_state = Globals.player.PlayerState.MENU
 		MenuState.DESABLE:
 			player.current_state = last_player_state
-			print(player.PlayerState.find_key(player.current_state))
 			
 
 func reset():

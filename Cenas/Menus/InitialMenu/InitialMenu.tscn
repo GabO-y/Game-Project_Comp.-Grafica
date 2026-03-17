@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bobuc127k7o1n"]
+[gd_scene format=3 uid="uid://bobuc127k7o1n"]
 
 [ext_resource type="Script" uid="uid://dcvxcggal32qh" path="res://Cenas/Menus/InitialMenu/initial_menu.gd" id="1_0kox7"]
 [ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="2_51tdx"]
@@ -79,19 +79,17 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[node name="InitialMenu" type="CanvasLayer" node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "focus_button")]
+[node name="InitialMenu" type="CanvasLayer" unique_id=432829440 node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "focus_button")]
 script = ExtResource("1_0kox7")
 anim = NodePath("AnimationPlayer")
 anim_control_node = NodePath("AnimationPlayer/Control")
 control_node = NodePath("Control")
 focus_button = NodePath("Control/VBoxContainer/Start/Start")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_7yfuj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=88312678]
+libraries/ = SubResource("AnimationLibrary_7yfuj")
 
-[node name="Control" type="Control" parent="AnimationPlayer"]
+[node name="Control" type="Control" parent="AnimationPlayer" unique_id=80099692]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -100,7 +98,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/Control"]
+[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/Control" unique_id=1387296780]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,7 +107,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_7yfuj")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=470853124]
 z_index = -1
 layout_mode = 3
 anchors_preset = 15
@@ -118,7 +116,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1942500388]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -128,7 +126,7 @@ grow_vertical = 2
 texture = ExtResource("2_jcdgm")
 expand_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=369661719]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -144,14 +142,14 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Start" type="Label" parent="Control/VBoxContainer"]
+[node name="Start" type="Label" parent="Control/VBoxContainer" unique_id=186468626]
 z_index = 1
 layout_mode = 2
 text = "Jogar"
 label_settings = SubResource("LabelSettings_7yfuj")
 horizontal_alignment = 1
 
-[node name="Start" type="Button" parent="Control/VBoxContainer/Start"]
+[node name="Start" type="Button" parent="Control/VBoxContainer/Start" unique_id=1000135004]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1
@@ -166,14 +164,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_51tdx")
 
-[node name="Tutorial" type="Label" parent="Control/VBoxContainer"]
+[node name="Tutorial" type="Label" parent="Control/VBoxContainer" unique_id=712349594]
 z_index = 1
 layout_mode = 2
 text = "Tutorial"
 label_settings = SubResource("LabelSettings_7yfuj")
 horizontal_alignment = 1
 
-[node name="Tutorial" type="Button" parent="Control/VBoxContainer/Tutorial"]
+[node name="Tutorial" type="Button" parent="Control/VBoxContainer/Tutorial" unique_id=1083511076]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1
@@ -190,14 +188,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_51tdx")
 
-[node name="Exit" type="Label" parent="Control/VBoxContainer"]
+[node name="Exit" type="Label" parent="Control/VBoxContainer" unique_id=671567111]
 z_index = 1
 layout_mode = 2
 text = "Sair"
 label_settings = SubResource("LabelSettings_7yfuj")
 horizontal_alignment = 1
 
-[node name="Start2" type="Button" parent="Control/VBoxContainer/Exit"]
+[node name="Start2" type="Button" parent="Control/VBoxContainer/Exit" unique_id=1798542773]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1
@@ -214,7 +212,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_51tdx")
 
-[node name="SoundIconMenu" parent="." instance=ExtResource("4_jcdgm")]
+[node name="SoundIconMenu" parent="." unique_id=1799075370 instance=ExtResource("4_jcdgm")]
 
 [connection signal="button_down" from="Control/VBoxContainer/Start/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Control/VBoxContainer/Tutorial/Tutorial" to="." method="_on_tutorial_button_down"]

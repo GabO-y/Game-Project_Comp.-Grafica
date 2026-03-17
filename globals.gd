@@ -32,9 +32,7 @@ var ene_to_default: int = 0
 
 var is_mute: bool = false
 
-var insta_ene_kill: bool = false
-var can_player_die: bool = true
-var has_key_animation: bool = true
+var god_vars: Dictionary
 
 # mapa de qual nova diagonal ele deve ir dependendo de onde bate
 var dir_possibles_crash_wall = {

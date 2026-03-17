@@ -9,22 +9,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Globals.player.current_state == Player.PlayerState.ANIMATION: return
 	super._process(delta)
-	return
-	if Input.is_action_just_pressed("ui_escape"):
-		if !manager.current_menu and not manager.is_in_menu:
-			show_menu()
-		elif manager.current_menu == self:
-			hide_menu()	
 			
 			
 func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
-			show_menu()
+			visible = true
 			get_tree().paused = true
-			last_player_state = Globals.player.current_state
+			#last_player_state = Globals.player.current_state
 		MenuState.DESABLE:
-			hide_menu()
+			visible = false
+			get_tree().paused = false
+
 	current_state = state
 	setup_player()
 			
@@ -49,7 +45,8 @@ func _on_button_pressed() -> void:
 
 func _on_exit_button_down() -> void:
 	Globals.house.reset()
-	Globals.house.inital_menu.start()
+	Globals.house.inital_menu.setup_state(Menu.MenuState.ENABLE)
+	#Globals.house.inital_menu.start()
 	
 
 func _on_finish_round_pressed() -> void:

@@ -62,7 +62,8 @@ func chasing_state(delta: float):
 	global_position = curve.get_point(progress)
 	curve.set_p2(Globals.player_pos())
 	if progress >= 1.0:
-		setup_state(ItemState.STOPED)
+		collect(Globals.player.body)
+		return
 	progress += 1.0 / progress_scale
 
 func stoped_state(delta: float):

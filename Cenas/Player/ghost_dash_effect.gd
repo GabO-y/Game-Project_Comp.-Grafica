@@ -3,7 +3,7 @@ extends Node2D
 @export var player: Player
 
 func _process(delta: float) -> void:
-	if player.is_dashing:
+	if player.current_state == Player.PlayerState.DASHING:
 		
 		var frames = player.anim.sprite_frames
 		var anim_name = player.anim.animation

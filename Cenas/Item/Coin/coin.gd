@@ -38,6 +38,7 @@ func get_type():
 	
 func collect(body: Node2D):
 	if not Globals.is_player(body): return
+	
 	if manager.created_items.has("coin"):
 		manager.created_items["coin"].erase(self)
 		
@@ -47,12 +48,10 @@ func collect(body: Node2D):
 	Globals.conquited_coins += value
 	Globals.player.update_label_coins()
 	
-	audio.play()
-	visible = false
-	
-	await audio.finished
-	
 	queue_free()
+	
+	
+	
 
 
 		

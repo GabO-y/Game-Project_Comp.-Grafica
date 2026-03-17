@@ -1,4 +1,4 @@
-extends LightArmor
+extends LightWeapon
 
 func _ready() -> void:
 	super._ready()

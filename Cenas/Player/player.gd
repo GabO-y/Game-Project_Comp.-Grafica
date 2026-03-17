@@ -1,7 +1,7 @@
 extends Character
 class_name Player
 
-@export var armor: LightArmor
+@export var armor: LightWeapon
 
 @export var can_die: bool = true
 @export var hit_kill: bool = false
@@ -32,12 +32,16 @@ var input_vector: Vector2
 var speed: float = 100
 var speed_bonus: float = 1.0
 var dash_speed: float = 600
-var dash_duration: float = 0.1
+
+var dash_frames_duration: int = 3
+var dash_frames: int = 0
+
+var dash_cooldown_frames: int = 0
+var dash_cooldown_frames_duration: int = 15
+
 var can_dash = true
 var is_dashing: bool = false
-var dash_timer: float = 0.0
-var dash_cooldown_timer: float = 0.0
-var dash_cooldown:float = 0.4
+
 var last_direction: Vector2 = Vector2.RIGHT
 var dash_dir: Vector2
 var dash_target_pos: Vector2
@@ -72,11 +76,12 @@ var current_state: PlayerState = PlayerState.MOVING
 var d: float = 0.0
 var t: float = 0.0
 
+var can_take_damege: bool = true
+
 func _ready() -> void:
 	
 	hearts = max_heart
 	
-		
 	update_label_coins()
 
 	_die.connect(
@@ -91,10 +96,9 @@ func _ready() -> void:
 	get_window().size_changed.connect(update_hearts)
 	update_hearts()
 	
-func set_armor(armor: LightArmor):
+func set_armor(armor: LightWeapon):
 	for child in armor_node.get_children():
 		armor_node.remove_child(child)
-		
 	armor_node.add_child(armor)
 	self.armor = armor
 		
@@ -141,13 +145,13 @@ func _physics_process(delta: float) -> void:
 			pass
 			
 	if not can_dash and current_state != PlayerState.DASHING:
-		dash_cooldown_timer += delta
-		if dash_cooldown_timer > dash_cooldown:
+		dash_cooldown_frames += 1
+		if dash_cooldown_frames > dash_cooldown_frames_duration:
 			can_dash = true
+			
 	if is_invencible:
 		invencible_timer += delta
 		flick()
-
 		if invencible_timer > invencible_duration:
 			is_invencible = false
 			invencible_timer = 0.0
@@ -155,47 +159,24 @@ func _physics_process(delta: float) -> void:
 		
 		
 			
-	return
-	
-	if is_in_menu: return
-		
-	if is_invencible:
-		flick()
-	
-	if is_on_knockback:			
-		body.velocity = knockback_dir * knockback_force
-		body.move_and_slide()
-		return
-#	O knockback vai acabar quando a animação de knockback acabar
-	
-	dir = get_dir_move()
-	dash_state(delta)
-	
-	body.velocity = dir * (speed * speed_bonus) 
-
-	if is_invencible:
-		if invencible_timer >= (invencible_duration * invencible_duration_bonus):
-			is_invencible = false
-			invencible_timer = 0
-			return
-		invencible_timer += delta
-
-	body.move_and_slide()
 
 func setup_state(state: PlayerState):
 	match state:
 		PlayerState.MOVING:
 			body.collision_layer = Globals.layers["player"]
 			body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["ghost"]
+			can_take_damege = true
 		PlayerState.DASHING:
 			if not can_dash: 
 				return
 			can_dash = false
-			dash_timer = 0.0
+			dash_frames = 0
 			dash_dir = last_direction
 			body.collision_layer = 0
 			body.collision_mask = Globals.layers["current_wall"]
+			can_take_damege = false
 		PlayerState.KNOCKBACK:
+			can_take_damege = false
 			knockback_time = 0.0
 			anim.play("knockback")
 			anim.animation_finished.connect(
@@ -211,36 +192,13 @@ func dash_state(delta):
 	body.velocity = dash_dir * dash_speed
 	body.move_and_slide()
 	
-	dash_timer += delta
+	dash_frames += 1
 	
-	if dash_timer > dash_duration:
-		setup_state(PlayerState.MOVING)
-		dash_cooldown_timer = 0.0
-	
-	return
-	
-	if Input.is_action_just_pressed("dash") and not is_dashing and can_dash:
-		dash_audio.play()
+	if dash_frames > dash_frames_duration:
 		can_dash = false
-		is_dashing = true
-		dash_dir = last_direction if dir == Vector2.ZERO else dir
-		set_collision_ene(false)
-	if is_dashing:
-		dash_timer += delta
-		if dash_timer >= dash_duration:
-			set_collision_ene(true)
-			dash_timer = 0
-			is_dashing = false
-			
-		body.velocity = dash_dir * dash_speed
-		body.move_and_slide()
-		
-	if not can_dash and not is_dashing:
-		dash_cooldown_timer += delta
-		if dash_cooldown_timer >= dash_cooldown:
-			can_dash = true
-			dash_cooldown_timer = 0
-			
+		setup_state(PlayerState.MOVING)
+		dash_cooldown_frames = 0
+	
 func get_dir_move() -> Vector2:
 	input_vector = Vector2.ZERO
 	
@@ -337,17 +295,19 @@ func _unlocked_doors():
 	pass
 	
 func take_damage(damage: int):
-	
-	if is_invencible or current_state == PlayerState.DASHING: return
+
+	if is_invencible or not can_take_damege or not Globals.god_vars["can_player_die"]: 
+		return
 	is_invencible = true
 	
-	setup_state(PlayerState.KNOCKBACK)
 	
-	if not can_die: return
+	setup_state(PlayerState.KNOCKBACK)
+
+	
 	hearts -= damage;
 	update_hearts()
 	
-	if hearts <= 0 and Globals.can_player_die:
+	if hearts <= 0:
 		die()
 	
 func die():

@@ -1,10 +1,15 @@
 [gd_scene format=3 uid="uid://m0u8xxwi7jfx"]
 
-[ext_resource type="Script" uid="uid://di5hjrvn7fcxt" path="res://Cenas/LightArmor/FairyLight/fairy_light.gd" id="1_57ktk"]
+[ext_resource type="Script" uid="uid://di5hjrvn7fcxt" path="res://Cenas/LightWeapon/FairyLight/fairy_light.gd" id="1_57ktk"]
 [ext_resource type="Texture2D" uid="uid://bwhyhctnqq8xa" path="res://Assets/LightArmor/FairyLight/aim_fairy_light.png" id="2_l8kg5"]
 
 [node name="FairyLight" type="Node2D" unique_id=1436199468]
 script = ExtResource("1_57ktk")
+damage = null
+time_to_damage = null
+distance = null
+is_active = null
+can_active = null
 
 [node name="AimFairyLight" type="Sprite2D" parent="." unique_id=74307814]
 texture_filter = 1

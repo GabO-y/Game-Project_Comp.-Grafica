@@ -13,11 +13,17 @@ class_name House
 @export var finish_menu: FinishMenu
 @export var inital_menu: InitialMenu
 @export var tutorial_menu: TutorialMenu
+@export var god_menu: GodMenu
 
-@export var only_play: bool = false
-@export var instal_ene_kill: bool = false
+@export var is_skip_initial_menu: bool = false
+@export var insta_ene_kill: bool = false
 @export var can_player_die: bool = true
 @export var has_key_animation: bool = true
+@export var test_boss: bool = false
+
+@export var can_use_god_menu: bool = false
+
+var already_finish: bool = false
 
 var can_reset: bool = false
 
@@ -25,26 +31,31 @@ var follow: Node2D
 
 var start_time: float = 0.0
 
+var god_vars: Dictionary = {}
+
 func _ready() -> void:
 	
 	Globals.house = self
 	Globals.player = player
 	Globals.backlayer_filter = backlayer_filter
 	
-	Globals.insta_ene_kill = instal_ene_kill
-	Globals.can_player_die = can_player_die
-	Globals.has_key_animation = has_key_animation
-		
+	Globals.god_vars["insta_ene_kill"] = insta_ene_kill
+	Globals.god_vars["can_player_die"] = can_player_die
+	Globals.god_vars["has_key_animation"] = has_key_animation
+
 	room_manager.set_initial_room("SafeRoom")
+	god_menu.setup_state(Menu.MenuState.DESABLE)
+	god_menu.setup()
 	player.body.global_position = initial_position.global_position
 	
 	Globals.room_manager = room_manager
 	Globals.item_manager = room_manager.item_manager
 	Globals.key_manager = room_manager.key_manager
 	Globals.round_manager = room_manager.round_manager
-	
+		
 	die_menu.house = self
 	
+	player.setup_state(Player.PlayerState.MENU)
 	player._die.connect(
 		func():
 			die_menu.a_coins.text = str(player.coins)
@@ -52,24 +63,21 @@ func _ready() -> void:
 			die_menu.set_active(true)
 			#die_menu.start_anim_1()
 	)
-	
-	room_manager.boss_finished.connect(finish_menu.start)
-	
+		
 	if room_manager.current_room.name == "SafeRoom":
 		for door in room_manager.current_room.doors:
 			door.open()
 			
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	#process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	inital_menu.start()
 	
-	if only_play:
-		inital_menu.set_active(false)
-		tutorial_menu.set_active(false)
-		player.set_active(true)
+	if is_skip_initial_menu:
+		inital_menu.setup_state(Menu.MenuState.DESABLE)
 		start_time = Time.get_ticks_msec()
+	else:
+		inital_menu.setup_state(Menu.MenuState.ENABLE)
 		
-	if false:
+	if test_boss:
 		var room = "GhostBossRoom"
 		for door in room_manager.get_room("SafeRoom").doors:
 			door.name = room
@@ -81,6 +89,13 @@ func _ready() -> void:
 		room_manager.match_doors("SafeRoom", room)
 		
 	inital_menu.start_play.connect(await_initial_menu)
+
+	
+	finish_game.connect(
+		func():
+			finish_menu.setup_state(Menu.MenuState.ENABLE)
+	)
+
 	#Globals.conquited_coins = 1000
 	#Globals.enemies_defalted = 500
 	
@@ -111,6 +126,8 @@ func desable_camera():
 		
 func reset():
 
+	already_finish = false
+
 	player.reset()
 	
 	menu_manager.reset()
@@ -135,5 +152,6 @@ func reset():
 func calc_game_time_sec():
 	var time = Time.get_ticks_msec() - start_time
 	return time / 1000
-	
+
+signal finish_game
 signal reseted

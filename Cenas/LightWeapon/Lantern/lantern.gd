@@ -1,4 +1,4 @@
-extends LightArmor
+extends LightWeapon
 
 class_name Lantern
 
@@ -41,6 +41,5 @@ func _process(delta):
 		dir = global_position.direction_to(get_global_mouse_position())
 	elif dir.length() < 0.2: 
 		return
-	print(rad_to_deg(dir.angle()))
 	rotation = dir.angle() - PI / 2
 	armor_dir = dir

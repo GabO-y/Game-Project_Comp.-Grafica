@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ciq4xboriaopc" path="res://Cenas/Menus/SoundIconMenu/SoundIconMenu.tscn" id="2_amuvb"]
 
 [node name="MenuPause" type="CanvasLayer" unique_id=240478034 node_paths=PackedStringArray("focus_button")]
+process_mode = 3
 script = ExtResource("1_bo35q")
 focus_button = NodePath("MarginContainer/VBoxContainer/Resume")
 

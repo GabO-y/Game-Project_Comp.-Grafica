@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://mcuhgoenbx6w" path="res://Cenas/Player/WearponsInfos/WearponsInfos.tscn" id="6_4o7c8"]
 [ext_resource type="Script" uid="uid://dww1rkje5k6ih" path="res://Cenas/Player/dynamic_background.gd" id="6_qhdav"]
 [ext_resource type="AudioStream" uid="uid://csl4jnmpwav2c" path="res://Assets/Sound/dash_sound.mp3" id="7_bsnao"]
-[ext_resource type="PackedScene" uid="uid://df6rl28qpnweo" path="res://Cenas/LightArmor/ArmorManager/ArmorManager.tscn" id="7_xjvfg"]
+[ext_resource type="PackedScene" uid="uid://df6rl28qpnweo" path="res://Cenas/LightWeapon/ArmorManager/ArmorManager.tscn" id="7_xjvfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ryd"]
 atlas = ExtResource("4_4o7c8")

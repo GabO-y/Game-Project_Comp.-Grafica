@@ -194,10 +194,6 @@ func show_rounds():
 			room.show_rounds()
 			
 func _clear_effects():
-	if current_room is BossRoom:
-		boss_finished.emit()
-		item_manager.get_all_items(current_room)
-	else:
 		key_manager.try_open_door()
 		item_manager.make_items_chase_player()
 

@@ -5,7 +5,6 @@ class_name Key
 @export var particles_node: CPUParticles2D
 
 var door1: Door
-var door2: Door
 
 var is_going_to_door: bool = false
 
@@ -25,26 +24,15 @@ var animation_stage: int = 1
 var aux_var: Dictionary
 
 func _ready() -> void:
-	if not Globals.has_key_animation:
+	if not Globals.god_vars["has_key_animation"]:
 		use()
 		queue_free()
 	else:
 		super._ready()
-		progress_scale = 150
-	
-	
-	
-func _process(delta: float) -> void:
+		progress_scale = 100
 	
 
-		
-		
-	#if Input.is_anything_pressed():
-		#if is_key_moment:
-			#finish_get_key()		
-		#elif is_await_moment:
-			#finish_await()
-			
+func _process(delta: float) -> void:
 	super._process(delta)
 	
 func custom_state(delta: float):
@@ -52,7 +40,7 @@ func custom_state(delta: float):
 		KeyState.ANIMATION:
 			animation_state(delta)
 			
-func animation_state(delta: float):
+func animation_state(_delta: float):
 	match animation_stage:
 		1:
 			var cam: Camera2D = aux_var["room_cam"]
@@ -90,7 +78,6 @@ func animation_state(delta: float):
 			if Input.is_anything_pressed():
 				setup_key_state(KeyState.NORNAL)
 
-				
 func setup_key_state(state: KeyState):
 	match state:
 		KeyState.NORNAL:
@@ -134,67 +121,11 @@ func setup_key_state(state: KeyState):
 			
 	current_key_state = state
 	
-func start_chase_player():
-	super.start_chase_player()
-	curve.set_t(0.007)
-	
-# Fazer a parte de quando a sala nao finalizadas pra que ele crie uma chave
-	
 func use():
 	key_manager.key = null
 	visible = false
 	door1.open()
 	
-func finish_get_key():
-	
-	if finish_key_moment: return
-	finish_key_moment = true
-	
-	set_go_to(door1.position)
-	use_when_arrieve.connect(_open_door_and_wait)
-
-func start_particles():
-	
-	var tween = create_tween()
-	particles_node.visible = true
-
-	tween.tween_property(particles_node, "amount", 100, 0.001)
-	tween.tween_property($Sprite2D, "modulate:a", 0.0, 2.0)
-	
-	is_key_moment = false
-		
-	await tween.finished
-	is_await_moment = true
-	
-func finish_await():
-	
-	if finish_await_moment: return
-	finish_await_moment = true
-	
-	is_await_moment = false
-	
-	Globals.player.is_getting_key = false
-	set_process(false)
-	
-	Globals.player.set_process(true)
-	Globals.player.set_physics_process(true)
-	
-	Globals.house.desable_camera()
-	use()		
-	
-	finish_key_moment = false
-	finish_await_moment = false
-	
-func _open_door_and_wait():
-	
-	visible = false
-
-	door1.unlock_audio.play()
-	door1.open()
-	
-	is_await_moment = true
-	is_key_moment =  false
-
 func collect(body: Node2D):
 	if Globals.is_player(body):
 		for c in area.body_entered.get_connections():
@@ -203,6 +134,3 @@ func collect(body: Node2D):
 		setup_key_state(KeyState.ANIMATION)
 		
 enum KeyState {NORNAL, ANIMATION}
-	
-signal use_when_arrieve
-	

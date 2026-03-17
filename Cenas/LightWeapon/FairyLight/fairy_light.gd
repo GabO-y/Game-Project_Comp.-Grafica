@@ -1,4 +1,4 @@
-extends LightArmor
+extends LightWeapon
 
 class_name FairyLight
 

@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name LightArmor
+class_name LightWeapon
 
 @export var damage: float = 0.0
 @export var time_to_damage: float = 0.0
@@ -55,7 +55,6 @@ func _process(delta: float) -> void:
 		toggle_activate()
 
 func toggle_activate():
-		
 	if not can_active:
 		if is_active:
 			is_active = false
@@ -87,7 +86,7 @@ func _input(event: InputEvent) -> void:
 	
 func damager_ene(delta: float):
 	for ene in enemies_on_light.keys():
-		if Globals.insta_ene_kill:
+		if Globals.god_vars["insta_ene_kill"]:
 			ene.die()
 			continue
 		if enemies_on_light[ene] >= time_to_damage:
@@ -316,4 +315,4 @@ class LevelInfos:
 	var max_level: int = 10
 	var min_level: int = 1
 
-	
+enum WearponType {LANTERN, LIGHTER, FAIRY_LIGHT}

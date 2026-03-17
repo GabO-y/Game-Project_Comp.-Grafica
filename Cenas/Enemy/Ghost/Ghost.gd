@@ -45,8 +45,11 @@ var type_special: int
 @export var animated_slash_attck: AnimatedSprite2D
 @export var slash_attack_area: Area2D
 
-var current_custom_state: CustomState = CustomState.SPECIAL
+var current_custom_state: CustomState
 var special_stage: int = 1
+
+var aux_var: Dictionary = {}
+ 
 
 func _ready() -> void:
 	animation_type = randi_range(1, 4)
@@ -98,7 +101,7 @@ func attacking_state(delta: float):
 
 func custom_state(delta: float):
 	match current_custom_state:
-		CustomState.SPECIAL:
+		CustomState.GHOST_RUN:
 			match special_stage:
 				1:
 					t += delta
@@ -116,8 +119,29 @@ func custom_state(delta: float):
 						queue_free()
 					body.velocity = last_dir_player * speed * 1.2
 					body.move_and_slide()
+		CustomState.SHOOTING_GHOST:
+			match special_stage:
+				1:
+					if aux_var["dist"] <= 0.0:
+						aux_var["can_continue"] = true
+						return
+					body.velocity = aux_var["dir"] * speed
+					body.move_and_slide()
+					aux_var["dist"] -= delta
+				2:
+					body.collision_layer = Globals.player.body.collision_mask
+					body.collision_mask = Globals.player.body.collision_layer
+					for body in area_hit.get_overlapping_bodies():
+						var player: Player = Globals.is_player(body)
+						if player:
+							var aux = player.can_take_damege
+							player.can_take_damege = true
+							Globals.player.take_damage(1)
+							player.can_take_damege = aux
+					body.velocity = aux_var["dir"] * speed
+					body.move_and_slide()
 					
-					
+				
 
 func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	match state:
@@ -135,6 +159,14 @@ func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	if d > -1: self.d = d
 		
 	current_state = state
+
+func setup_custom_state(state: CustomState):
+	match state:
+		CustomState.GHOST_RUN:
+			pass
+		CustomState.SHOOTING_GHOST:
+			pass
+	current_custom_state = state
 
 func play_attack_animation():
 		
@@ -297,6 +329,6 @@ func default_setup():
 	
 	set_level(9, "max")
 
-enum CustomState {SPECIAL}
+enum CustomState {GHOST_RUN, SHOOTING_GHOST}
 
 	

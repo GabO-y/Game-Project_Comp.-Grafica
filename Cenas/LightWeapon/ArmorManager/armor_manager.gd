@@ -7,46 +7,38 @@ class_name ArmorManager
 
 @export var armor_node: Node2D
 
-var selected_armor: LightArmor
-var armors: Array[LightArmor]
+var selected_armor: LightWeapon
+var armors: Array[LightWeapon]
+
 
 var index = 0
-var a = ["Lantern", "Lighter", "FairyLight"]
 
-func _ready() -> void:	
+func _ready() -> void:		
 	for name in ["Lantern", "Lighter", "FairyLight"]:
-		var path: String = str("res://Cenas/LightArmor/", name, "/", name, ".tscn")
-		var armor = load(path).instantiate() as LightArmor
+		var path: String = str("res://Cenas/LightWeapon/", name, "/", name, ".tscn")
+		var armor = load(path).instantiate() as LightWeapon
 		if not armor: continue
 		armor._ready()
-		if name == "FairyLight":
+		
+		if name == "Lantern":
 			armor.general_infos.is_locked = false
 			selected_armor = armor
 		armors.append(armor)
 		
 	change_to_select()
-		
-#func _input(event: InputEvent) -> void:
-	#if Input.is_action_just_pressed("ui_accept"):
-		#index += 1
-		#if index >= a.size():
-			#index = 0
-		#var arm = select_armor(a.get(index))
-		#if not arm.is_active:
-			#arm.toggle_activate()
-		
-		
+
 func get_selected_armor():
 	selected_armor._update()
 	return selected_armor
 	
-func get_armor(armor_name: String) -> LightArmor:
+func get_armor(armor_name: String) -> LightWeapon:
 	for armor in armors:
 		if armor.name.to_lower() == armor_name.to_lower():
 			return armor
 	return null
 	
-func select_armor(armor_name: String) -> LightArmor:
+
+func select_armor(armor_name: String) -> LightWeapon:
 	
 	var target = get_armor(armor_name)
 	
@@ -68,7 +60,7 @@ func change_to_select():
 	
 func try_buy(armor_name: String) -> bool:
 	
-	var armor_target: LightArmor
+	var armor_target: LightWeapon
 	
 	for armor in armors:
 		if armor.name.to_lower() == armor_name.to_lower():

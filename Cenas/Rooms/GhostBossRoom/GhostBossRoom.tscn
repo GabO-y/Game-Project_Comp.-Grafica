@@ -131,10 +131,9 @@ physics_layer_0/collision_layer = 0
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_47cy2")
 
-[node name="GhostBossRoom" type="Node2D" unique_id=1943359550 node_paths=PackedStringArray("segs_to_ghost_room", "boss", "spot_boss_spawn", "layer_node")]
+[node name="GhostBossRoom" type="Node2D" unique_id=1943359550 node_paths=PackedStringArray("segs_to_ghost_room", "spot_boss_spawn", "layer_node")]
 script = ExtResource("1_iuko5")
 segs_to_ghost_room = NodePath("Exports/SegsToGhostRun")
-boss = NodePath("")
 spot_boss_spawn = NodePath("Exports/Marker2D")
 layer_node = NodePath("Layers")
 
@@ -146,7 +145,6 @@ tile_set = SubResource("TileSet_dkjpy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1287867613]
 position = Vector2(193, 106)
-scale = Vector2(0.5, 0.5)
 zoom = Vector2(2.5, 2.5)
 
 [node name="Doors" type="Node2D" parent="." unique_id=990876643]
@@ -181,4 +179,4 @@ visible = false
 points = PackedVector2Array(450, 8, 450, 209)
 
 [node name="Marker2D" type="Marker2D" parent="Exports" unique_id=1600265454]
-position = Vector2(193, 37)
+position = Vector2(347, 102)

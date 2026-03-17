@@ -14,6 +14,8 @@ var level: int = 0
 var ene_quant: SimpleAttribute = SimpleAttribute.new(10, 1, 8)
 var current_quant_ene: int = 0
 
+var is_in_round: bool = false
+
 func _ready() -> void:
 	set_process(false)
 	
@@ -22,6 +24,7 @@ func _process(delta: float) -> void:
 		for ene in ene_spawn_node.get_children():
 			ene_spawn_node.remove_child(ene)
 		round_finished.emit()
+		is_in_round = false
 		set_process(false)
 			
 func spawn_random_enemy():
@@ -42,8 +45,9 @@ func spawn_random_enemy():
 	ene_spawn_node.add_child(ene)
 
 func start_random_round():
-	if room_manager.current_room is BossRoom: 
+	if room_manager.current_room is BossRoom or is_in_round: 
 		return
+	is_in_round = true
 	set_process(false)
 	level += 1
 	current_quant_ene = 0

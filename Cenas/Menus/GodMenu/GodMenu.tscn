@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bq24nxfpume1g"]
+
+[ext_resource type="Script" uid="uid://qoasl72mi2n5" path="res://Cenas/Menus/GodMenu/god_menu.gd" id="1_o16rh"]
+
+[node name="GodMenu" type="CanvasLayer" unique_id=401776683 node_paths=PackedStringArray("main_container", "check_box_button_mode", "rooms_node")]
+script = ExtResource("1_o16rh")
+main_container = NodePath("MainCointaner")
+check_box_button_mode = NodePath("MainCointaner/TabContainer/GlobalVars/ScrollContainer/CheckBoxButtonNode")
+rooms_node = NodePath("MainCointaner/TabContainer/TeleportRoom/ScrollContainer/RoomsNode")
+
+[node name="MainCointaner" type="MarginContainer" parent="." unique_id=606542298]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 100
+
+[node name="TabContainer" type="TabContainer" parent="MainCointaner" unique_id=181801649]
+layout_mode = 2
+current_tab = 1
+
+[node name="GlobalVars" type="MarginContainer" parent="MainCointaner/TabContainer" unique_id=1175722373]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainCointaner/TabContainer/GlobalVars" unique_id=1429550712]
+layout_mode = 2
+
+[node name="CheckBoxButtonNode" type="VBoxContainer" parent="MainCointaner/TabContainer/GlobalVars/ScrollContainer" unique_id=813536609]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="CheckButton" type="CheckButton" parent="MainCointaner/TabContainer/GlobalVars/ScrollContainer/CheckBoxButtonNode" unique_id=249272337]
+layout_mode = 2
+size_flags_vertical = 3
+text = "sdfnsndbfmsndf"
+
+[node name="TeleportRoom" type="MarginContainer" parent="MainCointaner/TabContainer" unique_id=1746474044]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainCointaner/TabContainer/TeleportRoom" unique_id=2094637709]
+layout_mode = 2
+
+[node name="RoomsNode" type="VBoxContainer" parent="MainCointaner/TabContainer/TeleportRoom/ScrollContainer" unique_id=1344146868]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Button" type="Button" parent="MainCointaner/TabContainer/TeleportRoom/ScrollContainer/RoomsNode" unique_id=648431095]
+layout_mode = 2
+text = "Room Name
+"

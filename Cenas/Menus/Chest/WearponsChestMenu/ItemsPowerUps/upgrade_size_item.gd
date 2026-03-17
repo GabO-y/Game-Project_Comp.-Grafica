@@ -43,7 +43,7 @@ func try_upgrade():
 		armor._update()
 		armor_menu._update(armor.name)
 		
-func _update_price(armor: LightArmor):
+func _update_price(armor: LightWeapon):
 		if armor.is_max(type):
 			item_price.text = "MAX"
 		else:

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bwxlo81gcn041"]
+
+[ext_resource type="Script" uid="uid://cxhl6iwkkumui" path="res://Cenas/MyClasses/CompostAttribute/compost_attribute.gd" id="1_1xn8l"]
+
+[node name="CompostAttribute" type="Node2D" unique_id=975807116]
+script = ExtResource("1_1xn8l")

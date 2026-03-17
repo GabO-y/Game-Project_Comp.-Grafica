@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsi5d8k7xbh8s"]
+[gd_scene format=3 uid="uid://dsi5d8k7xbh8s"]
 
 [ext_resource type="Script" uid="uid://caepm67rjkqyt" path="res://Cenas/Menus/FinishMenu/finish_menu.gd" id="1_oody7"]
 [ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="2_lsw61"]
@@ -155,20 +155,21 @@ font = ExtResource("2_lsw61")
 font_size = 40
 font_color = Color(0, 0, 0, 1)
 
-[node name="FinishMenu" type="CanvasLayer" node_paths=PackedStringArray("particles", "anim", "labels_node", "time_label")]
+[node name="FinishMenu" type="CanvasLayer" unique_id=900992116 node_paths=PackedStringArray("particles", "anim", "labels_node", "time_label")]
+process_mode = 3
+layer = 0
 script = ExtResource("1_oody7")
-particles = [NodePath("CPUParticles2D"), NodePath("CPUParticles2D2"), NodePath("CPUParticles2D3"), NodePath("CPUParticles2D4"), NodePath("CPUParticles2D5")]
+particles = [NodePath(""), null, null, null, null]
 anim = NodePath("AnimationPlayer")
 labels_node = NodePath("AnimationPlayer/Labels")
 time_label = NodePath("AnimationPlayer/Labels/Time")
 need_focus = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_au0an")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=7079430]
+libraries/ = SubResource("AnimationLibrary_au0an")
 
-[node name="Labels" type="Control" parent="AnimationPlayer"]
+[node name="Labels" type="Control" parent="AnimationPlayer" unique_id=263668997]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +177,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/Labels"]
+[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/Labels" unique_id=1283545672]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,7 +186,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_dqdgq")
 
-[node name="Parabens" type="Label" parent="AnimationPlayer/Labels"]
+[node name="Parabens" type="Label" parent="AnimationPlayer/Labels" unique_id=1051264630]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 460.0
@@ -195,7 +196,7 @@ offset_bottom = 98.0
 text = "Parabéns"
 label_settings = SubResource("LabelSettings_8dslt")
 
-[node name="TempJogo" type="Label" parent="AnimationPlayer/Labels"]
+[node name="TempJogo" type="Label" parent="AnimationPlayer/Labels" unique_id=1476191007]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 697.0
@@ -205,7 +206,7 @@ offset_bottom = 229.0
 text = "Tempo de Jogo:"
 label_settings = SubResource("LabelSettings_lsw61")
 
-[node name="Time" type="Label" parent="AnimationPlayer/Labels"]
+[node name="Time" type="Label" parent="AnimationPlayer/Labels" unique_id=1380462118]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 934.0
@@ -214,58 +215,3 @@ offset_right = 1249.0
 offset_bottom = 228.0
 text = "20:20"
 label_settings = SubResource("LabelSettings_lsw61")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-position = Vector2(158, 854)
-amount = 100
-lifetime = 20.0
-local_coords = true
-emission_shape = 2
-emission_sphere_radius = 128.0
-gravity = Vector2(0, -10)
-scale_amount_min = 2.0
-scale_amount_max = 10.0
-
-[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
-position = Vector2(314, 880)
-amount = 100
-lifetime = 20.0
-local_coords = true
-emission_shape = 2
-emission_sphere_radius = 128.0
-gravity = Vector2(0, -10)
-scale_amount_min = 2.0
-scale_amount_max = 10.0
-
-[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
-position = Vector2(533, 874)
-amount = 100
-lifetime = 20.0
-local_coords = true
-emission_shape = 2
-emission_sphere_radius = 128.0
-gravity = Vector2(0, -10)
-scale_amount_min = 2.0
-scale_amount_max = 10.0
-
-[node name="CPUParticles2D4" type="CPUParticles2D" parent="."]
-position = Vector2(799, 866)
-amount = 100
-lifetime = 20.0
-local_coords = true
-emission_shape = 2
-emission_sphere_radius = 128.0
-gravity = Vector2(0, -10)
-scale_amount_min = 2.0
-scale_amount_max = 10.0
-
-[node name="CPUParticles2D5" type="CPUParticles2D" parent="."]
-position = Vector2(1048, 864)
-amount = 100
-lifetime = 20.0
-local_coords = true
-emission_shape = 2
-emission_sphere_radius = 128.0
-gravity = Vector2(0, -10)
-scale_amount_min = 2.0
-scale_amount_max = 10.0

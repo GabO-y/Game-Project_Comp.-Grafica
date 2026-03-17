@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0ycmxpkip27y"]
 
-[ext_resource type="Script" uid="uid://endjb4wi0jx7" path="res://Cenas/LightArmor/Lantern/lantern.gd" id="1_ix4eb"]
+[ext_resource type="Script" uid="uid://endjb4wi0jx7" path="res://Cenas/LightWeapon/Lantern/lantern.gd" id="1_ix4eb"]
 
 [sub_resource type="Gradient" id="Gradient_k3727"]
 offsets = PackedFloat32Array(0, 0.633333, 1)

@@ -48,6 +48,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 		queue_redraw()
 
 func _on_collision_touch_body_entered(body: Node2D) -> void:
+	
 	if ene_stuck: return
 	var ene: Enemy = body.get_parent() as Enemy
 	if ene.health <= 0: return

@@ -321,12 +321,14 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgk55"]
 bg_color = Color(1, 0, 0.0627451, 1)
 
-[node name="GhostBoss" type="Node2D" unique_id=1076960256 node_paths=PackedStringArray("animated_slash_attack", "slash_attack_area", "touch_attack_area", "health_bar", "damage_bar", "body", "anim")]
+[node name="GhostBoss" type="Node2D" unique_id=1076960256 node_paths=PackedStringArray("animated_slash_attack", "slash_attack_area", "touch_attack_area", "timer_to_special_attack", "health_bar", "damage_bar", "body", "anim")]
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_2v53c")
 animated_slash_attack = NodePath("CharacterBody2D/Animated/AnimatedSlashAttack")
 slash_attack_area = NodePath("CharacterBody2D/Areas/SlashAttackArea")
 touch_attack_area = NodePath("CharacterBody2D/Areas/TouchAttackArea")
+timer_to_special_attack = NodePath("TimerToSpecialAttack")
+time_to_special = 0.0
 health_bar = NodePath("hud/HealthProgressBar")
 damage_bar = NodePath("hud/DamageProgressBar")
 speed = 100.0
@@ -342,7 +344,7 @@ anim = NodePath("CharacterBody2D/Animated/AnimatedSprite2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D/Animated" unique_id=221338547]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xgk55")
-animation = &"die"
+animation = &"partial_die"
 
 [node name="AnimatedSlashAttack" type="AnimatedSprite2D" parent="CharacterBody2D/Animated" unique_id=563859111]
 visible = false
@@ -405,5 +407,10 @@ size_flags_vertical = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_xgk55")
 show_percentage = false
 
+[node name="TimerToSpecialAttack" type="Timer" parent="." unique_id=1256749159]
+wait_time = 7.0
+autostart = true
+
 [connection signal="body_entered" from="CharacterBody2D/Areas/TouchAttackArea" to="." method="_on_touch_attack_area_body_entered"]
 [connection signal="screen_exited" from="CharacterBody2D/Utils/VisibleOnScreenNotifier2D" to="." method="_when_boss_exit_screen"]
+[connection signal="timeout" from="TimerToSpecialAttack" to="." method="_start_special_attack"]

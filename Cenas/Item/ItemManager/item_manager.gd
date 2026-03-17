@@ -43,8 +43,6 @@ func _ready() -> void:
 	round_manager = room_manager.round_manager
 		
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_ctrl"):
-		drop_coin(Globals.player_pos() + Vector2(100, 0))
 	if Input.is_key_pressed(KEY_0):
 		if  created_items.has("coin"): 
 			for c in created_items["coin"]:
@@ -145,7 +143,7 @@ func try_drop(ene: Enemy):
 		
 func drop_by_name(item: String, pos: Vector2):
 	var i: Item = drop(item, pos)
-	if not Globals.round_manager.current_round:
+	if not Globals.round_manager.is_in_round:
 		i.setup_state(Item.ItemState.CHASING)
 	
 	#

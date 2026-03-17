@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://bobuc127k7o1n" path="res://Cenas/Menus/InitialMenu/InitialMenu.tscn" id="9_1rbih"]
 [ext_resource type="AudioStream" uid="uid://dbirbkng1xhcs" path="res://Assets/Sound/main_tema.mp3" id="10_k1pxl"]
 [ext_resource type="PackedScene" uid="uid://dx3nt37r4u3du" path="res://Cenas/Menus/Tutorial/Tutorial.tscn" id="10_knsum"]
+[ext_resource type="PackedScene" uid="uid://bq24nxfpume1g" path="res://Cenas/Menus/GodMenu/GodMenu.tscn" id="11_k260e"]
 [ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="11_pabxg"]
+[ext_resource type="PackedScene" uid="uid://bgy6ocqyifrgf" path="res://Cenas/LightWeapon/LightDash/LightDash.tscn" id="14_fx5ou"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_knsum"]
 font = ExtResource("11_pabxg")
@@ -19,7 +21,7 @@ font_size = 32
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pabxg"]
 
-[node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu")]
+[node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu", "god_menu")]
 script = ExtResource("1_rmjq6")
 player = NodePath("Player")
 room_manager = NodePath("RoomManager")
@@ -31,7 +33,7 @@ die_menu = NodePath("MenuManager/Menus/DieMenu")
 finish_menu = NodePath("MenuManager/Menus/FinishMenu")
 inital_menu = NodePath("MenuManager/Menus/InitialMenu")
 tutorial_menu = NodePath("MenuManager/Menus/Tutorial")
-only_play = true
+god_menu = NodePath("MenuManager/Menus/GodMenu")
 
 [node name="RoomManager" parent="." unique_id=2145467993 instance=ExtResource("4_6pdaa")]
 position = Vector2(0, -2)
@@ -64,7 +66,6 @@ visible = false
 manager = NodePath("../..")
 
 [node name="InitialMenu" parent="MenuManager/Menus" unique_id=1373198782 node_paths=PackedStringArray("manager") instance=ExtResource("9_1rbih")]
-visible = false
 manager = NodePath("../..")
 
 [node name="ChestMenu" parent="MenuManager/Menus" unique_id=1174797014 node_paths=PackedStringArray("popup", "area", "player", "pos") instance=ExtResource("7_1rbih")]
@@ -72,6 +73,8 @@ popup = NodePath("../../Interatives/ChestMenu/PopUp")
 area = NodePath("../../Interatives/ChestMenu/Area2D")
 player = NodePath("../../../Player")
 pos = NodePath("../../Interatives/ChestMenu/ChestMarker")
+
+[node name="GodMenu" parent="MenuManager/Menus" unique_id=401776683 instance=ExtResource("11_k260e")]
 
 [node name="Interatives" type="Node2D" parent="MenuManager" unique_id=1403220471]
 
@@ -108,3 +111,5 @@ parameters/looping = true
 
 [node name="Filter" type="CanvasModulate" parent="." unique_id=1931587469]
 color = Color(0.258125, 0.1475, 0.59, 1)
+
+[node name="LightDash" parent="." unique_id=850298755 instance=ExtResource("14_fx5ou")]
