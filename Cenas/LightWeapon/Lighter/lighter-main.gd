@@ -1,34 +1,19 @@
 extends LightWeapon
 
+class_name Lighter
+
 func _ready() -> void:
 	super._ready()
 	
-	set_price(15)
+	attributes["damage"] = CompostAtrribute.new()
+	attributes["frames_to_damage"] = CompostAtrribute.new()
 	
-	set_max(3, "damage", "value")
-	set_min(1, "damage", "value")
+	attributes["frames_to_damage"].set_attr("value", 20, 40)
+	attributes["frames_to_damage"].set_attr("price", 100, 10)
 	
-	set_max(Vector2(1.5, 1.5), "distance", "value")
-	set_min(Vector2(1.0, 1.0), "distance", "value")
+	attributes["damage"].set_attr("value", 5, 1)
+	attributes["damage"].set_attr("price", 150, 10)
+
 	
-	set_max(0.4, "time_attack", "value")
-	set_min(1.0, "time_attack", "value")
-	
-	set_max(5, "time_attack", "level")
-	
-	set_min(10.0, "distance", "price")
-	set_max(70.0, "distance", "price")
-	
-	set_max(50.0, "damage", "price")
-	set_min(2, "damage", "price")
-	
-	set_max(80.0, "time_attack", "price")
-	set_min(10, "time_attack", "price")
-	
-	set_max(3, "damage", "level")
-	
-	_update()
-	
-func _process(delta: float) -> void:
-	super._process(delta)
+
 	

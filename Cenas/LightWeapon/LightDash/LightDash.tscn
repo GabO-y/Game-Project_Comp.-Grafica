@@ -2,5 +2,14 @@
 
 [ext_resource type="Script" uid="uid://d047cu3umlal0" path="res://Cenas/LightWeapon/LightDash/light_dash.gd" id="1_1y48o"]
 
-[node name="LightDash" type="Node2D" unique_id=850298755]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1y48o"]
+
+[node name="LightDash" type="Node2D" unique_id=850298755 node_paths=PackedStringArray("light_area")]
 script = ExtResource("1_1y48o")
+light_area = NodePath("LightArea")
+
+[node name="LightArea" type="Area2D" parent="." unique_id=151927648]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightArea" unique_id=1091104499]
+shape = SubResource("CircleShape2D_1y48o")
+disabled = true

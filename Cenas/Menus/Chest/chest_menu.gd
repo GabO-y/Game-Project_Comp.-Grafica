@@ -38,10 +38,10 @@ var label_coin_pos: Vector2
 func _ready() -> void:
 	menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	await get_tree().process_frame
-	Globals.player.armor_manager.chess_menu = self
+	#Globals.player.armor_manager.chess_menu = self
 	set_active(false)
 	hide_pop_up()
-	armor_menu.armor_manager = player.armor_manager
+	#armor_menu.armor_manager = player.armor_manager
 	armor_menu.setup_sizes()
 	armor_menu._update("lantern")
 	player.spend_coins.connect(_update_label_coins)

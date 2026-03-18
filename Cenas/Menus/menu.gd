@@ -64,12 +64,16 @@ func desable_state(delta: float):
 			
 func setup_player():
 	var player: Player = Globals.player
+	if not player: return
 	match current_state:
 		MenuState.ENABLE:
 			last_player_state = Globals.player.current_state
 			player.current_state = Globals.player.PlayerState.MENU
 		MenuState.DESABLE:
-			player.current_state = last_player_state
+			if last_player_state:
+				player.current_state = last_player_state
+			else:
+				player.current_state = Player.PlayerState.MOVING
 			
 
 func reset():

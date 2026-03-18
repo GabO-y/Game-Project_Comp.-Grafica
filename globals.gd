@@ -24,6 +24,7 @@ var room_manager: RoomManager
 var item_manager: ItemManager
 var key_manager: KeyManager
 var round_manager: RoundManagar
+var weapon_manager: WeaponManager
 var house: House
 
 var only_use_key: bool = false
@@ -51,7 +52,7 @@ var layers = {
 	"out_room_boss": 1 << 5,
 	"ghost": 1 << 6,
 	"no_collision_wall": 1 << 7,
-	"armor": 1 << 8,
+	"weapon": 1 << 8,
 	"dash_moment": 1 << 9,
 	# Para uns obstaculos nos quartos (toy_library)
 	"utils_wall": 1 << 10

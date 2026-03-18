@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://ciou68u8yy1t0"]
+
+[ext_resource type="Script" uid="uid://pqwme5opiip7" path="res://Cenas/Menus/ShopMenu/shop_menu.gd" id="1_l2c2b"]
+[ext_resource type="StyleBox" uid="uid://c6k377l0hcju0" path="res://new_style_box_flat.tres" id="2_2phjd"]
+[ext_resource type="PackedScene" uid="uid://4cnr1oho26gn" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/WeaponsUpgradesScreen/WeaponsUpgradesScreen.tscn" id="2_axche"]
+[ext_resource type="Texture2D" uid="uid://ds33n7jap68rc" path="res://Assets/Interfaces/ChestUI/LanternIcon.png" id="3_6tcjk"]
+[ext_resource type="Texture2D" uid="uid://i61i268vkyxl" path="res://Assets/Interfaces/ChestUI/PowerUpsIcon.png" id="4_punup"]
+[ext_resource type="PackedScene" uid="uid://6xkx4mskqytw" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/PlayerUpgradesScreen/PlayerUpgrades.tscn" id="6_punup"]
+
+[node name="ShopMenu" type="CanvasLayer" unique_id=1637258923 node_paths=PackedStringArray("tab_container", "weapon_upgrade_screen", "select_weapon_button", "select_upgrades_player_button")]
+script = ExtResource("1_l2c2b")
+tab_container = NodePath("MarginContainer/PanelContainer/VBoxContainer/TabContainer")
+weapon_upgrade_screen = NodePath("MarginContainer/PanelContainer/VBoxContainer/TabContainer/WeaponsUpgradesScreen")
+select_weapon_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Weapon")
+select_upgrades_player_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Player")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=428578410]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 25
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=149682609]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_2phjd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=404379338]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=730648307]
+layout_mode = 2
+alignment = 1
+
+[node name="Weapon" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=727865240]
+layout_mode = 2
+icon = ExtResource("3_6tcjk")
+
+[node name="Player" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1261531036]
+layout_mode = 2
+icon = ExtResource("4_punup")
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=631262847]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_2phjd")
+current_tab = 0
+tabs_visible = false
+
+[node name="WeaponsUpgradesScreen" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=2073619367 instance=ExtResource("2_axche")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PlayerUpgrades" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=65496558 instance=ExtResource("6_punup")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1

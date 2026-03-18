@@ -33,9 +33,9 @@ func _ready() -> void:
 	super._ready()
 
 	body.collision_layer = Globals.layers["boss"]
-	body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
+	body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"]
 	touch_attack_area.collision_layer = Globals.layers["boss"]
-	touch_attack_area.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
+	touch_attack_area.collision_mask = Globals.layers["player"] | Globals.layers["weapon"]
 	
 
 func _process(delta: float) -> void:
@@ -143,7 +143,7 @@ func ghost_run(stage: int, delta: float):
 				is_in_special = false
 				timer_to_special_attack.start()
 				body.collision_layer = Globals.layers["boss"]
-				body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
+				body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"]
 				return
 
 func shooting_ghosts(stage: int, delta: float):
@@ -238,15 +238,11 @@ func shooting_ghosts(stage: int, delta: float):
 				return
 			remove_child(g_node)
 		
-		
 			body.collision_layer = Globals.layers["boss"]
-			body.collision_mask = Globals.layers["player"] | Globals.layers["armor"]
+			body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"]
 			is_in_special = false
 			timer_to_special_attack.start()
 			setup_state(EnemyState.CHESING)
-				
-					
-				
 
 func dying_state(stage: int, delta: float):
 	match stage:

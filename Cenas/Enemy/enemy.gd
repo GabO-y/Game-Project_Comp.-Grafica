@@ -54,7 +54,6 @@ func _ready() -> void:
 		damage_att, speed_att, health_att
 	])
 		
-
 	damage_audio = AudioStreamPlayer.new()
 	
 	add_child(damage_audio)
@@ -63,7 +62,6 @@ func _ready() -> void:
 	damage_audio.pitch_scale = 1.5
 	damage_audio.volume_db = -10
 	
-
 func _process(delta: float) -> void:
 	if gnaw_audio:
 		if audio_timer >= audio_time_play:
@@ -143,7 +141,7 @@ func set_active(mode):
 	is_active = mode
 		
 	var layer = Globals.layers["enemy"] if mode else 0
-	var mask = Globals.layers["player"] | Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["utils_wall"] | Globals.layers["armor"] if mode else 0
+	var mask = Globals.layers["player"] | Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["utils_wall"] | Globals.layers["weapon"] if mode else 0
 	
 	body.collision_layer = layer
 	body.collision_mask = mask

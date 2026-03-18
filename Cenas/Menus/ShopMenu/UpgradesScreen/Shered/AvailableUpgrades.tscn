@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://b8wgqlkfrtspx"]
+
+[ext_resource type="Script" uid="uid://b7dxgunk51pt3" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/Shered/available_upgrades.gd" id="1_ecxfd"]
+[ext_resource type="StyleBox" uid="uid://c6k377l0hcju0" path="res://new_style_box_flat.tres" id="2_b4x0w"]
+[ext_resource type="StyleBox" uid="uid://cdbahwm6bedni" path="res://progress_bar.tres" id="3_y8v4u"]
+
+[sub_resource type="Gradient" id="Gradient_3kkg3"]
+offsets = PackedFloat32Array(0.6653226)
+colors = PackedColorArray(0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7bgnt"]
+gradient = SubResource("Gradient_3kkg3")
+width = 128
+height = 128
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kkg3"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 0.67058825)
+draw_center = false
+corner_radius_top_left = 400
+corner_radius_top_right = 400
+corner_radius_bottom_right = 400
+corner_radius_bottom_left = 400
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_41kts"]
+bg_color = Color(0.17522371, 0.17522374, 0.17522365, 0.5882353)
+corner_radius_top_left = 400
+corner_radius_top_right = 400
+corner_radius_bottom_right = 400
+corner_radius_bottom_left = 400
+
+[node name="AvailableUpgrades" type="TextureRect" unique_id=313429744 node_paths=PackedStringArray("button", "label_name", "label_price", "progress_bar")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_7bgnt")
+script = ExtResource("1_ecxfd")
+button = NodePath("Button")
+label_name = NodePath("Button/ProgressBar/VBoxContainer/HBoxContainer/Name")
+label_price = NodePath("Button/ProgressBar/VBoxContainer/HBoxContainer/Price")
+progress_bar = NodePath("Button/ProgressBar")
+
+[node name="Button" type="Button" parent="." unique_id=550180780]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3kkg3")
+theme_override_styles/pressed = ExtResource("2_b4x0w")
+
+[node name="ProgressBar" type="ProgressBar" parent="Button" unique_id=2075868204]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_41kts")
+theme_override_styles/fill = ExtResource("3_y8v4u")
+max_value = 1.0
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button/ProgressBar" unique_id=682752837]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Button/ProgressBar/VBoxContainer" unique_id=2101093128]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Name" type="Label" parent="Button/ProgressBar/VBoxContainer/HBoxContainer" unique_id=2073367528]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Upgrade Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Price" type="Label" parent="Button/ProgressBar/VBoxContainer/HBoxContainer" unique_id=1725773625]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Price"
+horizontal_alignment = 1
+vertical_alignment = 1

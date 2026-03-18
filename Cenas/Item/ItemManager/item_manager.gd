@@ -225,16 +225,9 @@ func finish_get_key():
 		Globals.house.desable_camera()
 		
 func reset():
-	
 	for child in items_node.get_children():
 		items_node.remove_child(child)
-	
 	created_items = {}
-
-	is_finish_get_key = false
-	key_in_scene = null
-	
-	Globals.player.is_getting_key = false
 	key_manager.reset()
 		
 func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:

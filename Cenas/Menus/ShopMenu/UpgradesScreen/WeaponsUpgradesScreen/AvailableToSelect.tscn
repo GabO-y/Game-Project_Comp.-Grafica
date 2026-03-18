@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://cmiisiocrjnoq"]
+
+[ext_resource type="Script" uid="uid://my7eauq7clsq" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/WeaponsUpgradesScreen/avaliable_to_select.gd" id="1_dledo"]
+[ext_resource type="Texture2D" uid="uid://b8w10j8p6lcri" path="res://Assets/LightArmor/Lantern/lantern_icon.png" id="1_necyg"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="2_mjfna"]
+
+[sub_resource type="Gradient" id="Gradient_ayj4j"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_necyg"]
+gradient = SubResource("Gradient_ayj4j")
+width = 128
+height = 128
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayj4j"]
+bg_color = Color(0, 0, 0, 0.23529412)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_dledo"]
+font = ExtResource("2_mjfna")
+font_size = 32
+
+[node name="AvailableWeapons" type="TextureRect" unique_id=629679489 node_paths=PackedStringArray("button", "label_name", "label_price")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_necyg")
+script = ExtResource("1_dledo")
+button = NodePath("Button")
+label_name = NodePath("Button/VBoxContainer/WeaponName")
+label_price = NodePath("Button/VBoxContainer/Price")
+
+[node name="Button" type="Button" parent="." unique_id=1389255977]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ayj4j")
+icon = ExtResource("1_necyg")
+expand_icon = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button" unique_id=1690004867]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 307.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="WeaponName" type="Label" parent="Button/VBoxContainer" unique_id=569789499]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Weapon Name"
+label_settings = SubResource("LabelSettings_dledo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Price" type="Label" parent="Button/VBoxContainer" unique_id=2068813073]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "                               Weapon Price"
+label_settings = SubResource("LabelSettings_dledo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Button/VBoxContainer" unique_id=1282732214]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 100

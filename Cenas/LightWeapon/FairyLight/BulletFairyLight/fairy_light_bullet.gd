@@ -15,9 +15,9 @@ var fairy_light: FairyLight
 var is_to_rotate: bool = true
 
 func _ready() -> void:
-	light_area.collision_layer = Globals.layers["armor"] | Globals.layers["player"]
+	light_area.collision_layer = Globals.layers["weapon"] | Globals.layers["player"]
 	light_area.collision_mask = Globals.layers["enemy"] | Globals.layers["ghost"] | Globals.layers["boss"]
-	collision_area.collision_layer = Globals.layers["armor"] | Globals.layers["player"]
+	collision_area.collision_layer = Globals.layers["weapon"] | Globals.layers["player"]
 	collision_area.collision_mask = Globals.layers["enemy"] | Globals.layers["ghost"] | Globals.layers["boss"]
 	
 func _physics_process(delta: float) -> void:
@@ -31,15 +31,16 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 		for ene in enemies_in_light:
 			if ene["in_light"]:
-				ene["time"] += delta
+				ene["frames"] += 1
 			else:
-				ene["time"] -= delta
-			var time = ene["time"]
-			if time < 0.0:
+				ene["frames"] -= 1
+			var f: int = ene["frames"]
+			if f < 0:
 				enemies_in_light.erase(ene)
-			if time > fairy_light.time_to_damage:
-				ene["ene"].take_damage(fairy_light.damage)
-				ene["time"] = 0.0
+			if f > fairy_light.attributes["frames_to_damage"].get_attr("value"):
+				ene["ene"].take_damage(fairy_light.attributes["damage"].get_attr("value"))
+				ene["frames"] = 0.0
+				
 	elif is_to_rotate:
 		rotate(deg_to_rad(20.0))
 		
@@ -53,7 +54,7 @@ func _on_collision_touch_body_entered(body: Node2D) -> void:
 	var ene: Enemy = body.get_parent() as Enemy
 	if ene.health <= 0: return
 	
-	if Globals.insta_ene_kill:
+	if Globals.god_vars["insta_ene_kill"]:
 		ene.die()
 		return
 	
@@ -64,7 +65,7 @@ func _on_collision_touch_body_entered(body: Node2D) -> void:
 		light_area.body_exited.connect(ene_exit_light)
 		enemies_in_light.append({
 			"ene": ene,
-			"time": 0.0,
+			"frames": 0,
 			"in_light": true
 		})
 
@@ -73,7 +74,7 @@ func ene_enter_light(body: Node2D):
 	if ene:
 		enemies_in_light.append({
 			"ene": ene,
-			"time": 0.0,
+			"frames": 0,
 			"in_light": true
 		})
 	

@@ -571,6 +571,7 @@ agent = NodePath("CharacterBody2D/NavigationAgent2D")
 time = NodePath("Timer")
 animated_slash_attack = NodePath("CharacterBody2D/Animateds/AnimatedSlashAttack")
 slash_hit_area = NodePath("CharacterBody2D/Areas/SlashHitArea")
+health = 10.0
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 

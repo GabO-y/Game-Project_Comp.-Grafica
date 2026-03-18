@@ -3,7 +3,7 @@ extends Control
 class_name ArmorChestMenu
 
 @export var chess_menu: ChestMenu
-@export var armor_manager: ArmorManager
+@export var armor_manager: WeaponManager
 
 @export var damage: UpgradeSizeItem
 @export var time_to_attack: UpgradeSizeItem
@@ -56,7 +56,9 @@ func _ready() -> void:
 	
 func _update(a_name: String):
 	
-	var arm = armor_manager.get_armor(a_name)
+	return
+	
+	var arm  # = armor_manager.get_armor(a_name)
 	
 	for up in up_options:
 		up.progress_bar.max_value = arm.general_infos.get_max_level(up.type)
@@ -78,9 +80,11 @@ func _update(a_name: String):
 
 func setup_sizes():
 
+	return
+
 	for armor in armor_options:
 		armor.armor_menu = self
-		armor.armor_manager = armor_manager
+		#armor.armor_manager = armor_manager
 		armor.setup_button()
 		_update(armor.name_label.text)
 

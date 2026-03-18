@@ -1,7 +1,7 @@
 extends Character
 class_name Player
 
-@export var armor: LightWeapon
+@export var weapon_node: Node2D
 
 @export var can_die: bool = true
 @export var hit_kill: bool = false
@@ -13,7 +13,7 @@ class_name Player
 @export var hud_node: CanvasLayer
 @export var label_coins: Label
 @export var armor_node: Node2D
-@export var armor_manager: ArmorManager
+@export var weapon_manager: WeaponManager
 @export var dash_audio: AudioStreamPlayer
 @export var raycast2d_node: Node2D
 
@@ -23,9 +23,9 @@ var max_heart: int = 5
 var hearts: int = 0
 
 var is_invencible: bool = false
-var invencible_duration: float = 1.2
+var invencible_frames_duration: float = 1.2
 var invencible_duration_bonus: float = 1.0
-var invencible_timer: float = 0
+var invencible_frames_count: float = 0
 
 var input_vector: Vector2
 
@@ -54,15 +54,6 @@ var knockback_force: int
 var knockback_time = 0
 var knockback_duration = 0.5
 
-var is_in_menu = false
-var is_getting_key: bool = false
-
-var wearpowns = [Lantern]
-
-var enemies_touch = {}
-
-var current_ene_defalut: int = 0
-
 var is_dead: bool = false
 
 @export var heart_node: Control
@@ -78,23 +69,91 @@ var t: float = 0.0
 
 var can_take_damege: bool = true
 
+var attributes: Dictionary = {}
+
 func _ready() -> void:
+	
+	var tab_infos: Dictionary = {
+		"life": {
+			"value": {
+				"max": 10,
+				"min": 5
+			},
+			"price": {
+				"max": 100,
+				"min": 15
+			},
+			"max_level": 6
+		},
+		"speed": {
+			"value": {
+				"max": 200,
+				"min": 100
+			},
+			"price": {
+				"max": 100,
+				"min": 15
+			}
+		},
+		"dash_duration": {
+			"value": {
+				"max": 6,
+				"min": 3
+			},
+			"max_level": 5,
+			"price": {
+				"max": 100,
+				"min": 15
+			}
+		},
+		"dash_coldown": {
+			"value": {
+				"max": 8,
+				"min": 15
+			},
+			"price": {
+				"max": 100,
+				"min": 15
+			}
+		},
+		"invencible_time": {
+			"value": {
+				"max": 120,
+				"min": 70
+			},
+			"price": {
+				"max": 100,
+				"min": 15
+			}
+		}
+	}
+	
+	for attr in tab_infos.keys():
+		var max_level: int = 10
+		if tab_infos[attr].has("max_level"):
+			max_level = tab_infos[attr]["max_level"]
+		var a: CompostAtrribute = CompostAtrribute.new(max_level)
+		
+		for key in tab_infos[attr]:
+			if key == "max_level":
+				continue
+			a.set_attr(key, tab_infos[attr][key]["max"], tab_infos[attr][key]["min"])
+		attributes[attr] = a
+	
+	for key in attributes.keys():
+		print(attributes[key].max_level)
+
+	Globals.weapon_manager = weapon_manager
 	
 	hearts = max_heart
 	
 	update_label_coins()
 
-	_die.connect(
-		func():
-			if armor.is_active: 
-				armor.toggle_activate()
-			armor.can_active = false
-	)
-		
 	spend_coins.connect(_spend_coins)
 	
 	get_window().size_changed.connect(update_hearts)
-	update_hearts()
+	for attr in attributes.keys():
+		update_status(attr)
 	
 func set_armor(armor: LightWeapon):
 	for child in armor_node.get_children():
@@ -109,19 +168,7 @@ func _spend_coins(amount: int):
 	coins -= amount
 	update_label_coins()
 	
-func _process(delta: float) -> void:
-	if is_in_menu: return
-	if coins < 0:
-		print("Negativo")
-	armor.global_position = body.global_position
-	
-	
-#func _exit_enemie(body):
-	##pra pegar o corpo e verificar se é enemie
-	#if !(body.get_parent() is Enemy): return
-	#var ene = body.get_parent()
-	#enemies_touch.erase(ene)
-		
+
 func _physics_process(delta: float) -> void:
 	match current_state:
 		PlayerState.MOVING:
@@ -150,15 +197,13 @@ func _physics_process(delta: float) -> void:
 			can_dash = true
 			
 	if is_invencible:
-		invencible_timer += delta
+		invencible_frames_count += 1
 		flick()
-		if invencible_timer > invencible_duration:
+		if invencible_frames_count > invencible_frames_duration:
 			is_invencible = false
-			invencible_timer = 0.0
+			invencible_frames_count = 0
 			flick_aux = 0
-		
-		
-			
+			anim.modulate = Color(1, 1, 1)
 
 func setup_state(state: PlayerState):
 	match state:
@@ -236,28 +281,6 @@ func animation_logic():
 	anim.flip_h = dir.x > 0
 	anim.play(play)
 		
-	#if is_on_knockback or is_getting_key or is_dead: return
-	
-	#var play = ""
-	
-	#var is_moving = dir != Vector2.ZERO
-	#
-	#if armor.is_active:
-		#dir = armor.armor_dir
-		#
-	#if not is_moving:
-		#play = "idle"
-		#if not armor.is_active:
-			#dir = last_direction
-	#else:
-		#play = "walk"
-		#
-	#play += "_back" if dir.y < 0 else ""
-	#
-		#
-	#anim.flip_h = dir.x > 0
-	#anim.play(play)
-
 func knockback_animation(dir: Vector2):
 	
 	anim.play("knockback")
@@ -268,51 +291,23 @@ func knockback_animation(dir: Vector2):
 	last_direction = -dir
 	last_direction.y = 1
 	is_on_knockback = false
-	
-func get_key_animation(key: Key):
-	
-	key.is_move = false
-	
-	if armor.is_active:
-		armor.toggle_activate()
-	
-	set_process(false)
-	set_physics_process(false)
-		
-	var tween = create_tween()
-	
-	is_getting_key = true
-	anim.play("get_item")
-	
-	var final_pos = body.global_position
-	final_pos.y -= 20
-	
-	tween.tween_property(key, "global_position", final_pos, 2)
-	
-	return tween.finished
 
-func _unlocked_doors():
-	pass
-	
 func take_damage(damage: int):
 
 	if is_invencible or not can_take_damege or not Globals.god_vars["can_player_die"]: 
 		return
 	is_invencible = true
-	
-	
 	setup_state(PlayerState.KNOCKBACK)
-
-	
 	hearts -= damage;
 	update_hearts()
-	
 	if hearts <= 0:
 		die()
 	
 func die():
 	
 	if is_dead: return
+	
+	Globals.weapon_manager.selected.setup_state(LightWeapon.LightWeaponState.DESABLE)
 	
 	get_tree().paused = true
 	
@@ -350,25 +345,7 @@ func update_label_coins():
 	
 func update_hearts():
 	set_heart_hud(hearts, max_heart)
-	
-	#for child in heart_conteiner.get_children():
-		#if is_instance_valid(child):
-			#heart_conteiner.remove_child(child)
-			#child.queue_free()
-	#if hearts == max_heart:
-		#var text = TextureRect.new()
-		#text.texture = heart_model
-		#for i in range(max_heart):
-			#heart_conteiner.add_child(text.duplicate())
-		#return
-	#for i in range(max_heart):
-		#var text = TextureRect.new()
-		#if i <= hearts - 1:
-			#text.texture = heart_model
-		#else:
-			#text.texture = broken_heart
-		#heart_conteiner.add_child(text)
-		
+
 func set_heart_hud(value: int, max: int):
 	
 	for c in heart_node.get_children():
@@ -407,7 +384,6 @@ func reset():
 	current_state = PlayerState.MOVING
 	
 	can_dash = false   
-	armor.can_active = true
 	
 	body.scale = Vector2(1, 1)
 	anim.z_index = 0
@@ -431,12 +407,8 @@ func set_active(mode: bool):
 	set_process_input(mode)
 	
 	if not mode:
-		if armor.is_active:
-			armor.toggle_activate()
 		anim.play("idle")
 		
-	armor.can_active = mode
-
 func set_collision_ene(mode: bool):
 	var mask = Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["ghost"] if mode else Globals.layers["current_wall"]
 	body.collision_mask = mask
@@ -447,6 +419,23 @@ func set_collision_ene(mode: bool):
 # ele empurra o player para o lado contrário
 func test_wall_stuck():
 	raycast2d_node.test_wall_stuck()
+	
+func update_status(name: String):
+	print(name)
+	match name:
+		"life":
+			max_heart = attributes[name].get_attr("value")
+			hearts = max_heart
+			update_hearts()
+		"speed":
+			speed = attributes[name].get_attr("value")
+		"dash_duration": 
+			dash_frames_duration = attributes[name].get_attr("value")
+		"dash_coldown": 
+			dash_cooldown_frames_duration = attributes[name].get_attr("value")
+		"invencible_time": 
+			invencible_frames_duration = attributes[name].get_attr("value")
+
 	
 signal _die
 

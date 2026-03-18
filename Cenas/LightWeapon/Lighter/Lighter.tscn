@@ -14,9 +14,9 @@ gradient = SubResource("Gradient_sx7w1")
 fill = 1
 fill_from = Vector2(0.495726, 0.492877)
 
-[node name="Lighter" type="Node2D" unique_id=1400855335 node_paths=PackedStringArray("area") groups=["Armor"]]
+[node name="Lighter" type="Node2D" unique_id=1400855335 node_paths=PackedStringArray("light_area") groups=["Armor"]]
 script = ExtResource("1_dlcgh")
-area = NodePath("Area2D")
+light_area = NodePath("Area2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1728836028]
 

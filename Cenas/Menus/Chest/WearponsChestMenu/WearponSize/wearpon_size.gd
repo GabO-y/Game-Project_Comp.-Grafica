@@ -8,7 +8,7 @@ class_name WearponSizeItem
 
 @export var audio: AudioStreamPlayer
 
-var armor_manager: ArmorManager
+var armor_manager: WeaponManager
 var armor_menu: ArmorChestMenu
 
 var is_to_play: bool = true
@@ -32,9 +32,9 @@ func setup(name_item: String, path_icon: String):
 	
 func setup_button():
 	
-	var price = armor_manager.get_armor(name_label.text).get_price()
+	#var price = armor_manager.get_armor(name_label.text).get_price()
 	
-	price_label.text = str(price)
+	#price_label.text = str(price)
 	
 	button.button_down.connect(_press_button)
 	

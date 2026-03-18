@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://4cnr1oho26gn"]
+
+[ext_resource type="Script" uid="uid://c1r1cmy326kyu" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/WeaponsUpgradesScreen/weapons_upgrades_screen.gd" id="1_rhl13"]
+[ext_resource type="PackedScene" uid="uid://cmiisiocrjnoq" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/WeaponsUpgradesScreen/AvailableToSelect.tscn" id="2_g1yaa"]
+[ext_resource type="PackedScene" uid="uid://b8wgqlkfrtspx" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/Shered/AvailableUpgrades.tscn" id="2_rhl13"]
+
+[node name="WeaponsUpgradesScreen" type="Control" unique_id=2073619367 node_paths=PackedStringArray("weapon_items", "upgredes_item")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rhl13")
+weapon_items = NodePath("MarginContainer/HBoxContainer/WeaponSize/Items")
+upgredes_item = NodePath("MarginContainer/HBoxContainer/Upgrades/Items")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1556652967]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1399994367]
+layout_mode = 2
+
+[node name="WeaponSize" type="ScrollContainer" parent="MarginContainer/HBoxContainer" unique_id=1527697005]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Items" type="VBoxContainer" parent="MarginContainer/HBoxContainer/WeaponSize" unique_id=1555417039]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="AvailableWeapons" parent="MarginContainer/HBoxContainer/WeaponSize/Items" unique_id=629679489 instance=ExtResource("2_g1yaa")]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer" unique_id=260403417]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Upgrades" type="ScrollContainer" parent="MarginContainer/HBoxContainer" unique_id=626710563]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Items" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Upgrades" unique_id=471820922]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="AvailableUpgrades" parent="MarginContainer/HBoxContainer/Upgrades/Items" unique_id=313429744 instance=ExtResource("2_rhl13")]
+layout_mode = 2

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://df6rl28qpnweo"]
+
+[ext_resource type="Script" uid="uid://dv2h8dpx42l3j" path="res://Cenas/LightWeapon/WeaponManager/weapon_manager.gd" id="1_f5o6k"]
+
+[node name="WeaponManager" type="Node2D" unique_id=954447346]
+script = ExtResource("1_f5o6k")
+
+[node name="Armors" type="Node2D" parent="." unique_id=822389571]

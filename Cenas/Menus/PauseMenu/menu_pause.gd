@@ -50,10 +50,6 @@ func _on_exit_button_down() -> void:
 	
 
 func _on_finish_round_pressed() -> void:
-	if Globals.player.is_getting_key:
-		hide_menu()
-		return 
 	setup_state(MenuState.DESABLE)
 	Globals.player.hearts = 0
 	Globals.player.die()
-	hide_menu()

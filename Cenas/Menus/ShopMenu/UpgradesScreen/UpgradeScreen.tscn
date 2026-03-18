@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cu8yue553jfvi"]
+
+[node name="UpgradeScreen" type="Control" unique_id=111975566]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1653334361]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=11654317]
+layout_mode = 2
+
+[node name="ToSelectSize" type="ScrollContainer" parent="MarginContainer/HBoxContainer" unique_id=1724858588]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Items" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ToSelectSize" unique_id=1042783036]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer" unique_id=1456805386]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Upgrades" type="ScrollContainer" parent="MarginContainer/HBoxContainer" unique_id=1643272421]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Items" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Upgrades" unique_id=2024234953]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+alignment = 1

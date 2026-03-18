@@ -28,8 +28,11 @@ var is_player_in_attack_range = false
 var last_dir_player: Vector2 = Vector2.RIGHT
 
 func _ready() -> void:
-	z_index = 1
 	animation_type = get_aniamtion_tipy()
+	
+	body.collision_layer = Globals.layers["enemy"] 
+	body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"] |  Globals.layers["current_wall"]
+	
 	super._ready()
 	
 
@@ -39,17 +42,6 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
-	
-	#if !is_active or is_stop:
-		#return
-#
-	#match current_state:
-		#State.CHASING:
-			#handle_chasing_state(dist_to_player())
-		#State.DASHING:
-			#handle_dashing_state(delta)
-		#State.ATTACKING:
-			#handle_attacking_state(delta)
 
 func waiting_state(delta: float):
 	if t > d:

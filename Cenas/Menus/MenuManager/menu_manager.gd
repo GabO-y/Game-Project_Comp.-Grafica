@@ -12,7 +12,6 @@ func _ready() -> void:
 		if child.name == "Menus":
 			for menu in child.get_children():
 				menus.append(menu)
-				menu.manager = self
 				menu.process_mode = Node.PROCESS_MODE_ALWAYS
 				
 func show_menus():

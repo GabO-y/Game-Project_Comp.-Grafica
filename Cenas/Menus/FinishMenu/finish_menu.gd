@@ -79,9 +79,6 @@ func setup_state(state: MenuState):
 			
 			player.body.add_child(particles_node)
 			player.hud_node.visible = false
-			player.armor.is_active = true
-			player.armor.toggle_activate()
-			player.armor.can_active = false
 
 			aux_var["stage"] = 1
 			aux_var["cam"] = Globals.room_manager.current_room.camera

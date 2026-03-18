@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://clp3coh5mf60x" path="res://Cenas/Player/Player.tscn" id="2_iqu7b"]
 [ext_resource type="PackedScene" uid="uid://b0ntae4uqgnun" path="res://Cenas/Rooms/RoomManager/RoomManager.tscn" id="4_6pdaa"]
 [ext_resource type="PackedScene" uid="uid://cgvqvypw3s860" path="res://Cenas/Menus/MenuManager/MenuManager.tscn" id="6_1jfoj"]
-[ext_resource type="PackedScene" uid="uid://bb4ttu771sbb6" path="res://Cenas/Menus/Chest/ChestMenu.tscn" id="7_1rbih"]
 [ext_resource type="PackedScene" uid="uid://f8wn68c73ads" path="res://Cenas/Menus/PauseMenu/MenuPause.tscn" id="7_6pdaa"]
 [ext_resource type="PackedScene" uid="uid://d0tbbrjem3h7v" path="res://Cenas/Menus/DieMenu/DieMenu.tscn" id="7_k5gof"]
 [ext_resource type="PackedScene" uid="uid://dsi5d8k7xbh8s" path="res://Cenas/Menus/FinishMenu/FinishMenu.tscn" id="8_k5gof"]
@@ -12,14 +11,12 @@
 [ext_resource type="AudioStream" uid="uid://dbirbkng1xhcs" path="res://Assets/Sound/main_tema.mp3" id="10_k1pxl"]
 [ext_resource type="PackedScene" uid="uid://dx3nt37r4u3du" path="res://Cenas/Menus/Tutorial/Tutorial.tscn" id="10_knsum"]
 [ext_resource type="PackedScene" uid="uid://bq24nxfpume1g" path="res://Cenas/Menus/GodMenu/GodMenu.tscn" id="11_k260e"]
-[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="11_pabxg"]
-[ext_resource type="PackedScene" uid="uid://bgy6ocqyifrgf" path="res://Cenas/LightWeapon/LightDash/LightDash.tscn" id="14_fx5ou"]
+[ext_resource type="PackedScene" uid="uid://ciou68u8yy1t0" path="res://Cenas/Menus/ShopMenu/ShopMenu.tscn" id="11_pabxg"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="12_k260e"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_knsum"]
-font = ExtResource("11_pabxg")
-font_size = 32
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_pabxg"]
+[sub_resource type="LabelSettings" id="LabelSettings_fx5ou"]
+font = ExtResource("12_k260e")
+font_size = 64
 
 [node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "camera", "menu_manager", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu", "god_menu")]
 script = ExtResource("1_rmjq6")
@@ -66,39 +63,31 @@ visible = false
 manager = NodePath("../..")
 
 [node name="InitialMenu" parent="MenuManager/Menus" unique_id=1373198782 node_paths=PackedStringArray("manager") instance=ExtResource("9_1rbih")]
+visible = false
 manager = NodePath("../..")
 
-[node name="ChestMenu" parent="MenuManager/Menus" unique_id=1174797014 node_paths=PackedStringArray("popup", "area", "player", "pos") instance=ExtResource("7_1rbih")]
-popup = NodePath("../../Interatives/ChestMenu/PopUp")
-area = NodePath("../../Interatives/ChestMenu/Area2D")
-player = NodePath("../../../Player")
-pos = NodePath("../../Interatives/ChestMenu/ChestMarker")
-
 [node name="GodMenu" parent="MenuManager/Menus" unique_id=401776683 instance=ExtResource("11_k260e")]
+visible = false
 
-[node name="Interatives" type="Node2D" parent="MenuManager" unique_id=1403220471]
+[node name="ShopMenu" parent="MenuManager/Menus" unique_id=1637258923 node_paths=PackedStringArray("pos", "pop_up") instance=ExtResource("11_pabxg")]
+pos = NodePath("../Interatives/ShopMenu/Pos")
+pop_up = NodePath("../Interatives/ShopMenu/PopUp")
 
-[node name="ChestMenu" type="Node2D" parent="MenuManager/Interatives" unique_id=1748998382]
+[node name="Interatives" type="Node2D" parent="MenuManager/Menus" unique_id=2072668704]
 
-[node name="PopUp" type="Label" parent="MenuManager/Interatives/ChestMenu" unique_id=1169807164]
-texture_filter = 1
-offset_left = 159.0
-offset_top = 44.0
-offset_right = 269.0
-offset_bottom = 78.0
-scale = Vector2(0.5, 0.5)
+[node name="ShopMenu" type="Node2D" parent="MenuManager/Menus/Interatives" unique_id=100975045]
+
+[node name="Pos" type="Marker2D" parent="MenuManager/Menus/Interatives/ShopMenu" unique_id=1614329997]
+position = Vector2(161, 77)
+
+[node name="PopUp" type="Label" parent="MenuManager/Menus/Interatives/ShopMenu" unique_id=2139945972]
+offset_left = 120.0
+offset_top = 45.0
+offset_right = 341.0
+offset_bottom = 111.0
+scale = Vector2(0.3, 0.3)
 text = "Abrir Baú"
-label_settings = SubResource("LabelSettings_knsum")
-metadata/_edit_use_anchors_ = true
-
-[node name="Area2D" type="Area2D" parent="MenuManager/Interatives/ChestMenu" unique_id=438153212]
-position = Vector2(183, 71)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MenuManager/Interatives/ChestMenu/Area2D" unique_id=2130982810]
-shape = SubResource("CircleShape2D_pabxg")
-
-[node name="ChestMarker" type="Marker2D" parent="MenuManager/Interatives/ChestMenu" unique_id=1841712602]
-position = Vector2(183, 71)
+label_settings = SubResource("LabelSettings_fx5ou")
 
 [node name="InitialPosition" type="Marker2D" parent="." unique_id=146841559]
 position = Vector2(69, 98)
@@ -111,5 +100,3 @@ parameters/looping = true
 
 [node name="Filter" type="CanvasModulate" parent="." unique_id=1931587469]
 color = Color(0.258125, 0.1475, 0.59, 1)
-
-[node name="LightDash" parent="." unique_id=850298755 instance=ExtResource("14_fx5ou")]
