@@ -33,10 +33,8 @@ func _ready() -> void:
 		var instance: LightWeapon = weapons[key]["weapon"].instantiate()
 		aux_array.append(instance)
 		aux_node.add_child(instance)
-		
-
+	
 	await get_tree().process_frame
-		
 		
 	for l in aux_array:
 		var upgrades: Dictionary = {}
@@ -47,10 +45,6 @@ func _ready() -> void:
 		aux_node.remove_child(child)
 	remove_child(aux_node)	
 	set_weapon("Lantern")
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_ctrl"):
-		print(weapons)
 
 func set_weapon(name: String):
 	for key in weapons.keys():
@@ -76,5 +70,3 @@ func set_weapon(name: String):
 				for attr in w.attributes.keys():
 					infos[attr] = w.attributes[attr].level
 				weapons_infos[key] = infos
-				
-			

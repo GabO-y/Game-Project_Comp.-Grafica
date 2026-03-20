@@ -2,11 +2,11 @@ extends Node2D
 
 class_name SimpleAttribute
 
-var max_value: float 
-var min_value: float 
+var max_value: Variant
+var min_value: Variant
 var max_level: int 
 
-func _init(max: float = 1.0, min: float = 1.0, max_l: int = 1) -> void:
+func _init(max: Variant = 1.0, min: Variant = 1.0, max_l: int = 1) -> void:
 	max_value = max
 	min_value = min
 	max_level = max_l

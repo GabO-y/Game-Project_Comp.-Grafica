@@ -65,9 +65,7 @@ func animation_state(_delta: float):
 
 			
 			curve.set_p2(door1.global_position)
-			
-			print(aux_var["room_cam"].global_position)
-		
+					
 			progress += 1.0 / progress_scale
 			if progress > 1.0:
 				print(aux_var["room_cam"].global_position)
@@ -130,6 +128,7 @@ func collect(body: Node2D):
 	if Globals.is_player(body):
 		for c in area.body_entered.get_connections():
 			area.body_entered.disconnect(c["callable"])
+		Globals.audio_manager.play("Key", "Items")
 		setup_state(ItemState.CUSTOM)
 		setup_key_state(KeyState.ANIMATION)
 		

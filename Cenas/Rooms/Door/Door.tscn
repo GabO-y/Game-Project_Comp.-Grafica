@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsa5vodvq7v6n"]
+[gd_scene format=3 uid="uid://dsa5vodvq7v6n"]
 
 [ext_resource type="Script" uid="uid://ncnlve3s8qvp" path="res://Cenas/Rooms/Door/door.gd" id="1_8re4r"]
 [ext_resource type="AudioStream" uid="uid://cynx2ee2mokb2" path="res://Assets/Sound/unlock_door.mp3" id="2_wkhpe"]
@@ -15,21 +15,21 @@ gradient = SubResource("Gradient_8re4r")
 fill = 1
 fill_from = Vector2(0.48433, 0.464387)
 
-[node name="Door" type="Node2D" node_paths=PackedStringArray("area", "light", "unlock_audio")]
+[node name="Door" type="Node2D" unique_id=2087126828 node_paths=PackedStringArray("area", "light", "unlock_audio")]
 script = ExtResource("1_8re4r")
 area = NodePath("Area2D")
 is_locked = true
 light = NodePath("Area2D/PointLight2D")
 unlock_audio = NodePath("UnlockSound")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1312412263]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=747390462]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=726145748]
 shape = SubResource("CircleShape2D_6rchu")
 
-[node name="PointLight2D" type="PointLight2D" parent="Area2D"]
+[node name="PointLight2D" type="PointLight2D" parent="Area2D" unique_id=1245051482]
 visible = false
 light_mask = 3
 visibility_layer = 3
@@ -38,7 +38,7 @@ scale = Vector2(2.96094, 3.02394)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_wkhpe")
 
-[node name="UnlockSound" type="AudioStreamPlayer" parent="."]
+[node name="UnlockSound" type="AudioStreamPlayer" parent="." unique_id=9187517]
 stream = ExtResource("2_wkhpe")
 volume_db = -5.0
 pitch_scale = 0.8

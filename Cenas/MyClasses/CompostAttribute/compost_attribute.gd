@@ -10,7 +10,7 @@ var max_level: int
 func _init(max: int = 10):
 	max_level = max
 
-func set_attr(name: String, max: float, min: float):
+func set_attr(name: String, max: Variant, min: Variant):
 		sub_attr[name] =  SimpleAttribute.new(max, min, max_level)
 
 func get_attr(name: String, level: int = 0):

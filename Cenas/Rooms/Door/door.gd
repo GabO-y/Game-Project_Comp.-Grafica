@@ -57,7 +57,7 @@ func all_lock():
 func open():
 	is_locked = false
 	set_active(true)
-		
+	Globals.audio_manager.play("door", "Objects")
 	for door in goTo.doors:
 		if door.name == my_room.name:
 			door.is_locked = false

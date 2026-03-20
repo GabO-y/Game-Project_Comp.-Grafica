@@ -13,19 +13,14 @@ var timer_to_drop_health: float = 0.0
 var is_to_update_bar: bool = false
 
 func _ready() -> void:
-	#damage_bar.max_value = heath
-	#life_bar.max_value = heath
-	#damage_bar.value = heath
-	#life_bar.value = heath
-	
+	super._ready()
 	update_progress_bars()
 	get_window().size_changed.connect(update_progress_bars)
 	
-	health_bar.value = health
-	damage_bar.value = health
+	health_bar.value = heart
+	damage_bar.value = heart
 	
 func _process(delta: float) -> void:
-	super._process(delta)
 	if wating_drop_health and timer_to_drop_health > time_to_drop_health:
 		is_to_update_bar = true
 		wating_drop_health = false
@@ -36,25 +31,6 @@ func _process(delta: float) -> void:
 			is_to_update_bar = false
 	timer_to_drop_health += delta 
 
-func set_active(mode):
-		
-	if mode: setup()
-	
-	set_process(mode)
-	set_physics_process(mode)
-	
-	is_stop = !mode
-	is_active = mode
-	visible = mode
-	
-	super.set_active(mode)
-
-func enable():
-	set_active(true)
-	
-func desable():
-	set_active(false)
-
 func setup():
 	pass
 	
@@ -64,7 +40,7 @@ func reset():
 func take_damage(damage):
 	super.take_damage(damage)
 	
-	health_bar.value = health
+	health_bar.value = heart
 	
 	is_to_update_bar = false
 	wating_drop_health = true

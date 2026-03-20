@@ -10,6 +10,8 @@ var enemies_in_light: Dictionary
 var is_use_mouse: bool = true
 var price: float = 0.0
 
+var can_toggle: bool = true
+
 # idea:
 #	cada arma conterá um atributo, nesse dicionario
 #	vc guarda o nome, e uma CompostAttribute
@@ -23,11 +25,17 @@ var price: float = 0.0
 
 var attributes: Dictionary = {} # { name : CompostAttribute }
 
+var damage: int 
+var frames_to_damage: int 
+
 func _ready() -> void:
 	light_area.collision_layer = Globals.layers["player"] | Globals.layers["weapon"]
 	light_area.collision_mask = Globals.layers["enemy"] | Globals.layers["ghost"] | Globals.layers["boss"]
 	light_area.body_entered.connect(ene_enter_light)
 	light_area.body_exited.connect(ene_exit_light)
+	await get_tree().process_frame
+	for key in attributes.keys():
+		update_status(key)
 	
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -39,14 +47,15 @@ func _physics_process(delta: float) -> void:
 func enable_state(delta: float):
 	for ene in enemies_in_light.keys():
 		enemies_in_light[ene] += 1
-		if enemies_in_light[ene] > attributes["frames_to_damage"].get_attr("value"):
-			var d: int = int(attributes["damage"].get_attr("value"))
+		if enemies_in_light[ene] > frames_to_damage:
+			var d: int = int(damage)
 			(ene as Enemy).take_damage(d)
 			enemies_in_light[ene] = 0
 	if Input.is_action_just_pressed("ui_toggle_armor"):
 		setup_state(LightWeaponState.DESABLE)
 
 func desable_state(delta: float):
+	if not can_toggle: return
 	if Input.is_action_just_pressed("ui_toggle_armor"):
 		setup_state(LightWeaponState.ENABLE)
 	
@@ -66,7 +75,7 @@ func setup_state(state: LightWeaponState):
 func ene_enter_light(body: Node2D):
 	var ene: Enemy = body.get_parent() as Enemy
 	if ene:
-		if ene.health <= 0:
+		if ene.heart <= 0:
 			return
 		enemies_in_light[ene] = 0
 		
@@ -77,6 +86,15 @@ func ene_exit_light(body: Node2D):
 
 func _input(event: InputEvent) -> void:
 	is_use_mouse = (event is InputEventMouseButton) or (event is  InputEventMouseMotion)
-		
+
+func update_status(name: String):
+	var attr: CompostAtrribute = attributes[name]
+	match name:
+		"damage":
+			damage = attr.get_attr("value")
+		"frames_to_damage":
+			frames_to_damage = attr.get_attr("value")
+		"distance":
+			scale = attr.get_attr("value")
 
 enum LightWeaponState {ENABLE, DESABLE}

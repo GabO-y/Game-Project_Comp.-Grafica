@@ -63,10 +63,15 @@ func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
 			
+
+
+			
 			labels_node.visible = true
 			anim.play("1")
 			
 			Globals.player.setup_state(Player.PlayerState.MENU)
+			Globals.weapon_manager.selected.can_toggle = false
+			Globals.weapon_manager.selected.setup_state(LightWeapon.LightWeaponState.DESABLE)
 			
 			var p_quant: int = int(get_viewport().size.x / particles_space)
 			var delta_space: float = particles_space 

@@ -6,13 +6,20 @@
 [ext_resource type="Texture2D" uid="uid://ds33n7jap68rc" path="res://Assets/Interfaces/ChestUI/LanternIcon.png" id="3_6tcjk"]
 [ext_resource type="Texture2D" uid="uid://i61i268vkyxl" path="res://Assets/Interfaces/ChestUI/PowerUpsIcon.png" id="4_punup"]
 [ext_resource type="PackedScene" uid="uid://6xkx4mskqytw" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/PlayerUpgradesScreen/PlayerUpgrades.tscn" id="6_punup"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="7_abwne"]
 
-[node name="ShopMenu" type="CanvasLayer" unique_id=1637258923 node_paths=PackedStringArray("tab_container", "weapon_upgrade_screen", "select_weapon_button", "select_upgrades_player_button")]
+[sub_resource type="LabelSettings" id="LabelSettings_c4xsa"]
+font = ExtResource("7_abwne")
+font_size = 56
+
+[node name="ShopMenu" type="CanvasLayer" unique_id=1637258923 node_paths=PackedStringArray("tab_container", "weapon_upgrade_screen", "player_upgrade_screen", "select_weapon_button", "select_upgrades_player_button", "label_coins")]
 script = ExtResource("1_l2c2b")
 tab_container = NodePath("MarginContainer/PanelContainer/VBoxContainer/TabContainer")
 weapon_upgrade_screen = NodePath("MarginContainer/PanelContainer/VBoxContainer/TabContainer/WeaponsUpgradesScreen")
+player_upgrade_screen = NodePath("MarginContainer/PanelContainer/VBoxContainer/TabContainer/PlayerUpgrades")
 select_weapon_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Weapon")
 select_upgrades_player_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Player")
+label_coins = NodePath("MarginContainer/LabelCoins")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=428578410]
 anchors_preset = 15
@@ -53,11 +60,20 @@ theme_override_styles/panel = ExtResource("2_2phjd")
 current_tab = 0
 tabs_visible = false
 
-[node name="WeaponsUpgradesScreen" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=2073619367 instance=ExtResource("2_axche")]
+[node name="WeaponsUpgradesScreen" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=2073619367 node_paths=PackedStringArray("shop_menu") instance=ExtResource("2_axche")]
 layout_mode = 2
+shop_menu = NodePath("../../../../..")
 metadata/_tab_index = 0
 
-[node name="PlayerUpgrades" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=65496558 instance=ExtResource("6_punup")]
+[node name="PlayerUpgrades" parent="MarginContainer/PanelContainer/VBoxContainer/TabContainer" unique_id=65496558 node_paths=PackedStringArray("shop_menu") instance=ExtResource("6_punup")]
 visible = false
 layout_mode = 2
+shop_menu = NodePath("../../../../..")
 metadata/_tab_index = 1
+
+[node name="LabelCoins" type="Label" parent="MarginContainer" unique_id=11573122]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Player Coin"
+label_settings = SubResource("LabelSettings_c4xsa")
+horizontal_alignment = 2

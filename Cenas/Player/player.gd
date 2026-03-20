@@ -14,7 +14,6 @@ class_name Player
 @export var label_coins: Label
 @export var armor_node: Node2D
 @export var weapon_manager: WeaponManager
-@export var dash_audio: AudioStreamPlayer
 @export var raycast2d_node: Node2D
 
 var flick_aux: int = 0
@@ -87,8 +86,8 @@ func _ready() -> void:
 		},
 		"speed": {
 			"value": {
-				"max": 200,
-				"min": 100
+				"max": 150.0,
+				"min": 100.0
 			},
 			"price": {
 				"max": 100,
@@ -139,10 +138,7 @@ func _ready() -> void:
 				continue
 			a.set_attr(key, tab_infos[attr][key]["max"], tab_infos[attr][key]["min"])
 		attributes[attr] = a
-	
-	for key in attributes.keys():
-		print(attributes[key].max_level)
-
+		
 	Globals.weapon_manager = weapon_manager
 	
 	hearts = max_heart
@@ -220,6 +216,7 @@ func setup_state(state: PlayerState):
 			body.collision_layer = 0
 			body.collision_mask = Globals.layers["current_wall"]
 			can_take_damege = false
+			Globals.audio_manager.play("dash", "Player")
 		PlayerState.KNOCKBACK:
 			can_take_damege = false
 			knockback_time = 0.0
@@ -421,7 +418,6 @@ func test_wall_stuck():
 	raycast2d_node.test_wall_stuck()
 	
 func update_status(name: String):
-	print(name)
 	match name:
 		"life":
 			max_heart = attributes[name].get_attr("value")

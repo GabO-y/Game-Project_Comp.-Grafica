@@ -88,11 +88,6 @@ func set_active(mode: bool):
 	for door in doors:
 		if door is Door:
 			door.set_active(mode)
-			
-	for spawn in spaweners:
-		if spawn is Spawn:
-			spawn.set_active(mode)
-
 	for layer in layers:
 
 		layer.collision_enabled = mode
@@ -134,65 +129,10 @@ func lock_all_doors():
 		door.set_active(false)
 	
 func reset():
-	finish = false
-	already_drop_key = false
-	is_clear = false
-	
-	for spawn in spaweners:		
-		spawn.set_active(false)
-		
 	for door in doors:
 		door.is_locked = true
 		door.set_active(false)
 		
-func get_random_spawn():
-	return spaweners.pick_random()
-
-func get_random_spawns(quant: int):
-	
-	var original_quant = quant
-	
-	if quant <= 0:
-		return 
-		
-	if quant >= spaweners.size():
-		return spaweners
-	
-	var spawns: Array[Spawn] = []
-	
-	var error = false
-	
-	while quant > 0:
-		
-		if abs(quant) > 100:
-			error = true
-			break
-		
-		var spawn = spaweners.pick_random()
-		
-		if spawn in spawns:
-			quant += 1
-			continue
-			
-		spawns.append(spawn)
-		quant -= 1
-		
-	if error:
-		
-		spawns.clear()
-		
-		for i in range(original_quant - 1):
-			
-			var s = spaweners.get(i)
-			
-			if  not s is Spawn:
-				print("deu nao")
-				get_tree().quit()
-				
-			spawns.append(spaweners.get(i))
-		
-	return spawns
-
 # fazendo a parte de items, quando sala limpa, item segue player
 signal clear
  

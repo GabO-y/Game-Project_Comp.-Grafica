@@ -2,96 +2,43 @@ extends Character
 
 class_name Enemy
 
-var damage_att: Attribute = Attribute.new()
-var speed_att: Attribute = Attribute.new()
-var health_att: Attribute = Attribute.new()
+@export var level: int = 1
 
-@export var speed: float = 0.0
-@export var health: float = 0.0
-@export var damage: float = 0.0
+var speed: float 
+var heart: int 
+var damage: int 
 
-var atributes: Array[Attribute]
+var wait_frames_count: int = 0
+var wait_frames_duration: int
+
+var take_damage_frames_count: int = 0
+var take_damage_coldown_frames: int 
+
+var attributes: Dictionary = {}
 
 @export var body: CharacterBody2D 
 @export var anim: AnimatedSprite2D
 
-
-@export var gnaw_audio: AudioStreamPlayer2D	
-var damage_audio: AudioStreamPlayer
-
-var spawn: Spawn
-
-var is_stop = false
-
-var player: Player #Proprio jogador
-
-var position_target #Para onde ele deve andar
-var is_attacking = false #para verificar se esta atacando o player para ter que ficar parado
-var is_active: bool = false
-var knockback_force: float = 500.0
-var is_dead: bool = false
-var last_dir: Vector2
-
-var audio_timer: float = 0.0
-var audio_time_play: float = 1.0
-
-var is_stuned: bool = false
-var stun_duration: float = 0.3
-var stun_timer: float = 0.0
-var stun_coldown: float = 0.3
-var can_stun: bool = true
-
-var current_state: EnemyState = EnemyState.WAITING
+var current_state: EnemyState = EnemyState.CHASING
 # variaveis genericas para servir como timer e duration
+
 var t: float = 0.0
 var d: float = 0.0
 
 func _ready() -> void:
+	body.collision_layer = Globals.layers["enemy"]
+	body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"] | Globals.layers["current_wall"] 
 	
-	player = Globals.player
+	setup_status()
 	
-	atributes.append_array([
-		damage_att, speed_att, health_att
-	])
-		
-	damage_audio = AudioStreamPlayer.new()
-	
-	add_child(damage_audio)
-	
-	damage_audio.stream = load("res://Assets/Sound/ene_damage.mp3")
-	damage_audio.pitch_scale = 1.5
-	damage_audio.volume_db = -10
-	
-func _process(delta: float) -> void:
-	if gnaw_audio:
-		if audio_timer >= audio_time_play:
-			audio_time_play = randf_range(2.0, 3.0)
-			gnaw_audio.play()
-			audio_timer = 0.0
-		audio_timer += delta
-	if is_stuned and can_stun:
-		if stun_timer >= stun_duration:
-			is_stop = false
-			is_stuned = false
-			can_stun = false
-			stun_coldown = 0.3
-		stun_timer += delta
-	if not can_stun:
-		if stun_timer >= stun_coldown:
-			stun_timer = 0.0
-			can_stun = true
-		stun_timer += delta
-		
 func _physics_process(delta: float) -> void:
-	
-	if Globals.player.is_dead:
+	if Globals.player.hearts <= 0:
 		setup_state(EnemyState.WAITING)
-	
 	match current_state:
 		EnemyState.WAITING:
 			waiting_state(delta)
-		EnemyState.CHESING:
-			chesing_state(delta)
+		EnemyState.CHASING:
+			chasing_state(delta)
 		EnemyState.DASHING:
 			dashing_state(delta)
 		EnemyState.ATTACKING:
@@ -101,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		EnemyState.CUSTOM:
 			custom_state(delta)
 			
-func chesing_state(delta: float):
+func chasing_state(delta: float):
 	pass
 
 func waiting_state(delta: float):
@@ -122,63 +69,20 @@ func custom_state(delta: float):
 func setup_custom_state(custom_idx: int):
 	pass
 	
-func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
+func setup_state(state: EnemyState):
 	pass
 	
-func set_level(lv: int, what):
-	for att in atributes:
-		match what:
-			"current": att.level.current = lv
-			"max": att.level.max = lv
-			"min": att.level.min = lv
-
-func set_active(mode):
-		
-	set_process(mode)
-	set_physics_process(mode)
-	
-	visible = mode
-	is_active = mode
-		
-	var layer = Globals.layers["enemy"] if mode else 0
-	var mask = Globals.layers["player"] | Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["utils_wall"] | Globals.layers["weapon"] if mode else 0
-	
-	body.collision_layer = layer
-	body.collision_mask = mask
-
 func take_damage(damage: float):
-
-	if is_dead: return
-		
-	is_stop = true
-	is_stuned = true
-	
-	health -= damage
-	
-	if damage_audio:
-		damage_audio.play()
-
+	heart -= damage
 	drop_damage_label(damage)
-	
-	if health <= 0:
+	Globals.audio_manager.play("hit", "Enemies")
+	if heart <= 0:
 		die()
 	else:
 		change_color_damage()
 
-func knockback_logic():
-	var knockback_dir = (body.global_position - player.player_body.global_position).normalized()
-	body.velocity = knockback_dir * knockback_force
-	
-func _update_sound(enes: Array[Enemy]):
-	spawn.room.manager.update_sound(enes)
-	
 func die():
-	
-	if is_dead: return
-				
-	is_dead = true
-	is_active = false
-	
+
 	set_physics_process(false)
 	set_process(false)
 	
@@ -187,7 +91,6 @@ func die():
 	
 	if not self is Boss:
 		anim.play("die")
-	anim.flip_h = last_dir.x > 0
 	
 	await anim.animation_finished
 
@@ -204,7 +107,7 @@ func change_color_damage():
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = original_color
 	
-func drop_damage_label(damage: float):
+func drop_damage_label(damage: int):
 	var label := Label.new()
 	label.text = str("-", damage)
 	label.modulate = Color.RED
@@ -245,57 +148,29 @@ func chase_player(dist_limit: float = 0.0, speed_multplier: float = 1.0) -> bool
 	body.move_and_slide()
 	return false
 	
-func setup():
-	health = health_att.get_value()
-	speed = speed_att.get_value()
-	damage = damage_att.get_value()
-
-func default_setup():
-	pass
+func setup_status():
+	attributes = { 
+		"damage": SimpleAttribute.new(),
+		"heart": SimpleAttribute.new(),
+		"speed": SimpleAttribute.new(),
+		"take_damage": SimpleAttribute.new()
+	}
+	update_all_status()
 	
+func update_status(name: String):
+	var attr: SimpleAttribute = attributes[name]
+	match name:
+		"damage": damage = attr.get_value(level)
+		"heart": heart = attr.get_value(level)
+		"speed": speed = attr.get_value(level)
+		"wait_frames": wait_frames_duration = attr.get_value(level)
+		"take_damage": take_damage_coldown_frames = attr.get_value(level)
+	return attr
+	
+func update_all_status():
+	for attr in attributes.keys():
+		update_status(attr)
+		
 signal enemy_die(ene: Enemy)
-signal tk_damage
 
-class Attribute:
-	
-	var type: String
-	var level: HasRange = HasRange.new()
-	var value: HasRange = HasRange.new()
-
-	func get_value():
-				
-		if level.current == 1:
-			return value.min
-						
-		var mid = value.max - value.min
-		
-		var p = float(level.current) / level.max
-		
-		value.current = value.min + (mid * p)
-
-		return value.current
-		
-	func set_max(max, what: String):
-		match what:
-			"value":
-				value.max = max
-			"level":
-				level.max = max
-				
-	func set_min(min, what: String):
-		match what:
-			"value":
-				value.min = min
-			"level":
-				level.min = min
-				
-	func setup(min, max, what):
-		set_max(max, what)
-		set_min(min,  what)
-		
-class HasRange:
-	var current = 1
-	var min = 0
-	var max = 1
-	
-enum EnemyState {WAITING, CHESING, DASHING, ATTACKING, STUNED, CUSTOM}
+enum EnemyState {WAITING, CHASING, DASHING, ATTACKING, STUNED, CUSTOM}

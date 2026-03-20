@@ -47,6 +47,7 @@ func collect(body: Node2D):
 	Globals.player.coins += value
 	Globals.conquited_coins += value
 	Globals.player.update_label_coins()
+	Globals.audio_manager.play("coin", "Items")
 	
 	queue_free()
 	

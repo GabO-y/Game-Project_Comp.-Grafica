@@ -331,9 +331,6 @@ timer_to_special_attack = NodePath("TimerToSpecialAttack")
 time_to_special = 0.0
 health_bar = NodePath("hud/HealthProgressBar")
 damage_bar = NodePath("hud/DamageProgressBar")
-speed = 100.0
-health = 100.0
-damage = 1.0
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animated/AnimatedSprite2D")
 

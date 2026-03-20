@@ -3,9 +3,10 @@ extends Control
 class_name PlayerUpgradeScreen
 
 @export var upgrades_node: Control
+@export var shop_menu: ShopMenu
+
 
 func _ready() -> void:
-	
 	await get_tree().process_frame
 	update()
 
@@ -62,13 +63,12 @@ func update():
 			price_text = "MAX"
 		item.label_price.text = price_text
 
-			
-		
-		
 func buy_upgrade(attr: Dictionary, name: String, price: int):
 	if Globals.player.coins < price:
+		shop_menu.insufficiente_coin_effect()
 		return
 		
+	shop_menu.update_coin()
 	Globals.player.coins -= price
 	Globals.player.update_label_coins()
 	attr[name].level += 1

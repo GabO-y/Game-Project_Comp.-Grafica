@@ -8,7 +8,7 @@ resource_name = "1"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationPlayer/Part1/TextureRect:texture:gradient:offsets")
+tracks/0/path = NodePath("AnimationPlayer/ToSetVisible/Part1/TextureRect:texture:gradient:offsets")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,7 +24,7 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationPlayer/Part2/CoinText:modulate")
+tracks/0/path = NodePath("AnimationPlayer/ToSetVisible/Part2/CoinText:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -36,7 +36,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationPlayer/Part2/EneText:modulate")
+tracks/1/path = NodePath("AnimationPlayer/ToSetVisible/Part2/EneText:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -48,7 +48,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimationPlayer/Part2/AlreadyCoin:modulate")
+tracks/2/path = NodePath("AnimationPlayer/ToSetVisible/Part2/AlreadyCoin:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -60,7 +60,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimationPlayer/Part2/ConqCoin:modulate")
+tracks/3/path = NodePath("AnimationPlayer/ToSetVisible/Part2/ConqCoin:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -72,7 +72,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimationPlayer/Part2/EneCount:modulate")
+tracks/4/path = NodePath("AnimationPlayer/ToSetVisible/Part2/EneCount:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -88,7 +88,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationPlayer/Part2/ConqCoin:modulate")
+tracks/0/path = NodePath("AnimationPlayer/ToSetVisible/Part2/ConqCoin:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -103,7 +103,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationPlayer/Part1/TextureRect:texture:gradient:offsets")
+tracks/0/path = NodePath("AnimationPlayer/ToSetVisible/Part1/TextureRect:texture:gradient:offsets")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -115,7 +115,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimationPlayer/Part2/CoinText:modulate")
+tracks/1/path = NodePath("AnimationPlayer/ToSetVisible/Part2/CoinText:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -127,7 +127,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimationPlayer/Part2/EneText:modulate")
+tracks/2/path = NodePath("AnimationPlayer/ToSetVisible/Part2/EneText:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -139,7 +139,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimationPlayer/Part2/AlreadyCoin:modulate")
+tracks/3/path = NodePath("AnimationPlayer/ToSetVisible/Part2/AlreadyCoin:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -151,7 +151,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimationPlayer/Part2/ConqCoin:modulate")
+tracks/4/path = NodePath("AnimationPlayer/ToSetVisible/Part2/ConqCoin:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -163,7 +163,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimationPlayer/Part2/EneCount:modulate")
+tracks/5/path = NodePath("AnimationPlayer/ToSetVisible/Part2/EneCount:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -209,18 +209,20 @@ font_size = 40
 font = ExtResource("2_ijqvd")
 font_size = 40
 
-[node name="DieMenu" type="CanvasLayer" unique_id=717502722 node_paths=PackedStringArray("anim", "a_coins", "c_coins", "ene_count")]
+[node name="DieMenu" type="CanvasLayer" unique_id=717502722 node_paths=PackedStringArray("anim", "a_coins", "c_coins", "ene_count", "to_set_visible_node")]
 script = ExtResource("1_fivf0")
 anim = NodePath("AnimationPlayer")
-a_coins = NodePath("AnimationPlayer/Part2/AlreadyCoin")
-c_coins = NodePath("AnimationPlayer/Part2/ConqCoin")
-ene_count = NodePath("AnimationPlayer/Part2/EneCount")
+a_coins = NodePath("AnimationPlayer/ToSetVisible/Part2/AlreadyCoin")
+c_coins = NodePath("AnimationPlayer/ToSetVisible/Part2/ConqCoin")
+ene_count = NodePath("AnimationPlayer/ToSetVisible/Part2/EneCount")
+to_set_visible_node = NodePath("AnimationPlayer/ToSetVisible")
 need_focus = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=406428577]
 libraries/ = SubResource("AnimationLibrary_ijqvd")
 
-[node name="Part1" type="Control" parent="AnimationPlayer" unique_id=1749942525]
+[node name="ToSetVisible" type="Control" parent="AnimationPlayer" unique_id=305485455]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -228,7 +230,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/Part1" unique_id=258826029]
+[node name="Part1" type="Control" parent="AnimationPlayer/ToSetVisible" unique_id=1749942525]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="AnimationPlayer/ToSetVisible/Part1" unique_id=258826029]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,15 +249,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = SubResource("GradientTexture2D_ijqvd")
 
-[node name="Part2" type="Control" parent="AnimationPlayer" unique_id=560758501]
-layout_mode = 3
+[node name="Part2" type="Control" parent="AnimationPlayer/ToSetVisible" unique_id=560758501]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CoinText" type="Label" parent="AnimationPlayer/Part2" unique_id=219292503]
+[node name="CoinText" type="Label" parent="AnimationPlayer/ToSetVisible/Part2" unique_id=219292503]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -260,7 +270,7 @@ label_settings = SubResource("LabelSettings_ijqvd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="EneText" type="Label" parent="AnimationPlayer/Part2" unique_id=1238789272]
+[node name="EneText" type="Label" parent="AnimationPlayer/ToSetVisible/Part2" unique_id=1238789272]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -276,7 +286,7 @@ label_settings = SubResource("LabelSettings_6w1pf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AlreadyCoin" type="Label" parent="AnimationPlayer/Part2" unique_id=1386706534]
+[node name="AlreadyCoin" type="Label" parent="AnimationPlayer/ToSetVisible/Part2" unique_id=1386706534]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -293,7 +303,7 @@ label_settings = SubResource("LabelSettings_aj38n")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ConqCoin" type="Label" parent="AnimationPlayer/Part2" unique_id=1831106289]
+[node name="ConqCoin" type="Label" parent="AnimationPlayer/ToSetVisible/Part2" unique_id=1831106289]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -310,7 +320,7 @@ label_settings = SubResource("LabelSettings_y25e6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="EneCount" type="Label" parent="AnimationPlayer/Part2" unique_id=1862502988]
+[node name="EneCount" type="Label" parent="AnimationPlayer/ToSetVisible/Part2" unique_id=1862502988]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15

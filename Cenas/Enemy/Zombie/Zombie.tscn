@@ -563,7 +563,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ft1h0"]
-radius = 14.035668
+radius = 18.0
 
 [node name="Zombie" type="Node2D" unique_id=985319853 node_paths=PackedStringArray("agent", "time", "animated_slash_attack", "slash_hit_area", "body", "anim")]
 script = ExtResource("1_21gwn")
@@ -571,7 +571,6 @@ agent = NodePath("CharacterBody2D/NavigationAgent2D")
 time = NodePath("Timer")
 animated_slash_attack = NodePath("CharacterBody2D/Animateds/AnimatedSlashAttack")
 slash_hit_area = NodePath("CharacterBody2D/Areas/SlashHitArea")
-health = 10.0
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/AnimatedSprite2D")
 

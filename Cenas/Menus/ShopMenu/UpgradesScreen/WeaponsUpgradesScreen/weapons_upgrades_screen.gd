@@ -5,6 +5,8 @@ class_name WeaponUpgradesScreen
 @export var weapon_items: Control
 @export var upgredes_item: Control
 
+@export var shop_menu: ShopMenu
+
 func update():
 	
 	for child in weapon_items.get_children():
@@ -31,6 +33,9 @@ func update():
 		},
 		"frames_coldown_shoot": {
 			"name": "Tempo de Recarga"
+		},
+		"distance": {
+			"name": "Distância da Luz"
 		}
 	}
 	
@@ -68,7 +73,7 @@ func update():
 					text = tab_infos[attr]["name"]
 				else:
 					text = attr
-								
+
 				var a: CompostAtrribute = attributes[attr]
 				a.level = weapons[w]["upgrades"][attr]
 								
@@ -89,12 +94,14 @@ func buy_weapon(weapon_name: String, weapon_infos: Dictionary):
 	if not weapon_infos["locked"]:
 		Globals.weapon_manager.set_weapon(weapon_name)
 	elif Globals.player.coins < price:
-		print("sem money")
+		shop_menu.insufficiente_coin_effect()
 		return
 	else:
+		Globals.audio_manager.play("buy_weapon", "Player")
 		Globals.player.coins -= price
 		Globals.player.update_label_coins()
 		Globals.weapon_manager.set_weapon(weapon_name)
+		shop_menu.update_coin()
 
 	update()
 	
@@ -104,14 +111,18 @@ func buy_upgrade(weapon_name, attr_name, attr):
 		
 	var price: int = int(a.get_attr("price"))
 	if Globals.player.coins < price:
+		shop_menu.insufficiente_coin_effect()
 		return
 	if a.level >= a.max_level:
 		return
 
 	Globals.player.coins -= price
+	shop_menu.update_coin()
 	
 	var level: int = Globals.weapon_manager.weapons[weapon_name]["upgrades"][attr_name] + 1
 	Globals.weapon_manager.weapons[weapon_name]["upgrades"][attr_name] = level
 	Globals.weapon_manager.selected.attributes[attr_name].level = level
+	Globals.weapon_manager.selected.update_status(attr_name)
 	Globals.player.update_label_coins()
+	
 	update()

@@ -49,18 +49,18 @@ func _physics_process(delta: float) -> void:
 	
 
 func waiting_state(delta: float):
-	if t > d:
-		setup_state(EnemyState.CHESING)
+	if wait_frames_count > wait_frames_duration:
+		setup_state(EnemyState.CHASING)
 		return
-	t += delta
+	wait_frames_count += 1
 	
-func chesing_state(delta: float):
+func chasing_state(delta: float):
 	if chase_player(30.0):
 		setup_state(EnemyState.ATTACKING)
 		return
 	
 func attacking_state(delta: float):
-	if t > d:
+	if take_damage_frames_count > take_damage_coldown_frames:
 		play_attack_animation()
 		for body in slash_attack_area.get_overlapping_bodies():
 			if body.get_parent() is Player:
@@ -69,7 +69,7 @@ func attacking_state(delta: float):
 				break
 		setup_state(EnemyState.WAITING)
 		return
-	t += delta
+	take_damage_frames_count += 1
 	
 func custom_state(delta: float):
 	match current_custom_state:
@@ -242,7 +242,7 @@ func shooting_ghosts(stage: int, delta: float):
 			body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"]
 			is_in_special = false
 			timer_to_special_attack.start()
-			setup_state(EnemyState.CHESING)
+			setup_state(EnemyState.CHASING)
 
 func dying_state(stage: int, delta: float):
 	match stage:
@@ -272,13 +272,9 @@ func dying_state(stage: int, delta: float):
 func setup_state(state: EnemyState, d: float = -1.0, t: float = -1.0):
 	match state:
 		EnemyState.ATTACKING:
-			self.t = 0.0
-			self.d = 0.1
+			take_damage_frames_count = 0
 		EnemyState.WAITING:
-			self.t = 0.0
-			self.d = 1.0
-		
-		
+			wait_frames_count = 0
 	if d > -1.0: self.d = d
 	if t > -1.0: self.t = t
 	current_state = state
@@ -336,10 +332,10 @@ func setup_custom_state(state: CustomState, idx: int = 0):
 	current_state = EnemyState.CUSTOM
 	
 func take_damage(damage):
-	if is_dead: return
+	if heart <= 0:
+		return
 	super.take_damage(damage)
-	if health <= 0:
-		is_dead = true
+	if heart <= 0:
 		die()
 		
 func die():
@@ -389,5 +385,15 @@ func _start_special_attack() -> void:
 	is_in_special = true
 	setup_state(EnemyState.CUSTOM)
 	setup_custom_state(CustomState.RANDOM_SPECIAL)
+	
+func setup_status():
+	attributes = {
+		"heart": SimpleAttribute.new(100, 100, 1),
+		"damage": SimpleAttribute.new(2, 2, 1),
+		"speed": SimpleAttribute.new(100.0, 100.0, 1),
+		"wait_frames": SimpleAttribute.new(30, 40, 9),
+		"take_damage": SimpleAttribute.new(1, 5, 9)
+	}
+	update_all_status()
 
 enum CustomState {RANDOM_SPECIAL, GHOST_RUN, SHOOTING_GHOSTS, DYING}

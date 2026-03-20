@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bmmrcde8nrn5d" path="res://Cenas/Enemy/Ghost/Ghost.gd" id="1_8icm7"]
 [ext_resource type="Texture2D" uid="uid://ba5o5r15gpsgu" path="res://Assets/Enemies/Fantasm/spr_ghost_tileset.png" id="2_ucp1k"]
 [ext_resource type="Texture2D" uid="uid://7wfqx7fbfubp" path="res://Assets/NewEnemies/Ghost/simple-slash.png" id="3_6jl8n"]
-[ext_resource type="AudioStream" uid="uid://ntbk785g70rv" path="res://Assets/Sound/ghost_voice.mp3" id="3_636iv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8ghm"]
 atlas = ExtResource("2_ucp1k")
@@ -291,7 +290,7 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Ghost" type="Node2D" unique_id=1054010247 node_paths=PackedStringArray("area_hit", "screen_notifier", "animated_slash_attck", "slash_attack_area", "body", "anim", "gnaw_audio")]
+[node name="Ghost" type="Node2D" unique_id=1054010247 node_paths=PackedStringArray("area_hit", "screen_notifier", "animated_slash_attck", "slash_attack_area", "body", "anim")]
 script = ExtResource("1_8icm7")
 area_hit = NodePath("CharacterBody2D/Areas/HitArea")
 screen_notifier = NodePath("CharacterBody2D/ToBoss/VisibleOnScreenNotifier2D")
@@ -299,7 +298,6 @@ animated_slash_attck = NodePath("CharacterBody2D/Animated/AnimatedSlashAttack")
 slash_attack_area = NodePath("CharacterBody2D/Areas/SlashAttackArea")
 body = NodePath("CharacterBody2D")
 anim = NodePath("CharacterBody2D/Animation")
-gnaw_audio = NodePath("GwanAudio")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=466160859]
 collision_layer = 0
@@ -343,8 +341,5 @@ position = Vector2(-5.9604645e-08, 0)
 scale = Vector2(1.2, 1.5)
 sprite_frames = SubResource("SpriteFrames_ryt00")
 animation = &"attack"
-
-[node name="GwanAudio" type="AudioStreamPlayer2D" parent="." unique_id=1838264745]
-stream = ExtResource("3_636iv")
 
 [connection signal="body_entered" from="CharacterBody2D/Areas/HitArea" to="." method="_player_enter_hit"]

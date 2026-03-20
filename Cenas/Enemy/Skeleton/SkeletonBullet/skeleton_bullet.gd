@@ -1,5 +1,9 @@
 extends Bullet
 
+class_name SkeletonArrow
+
+var damage: int
+
 func _ready() -> void:
 	super._ready()
 	collision_area.collision_layer = Globals.layers["enemy"]
@@ -10,4 +14,4 @@ func _on_area_2d_body_player_entered(body: Node2D) -> void:
 	if !player: return
 	
 	player.take_knockback(dir, 10)
-	player.take_damage(1)
+	player.take_damage(damage)

@@ -5,24 +5,17 @@ class_name DieMenu
 @export var house: House
 @export var anim: AnimationPlayer
 
-var can_skip: bool = true
-var can_skip_1: bool = false
-var can_skip_2: bool = false
-var can_skip_3: bool = false
-
-var can_reset: bool = false
-
 @export var a_coins: Label
 @export var c_coins: Label
 @export var ene_count: Label
+
+@export var to_set_visible_node: Control
 
 var timer: float = 0.0
 var duration: float = 0.0
 var is_awaiting: bool = false
 
 var original_c_coin_pos: Vector2
-
-var final_results: Dictionary
 
 # new
 
@@ -36,11 +29,6 @@ func _ready() -> void:
 	reset()
 	
 func reset():
-	set_active(false)
-	set_visi(false)
-	set_process_input(false)
-	set_process_unhandled_input(false)
-	set_process_unhandled_key_input(false)
 	c_coins.global_position = original_c_coin_pos
 	Globals.conquited_coins = 0
 
@@ -53,8 +41,7 @@ func enable_state(delta: float):
 			aux_var["can_skip_count"] += 1
 			if aux_var["can_skip_count"] >= aux_var["can_skip_limit"]:
 				aux_var["can_skip"] = true
-				
-			if can_skip and Input.is_anything_pressed() and aux_var["can_skip"]: 
+			if Input.is_anything_pressed() and aux_var["can_skip"]: 
 				c_coins.text = str(Globals.conquited_coins)
 				ene_count.text = str(Globals.enemies_defalted)
 				progress = 1.0
@@ -63,9 +50,7 @@ func enable_state(delta: float):
 				anim.seek(anim.current_animation_length + 1, true)
 				var player: Player = Globals.player
 				player.anim.frame = player.anim.animation.length()
-				stage = 2				
-				
-			
+				stage = 2
 			if progress == 0.0:
 				var s: float = delta * progress_scale
 				var d: float = anim.get_animation("1").length + 0.2
@@ -114,6 +99,8 @@ func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
 			
+			to_set_visible_node.visible = true
+			
 			progress = 0.0
 			Globals.player.anim.play("die", 2.0)
 			
@@ -151,16 +138,15 @@ func setup_state(state: MenuState):
 			aux_var["can_skip_count"] = 0
 			aux_var["can_skip_limit"] = 50
 			aux_var["can_skip"] = false
-			
-			set_active(true)
 		MenuState.DESABLE:
+			to_set_visible_node.visible = false
 			stage = 1
 			c_coins.global_position = aux_var["original_c_coin_pos"]
 			set_active(false)
-			anim.play("2")
-			anim.stop()
-			anim.seek(0.0, true)
 			aux_var = {}
+			anim.play("2")
+			anim.seek(0.0, true)
+			anim.stop()
 	current_state = state
 
 func set_visi(mode: bool, type: int = 0):	

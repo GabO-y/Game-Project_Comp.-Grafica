@@ -14,8 +14,7 @@ func setup_state(state: MenuState):
 			visible = true
 			control_node.visible = true
 			anim_control_node.visible = false
-			Globals.player.setup_state(Player.PlayerState.MENU)
-			
+			Globals.player.setup_state(Player.PlayerState.MENU)			
 		MenuState.DESABLE:
 			visible = false
 			anim_control_node.visible = false

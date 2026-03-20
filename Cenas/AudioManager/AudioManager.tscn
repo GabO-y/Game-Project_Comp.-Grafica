@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bgfoedhdsvxrx"]
+
+[ext_resource type="Script" uid="uid://cp763cm7xmqu6" path="res://Cenas/AudioManager/audio_manager.gd" id="1_dpdcs"]
+[ext_resource type="AudioStream" uid="uid://ntbk785g70rv" path="res://Assets/Sound/ghost_voice.mp3" id="2_esrpi"]
+[ext_resource type="AudioStream" uid="uid://csl4jnmpwav2c" path="res://Assets/Sound/dash_sound.mp3" id="2_qkj07"]
+[ext_resource type="AudioStream" uid="uid://b8aq7128vm88f" path="res://Assets/Sound/get_new_armor.mp3" id="3_wdlo5"]
+[ext_resource type="AudioStream" uid="uid://cowqvpvyqhw6i" path="res://Assets/Sound/zombie_sound.mp3" id="3_xvmpw"]
+[ext_resource type="AudioStream" uid="uid://clokbwbb82k82" path="res://Assets/Sound/skeleton_voice.mp3" id="4_5h7vj"]
+[ext_resource type="AudioStream" uid="uid://dxiantgjacb8" path="res://Assets/Sound/collect_coin.mp3" id="5_5h7vj"]
+[ext_resource type="AudioStream" uid="uid://sej6hah1qyw5" path="res://Assets/Sound/get_key.mp3" id="6_esomf"]
+[ext_resource type="AudioStream" uid="uid://cynx2ee2mokb2" path="res://Assets/Sound/unlock_door.mp3" id="7_4fyb2"]
+[ext_resource type="AudioStream" uid="uid://bk5g8vbs0avfy" path="res://Assets/Sound/hit_enemy.mp3" id="7_igiy0"]
+[ext_resource type="AudioStream" uid="uid://dbirbkng1xhcs" path="res://Assets/Sound/main_tema.mp3" id="9_t83d2"]
+[ext_resource type="AudioStream" uid="uid://csr1vwak6yiaa" path="res://Assets/Sound/inssuficientCoins.mp3" id="10_s22t5"]
+
+[node name="AudioManager" type="Node2D" unique_id=470727849]
+process_mode = 3
+script = ExtResource("1_dpdcs")
+
+[node name="Player" type="Node2D" parent="." unique_id=847151453]
+
+[node name="Dash" type="AudioStreamPlayer2D" parent="Player" unique_id=305563081]
+stream = ExtResource("2_qkj07")
+
+[node name="BuyWeapon" type="AudioStreamPlayer2D" parent="Player" unique_id=2013077705]
+stream = ExtResource("3_wdlo5")
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1006784770]
+
+[node name="Ghost" type="AudioStreamPlayer2D" parent="Enemies" unique_id=846234970]
+stream = ExtResource("2_esrpi")
+
+[node name="Zombie" type="AudioStreamPlayer2D" parent="Enemies" unique_id=1423861311]
+stream = ExtResource("3_xvmpw")
+
+[node name="Skeleton" type="AudioStreamPlayer2D" parent="Enemies" unique_id=2088354280]
+stream = ExtResource("4_5h7vj")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Enemies" unique_id=2059317958]
+stream = ExtResource("7_igiy0")
+
+[node name="Items" type="Node2D" parent="." unique_id=1112665567]
+
+[node name="Coin" type="AudioStreamPlayer2D" parent="Items" unique_id=1977409422]
+stream = ExtResource("5_5h7vj")
+
+[node name="Key" type="AudioStreamPlayer2D" parent="Items" unique_id=2016035041]
+stream = ExtResource("6_esomf")
+
+[node name="InssuficientCoin" type="AudioStreamPlayer2D" parent="Items" unique_id=120175343]
+stream = ExtResource("10_s22t5")
+
+[node name="Objects" type="Node2D" parent="." unique_id=622809083]
+
+[node name="Door" type="AudioStreamPlayer2D" parent="Objects" unique_id=591821068]
+stream = ExtResource("7_4fyb2")
+
+[node name="Themes" type="Node2D" parent="." unique_id=1921024010]
+
+[node name="Main" type="AudioStreamPlayer2D" parent="Themes" unique_id=1686425390]
+stream = ExtResource("9_t83d2")
+autoplay = true

@@ -3,9 +3,12 @@ extends Node2D
 class_name House
 
 @export var player: Player
+
 @export var room_manager: RoomManager
-@export var camera: Camera2D
 @export var menu_manager: MenuManager
+@export var audio_manager: AudioManager
+
+@export var camera: Camera2D
 @export var initial_position: Marker2D
 @export var backlayer_filter: Node2D
 
@@ -20,6 +23,7 @@ class_name House
 @export var can_player_die: bool = true
 @export var has_key_animation: bool = true
 @export var test_boss: bool = false
+@export var ene_test: bool = false
 
 @export var can_use_god_menu: bool = false
 
@@ -52,6 +56,7 @@ func _ready() -> void:
 	Globals.item_manager = room_manager.item_manager
 	Globals.key_manager = room_manager.key_manager
 	Globals.round_manager = room_manager.round_manager
+	Globals.audio_manager = audio_manager
 		
 	die_menu.house = self
 	
@@ -87,6 +92,14 @@ func _ready() -> void:
 			break
 		
 		room_manager.match_doors("SafeRoom", room)
+	
+	if ene_test:
+		var zombie: Zombie = load("res://Cenas/Enemy/Zombie/Zombie.tscn").instantiate()
+		var room: Room = room_manager.current_room
+		room.add_child(zombie)
+		zombie.global_position = room.camera.global_position
+		zombie.set_physics_process(false)
+		zombie.heart = 1000000
 		
 	inital_menu.start_play.connect(await_initial_menu)
 
@@ -95,6 +108,8 @@ func _ready() -> void:
 		func():
 			finish_menu.setup_state(Menu.MenuState.ENABLE)
 	)
+	
+
 
 	#Globals.conquited_coins = 1000
 	#Globals.enemies_defalted = 500

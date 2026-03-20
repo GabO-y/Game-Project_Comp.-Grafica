@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://chamii6y3xgja" path="res://Cenas/Player/ghost_dash_effect.gd" id="4_6ihxy"]
 [ext_resource type="Script" uid="uid://bal4r08u27v5j" path="res://Cenas/Player/ray_casts.gd" id="5_bsnao"]
 [ext_resource type="Script" uid="uid://dww1rkje5k6ih" path="res://Cenas/Player/dynamic_background.gd" id="6_qhdav"]
-[ext_resource type="AudioStream" uid="uid://csl4jnmpwav2c" path="res://Assets/Sound/dash_sound.mp3" id="7_bsnao"]
 [ext_resource type="PackedScene" uid="uid://df6rl28qpnweo" path="res://Cenas/LightWeapon/WeaponManager/WeaponManager.tscn" id="7_xjvfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r8ryd"]
@@ -248,7 +247,7 @@ size = Vector2(11.5, 12.2222)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
-[node name="Player" type="Node2D" unique_id=1788556315 node_paths=PackedStringArray("weapon_node", "body", "anim", "hit_area", "hud_node", "label_coins", "armor_node", "weapon_manager", "dash_audio", "raycast2d_node", "heart_node") groups=["player"]]
+[node name="Player" type="Node2D" unique_id=1788556315 node_paths=PackedStringArray("weapon_node", "body", "anim", "hit_area", "hud_node", "label_coins", "armor_node", "weapon_manager", "raycast2d_node", "heart_node") groups=["player"]]
 modulate = Color(1, 0.992157, 1, 1)
 script = ExtResource("1_yjlpd")
 weapon_node = NodePath("CharacterBody2D/WeaponNode")
@@ -259,7 +258,6 @@ hud_node = NodePath("Hud")
 label_coins = NodePath("Hud/Coins")
 armor_node = NodePath("CharacterBody2D/WeaponNode")
 weapon_manager = NodePath("WeaponManager")
-dash_audio = NodePath("DashSound")
 raycast2d_node = NodePath("CharacterBody2D/RayCasts")
 heart_node = NodePath("Hud/HeartsNode")
 
@@ -324,9 +322,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="DashSound" type="AudioStreamPlayer" parent="." unique_id=1345629383]
-stream = ExtResource("7_bsnao")
 
 [node name="WeaponManager" parent="." unique_id=954447346 instance=ExtResource("7_xjvfg")]
 
