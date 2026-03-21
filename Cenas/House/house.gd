@@ -24,6 +24,7 @@ class_name House
 @export var has_key_animation: bool = true
 @export var test_boss: bool = false
 @export var ene_test: bool = false
+@export var player_infinity_coin: bool = false
 
 @export var can_use_god_menu: bool = false
 
@@ -46,6 +47,7 @@ func _ready() -> void:
 	Globals.god_vars["insta_ene_kill"] = insta_ene_kill
 	Globals.god_vars["can_player_die"] = can_player_die
 	Globals.god_vars["has_key_animation"] = has_key_animation
+	Globals.god_vars["player_infinity_coins"] = player_infinity_coin
 
 	room_manager.set_initial_room("SafeRoom")
 	god_menu.setup_state(Menu.MenuState.DESABLE)
@@ -65,17 +67,12 @@ func _ready() -> void:
 		func():
 			die_menu.a_coins.text = str(player.coins)
 			die_menu.setup_state(die_menu.MenuState.ENABLE)
-			die_menu.set_active(true)
-			#die_menu.start_anim_1()
 	)
 		
 	if room_manager.current_room.name == "SafeRoom":
 		for door in room_manager.current_room.doors:
 			door.open()
 			
-	#process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	
 	if is_skip_initial_menu:
 		inital_menu.setup_state(Menu.MenuState.DESABLE)
 		start_time = Time.get_ticks_msec()
@@ -103,42 +100,20 @@ func _ready() -> void:
 		
 	inital_menu.start_play.connect(await_initial_menu)
 
-	
 	finish_game.connect(
 		func():
 			finish_menu.setup_state(Menu.MenuState.ENABLE)
 	)
 	
-
-
-	#Globals.conquited_coins = 1000
-	#Globals.enemies_defalted = 500
+	if player_infinity_coin:
+		player.update_label_coins(1000000000)
 	
+
+
 func await_initial_menu():
-	player.set_active(true)
 	if start_time == 0.0:
 		start_time = Time.get_ticks_msec()
-
-func _process(delta: float) -> void:
-	if camera.enabled:
-		if is_instance_valid(follow):
-			camera.global_position = follow.global_position
-		else:
-			camera.enabled = false
-			
-# Como o canvasLayer tem que tá na cena main, é ele ativa e desativa o chestMenu 
-# basedo no sinal que o room_manager tem, vendo se é o saferoom
-
-func set_camare_in(thing: Node2D, zoom: Vector2):
-	camera.enabled = true
-	room_manager.current_room.camera.enabled = false
-	camera.zoom = zoom
-	follow = thing
-	
-func desable_camera():
-	camera.enabled = false
-	room_manager.current_room.camera.enabled = true
-		
+				
 func reset():
 
 	already_finish = false

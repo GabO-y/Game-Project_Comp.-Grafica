@@ -89,18 +89,13 @@ func set_active(mode: bool):
 		if door is Door:
 			door.set_active(mode)
 	for layer in layers:
-
 		layer.collision_enabled = mode
 		layer.navigation_enabled = mode
-		
 		layer.set_process(mode)
 		layer.set_physics_process(mode)
-		
 		var lar = Globals.layers["current_wall"] if mode else 0
-				
 		layer.tile_set.set_physics_layer_collision_layer(0, lar)
 		layer.tile_set.set_physics_layer_collision_mask(0, lar)
-		
 	if mode:
 		_update_doors()
 			
@@ -129,10 +124,9 @@ func lock_all_doors():
 		door.set_active(false)
 	
 func reset():
+	finish = false
 	for door in doors:
 		door.is_locked = true
 		door.set_active(false)
-		
-# fazendo a parte de items, quando sala limpa, item segue player
-signal clear
+
  

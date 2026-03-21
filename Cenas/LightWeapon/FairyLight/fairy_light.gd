@@ -5,8 +5,6 @@ class_name FairyLight
 var can_shoot: bool = true
 var aux_frames: int = 0
 
-var last_dir: Vector2 = Vector2.LEFT
-
 func _ready() -> void:
 	attributes["damage"] = CompostAtrribute.new()
 	attributes["frames_to_damage"] = CompostAtrribute.new()
@@ -23,17 +21,8 @@ func _ready() -> void:
 	
 func enable_state(delta: float):
 	
-	var dir: Vector2 
-	if is_use_mouse:
-		dir = global_position.direction_to(get_global_mouse_position())
-	else:
-		pass
-		
-	if dir == Vector2.ZERO:
-		dir = last_dir
-	else:
-		last_dir = dir
-		
+	var dir: Vector2 = get_dir()
+	
 	rotation = dir.angle()
 	if not can_shoot:
 		aux_frames += 1

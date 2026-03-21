@@ -25,9 +25,9 @@ func _physics_process(delta: float) -> void:
 	if ene_stuck:
 		global_position = ene_stuck.body.global_position
 		life_time -= delta
-		if ene_stuck.health <= 0:
+		if ene_stuck.heart <= 0:
 			life_time -= delta
-		if life_time <= 0 or ene_stuck.health <= 0:
+		if life_time <= 0 or ene_stuck.heart <= 0:
 			queue_free()
 		for ene in enemies_in_light:
 			if ene["in_light"]:
@@ -52,7 +52,7 @@ func _on_collision_touch_body_entered(body: Node2D) -> void:
 	
 	if ene_stuck: return
 	var ene: Enemy = body.get_parent() as Enemy
-	if ene.health <= 0: return
+	if ene.heart <= 0: return
 	
 	if Globals.god_vars["insta_ene_kill"]:
 		ene.die()

@@ -177,15 +177,10 @@ func get_all_items(room: Room):
 	
 # Chamado no Room
 func make_items_chase_player():
-	print(created_items)
 	for key in created_items.keys():
 		for item in created_items[key]:
 			if is_instance_valid(item):
 				item.setup_state(Item.ItemState.CHASING)
-				
-	#for item in items_node.get_children():
-		#item = item as Item 
-		#item.start_chase_player()	
 		
 func _collect_item(item: Item):
 	if Globals.player.is_dead:
@@ -213,17 +208,7 @@ func _collect_item(item: Item):
 			item.is_key_moment = true
 
 # caso o player atravesse a porta, mas não tenha pegado a chave
-func finish_get_key():
-	
-	if key_in_scene:
-		key_in_scene.use()
-		Globals.player.is_getting_key = false
-	
-		Globals.player.set_process(true)
-		Globals.player.set_physics_process(true)
 
-		Globals.house.desable_camera()
-		
 func reset():
 	for child in items_node.get_children():
 		items_node.remove_child(child)

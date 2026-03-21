@@ -84,7 +84,9 @@ script = ExtResource("1_0kox7")
 anim = NodePath("AnimationPlayer")
 anim_control_node = NodePath("AnimationPlayer/Control")
 control_node = NodePath("Control")
+is_active = null
 focus_button = NodePath("Control/VBoxContainer/Start/Start")
+need_focus = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=88312678]
 libraries/ = SubResource("AnimationLibrary_7yfuj")

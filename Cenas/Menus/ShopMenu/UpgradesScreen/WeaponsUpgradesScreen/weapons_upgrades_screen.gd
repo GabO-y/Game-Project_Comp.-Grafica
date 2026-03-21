@@ -5,9 +5,20 @@ class_name WeaponUpgradesScreen
 @export var weapon_items: Control
 @export var upgredes_item: Control
 
+@export var weapon_scroll: ScrollContainer
+@export var upgrades_scroll: ScrollContainer
+
 @export var shop_menu: ShopMenu
 
+var last_focus: Control
+
+var idx_section: int = 0
+var idx_selected: int = 0
+
+
 func update():
+	
+	find_focus()
 	
 	for child in weapon_items.get_children():
 		weapon_items.remove_child(child)
@@ -43,11 +54,14 @@ func update():
 	var weapons: Dictionary = w_m.weapons
 	
 	for w in weapons.keys():
+				
 		if not tab_infos.has(w):
 			continue
 		
 		var item: AvailableWeapons = load("res://Cenas/Menus/ShopMenu/UpgradesScreen/WeaponsUpgradesScreen/AvailableToSelect.tscn").instantiate()
 		weapon_items.add_child(item)
+		
+		item.name = str(w)
 					
 		item.label_name.text = str(tab_infos[w]["name"])
 				
@@ -86,37 +100,74 @@ func update():
 				up.label_price.text = str(price) if level < max_level else "MAX"
 				up.progress_bar.value = level / max_level 
 				up.button.button_up.connect(buy_upgrade.bind(w, attr, attributes))
-
+	update_focus()
+	
+func find_focus():
+	var focus: Control = get_viewport().gui_get_focus_owner()
+	var idx: int = 0
+	for c in weapon_items.get_children():
+		if c.button == focus:
+			idx_section = 0
+			idx_selected = idx
+		idx += 1
+	idx = 0
+	for c in upgredes_item.get_children():
+		if c.button == focus:
+			idx_section = 1
+			idx_selected = idx
+		idx += 1
+	
+func update_focus():
+	var childs: Array
+	match idx_section:
+		0:
+			childs = weapon_items.get_children()
+			shop_menu.scroll_focus = weapon_scroll
+		1:
+			childs = upgredes_item.get_children()
+			shop_menu.scroll_focus = upgrades_scroll
+	print(childs)
+	childs.get(idx_selected).button.grab_focus()
+		
 func buy_weapon(weapon_name: String, weapon_infos: Dictionary):
 	
 	var price: int = weapon_infos["price"]
+	var infinity_coins: bool = Globals.god_vars["player_infinity_coins"]
 	
 	if not weapon_infos["locked"]:
 		Globals.weapon_manager.set_weapon(weapon_name)
-	elif Globals.player.coins < price:
-		shop_menu.insufficiente_coin_effect()
-		return
-	else:
-		Globals.audio_manager.play("buy_weapon", "Player")
+	elif not infinity_coins:
+		if Globals.player.coins < price:
+			shop_menu.insufficiente_coin_effect()
+			return
 		Globals.player.coins -= price
-		Globals.player.update_label_coins()
-		Globals.weapon_manager.set_weapon(weapon_name)
-		shop_menu.update_coin()
-
+		unlock_weapon(weapon_name)
+	else:
+		unlock_weapon(weapon_name)
 	update()
+	
+func unlock_weapon(weapon_name: String):
+	Globals.audio_manager.play("buy_weapon", "Player")
+	Globals.player.update_label_coins()
+	Globals.weapon_manager.set_weapon(weapon_name)
+	shop_menu.update_coin()
 	
 func buy_upgrade(weapon_name, attr_name, attr):
 	
 	var a: CompostAtrribute = attr[attr_name]
-		
-	var price: int = int(a.get_attr("price"))
-	if Globals.player.coins < price:
-		shop_menu.insufficiente_coin_effect()
-		return
 	if a.level >= a.max_level:
 		return
-
-	Globals.player.coins -= price
+		
+	var price: int = int(a.get_attr("price"))
+	
+	var infinity_coin: bool = Globals.god_vars["player_infinity_coins"]
+	
+	if not infinity_coin:
+		if Globals.player.coins < price:
+			shop_menu.insufficiente_coin_effect()
+			return
+		Globals.player.coins -= price
+		
 	shop_menu.update_coin()
 	
 	var level: int = Globals.weapon_manager.weapons[weapon_name]["upgrades"][attr_name] + 1
@@ -126,3 +177,4 @@ func buy_upgrade(weapon_name, attr_name, attr):
 	Globals.player.update_label_coins()
 	
 	update()
+	

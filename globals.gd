@@ -96,12 +96,6 @@ func update_room_light():
 
 func time(time: float):
 	return get_tree().create_timer(time).timeout
-	
-func _on_goint_to_center():
-	already_center += 1
-	if already_center >= 8:
-		emerge_boss.emit()
-		already_center = 0
 
 func player_pos(): 
 	if !player:
@@ -145,6 +139,12 @@ func get_random_dir() -> Vector2:
 		randf_range(-1.0, 1.0),
 		randf_range(-1.0, 1.0)
 	).normalized()
+	
+func get_current_room() -> Room:
+	return room_manager.current_room
+	
+func get_current_room_cam() -> Camera2D:
+	return get_current_room().camera
 
 func test_collsion(c: CollisionObject2D):
 	print("--------------------------------")
@@ -166,6 +166,22 @@ func is_player(body: Node2D) -> Player:
 			return player
 	return null
 	
-signal goint_to_center
-
-signal emerge_boss
+func make_drop_curve(first: Vector2, last: Vector2, heigth: float):
+	
+	var dir: Vector2 = first.direction_to(last)
+	var dist: float = first.distance_to(last)
+	var center: Vector2 = first + dir * dist / 2.0
+	
+	center += dir.rotated(deg_to_rad(-90.0)) * heigth
+	
+	var curve: Curve2D = Curve2D.new()
+	curve.add_point(first)
+	curve.add_point(center, Vector2.LEFT * heigth * 0.3, Vector2.RIGHT * heigth * 0.3)
+	curve.add_point(last)
+	
+	return curve
+	
+func get_pos_curve(curve: Curve2D, n: float):
+	var points: Array = curve.get_baked_points()
+	var size: int = points.size() - 1
+	return points.get(int(size * n))

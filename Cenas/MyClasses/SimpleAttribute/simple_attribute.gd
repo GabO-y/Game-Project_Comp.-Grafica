@@ -16,7 +16,7 @@ func get_value(level: int):
 		return max_value
 	if level <= 1:
 		return min_value
-	var delta = (max_value - min_value) / max_level
+	var delta = (max_value - min_value) / max_level 
 	return min_value + (delta * level)
 	
 func _to_string() -> String:

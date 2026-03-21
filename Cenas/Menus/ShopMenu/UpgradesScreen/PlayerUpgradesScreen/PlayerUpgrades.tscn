@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byg5vvk10qlyv" path="res://Cenas/Menus/ShopMenu/UpgradesScreen/PlayerUpgradesScreen/player_upgrades.gd" id="1_pvmic"]
 
-[node name="PlayerUpgrades" type="Control" unique_id=65496558 node_paths=PackedStringArray("upgrades_node")]
+[node name="PlayerUpgrades" type="Control" unique_id=65496558 node_paths=PackedStringArray("upgrades_node", "scroll_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pvmic")
 upgrades_node = NodePath("ScrollContainer/VBoxContainer")
+scroll_container = NodePath("ScrollContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1722698055]
 layout_mode = 1

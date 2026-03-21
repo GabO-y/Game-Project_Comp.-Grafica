@@ -142,7 +142,6 @@ func setup_state(state: MenuState):
 			to_set_visible_node.visible = false
 			stage = 1
 			c_coins.global_position = aux_var["original_c_coin_pos"]
-			set_active(false)
 			aux_var = {}
 			anim.play("2")
 			anim.seek(0.0, true)

@@ -19,6 +19,6 @@ func _ready() -> void:
 	attributes["distance"].set_attr("price", 150, 10)
 	
 func enable_state(delta: float):
-	var dir: Vector2 = Globals.player_pos().direction_to(get_global_mouse_position())
+	var dir: Vector2 = get_dir()
 	rotation = dir.angle() # * (PI / 2.0)
 	super.enable_state(delta)

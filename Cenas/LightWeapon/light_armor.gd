@@ -12,6 +12,9 @@ var price: float = 0.0
 
 var can_toggle: bool = true
 
+var last_dir: Vector2 = Vector2.LEFT
+
+
 # idea:
 #	cada arma conterá um atributo, nesse dicionario
 #	vc guarda o nome, e uma CompostAttribute
@@ -96,5 +99,19 @@ func update_status(name: String):
 			frames_to_damage = attr.get_attr("value")
 		"distance":
 			scale = attr.get_attr("value")
+
+func get_dir() -> Vector2:
+	var dir: Vector2 
+	if is_use_mouse:
+		dir = global_position.direction_to(get_global_mouse_position())
+	else:
+		dir.x = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
+		dir.y = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
+	if dir == Vector2.ZERO:
+		dir = last_dir
+	else:
+		last_dir = dir
+	return dir
+		
 
 enum LightWeaponState {ENABLE, DESABLE}

@@ -70,7 +70,7 @@ func attacking_state(delta: float):
 		play_attack_animation()
 		for body in slash_hit_area.get_overlapping_bodies():
 			if body.get_parent() is Player:
-				Globals.player.take_damage(1)
+				Globals.player.take_damage(damage)
 		return
 	take_damage_frames_count += 1
 	

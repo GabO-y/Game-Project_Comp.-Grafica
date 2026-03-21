@@ -36,7 +36,6 @@ func _ready() -> void:
 
 	round_manager.round_finished.connect(
 		func():
-			print("aa")
 			if not current_room.can_return and not Globals.is_reseting:
 				current_room.finish = true
 			_clear_effects()
@@ -61,7 +60,6 @@ func _change_room(goTo):
 	item_manager.get_all_items(current_room)
 
 	# Caso vc passe pela porta e não tenha tocado na chave
-	item_manager.finish_get_key()
 	current_room.desable()
 	
 	var room_name = current_room.name
@@ -77,14 +75,6 @@ func _change_room(goTo):
 	Globals.can_teleport = false
 	round_manager.start_random_round()
 	
-	#
-	#round_manager.setup_next_level()
-	#
-	#if current_room is BossRoom:
-		#current_room.boss.setup()
-	#else:
-		#round_manager.start_random_round()
-		
 	await get_tree().create_timer(0.3).timeout
 	
 	Globals.can_teleport = true
@@ -201,9 +191,7 @@ func reset():
 		
 	for room in rooms: 
 		room.reset()
-		
-	sounds_to_play.clear()
-		
+				
 	current_room.desable()
 	current_room = get_room("SafeRoom")
 	current_room.enable()

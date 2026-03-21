@@ -131,5 +131,7 @@ func collect(body: Node2D):
 		Globals.audio_manager.play("Key", "Items")
 		setup_state(ItemState.CUSTOM)
 		setup_key_state(KeyState.ANIMATION)
+		Globals.player.setup_state(Player.PlayerState.ANIMATION)
+		
 		
 enum KeyState {NORNAL, ANIMATION}

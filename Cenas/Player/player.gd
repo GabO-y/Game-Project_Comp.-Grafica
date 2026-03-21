@@ -75,9 +75,9 @@ func _ready() -> void:
 	var tab_infos: Dictionary = {
 		"life": {
 			"value": {
-				"max": 10,
-				"min": 5
-			},
+				"max": 10.0,
+				"min": 5.0
+			},			
 			"price": {
 				"max": 100,
 				"min": 15
@@ -132,37 +132,22 @@ func _ready() -> void:
 		if tab_infos[attr].has("max_level"):
 			max_level = tab_infos[attr]["max_level"]
 		var a: CompostAtrribute = CompostAtrribute.new(max_level)
-		
 		for key in tab_infos[attr]:
 			if key == "max_level":
 				continue
 			a.set_attr(key, tab_infos[attr][key]["max"], tab_infos[attr][key]["min"])
 		attributes[attr] = a
-		
+
 	Globals.weapon_manager = weapon_manager
 	
 	hearts = max_heart
 	
 	update_label_coins()
 
-	spend_coins.connect(_spend_coins)
-	
 	get_window().size_changed.connect(update_hearts)
 	for attr in attributes.keys():
 		update_status(attr)
 	
-func set_armor(armor: LightWeapon):
-	for child in armor_node.get_children():
-		armor_node.remove_child(child)
-	armor_node.add_child(armor)
-	self.armor = armor
-		
-func _spend_coins(amount: int):
-	if amount > coins:
-		print("quantidade a ser gasta, execede a quantidade de moedas: Player/spend_coins()")
-		return
-	coins -= amount
-	update_label_coins()
 	
 
 func _physics_process(delta: float) -> void:
@@ -202,6 +187,7 @@ func _physics_process(delta: float) -> void:
 			anim.modulate = Color(1, 1, 1)
 
 func setup_state(state: PlayerState):
+	
 	match state:
 		PlayerState.MOVING:
 			body.collision_layer = Globals.layers["player"]
@@ -290,7 +276,6 @@ func knockback_animation(dir: Vector2):
 	is_on_knockback = false
 
 func take_damage(damage: int):
-
 	if is_invencible or not can_take_damege or not Globals.god_vars["can_player_die"]: 
 		return
 	is_invencible = true
@@ -313,8 +298,8 @@ func die():
 	set_process(false)
 	set_physics_process(false)
 	
-
 	_die.emit()
+	
 	
 func flick():
 	if flick_aux % 10 == 0:
@@ -337,7 +322,11 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	var ene = body.get_parent() as Enemy
 	if ene == null: return
 	
-func update_label_coins():
+func update_label_coins(coins: int = -1):
+	if coins != -1:
+		self.coins = coins
+	else:
+		coins = self.coins
 	label_coins.text = str(coins)
 	
 func update_hearts():
@@ -374,11 +363,9 @@ func reset():
 	
 	set_active(true)
 	
-	#armor.set_process(true)
-	#armor.set_physics_process(true)
-	
 	process_mode = Node.PROCESS_MODE_INHERIT
 	current_state = PlayerState.MOVING
+	weapon_manager.selected.can_toggle = true
 	
 	can_dash = false   
 	
@@ -420,7 +407,7 @@ func test_wall_stuck():
 func update_status(name: String):
 	match name:
 		"life":
-			max_heart = attributes[name].get_attr("value")
+			max_heart = int(attributes[name].get_attr("value"))
 			hearts = max_heart
 			update_hearts()
 		"speed":
@@ -432,7 +419,6 @@ func update_status(name: String):
 		"invencible_time": 
 			invencible_frames_duration = attributes[name].get_attr("value")
 
-	
 signal _die
 
 signal spend_coins(amount: int)

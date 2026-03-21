@@ -122,14 +122,12 @@ func setup_state(state: MenuState):
 			for i in range(p_quant):
 				var cpu_p: CPUParticles2D = CPUParticles2D.new()
 				particles_node.add_child(cpu_p)
-				
 				cpu_p.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
 				cpu_p.emission_sphere_radius = particles_space
-				
 				cpu_p.emitting = true
-				cpu_p.amount = 100
+				cpu_p.amount = 400
 				cpu_p.lifetime = 20.0
-				cpu_p.gravity = Vector2(0.0, -10.0)
+				cpu_p.gravity = Vector2(0.0, -15.0)
 				cpu_p.scale_amount_max = 5.0
 				cpu_p.global_position = current_pos + Vector2(delta_space * i, Globals.player_pos().y * 3.5)
 				cpu_p.process_mode = Node.PROCESS_MODE_ALWAYS

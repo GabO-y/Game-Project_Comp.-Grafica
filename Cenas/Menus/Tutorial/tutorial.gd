@@ -117,16 +117,15 @@ func _ready() -> void:
 		false
 	)
 
+func setup_state(state: MenuState):
+	match state:
+		MenuState.ENABLE:
+			visible = true
+			play(1)
+		MenuState.DESABLE:
+			visible = false
+	current_state = state
 	
-	
-
-func set_active(mode: bool, principal: bool = true):
-	super.set_active(mode)
-	
-	if mode:
-		current_index = 1
-		play(1)
-
 func next():
 	var i = current_index + 1
 	if i > infos.size(): return
@@ -138,8 +137,8 @@ func back():
 	play(i)
 	
 func exit() -> void:
-	set_active(false)
-	Globals.house.inital_menu.set_active(true)
+	setup_state(MenuState.DESABLE)
+	Globals.house.inital_menu.setup_state(MenuState.ENABLE)
 	
 func play(i: int):
 	

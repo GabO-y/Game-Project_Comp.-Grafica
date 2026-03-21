@@ -69,6 +69,8 @@ func _on_timer_timeout() -> void:
 		
 func reset():
 	level = 0
+	timer.stop()
+	is_in_round = false
 	for ene in ene_spawn_node.get_children():
 		ene_spawn_node.remove_child(ene)
 	spawned_enemies.clear()
