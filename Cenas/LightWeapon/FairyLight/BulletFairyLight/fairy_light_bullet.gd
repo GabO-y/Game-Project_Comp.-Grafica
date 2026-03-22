@@ -7,8 +7,6 @@ class_name FairyLightBullet
 var is_stuck: bool = false
 var ene_stuck: Enemy
 
-var life_time: float = 5.0
-
 var enemies_in_light: Array[Dictionary]
 
 var fairy_light: FairyLight
@@ -23,12 +21,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	if ene_stuck:
-		global_position = ene_stuck.body.global_position
-		life_time -= delta
-		if ene_stuck.heart <= 0:
-			life_time -= delta
-		if life_time <= 0 or ene_stuck.heart <= 0:
+		
+		if frames > life_time_frames:
 			queue_free()
+			return
+		else:
+			frames += 1
+			
+		global_position = ene_stuck.body.global_position
 		for ene in enemies_in_light:
 			if ene["in_light"]:
 				ene["frames"] += 1
@@ -40,7 +40,6 @@ func _physics_process(delta: float) -> void:
 			if f > fairy_light.attributes["frames_to_damage"].get_attr("value"):
 				ene["ene"].take_damage(fairy_light.attributes["damage"].get_attr("value"))
 				ene["frames"] = 0.0
-				
 	elif is_to_rotate:
 		rotate(deg_to_rad(20.0))
 		
@@ -59,6 +58,8 @@ func _on_collision_touch_body_entered(body: Node2D) -> void:
 		return
 	
 	if ene:
+		life_time_frames = 200
+		frames = 0
 		ene_stuck = ene
 		is_to_move = false
 		light_area.body_entered.connect(ene_enter_light)

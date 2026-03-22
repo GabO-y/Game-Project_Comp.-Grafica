@@ -6,6 +6,7 @@ class_name GodMenu
 @export var check_box_button_mode: VBoxContainer
 @export var rooms_node: VBoxContainer
 
+
 func setup_state(state: MenuState):
 	if not Globals.house.can_use_god_menu:
 		state = MenuState.DESABLE

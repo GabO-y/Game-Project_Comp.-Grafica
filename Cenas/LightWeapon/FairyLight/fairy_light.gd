@@ -16,8 +16,10 @@ func _ready() -> void:
 	attributes["frames_coldown_shoot"].set_attr("value", 20, 50)
 	attributes["frames_coldown_shoot"].set_attr("price", 100, 10)
 	
-	attributes["damage"].set_attr("value", 10, 2)
+	attributes["damage"].set_attr("value", 10.0, 2.0)
 	attributes["damage"].set_attr("price", 150, 10)
+	
+	super._ready()
 	
 func enable_state(delta: float):
 	

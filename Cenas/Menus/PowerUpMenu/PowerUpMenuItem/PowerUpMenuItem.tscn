@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ccioee6rcjhd4"]
+
+[ext_resource type="Script" uid="uid://3ubwu0rn2k4c" path="res://Cenas/Menus/PowerUpMenu/PowerUpMenuItem/power_up_menu_item.gd" id="1_j5wx2"]
+
+[sub_resource type="Gradient" id="Gradient_g7fg3"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j5wx2"]
+gradient = SubResource("Gradient_g7fg3")
+width = 400
+height = 400
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5wx2"]
+bg_color = Color(2.627939e-05, 0.70721066, 0.14887455, 1)
+
+[node name="PowerUpMenuItem" type="TextureRect" unique_id=1222876754 node_paths=PackedStringArray("button", "progress_bar")]
+offset_right = 100.0
+offset_bottom = 100.0
+texture = SubResource("GradientTexture2D_j5wx2")
+script = ExtResource("1_j5wx2")
+button = NodePath("Button")
+progress_bar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1974049074]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_j5wx2")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="Button" type="Button" parent="." unique_id=1464972624]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

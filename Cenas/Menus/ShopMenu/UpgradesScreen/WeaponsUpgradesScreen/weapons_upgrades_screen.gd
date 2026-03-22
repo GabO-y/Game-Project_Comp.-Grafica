@@ -118,6 +118,8 @@ func find_focus():
 		idx += 1
 	
 func update_focus():
+	if shop_menu.current_state != Menu.MenuState.ENABLE:
+		return
 	var childs: Array
 	match idx_section:
 		0:
@@ -126,7 +128,6 @@ func update_focus():
 		1:
 			childs = upgredes_item.get_children()
 			shop_menu.scroll_focus = upgrades_scroll
-	print(childs)
 	childs.get(idx_selected).button.grab_focus()
 		
 func buy_weapon(weapon_name: String, weapon_infos: Dictionary):

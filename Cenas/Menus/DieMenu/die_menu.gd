@@ -43,7 +43,7 @@ func enable_state(delta: float):
 				aux_var["can_skip"] = true
 			if Input.is_anything_pressed() and aux_var["can_skip"]: 
 				c_coins.text = str(Globals.conquited_coins)
-				ene_count.text = str(Globals.enemies_defalted)
+				ene_count.text = str(Globals.ene_defaeted_current_run)
 				progress = 1.0
 				anim.seek(anim.current_animation_length + 1, true)
 				anim.play("2")
@@ -76,7 +76,7 @@ func enable_state(delta: float):
 				anim.play("2", -1, speed)
 			progress += (1.0 / progress_scale)
 			c_coins.text = str(int(Globals.conquited_coins * progress))
-			ene_count.text = str(int(Globals.enemies_defalted * progress))
+			ene_count.text = str(int(Globals.ene_defaeted_current_run * progress))
 			if progress > 1:
 				if anim.is_playing():
 					anim.seek(anim.current_animation_length + 1, true)

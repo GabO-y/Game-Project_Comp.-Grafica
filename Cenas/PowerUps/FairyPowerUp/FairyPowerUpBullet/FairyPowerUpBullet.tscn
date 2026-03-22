@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cg1hdujpws13f"]
+
+[ext_resource type="Script" uid="uid://c8vrapw7rlrvl" path="res://Cenas/PowerUps/FairyPowerUp/FairyPowerUpBullet/fairy_power_up_bullet.gd" id="1_j1j3n"]
+
+[sub_resource type="Gradient" id="Gradient_j1j3n"]
+offsets = PackedFloat32Array(0.12025317, 0.60126585)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b11fi"]
+gradient = SubResource("Gradient_j1j3n")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_s1fmh"]
+offsets = PackedFloat32Array(0, 0.42405063)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8n80g"]
+gradient = SubResource("Gradient_s1fmh")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j1j3n"]
+radius = 3.6055512
+
+[node name="FairyPowerUpBullet" type="Sprite2D" unique_id=1794157843 node_paths=PackedStringArray("collision_area")]
+position = Vector2(-1.4305115e-06, -1.4305115e-06)
+scale = Vector2(0.484375, 0.484375)
+texture = SubResource("GradientTexture2D_b11fi")
+script = ExtResource("1_j1j3n")
+collision_area = NodePath("Area2D")
+speed = 2.0
+life_time_frames = 200
+metadata/_custom_type_script = "uid://cpx6if1x2k6ic"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1712200277]
+position = Vector2(-9.536743e-07, -9.536743e-07)
+scale = Vector2(0.65625, 0.65625)
+texture = SubResource("GradientTexture2D_8n80g")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1266533811]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1867447222]
+shape = SubResource("CircleShape2D_j1j3n")
+
+[connection signal="body_entered" from="Area2D" to="." method="_ene_enter_light"]

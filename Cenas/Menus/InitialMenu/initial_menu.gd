@@ -6,6 +6,8 @@ class_name InitialMenu
 @export var anim_control_node: Control
 @export var control_node: Control
 
+@export var start_button: Button
+
 var stage: int = 1
 
 func setup_state(state: MenuState):
@@ -14,7 +16,8 @@ func setup_state(state: MenuState):
 			visible = true
 			control_node.visible = true
 			anim_control_node.visible = false
-			Globals.player.setup_state(Player.PlayerState.MENU)			
+			Globals.player.setup_state(Player.PlayerState.MENU)
+			start_button.grab_focus()
 		MenuState.DESABLE:
 			visible = false
 			anim_control_node.visible = false
@@ -43,11 +46,11 @@ func _on_start_button_down() -> void:
 
 	anim.play("start")
 	anim.animation_finished.connect(
-		func(n):
+		func(_n):
 			control_node.visible = false
 			anim.play("start2")
 			anim.animation_finished.connect(
-				func(n):
+				func(_m):
 					setup_state(MenuState.DESABLE)
 					start_play.emit()
 			)

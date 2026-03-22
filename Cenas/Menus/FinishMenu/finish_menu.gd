@@ -63,9 +63,6 @@ func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
 			
-
-
-			
 			labels_node.visible = true
 			anim.play("1")
 			
@@ -132,7 +129,6 @@ func setup_state(state: MenuState):
 				cpu_p.global_position = current_pos + Vector2(delta_space * i, Globals.player_pos().y * 3.5)
 				cpu_p.process_mode = Node.PROCESS_MODE_ALWAYS
 		MenuState.DESABLE:
-			
 			labels_node.visible = false			
 			Globals.player.hud_node.visible = true
 			aux_var = {}

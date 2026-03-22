@@ -7,6 +7,7 @@ class_name TutorialMenu
 @export var button_next: Button
 @export var titulo: Label
 @export var imgs_cont: VBoxContainer
+@export var exit_button: Button
 
 var current_index: int = 1
 
@@ -117,11 +118,18 @@ func _ready() -> void:
 		false
 	)
 
+func enable_state(delta: float):
+	if Input.is_action_just_pressed("ui_next"):
+		next()
+	elif Input.is_action_just_pressed("ui_previus"):
+		back()
+
 func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
 			visible = true
 			play(1)
+			exit_button.grab_focus()
 		MenuState.DESABLE:
 			visible = false
 	current_state = state
@@ -192,7 +200,6 @@ func play(i: int):
 		painel.add_child(label)
 		labels_container.add_child(painel)
 			
-	
 func create_info(contents: Array[String], texts: Array[String], is_video: bool = true):
 	
 	var info = Infos.new() as Infos

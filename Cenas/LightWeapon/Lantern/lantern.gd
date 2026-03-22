@@ -3,8 +3,7 @@ extends LightWeapon
 class_name Lantern
 
 func _ready() -> void:
-	super._ready()
-	
+		
 	attributes["damage"] = CompostAtrribute.new()
 	attributes["frames_to_damage"] = CompostAtrribute.new()
 	attributes["distance"] = CompostAtrribute.new(5)
@@ -17,6 +16,11 @@ func _ready() -> void:
 	
 	attributes["distance"].set_attr("value", Vector2(2, 2), Vector2(1, 1))
 	attributes["distance"].set_attr("price", 150, 10)
+	
+	super._ready()
+
+	
+	
 	
 func enable_state(delta: float):
 	var dir: Vector2 = get_dir()

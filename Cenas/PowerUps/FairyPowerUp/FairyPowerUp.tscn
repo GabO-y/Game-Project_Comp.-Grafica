@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c86q0pewylqq5"]
+
+[ext_resource type="Script" uid="uid://b60ff2uxw385l" path="res://Cenas/PowerUps/FairyPowerUp/fairy_power_up.gd" id="1_35aaq"]
+
+[sub_resource type="Gradient" id="Gradient_qmeg3"]
+offsets = PackedFloat32Array(0, 0.14556962)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k2m72"]
+gradient = SubResource("Gradient_qmeg3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_35aaq"]
+offsets = PackedFloat32Array(0.15822785, 0.664557)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qmeg3"]
+gradient = SubResource("Gradient_35aaq")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="FairyPowerUp" type="Node2D" unique_id=1019040167]
+script = ExtResource("1_35aaq")
+power_up_name = "Fada Amiga"
+power_up_description = "Uma fada irá te seguir, disparando rajadas de luz contra os monstros"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1177159480]
+texture = SubResource("GradientTexture2D_k2m72")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=1075430420]
+texture = SubResource("GradientTexture2D_qmeg3")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1330771773]
+amount = 20
+emission_shape = 1
+emission_sphere_radius = 11.65
+gravity = Vector2(0, -10)

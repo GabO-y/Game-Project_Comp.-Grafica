@@ -31,15 +31,16 @@ func _ready() -> void:
 			player_upgrade_screen.update()
 	)
 
-	
 
 func enable_state(delta: float):
-	
-	if Input.is_action_just_pressed("ui_exit_menu"):
+	if Input.is_action_just_pressed("ui_next"):
+		select_upgrades_player_button.button_up.emit()
+	if Input.is_action_just_pressed("ui_previus"):
+		select_weapon_button.button_up.emit()
+	if Input.is_action_just_pressed("ui_toggle_menu"):
 		setup_state(MenuState.DESABLE)
 	if aux_var["inssu_effect"]:
 		insufficiente_coin_state()
-		
 	if scroll_focus:
 		var y: float = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 		scroll_focus.scroll_vertical += y * scroll_speed

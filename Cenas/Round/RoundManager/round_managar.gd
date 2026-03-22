@@ -44,6 +44,9 @@ func spawn_random_enemy():
 		func(ene):
 			Globals.item_manager.drop("Coin", ene.body.global_position)
 			spawned_enemies.erase(ene)
+			Globals.ene_defaeted_current_run += 1
+			Globals.total_ene_defaeted += 1
+			Globals.power_up_manager.ene_defeated += 1
 	)
 	spawned_enemies.append(ene)
 	ene.level = level

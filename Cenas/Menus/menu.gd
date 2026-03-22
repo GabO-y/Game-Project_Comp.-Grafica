@@ -11,7 +11,7 @@ var aux_var: Dictionary = {}
 
 enum MenuState {ENABLE, DESABLE}
 
-var current_state: MenuState = MenuState.DESABLE
+@export var current_state: MenuState = MenuState.DESABLE
 
 var last_player_state: int
 			

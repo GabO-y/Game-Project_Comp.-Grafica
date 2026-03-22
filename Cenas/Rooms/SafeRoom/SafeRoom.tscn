@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://cirgr2k7g1tgi"]
 
 [ext_resource type="PackedScene" uid="uid://dls8b0gmqgxgr" path="res://Cenas/Rooms/SafeRoom/teto_0.tscn" id="0_id"]
-[ext_resource type="Script" uid="uid://cb3mmc8s7ai8c" path="res://Cenas/Rooms/SafeRoom/safe_room.gd" id="1_ckbd2"]
+[ext_resource type="Script" uid="uid://d3u4esfgv0xnj" path="res://Cenas/Rooms/room.gd" id="1_6su08"]
 [ext_resource type="PackedScene" uid="uid://bxyjh8tinbc8b" path="res://Cenas/Rooms/SafeRoom/moveis_alto_1.tscn" id="1_id"]
 [ext_resource type="PackedScene" uid="uid://df5k2h6ohwyue" path="res://Cenas/Rooms/SafeRoom/moveis_baixo_2.tscn" id="2_id"]
 [ext_resource type="PackedScene" uid="uid://b23ny6iov6og0" path="res://Cenas/Rooms/SafeRoom/Porta_3.tscn" id="3_id"]
@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://c42kqnewe2l" path="res://Cenas/Rooms/SafeRoom/Fundo_7.tscn" id="7_id"]
 [ext_resource type="Texture2D" uid="uid://dfimnqlujm1iq" path="res://Assets/rooms/sprites_v4.png" id="7_t81q4"]
 [ext_resource type="PackedScene" uid="uid://dsa5vodvq7v6n" path="res://Cenas/Rooms/Door/Door.tscn" id="10_ko388"]
-[ext_resource type="PackedScene" uid="uid://c5t1rcxsbscp5" path="res://Cenas/Enemy/Zombie/Zombie.tscn" id="13_gqryf"]
-[ext_resource type="PackedScene" uid="uid://csvmtodty8e68" path="res://Cenas/Enemy/Spawner/EnemySpawner.tscn" id="13_jkyqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6su08"]
 texture = ExtResource("7_t81q4")
@@ -141,11 +139,13 @@ sources/0 = SubResource("TileSetAtlasSource_6su08")
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_t81q4"]
 polygon = PackedVector2Array(-8, 7, -11, -27, 11, -27, 8, 7, 8, -24, -8, -24)
 
-[node name="SafeRoom" type="Node2D" unique_id=40438358 node_paths=PackedStringArray("layer_node")]
-script = ExtResource("1_ckbd2")
+[node name="SafeRoom" type="Node2D" unique_id=10860570 node_paths=PackedStringArray("camera", "layer_node")]
+script = ExtResource("1_6su08")
 is_clear = true
 finish = true
+camera = NodePath("Camera2D")
 layer_node = NodePath("Layers")
+metadata/_custom_type_script = "uid://d3u4esfgv0xnj"
 
 [node name="Layers" type="Node2D" parent="." unique_id=16283034]
 
@@ -195,10 +195,6 @@ open_door_sprite = NodePath("../../Layers/Porta_aberta")
 occluder = SubResource("OccluderPolygon2D_t81q4")
 
 [node name="Spawners" type="Node2D" parent="." unique_id=498892235]
-
-[node name="EnemieSpawaner" parent="Spawners" unique_id=796061481 instance=ExtResource("13_jkyqi")]
-position = Vector2(274, 107)
-type_enemie = ExtResource("13_gqryf")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=628568755]
 position = Vector2(153, 94)

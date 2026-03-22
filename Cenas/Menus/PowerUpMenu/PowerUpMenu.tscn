@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://c0v22ll5w46xn"]
+
+[ext_resource type="Script" uid="uid://8kwr5tkvc26v" path="res://Cenas/Menus/PowerUpMenu/power_up_menu.gd" id="1_rrkqi"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="2_2oc7s"]
+[ext_resource type="PackedScene" uid="uid://ccioee6rcjhd4" path="res://Cenas/Menus/PowerUpMenu/PowerUpMenuItem/PowerUpMenuItem.tscn" id="2_hnoha"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2oc7s"]
+font = ExtResource("2_2oc7s")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_dxw6a"]
+font = ExtResource("2_2oc7s")
+font_size = 64
+
+[node name="PowerUpMenu" type="CanvasLayer" unique_id=657579698 node_paths=PackedStringArray("power_ups_node", "power_name", "power_description")]
+script = ExtResource("1_rrkqi")
+power_ups_node = NodePath("MarginContainer/PanelContainer/PowerUpsNode")
+power_name = NodePath("MarginContainer/PanelContainer/HBoxContainer/PowerUpName")
+power_description = NodePath("MarginContainer/PanelContainer/HBoxContainer/RichTextLabel")
+metadata/_custom_type_script = "uid://b4nrn1evrp1qq"
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1974512786]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=135301320]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer" unique_id=542012257]
+layout_mode = 2
+
+[node name="PowerUpName" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=809315733]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Power Up Name"
+label_settings = SubResource("LabelSettings_2oc7s")
+vertical_alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=1196561602]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("2_2oc7s")
+theme_override_font_sizes/normal_font_size = 32
+text = "Power Up description"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PowerUpsNode" type="HBoxContainer" parent="MarginContainer/PanelContainer" unique_id=902417175]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 200
+
+[node name="PowerUpMenuItem" parent="MarginContainer/PanelContainer/PowerUpsNode" unique_id=1222876754 instance=ExtResource("2_hnoha")]
+layout_mode = 2
+
+[node name="PowerUpMenuItem2" parent="MarginContainer/PanelContainer/PowerUpsNode" unique_id=673045949 instance=ExtResource("2_hnoha")]
+layout_mode = 2
+
+[node name="PowerUpMenuItem3" parent="MarginContainer/PanelContainer/PowerUpsNode" unique_id=342821437 instance=ExtResource("2_hnoha")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=270491515]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "
+Faça Sua Escolha"
+label_settings = SubResource("LabelSettings_dxw6a")

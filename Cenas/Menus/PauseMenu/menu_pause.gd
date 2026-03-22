@@ -1,5 +1,7 @@
 extends Menu
 
+@export var resume_button: Button
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	current_state = MenuState.DESABLE
@@ -15,7 +17,7 @@ func setup_state(state: MenuState):
 		MenuState.ENABLE:
 			visible = true
 			get_tree().paused = true
-			#last_player_state = Globals.player.current_state
+			resume_button.grab_focus()
 		MenuState.DESABLE:
 			visible = false
 			get_tree().paused = false
@@ -24,12 +26,12 @@ func setup_state(state: MenuState):
 	setup_player()
 			
 func enable_state(delta: float):
-	if Input.is_action_just_pressed("ui_exit_menu"):
+	if Input.is_action_just_pressed("ui_toggle_menu"):
 		setup_state(MenuState.DESABLE)
 		
 func desable_state(delta: float):
 	if Globals.player.current_state != Player.PlayerState.MENU: 
-		if Input.is_action_just_pressed("ui_exit_menu"):
+		if Input.is_action_just_pressed("ui_pause_menu"):
 			setup_state(MenuState.ENABLE)
 			
 func _on_button_pressed() -> void:

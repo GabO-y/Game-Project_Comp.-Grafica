@@ -96,12 +96,12 @@ func attack():
 	
 func setup_status():
 	attributes = {
-		"heart": SimpleAttribute.new(20, 5, 9),
+		"heart": SimpleAttribute.new(15, 4, 9),
 		"damage": SimpleAttribute.new(2, 1, 9),
-		"speed": SimpleAttribute.new(200.0, 100.0, 9),
-		"arrow_speed": SimpleAttribute.new(5.0, 4.0, 9),
-		"wait_frames": SimpleAttribute.new(30, 40, 9),
-		"take_damage": SimpleAttribute.new(10, 50, 9)
+		"speed": SimpleAttribute.new(150.0, 100.0, 9),
+		"arrow_speed": SimpleAttribute.new(5.0, 3.5, 9),
+		"wait_frames": SimpleAttribute.new(30, 50, 9),
+		"take_damage": SimpleAttribute.new(20, 60, 9)
 	}
 	update_all_status()
 

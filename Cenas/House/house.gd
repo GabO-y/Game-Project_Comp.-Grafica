@@ -16,6 +16,7 @@ class_name House
 @export var finish_menu: FinishMenu
 @export var inital_menu: InitialMenu
 @export var tutorial_menu: TutorialMenu
+@export var power_up_menu: PowerUpMenu
 @export var god_menu: GodMenu
 
 @export var is_skip_initial_menu: bool = false
@@ -105,10 +106,11 @@ func _ready() -> void:
 			finish_menu.setup_state(Menu.MenuState.ENABLE)
 	)
 	
+	power_up_menu.setup_state(Menu.MenuState.DESABLE)
+	
 	if player_infinity_coin:
 		player.update_label_coins(1000000000)
 	
-
 
 func await_initial_menu():
 	if start_time == 0.0:
@@ -130,6 +132,8 @@ func reset():
 	
 	player.body.global_position = initial_position.global_position
 	
+	Globals.ene_defaeted_current_run = 0
+		
 	for door in room_manager.current_room.doors:
 		door.open()
 		

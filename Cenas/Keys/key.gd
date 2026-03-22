@@ -56,19 +56,17 @@ func animation_state(_delta: float):
 				progress = 0.0
 		2:
 			if Input.is_anything_pressed():
-				animation_stage += 1
+				animation_stage = 3
 		3:
 			var curve: MyCurve = aux_var["curve"]
 			
 			global_position = curve.get_point(progress)
 			aux_var["room_cam"].global_position = curve.get_point(progress)
 
-			
 			curve.set_p2(door1.global_position)
 					
 			progress += 1.0 / progress_scale
 			if progress > 1.0:
-				print(aux_var["room_cam"].global_position)
 				progress = 0.0
 				animation_stage += 1
 				use()
@@ -92,7 +90,7 @@ func setup_key_state(state: KeyState):
 		KeyState.ANIMATION:
 			
 			animation_stage = 1
-			Globals.player.setup_state(Player.PlayerState.ANIMATION)
+			Globals.player.setup_state(Player.PlayerState.MOVING)
 			Globals.player.anim.play("get_item")
 			
 			var room_cam: Camera2D = Globals.room_manager.current_room.camera

@@ -11,10 +11,6 @@ var idx_selected: int = 0
 
 var is_clicking: bool = false
 
-
-func _ready() -> void:
-	await get_tree().process_frame
-	update()
 	
 func update():
 	

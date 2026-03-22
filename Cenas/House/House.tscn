@@ -13,12 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://bq24nxfpume1g" path="res://Cenas/Menus/GodMenu/GodMenu.tscn" id="11_k260e"]
 [ext_resource type="PackedScene" uid="uid://ciou68u8yy1t0" path="res://Cenas/Menus/ShopMenu/ShopMenu.tscn" id="11_pabxg"]
 [ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="12_k260e"]
+[ext_resource type="PackedScene" uid="uid://c0v22ll5w46xn" path="res://Cenas/Menus/PowerUpMenu/PowerUpMenu.tscn" id="14_fx5ou"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fx5ou"]
 font = ExtResource("12_k260e")
 font_size = 64
 
-[node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "menu_manager", "audio_manager", "camera", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu", "god_menu")]
+[node name="House" type="Node2D" unique_id=692421353 node_paths=PackedStringArray("player", "room_manager", "menu_manager", "audio_manager", "camera", "initial_position", "backlayer_filter", "die_menu", "finish_menu", "inital_menu", "tutorial_menu", "power_up_menu", "god_menu")]
 script = ExtResource("1_rmjq6")
 player = NodePath("Player")
 room_manager = NodePath("RoomManager")
@@ -31,6 +32,7 @@ die_menu = NodePath("MenuManager/Menus/DieMenu")
 finish_menu = NodePath("MenuManager/Menus/FinishMenu")
 inital_menu = NodePath("MenuManager/Menus/InitialMenu")
 tutorial_menu = NodePath("MenuManager/Menus/Tutorial")
+power_up_menu = NodePath("MenuManager/Menus/PowerUpMenu")
 god_menu = NodePath("MenuManager/Menus/GodMenu")
 
 [node name="RoomManager" parent="." unique_id=2145467993 instance=ExtResource("4_6pdaa")]
@@ -73,8 +75,12 @@ manager = NodePath("../..")
 visible = false
 
 [node name="ShopMenu" parent="MenuManager/Menus" unique_id=1637258923 node_paths=PackedStringArray("pos", "pop_up") instance=ExtResource("11_pabxg")]
+visible = false
 pos = NodePath("../Interatives/ShopMenu/Pos")
 pop_up = NodePath("../Interatives/ShopMenu/PopUp")
+
+[node name="PowerUpMenu" parent="MenuManager/Menus" unique_id=657579698 instance=ExtResource("14_fx5ou")]
+visible = false
 
 [node name="Interatives" type="Node2D" parent="MenuManager/Menus" unique_id=2072668704]
 

@@ -9,14 +9,15 @@
 font = ExtResource("3_tb207")
 font_size = 60
 
-[node name="Tutorial" type="CanvasLayer" unique_id=823908965 node_paths=PackedStringArray("video", "labels_container", "button_next", "titulo", "imgs_cont", "focus_button")]
+[node name="Tutorial" type="CanvasLayer" unique_id=823908965 node_paths=PackedStringArray("video", "labels_container", "button_next", "titulo", "imgs_cont", "exit_button", "focus_button")]
 script = ExtResource("1_dmow6")
 video = NodePath("Control/MarginContainer/HBoxContainer/VideoStreamPlayer")
 labels_container = NodePath("Control/MarginContainer/HBoxContainer/VBoxContainer")
-button_next = NodePath("Control/HBoxContainer/Button5")
+button_next = NodePath("Control/HBoxContainer/Next")
 titulo = NodePath("Control/MarginContainer/HBoxContainer/VBoxContainer/T1")
 imgs_cont = NodePath("Control/MarginContainer/HBoxContainer/ImgsCointainer")
-focus_button = NodePath("Control/HBoxContainer/Button5")
+exit_button = NodePath("Control/HBoxContainer/Exit")
+focus_button = NodePath("Control/HBoxContainer/Next")
 
 [node name="Control" type="Control" parent="." unique_id=1192503361]
 layout_mode = 3
@@ -98,11 +99,11 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Button" type="Button" parent="Control/HBoxContainer" unique_id=2035511762]
+[node name="Exit" type="Button" parent="Control/HBoxContainer" unique_id=2035511762]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/Button" unique_id=1009695026]
+[node name="Label" type="Label" parent="Control/HBoxContainer/Exit" unique_id=1009695026]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,11 +119,11 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 600
 
-[node name="Button4" type="Button" parent="Control/HBoxContainer" unique_id=2060137057]
+[node name="Previus" type="Button" parent="Control/HBoxContainer" unique_id=2060137057]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/Button4" unique_id=1681585138]
+[node name="Label" type="Label" parent="Control/HBoxContainer/Previus" unique_id=1681585138]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -133,11 +134,11 @@ text = "Voltar"
 label_settings = ExtResource("3_w8pg0")
 horizontal_alignment = 1
 
-[node name="Button5" type="Button" parent="Control/HBoxContainer" unique_id=1418783971]
+[node name="Next" type="Button" parent="Control/HBoxContainer" unique_id=1418783971]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/Button5" unique_id=1140627405]
+[node name="Label" type="Label" parent="Control/HBoxContainer/Next" unique_id=1140627405]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -163,6 +164,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="button_down" from="Control/HBoxContainer/Button" to="." method="exit"]
-[connection signal="button_down" from="Control/HBoxContainer/Button4" to="." method="back"]
-[connection signal="button_down" from="Control/HBoxContainer/Button5" to="." method="next"]
+[connection signal="button_down" from="Control/HBoxContainer/Exit" to="." method="exit"]
+[connection signal="button_down" from="Control/HBoxContainer/Previus" to="." method="back"]
+[connection signal="button_down" from="Control/HBoxContainer/Next" to="." method="next"]

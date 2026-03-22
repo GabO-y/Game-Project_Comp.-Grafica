@@ -17,7 +17,9 @@ var quantity_ene:  float = 1
 var quantity_horder: float = 1
 var quantity_spawns: float = 1
 
-var enemies_defalted: int = 0
+var total_ene_defaeted: int = 0
+var ene_defaeted_current_run: int = 0
+
 var conquited_coins: int = 0
 
 var room_manager: RoomManager
@@ -26,11 +28,8 @@ var key_manager: KeyManager
 var round_manager: RoundManagar
 var weapon_manager: WeaponManager
 var audio_manager: AudioManager
+var power_up_manager: PowerUpManager
 var house: House
-
-var only_use_key: bool = false
-
-var ene_to_default: int = 0
 
 var is_mute: bool = false
 
@@ -51,10 +50,6 @@ var layers = {
 	"utils_wall": 1 << 10
 }
 
-var ene_in_crash_attack: Array[Enemy]
-var special_ghost_collision = 2
-
-var already_center = 0
 
 var is_reseting: bool = false
 
@@ -85,7 +80,6 @@ func set_teleport(can: bool):
 func is_clean_room():
 	return current_room.is_clean()
 
-	
 func update_room_light():
 	current_room._update_doors_light()
 	
@@ -103,7 +97,6 @@ func player_pos():
 		return Vector2(0, 0)
 	return player.body.global_position
 
-
 func get_special_time_ghost_run():
 	special_time_ghost_run += 0.5
 	return special_time_ghost_run
@@ -111,24 +104,6 @@ func get_special_time_ghost_run():
 func dir_to(current: Vector2, target: Vector2):
 	return current.direction_to(target)
 	
-func setup_next_round():
-	
-	current_level += 1
-	
-	quantity_ene += 0.5
-	quantity_horder += 0.5
-	quantity_spawns += 0.5
-		
-	if quantity_ene > 2.0:
-		quantity_ene = 2.0
-	if quantity_horder > 2.0:
-		quantity_horder = 2.0
-	if quantity_spawns > 2.0:
-		quantity_spawns = 2.0
-		
-	player.current_ene_defalut = 0
-	ene_to_default = int(floor(Globals.quantity_ene) * floor(Globals.quantity_horder) * floor(Globals.quantity_spawns)) 
-
 func debug_area(area: Area2D):
 	print(area.get_path())
 	print("\tlayer: ", area.collision_layer)
@@ -185,3 +160,12 @@ func get_pos_curve(curve: Curve2D, n: float):
 	var points: Array = curve.get_baked_points()
 	var size: int = points.size() - 1
 	return points.get(int(size * n))
+
+func get_random_enemy() -> Enemy:
+	var ene: Enemy
+	if round_manager.is_in_round:
+		if not round_manager.spawned_enemies.is_empty():
+			while not ene:
+				ene = round_manager.spawned_enemies.pick_random()
+	return ene
+	

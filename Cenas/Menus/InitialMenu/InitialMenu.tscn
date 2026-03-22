@@ -79,14 +79,13 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[node name="InitialMenu" type="CanvasLayer" unique_id=432829440 node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "focus_button")]
+[node name="InitialMenu" type="CanvasLayer" unique_id=432829440 node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "start_button")]
 script = ExtResource("1_0kox7")
 anim = NodePath("AnimationPlayer")
 anim_control_node = NodePath("AnimationPlayer/Control")
 control_node = NodePath("Control")
-is_active = null
-focus_button = NodePath("Control/VBoxContainer/Start/Start")
-need_focus = null
+start_button = NodePath("Control/VBoxContainer/Start/Start")
+need_focus = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=88312678]
 libraries/ = SubResource("AnimationLibrary_7yfuj")
@@ -197,7 +196,7 @@ text = "Sair"
 label_settings = SubResource("LabelSettings_7yfuj")
 horizontal_alignment = 1
 
-[node name="Start2" type="Button" parent="Control/VBoxContainer/Exit" unique_id=1798542773]
+[node name="Exit" type="Button" parent="Control/VBoxContainer/Exit" unique_id=1798542773]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1
@@ -218,4 +217,4 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_51tdx")
 
 [connection signal="button_down" from="Control/VBoxContainer/Start/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Control/VBoxContainer/Tutorial/Tutorial" to="." method="_on_tutorial_button_down"]
-[connection signal="button_down" from="Control/VBoxContainer/Exit/Start2" to="." method="exit"]
+[connection signal="button_down" from="Control/VBoxContainer/Exit/Exit" to="." method="exit"]

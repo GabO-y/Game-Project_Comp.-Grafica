@@ -21,6 +21,7 @@ texture = ExtResource("1_ok7kv")
 script = ExtResource("1_vhc02")
 light_area = NodePath("Light")
 collision_area = NodePath("CollisionTouch")
+life_time_frames = 100
 
 [node name="Light" type="Area2D" parent="." unique_id=1714208640]
 

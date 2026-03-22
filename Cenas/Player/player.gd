@@ -14,7 +14,9 @@ class_name Player
 @export var label_coins: Label
 @export var armor_node: Node2D
 @export var weapon_manager: WeaponManager
+@export var power_up_manager: PowerUpManager
 @export var raycast2d_node: Node2D
+@export var power_up_node: Node2D
 
 var flick_aux: int = 0
 
@@ -139,18 +141,20 @@ func _ready() -> void:
 		attributes[attr] = a
 
 	Globals.weapon_manager = weapon_manager
+	Globals.power_up_manager = power_up_manager
 	
 	hearts = max_heart
-	
 	update_label_coins()
 
 	get_window().size_changed.connect(update_hearts)
 	for attr in attributes.keys():
 		update_status(attr)
 	
+func _physics_process(delta: float) -> void:
+	
 	
 
-func _physics_process(delta: float) -> void:
+	
 	match current_state:
 		PlayerState.MOVING:
 			var dir = get_dir_move()
@@ -168,9 +172,9 @@ func _physics_process(delta: float) -> void:
 			body.velocity = knockback_dir * knockback_force
 			body.move_and_slide()
 		PlayerState.MENU:
-			pass
+			return
 		PlayerState.ANIMATION:
-			pass
+			return
 			
 	if not can_dash and current_state != PlayerState.DASHING:
 		dash_cooldown_frames += 1
@@ -209,9 +213,11 @@ func setup_state(state: PlayerState):
 			anim.play("knockback")
 			anim.animation_finished.connect(
 				func(): 
-					setup_state(PlayerState.MOVING)
 					for i in anim.animation_finished.get_connections():
 						anim.animation_finished.disconnect(i["callable"])
+					if current_state == PlayerState.ANIMATION:
+						return
+					setup_state(PlayerState.MOVING)
 			)
 	current_state = state
 
@@ -377,6 +383,12 @@ func reset():
 	
 	z_index = 0
 	is_dead = false
+	
+	for child in power_up_node.get_children():
+		power_up_node.remove_child(child)
+		child.queue_free()
+		
+	power_up_manager.ene_defeated = 0
 	
 func set_active(mode: bool):
 	set_process(mode)

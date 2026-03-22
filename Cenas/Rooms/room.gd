@@ -5,7 +5,7 @@ class_name Room
 @export var is_clear: bool = false
 @export var finish = false
 @export var spaweners: Array[Spawn]
-@export var spread: bool = false
+#@export var spread: bool = false
 @export var doors: Array[Door]
 @export var camera: Camera2D
 @export var layer_node: Node2D
@@ -27,27 +27,25 @@ var already_drop_key: bool = false
 func _ready() -> void:
 	
 	for child in get_children():
-		
 		if child is Camera2D:
 			camera = child
-		
-		if child.name == "Spawners":
-			for spawn in child.get_children():
-				if spawn is Spawn:
-					spaweners.append(spawn)
-					spawn.room = self
-					
-		if child.name == "Doors":
-			for door in child.get_children():
-				if door is Door:
-					doors.append(door)
-					door.my_room = self
-					
-		if child.name == "Layers":
-			for layer in child.get_children():
-				if layer is TileMapLayer:
-					layers.append(layer)
-
+			continue
+		match child.name:
+			"Doors":
+				for door in child.get_children():
+					if door is Door:
+						door.my_room = self
+						doors.append(door)
+			"Layers":
+				for layer in child.get_children():
+					if layer is TileMapLayer:
+						layers.append(layer)
+			"Spawners":
+				for spawn in child.get_children():
+					if spawn is Spawn:
+						spawn.room = self
+						spaweners.append(spawn)
+			
 func _process(delta: float) -> void:
 	if is_camera_chase_mode:
 		camara_chase(delta)
@@ -80,7 +78,7 @@ func set_active(mode: bool):
 		
 	if camera: camera.enabled = mode
 	
-	spread = mode
+	#spread = mode
 	
 	set_process(mode)
 	set_physics_process(mode)
