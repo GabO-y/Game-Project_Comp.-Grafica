@@ -28,5 +28,5 @@ func reset():
 func spawn_boss():
 	if boss in get_children():
 		remove_child(boss)
-	boss = load("res://Cenas/Enemy/Bosses/newGhostBoss/GhostBoss.tscn").instantiate()
+	boss = load("res://Cenas/Enemy/Bosses/GhostBoss/GhostBoss.tscn").instantiate()
 	add_child(boss)

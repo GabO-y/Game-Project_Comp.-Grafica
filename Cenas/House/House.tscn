@@ -90,6 +90,7 @@ visible = false
 position = Vector2(161, 77)
 
 [node name="PopUp" type="Label" parent="MenuManager/Menus/Interatives/ShopMenu" unique_id=2139945972]
+visible = false
 offset_left = 120.0
 offset_top = 45.0
 offset_right = 341.0

@@ -60,10 +60,11 @@ func _ready() -> void:
 	Globals.key_manager = room_manager.key_manager
 	Globals.round_manager = room_manager.round_manager
 	Globals.audio_manager = audio_manager
-		
+	
+	power_up_menu.setup_state(Menu.MenuState.DESABLE)
+
 	die_menu.house = self
 	
-	player.setup_state(Player.PlayerState.MENU)
 	player._die.connect(
 		func():
 			die_menu.a_coins.text = str(player.coins)
@@ -106,11 +107,8 @@ func _ready() -> void:
 			finish_menu.setup_state(Menu.MenuState.ENABLE)
 	)
 	
-	power_up_menu.setup_state(Menu.MenuState.DESABLE)
-	
 	if player_infinity_coin:
 		player.update_label_coins(1000000000)
-	
 
 func await_initial_menu():
 	if start_time == 0.0:

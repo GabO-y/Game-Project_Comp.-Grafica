@@ -22,11 +22,10 @@ func setup_state(state: MenuState):
 	match state:
 		MenuState.ENABLE:
 			visible = true
-			get_tree().paused = true
 			set_power_ups()
 		MenuState.DESABLE:
 			visible = false
-			get_tree().paused = false
+	setup_player()
 
 			
 func set_power_ups():
@@ -40,11 +39,19 @@ func set_power_ups():
 	
 	for child in power_ups_node.get_children():
 		power_ups_node.remove_child(child)
-	for up in power_ups:
-		var item: PowerUpMenuItem = load("res://Cenas/Menus/PowerUpMenu/PowerUpMenuItem/PowerUpMenuItem.tscn").instantiate()
 		
+	var is_first: bool = true
+		
+	for up in power_ups:
+		var item: PowerUpMenuItem = load("res://Cenas/Menus/PowerUpMenu/PowerUpMenuItem/PowerUpMenuItem.tscn").instantiate()	
 		power_ups_node.add_child(item)
-		var texture: GradientTexture2D = GradientTexture2D.new()
+		var texture: GradientTexture2D = item.texture
+		
+		if width != heigth:
+			var max = max(width, heigth)
+			width = max
+			heigth = max
+		
 		texture.width = width
 		texture.height = heigth
 		
@@ -54,8 +61,18 @@ func set_power_ups():
 		
 		if not up.icon_path.is_empty():
 			item.button.icon = load(up.icon_path)
-		power_name.text = up.power_up_name + "\n"
-		power_description.text = up.power_up_description + "\n"
+		
 
-
+		item.button.button_down.connect(
+			func():
+				item.button.grab_focus()
+				power_name.text = up.power_up_name + "\n"
+				power_description.text = up.power_up_description + "\n"
+		)
+		
+		if is_first:
+			item.button.button_down.emit()
+			item.button.button_up.emit()
+			is_first = false
+		
 		

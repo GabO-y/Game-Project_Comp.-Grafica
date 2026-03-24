@@ -46,7 +46,6 @@ func spawn_random_enemy():
 			spawned_enemies.erase(ene)
 			Globals.ene_defaeted_current_run += 1
 			Globals.total_ene_defaeted += 1
-			Globals.power_up_manager.ene_defeated += 1
 	)
 	spawned_enemies.append(ene)
 	ene.level = level
@@ -71,6 +70,7 @@ func _on_timer_timeout() -> void:
 		current_quant_ene += 1
 		
 func reset():
+	set_physics_process(false)
 	level = 0
 	timer.stop()
 	is_in_round = false

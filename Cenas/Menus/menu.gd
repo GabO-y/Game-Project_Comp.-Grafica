@@ -35,14 +35,17 @@ func setup_player():
 		MenuState.ENABLE:
 			last_player_state = Globals.player.current_state
 			player.current_state = Globals.player.PlayerState.MENU
+			get_tree().paused = true
 		MenuState.DESABLE:
 			if last_player_state:
 				player.current_state = last_player_state
 			else:
 				player.current_state = Player.PlayerState.MOVING
+			get_tree().paused = false
+
 			
 func reset():
-	pass
+	setup_state(MenuState.DESABLE)
 			
 func setup_state(state: MenuState):
 	pass

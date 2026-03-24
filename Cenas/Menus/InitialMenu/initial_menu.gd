@@ -16,16 +16,15 @@ func setup_state(state: MenuState):
 			visible = true
 			control_node.visible = true
 			anim_control_node.visible = false
-			Globals.player.setup_state(Player.PlayerState.MENU)
 			start_button.grab_focus()
 		MenuState.DESABLE:
 			visible = false
 			anim_control_node.visible = false
 			for c in anim.animation_finished.get_connections():
 				anim.animation_finished.disconnect(c["callable"])
-			Globals.player.setup_state(Player.PlayerState.MOVING)
 			anim.stop()
 	current_state = state
+	setup_player()
 
 func start():
 	
@@ -51,6 +50,7 @@ func _on_start_button_down() -> void:
 			anim.play("start2")
 			anim.animation_finished.connect(
 				func(_m):
+					print("a")
 					setup_state(MenuState.DESABLE)
 					start_play.emit()
 			)

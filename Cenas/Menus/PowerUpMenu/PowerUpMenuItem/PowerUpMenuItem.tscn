@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ccioee6rcjhd4"]
 
 [ext_resource type="Script" uid="uid://3ubwu0rn2k4c" path="res://Cenas/Menus/PowerUpMenu/PowerUpMenuItem/power_up_menu_item.gd" id="1_j5wx2"]
+[ext_resource type="Texture2D" uid="uid://bqu6m335gm34c" path="res://Assets/PowerUp/PowerUpNoneIcon.png" id="2_n44oy"]
 
 [sub_resource type="Gradient" id="Gradient_g7fg3"]
 offsets = PackedFloat32Array(0)
@@ -35,9 +36,13 @@ value = 0.5
 show_percentage = false
 
 [node name="Button" type="Button" parent="." unique_id=1464972624]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+icon = ExtResource("2_n44oy")
+flat = true
+expand_icon = true

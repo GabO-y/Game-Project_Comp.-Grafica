@@ -12,6 +12,10 @@ font_size = 32
 font = ExtResource("2_2oc7s")
 font_size = 64
 
+[sub_resource type="LabelSettings" id="LabelSettings_hnoha"]
+font = ExtResource("2_2oc7s")
+font_size = 32
+
 [node name="PowerUpMenu" type="CanvasLayer" unique_id=657579698 node_paths=PackedStringArray("power_ups_node", "power_name", "power_description")]
 script = ExtResource("1_rrkqi")
 power_ups_node = NodePath("MarginContainer/PanelContainer/PowerUpsNode")
@@ -77,3 +81,10 @@ size_flags_vertical = 0
 text = "
 Faça Sua Escolha"
 label_settings = SubResource("LabelSettings_dxw6a")
+
+[node name="Label2" type="Label" parent="MarginContainer" unique_id=1144267129]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Precione o ícone por um tempo para escolhe-lo"
+label_settings = SubResource("LabelSettings_hnoha")

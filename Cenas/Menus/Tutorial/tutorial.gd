@@ -133,6 +133,7 @@ func setup_state(state: MenuState):
 		MenuState.DESABLE:
 			visible = false
 	current_state = state
+	setup_player()
 	
 func next():
 	var i = current_index + 1

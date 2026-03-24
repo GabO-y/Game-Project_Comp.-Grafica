@@ -2,21 +2,12 @@ extends Node2D
 
 class_name PowerUpManager
 
-var up_quant: int = 1
-
-var ene_to_up: SimpleAttribute = SimpleAttribute.new(30, 1, 9)
-var ene_defeated: int = 0
-
 var availabel_ups: Array[String] = ["FairyPowerUp"]
-
-func _process(delta: float) -> void:
-	
-	if ene_defeated >= ene_to_up.get_value(up_quant):
-		var menu: PowerUpMenu = Globals.house.power_up_menu
-		menu.power_ups = get_power_ups()
-		menu.setup_state(Menu.MenuState.ENABLE)
-		ene_defeated = 0
-		up_quant += 1
+		
+func start():
+	var menu: PowerUpMenu = Globals.house.power_up_menu
+	menu.power_ups = get_power_ups()
+	menu.setup_state(Menu.MenuState.ENABLE)
 	
 func get_power_ups():
 	var ups: Array[String]

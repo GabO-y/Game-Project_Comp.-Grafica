@@ -152,9 +152,6 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	
-	
-
-	
 	match current_state:
 		PlayerState.MOVING:
 			var dir = get_dir_move()
@@ -191,7 +188,6 @@ func _physics_process(delta: float) -> void:
 			anim.modulate = Color(1, 1, 1)
 
 func setup_state(state: PlayerState):
-	
 	match state:
 		PlayerState.MOVING:
 			body.collision_layer = Globals.layers["player"]
@@ -388,8 +384,6 @@ func reset():
 		power_up_node.remove_child(child)
 		child.queue_free()
 		
-	power_up_manager.ene_defeated = 0
-	
 func set_active(mode: bool):
 	set_process(mode)
 	set_physics_process(mode)
