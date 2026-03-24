@@ -8,6 +8,10 @@ class_name InitialMenu
 
 @export var start_button: Button
 
+@export var scroll_bright_bar: HScrollBar
+@export var brightness_config: BrightnessConfig
+
+
 var stage: int = 1
 
 func setup_state(state: MenuState):
@@ -17,6 +21,8 @@ func setup_state(state: MenuState):
 			control_node.visible = true
 			anim_control_node.visible = false
 			start_button.grab_focus()
+			brightness_config.visible = true
+			Globals.update_brightness()
 		MenuState.DESABLE:
 			visible = false
 			anim_control_node.visible = false
@@ -44,6 +50,8 @@ func _on_start_button_down() -> void:
 		anim.animation_finished.disconnect(i["callable"])
 
 	anim.play("start")
+	brightness_config.visible = false
+
 	anim.animation_finished.connect(
 		func(_n):
 			control_node.visible = false

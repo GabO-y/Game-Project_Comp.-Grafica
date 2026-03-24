@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bescn3vpqqiql" path="res://Cenas/Menus/PauseMenu/menu_pause.gd" id="1_bo35q"]
 [ext_resource type="PackedScene" uid="uid://ciq4xboriaopc" path="res://Cenas/Menus/SoundIconMenu/SoundIconMenu.tscn" id="2_amuvb"]
+[ext_resource type="PackedScene" uid="uid://o57hyrc8sxig" path="res://Cenas/ConfigureScenes/BrightnessConfig/BrightnessConfig.tscn" id="3_iskor"]
 
-[node name="MenuPause" type="CanvasLayer" unique_id=240478034 node_paths=PackedStringArray("resume_button", "focus_button")]
+[node name="MenuPause" type="CanvasLayer" unique_id=240478034 node_paths=PackedStringArray("resume_button", "brightness_config", "focus_button")]
 process_mode = 3
 script = ExtResource("1_bo35q")
 resume_button = NodePath("MarginContainer/VBoxContainer/Resume")
+brightness_config = NodePath("BrightnessConfig")
 focus_button = NodePath("MarginContainer/VBoxContainer/Resume")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1825972760]
@@ -43,6 +45,8 @@ layout_mode = 2
 text = "Voltar para o Menu"
 
 [node name="SoundIconMenu" parent="." unique_id=1552574553 instance=ExtResource("2_amuvb")]
+
+[node name="BrightnessConfig" parent="." unique_id=1927430426 instance=ExtResource("3_iskor")]
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_button_pressed"]
 [connection signal="button_down" from="MarginContainer/VBoxContainer/FinishRound" to="." method="_on_finish_round_button_down"]

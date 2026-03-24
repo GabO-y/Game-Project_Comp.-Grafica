@@ -27,7 +27,7 @@ menu_manager = NodePath("MenuManager")
 audio_manager = NodePath("AudioManager")
 camera = NodePath("Camera2D")
 initial_position = NodePath("InitialPosition")
-backlayer_filter = NodePath("Filter")
+backlayer_filter = NodePath("CanvasModulate")
 die_menu = NodePath("MenuManager/Menus/DieMenu")
 finish_menu = NodePath("MenuManager/Menus/FinishMenu")
 inital_menu = NodePath("MenuManager/Menus/InitialMenu")
@@ -102,5 +102,4 @@ label_settings = SubResource("LabelSettings_fx5ou")
 [node name="InitialPosition" type="Marker2D" parent="." unique_id=146841559]
 position = Vector2(69, 98)
 
-[node name="Filter" type="CanvasModulate" parent="." unique_id=1931587469]
-color = Color(0.258125, 0.1475, 0.59, 1)
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1671723958]

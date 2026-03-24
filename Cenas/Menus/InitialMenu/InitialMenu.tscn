@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="2_51tdx"]
 [ext_resource type="Texture2D" uid="uid://de7xav36r8sue" path="res://Assets/LightMare.jpg" id="2_jcdgm"]
 [ext_resource type="PackedScene" uid="uid://ciq4xboriaopc" path="res://Cenas/Menus/SoundIconMenu/SoundIconMenu.tscn" id="4_jcdgm"]
+[ext_resource type="PackedScene" uid="uid://o57hyrc8sxig" path="res://Cenas/ConfigureScenes/BrightnessConfig/BrightnessConfig.tscn" id="5_55wf5"]
 
 [sub_resource type="Animation" id="Animation_7yfuj"]
 length = 0.001
@@ -79,12 +80,13 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[node name="InitialMenu" type="CanvasLayer" unique_id=432829440 node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "start_button")]
+[node name="InitialMenu" type="CanvasLayer" unique_id=432829440 node_paths=PackedStringArray("anim", "anim_control_node", "control_node", "start_button", "brightness_config")]
 script = ExtResource("1_0kox7")
 anim = NodePath("AnimationPlayer")
 anim_control_node = NodePath("AnimationPlayer/Control")
 control_node = NodePath("Control")
 start_button = NodePath("Control/VBoxContainer/Start/Start")
+brightness_config = NodePath("BrightnessConfig")
 need_focus = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=88312678]
@@ -214,6 +216,8 @@ size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_51tdx")
 
 [node name="SoundIconMenu" parent="." unique_id=1799075370 instance=ExtResource("4_jcdgm")]
+
+[node name="BrightnessConfig" parent="." unique_id=1927430426 instance=ExtResource("5_55wf5")]
 
 [connection signal="button_down" from="Control/VBoxContainer/Start/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Control/VBoxContainer/Tutorial/Tutorial" to="." method="_on_tutorial_button_down"]

@@ -1,6 +1,7 @@
 extends Menu
 
 @export var resume_button: Button
+@export var brightness_config: BrightnessConfig
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -18,10 +19,11 @@ func setup_state(state: MenuState):
 			visible = true
 			get_tree().paused = true
 			resume_button.grab_focus()
+			brightness_config.value = Globals.global_brightness
 		MenuState.DESABLE:
 			visible = false
 			get_tree().paused = false
-
+			
 	current_state = state
 	setup_player()
 			

@@ -10,7 +10,7 @@ class_name House
 
 @export var camera: Camera2D
 @export var initial_position: Marker2D
-@export var backlayer_filter: Node2D
+@export var backlayer_filter: CanvasModulate
 
 @export var die_menu: DieMenu
 @export var finish_menu: FinishMenu
@@ -39,11 +39,20 @@ var start_time: float = 0.0
 
 var god_vars: Dictionary = {}
 
+var filter_color: Color = Color(67.0/255.0, 0.0, 140.0 / 255.0, 1.0)
+#var filter_color: Color = Color(1.0, 1.0, 1.0)
+
+
 func _ready() -> void:
 	
 	Globals.house = self
 	Globals.player = player
+	
+	backlayer_filter.color = filter_color
+	
 	Globals.backlayer_filter = backlayer_filter
+	Globals.color_brigthness_target = filter_color
+	Globals.update_brightness()
 	
 	Globals.god_vars["insta_ene_kill"] = insta_ene_kill
 	Globals.god_vars["can_player_die"] = can_player_die
@@ -109,6 +118,7 @@ func _ready() -> void:
 	
 	if player_infinity_coin:
 		player.update_label_coins(1000000000)
+
 
 func await_initial_menu():
 	if start_time == 0.0:

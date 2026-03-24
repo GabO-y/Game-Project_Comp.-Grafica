@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://o57hyrc8sxig"]
+
+[ext_resource type="Script" uid="uid://krhwt8dosgq3" path="res://Cenas/ConfigureScenes/BrightnessConfig/brightness_config.gd" id="1_0ishs"]
+[ext_resource type="FontFile" uid="uid://fjtj7n7g3qwi" path="res://Assets/Fonts/PixelFont/Pixel Game.otf" id="1_ofumt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ishs"]
+font = ExtResource("1_ofumt")
+font_size = 32
+
+[node name="BrightnessConfig" type="HScrollBar" unique_id=1927430426 node_paths=PackedStringArray("filter_exemple")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -27.0
+offset_right = 394.0
+offset_bottom = -7.0
+grow_vertical = 0
+max_value = 1.0
+page = 0.04
+value = 0.5
+script = ExtResource("1_0ishs")
+filter_exemple = NodePath("FilterExemple")
+
+[node name="FilterExemple" type="CanvasModulate" parent="." unique_id=713329059]
+
+[node name="Label" type="Label" parent="." unique_id=592832998]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -50.0
+offset_right = 43.0
+offset_bottom = -27.0
+grow_vertical = 0
+text = "Ajuste de Brilho"
+label_settings = SubResource("LabelSettings_0ishs")
+
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]

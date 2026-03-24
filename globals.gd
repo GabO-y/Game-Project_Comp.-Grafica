@@ -31,9 +31,13 @@ var audio_manager: AudioManager
 var power_up_manager: PowerUpManager
 var house: House
 
+var color_brigthness_target: Color 
+
 var is_mute: bool = false
 
 var god_vars: Dictionary
+
+var global_brightness: float = 0.5
 
 var layers = {
 	"player" : 1 << 0,
@@ -168,4 +172,7 @@ func get_random_enemy() -> Enemy:
 			while not ene:
 				ene = round_manager.spawned_enemies.pick_random()
 	return ene
+
+func update_brightness():
+	backlayer_filter.color = lerp(Color(1,1,1), color_brigthness_target, global_brightness)
 	
