@@ -10,14 +10,14 @@ func _ready() -> void:
 	attributes["frames_to_damage"] = CompostAtrribute.new()
 	attributes["frames_coldown_shoot"] = CompostAtrribute.new()
 	
-	attributes["frames_to_damage"].set_attr("value", 50, 95)
-	attributes["frames_to_damage"].set_attr("price", 100, 10)
+	attributes["frames_to_damage"].set_attr("value", 50.0, 95.0)
+	attributes["frames_to_damage"].set_attr("price", 100.0, 10.0)
 	
-	attributes["frames_coldown_shoot"].set_attr("value", 20, 50)
-	attributes["frames_coldown_shoot"].set_attr("price", 100, 10)
+	attributes["frames_coldown_shoot"].set_attr("value", 20.0, 50.0)
+	attributes["frames_coldown_shoot"].set_attr("price", 100.0, 10.0)
 	
 	attributes["damage"].set_attr("value", 10.0, 2.0)
-	attributes["damage"].set_attr("price", 150, 10)
+	attributes["damage"].set_attr("price", 150.0, 10.0)
 	
 	super._ready()
 	

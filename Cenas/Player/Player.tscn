@@ -244,7 +244,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmvhq"]
-size = Vector2(11.5, 12.2222)
+size = Vector2(11.5, 15.555551)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yjlpd"]
 
@@ -275,7 +275,7 @@ sprite_frames = SubResource("SpriteFrames_htvwm")
 animation = &"knockback"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=829775109]
-position = Vector2(1, 0.500005)
+position = Vector2(1, -1.0000024)
 scale = Vector2(0.9, 0.9)
 shape = SubResource("RectangleShape2D_pmvhq")
 

@@ -40,8 +40,6 @@ var start_time: float = 0.0
 var god_vars: Dictionary = {}
 
 var filter_color: Color = Color(67.0/255.0, 0.0, 140.0 / 255.0, 1.0)
-#var filter_color: Color = Color(1.0, 1.0, 1.0)
-
 
 func _ready() -> void:
 	

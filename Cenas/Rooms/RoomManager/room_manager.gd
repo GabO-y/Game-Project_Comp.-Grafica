@@ -181,7 +181,6 @@ func show_rounds():
 			room.show_rounds()
 			
 func _clear_effects():
-	print("AAA")
 	Globals.power_up_manager.start()
 	key_manager.try_open_door()
 	item_manager.make_items_chase_player()

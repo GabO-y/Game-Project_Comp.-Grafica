@@ -149,6 +149,9 @@ func _ready() -> void:
 	get_window().size_changed.connect(update_hearts)
 	for attr in attributes.keys():
 		update_status(attr)
+		
+	body.collision_layer = Globals.layers["player"]
+	body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] 
 	
 func _physics_process(delta: float) -> void:
 	
@@ -191,7 +194,7 @@ func setup_state(state: PlayerState):
 	match state:
 		PlayerState.MOVING:
 			body.collision_layer = Globals.layers["player"]
-			body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] | Globals.layers["ghost"]
+			body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] 
 			can_take_damege = true
 		PlayerState.DASHING:
 			if not can_dash: 
