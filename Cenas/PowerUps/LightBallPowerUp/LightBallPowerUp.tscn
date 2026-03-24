@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://c7atkn1i8kl1"]
+
+[ext_resource type="Script" uid="uid://bs8vgne335ms8" path="res://Cenas/PowerUps/LightBallPowerUp/light_ball_power_up.gd" id="1_krjfm"]
+
+[sub_resource type="Gradient" id="Gradient_krjfm"]
+offsets = PackedFloat32Array(0.42405063, 0.62658226)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0fjld"]
+gradient = SubResource("Gradient_krjfm")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_krjfm"]
+radius = 22.022715
+
+[node name="LightBallPowerUp" type="Node2D" unique_id=1669858760 node_paths=PackedStringArray("light_area")]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_krjfm")
+light_area = NodePath("Area2D")
+power_up_name = "Bola de Luz"
+power_up_description = "Uma brilante bola irá circundar em volta de ti , machucando quem toca"
+icon_path = "res://Assets/PowerUp/BallLightPowerUpIcon.png"
+metadata/_custom_type_script = "uid://dipvwf1xl5w6d"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=680352119]
+texture = SubResource("GradientTexture2D_0fjld")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2031865370]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=181133944]
+shape = SubResource("CircleShape2D_krjfm")
+
+[connection signal="body_entered" from="Area2D" to="." method="_ene_enter_light"]

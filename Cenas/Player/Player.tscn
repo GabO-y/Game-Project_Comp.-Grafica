@@ -312,6 +312,10 @@ script = ExtResource("6_qhdav")
 
 [node name="PowerUpNode" type="Node2D" parent="CharacterBody2D" unique_id=1433083563]
 
+[node name="Fairy" type="Node2D" parent="CharacterBody2D/PowerUpNode" unique_id=1509969917]
+
+[node name="LightBall" type="Node2D" parent="CharacterBody2D/PowerUpNode" unique_id=952760389]
+
 [node name="Hud" type="CanvasLayer" parent="." unique_id=928206949]
 
 [node name="Coins" type="Label" parent="Hud" unique_id=700337594]
@@ -334,3 +338,4 @@ offset_bottom = 40.0
 
 [connection signal="area_entered" from="CharacterBody2D/HitArea" to="." method="_kill_entered"]
 [connection signal="body_entered" from="CharacterBody2D/HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="child_entered_tree" from="CharacterBody2D/PowerUpNode/LightBall" to="." method="_organizate_light_balls"]

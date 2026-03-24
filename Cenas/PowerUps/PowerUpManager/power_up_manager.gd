@@ -2,7 +2,12 @@ extends Node2D
 
 class_name PowerUpManager
 
-var availabel_ups: Array[String] = ["FairyPowerUp"]
+var availabel_ups: Array[String] = ["FairyPowerUp", "LightBallPowerUp"]
+
+var power_up_in_scene: Dictionary = {
+	"Fairy": [],
+	"LightBall": []
+}
 		
 func start():
 	var menu: PowerUpMenu = Globals.house.power_up_menu

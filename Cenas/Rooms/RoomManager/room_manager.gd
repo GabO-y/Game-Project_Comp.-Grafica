@@ -16,8 +16,6 @@ var last_ene_pos: Vector2
 
 var current_room: Room
 
-var sounds_to_play: Array[Dictionary] = []
-
 func _ready() -> void:
 	for room in roomsNode.get_children():
 		if room is Room:			

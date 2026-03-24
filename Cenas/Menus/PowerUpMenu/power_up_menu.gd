@@ -16,7 +16,7 @@ func _ready() -> void:
 			if current_state == MenuState.ENABLE:
 				set_power_ups()
 	)
-
+	
 func setup_state(state: MenuState):
 	current_state = state
 	match state:
@@ -62,17 +62,14 @@ func set_power_ups():
 		if not up.icon_path.is_empty():
 			item.button.icon = load(up.icon_path)
 		
-
-		item.button.button_down.connect(
+		item.button.focus_entered.connect(
 			func():
-				item.button.grab_focus()
 				power_name.text = up.power_up_name + "\n"
 				power_description.text = up.power_up_description + "\n"
 		)
 		
 		if is_first:
-			item.button.button_down.emit()
-			item.button.button_up.emit()
+			item.button.grab_focus()
 			is_first = false
 		
 		

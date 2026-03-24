@@ -117,7 +117,6 @@ func _ready() -> void:
 	if player_infinity_coin:
 		player.update_label_coins(1000000000)
 
-
 func await_initial_menu():
 	if start_time == 0.0:
 		start_time = Time.get_ticks_msec()

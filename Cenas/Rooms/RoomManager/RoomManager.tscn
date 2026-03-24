@@ -13,9 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://rj84xueqnc2o" path="res://Cenas/Rooms/DeskRoom/DeskRoom.tscn" id="9_oxtvy"]
 [ext_resource type="PackedScene" uid="uid://bykulbxi0xxnq" path="res://Cenas/Rooms/TutorialRoom/TutorialRoom.tscn" id="10_gc0uj"]
 [ext_resource type="PackedScene" uid="uid://c8pmycrg74u1x" path="res://Cenas/Round/RoundManager/RoundManagar.tscn" id="13_gc0uj"]
-[ext_resource type="AudioStream" uid="uid://ntbk785g70rv" path="res://Assets/Sound/ghost_voice.mp3" id="13_m3jl5"]
-[ext_resource type="AudioStream" uid="uid://cowqvpvyqhw6i" path="res://Assets/Sound/zombie_sound.mp3" id="14_mx1pn"]
-[ext_resource type="AudioStream" uid="uid://clokbwbb82k82" path="res://Assets/Sound/skeleton_voice.mp3" id="15_ei4sg"]
 
 [node name="RoomManager" type="Node2D" unique_id=398198895 node_paths=PackedStringArray("roomsNode", "item_manager", "key_manager", "round_manager")]
 script = ExtResource("1_n2tco")
@@ -65,14 +62,3 @@ key_manager = NodePath("../KeyManager")
 room_manager = NodePath("../..")
 
 [node name="RoundManagar" parent="Managers" unique_id=2028653320 instance=ExtResource("13_gc0uj")]
-
-[node name="EneSounds" type="Node2D" parent="." unique_id=1723378813]
-
-[node name="Ghost" type="AudioStreamPlayer" parent="EneSounds" unique_id=1818990210]
-stream = ExtResource("13_m3jl5")
-
-[node name="Zombie" type="AudioStreamPlayer" parent="EneSounds" unique_id=750591221]
-stream = ExtResource("14_mx1pn")
-
-[node name="Skeleton" type="AudioStreamPlayer" parent="EneSounds" unique_id=97930827]
-stream = ExtResource("15_ei4sg")
