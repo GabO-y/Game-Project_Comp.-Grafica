@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dvjyp3fp4f5ja"]
+
+[ext_resource type="Script" uid="uid://csk3d53dqgxrj" path="res://Cenas/PowerUps/RecoverAllHeartsPowerUp/recover_all_hearts_power_up.gd" id="1_mayfd"]
+
+[node name="RecoverAllHeartsPowerUp" type="Node2D" unique_id=623821228]
+script = ExtResource("1_mayfd")
+power_up_name = "Não desista"
+power_up_description = "Todos os seus corações serão recuperados"
+icon_path = "res://Assets/PowerUp/RecoverAllHeartsPowerUp.png"
+metadata/_custom_type_script = "uid://dipvwf1xl5w6d"

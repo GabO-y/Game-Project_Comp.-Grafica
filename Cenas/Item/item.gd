@@ -25,10 +25,6 @@ func _ready() -> void:
 	area.collision_mask = Globals.layers["player"]
 	area.body_entered.connect(collect)
 	
-	#curve.progress_finish.connect(
-		#func():
-			#is_move = false
-	#)
 		
 func _process(delta: float) -> void:
 	match current_state:
@@ -41,16 +37,6 @@ func _process(delta: float) -> void:
 		ItemState.CUSTOM:
 			custom_state(delta)
 	
-	return
-	
-	if is_move:
-		match type_move:
-			"curve_move":
-				curve_move()
-			"chase_player":
-				chase_player()
-			"drop_down":
-				drop_down()
 
 func droping_state(delta: float):
 	global_position = curve.get_point(progress)
@@ -132,39 +118,6 @@ func set_go_to(pos: Vector2):
 				
 		)
 	
-# Gera a curva que o item vai seguir ate o player
-func start_chase_player():
-	
-	is_move = true
-	type_move = "chase_player"
-	
-	var p0 = global_position
-	var p1 = p0
-	var p2 = Globals.player_pos()
-	
-	var dir: Vector2 = p0.direction_to(p2) * 80
-	
-	p1 -= dir 
-	
-	dir.x = [-1,1].pick_random()
-	dir.y = [-1,1].pick_random()
-	
-	dir *= 80
-		
-	p1 -= dir
-	
-	curve = MyCurve.new(p0, p1, p2)
-
-func _on_player_body_entered(body: Node2D) -> void:
-		
-	var player = body.get_parent() as Player
-	if player == null: return
-	
-	if audio:
-		audio.play()
-		
-	collected.emit(self)
-			
 func get_curve_drop() -> MyCurve:
 	
 	var item_pos: Vector2 = global_position
@@ -221,6 +174,4 @@ func get_curve_chase() -> MyCurve:
 func collect(body: Node2D):
 	pass
 			
-signal collected(item: Item)
-
 enum ItemState {CHASING, DROPING, STOPED, CUSTOM}

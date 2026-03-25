@@ -113,9 +113,6 @@ func _ready() -> void:
 		func():
 			finish_menu.setup_state(Menu.MenuState.ENABLE)
 	)
-	
-	if player_infinity_coin:
-		player.update_label_coins(1000000000)
 
 func await_initial_menu():
 	if start_time == 0.0:

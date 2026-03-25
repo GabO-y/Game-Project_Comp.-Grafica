@@ -131,5 +131,4 @@ func collect(body: Node2D):
 		setup_key_state(KeyState.ANIMATION)
 		Globals.player.setup_state(Player.PlayerState.ANIMATION)
 		
-		
 enum KeyState {NORNAL, ANIMATION}

@@ -125,7 +125,7 @@ func setup_key(key: Key) -> Item:
 	
 	call_deferred("add_child", key)
 	
-	key.collected.connect(item_manager._collect_item)
+	#key.collected.connect(item_manager._collect_item)
 	
 	key.type = item_manager.item_type.KEY
 	
@@ -136,7 +136,7 @@ func setup_key(key: Key) -> Item:
 
 	key.manager = item_manager
 
-	key.start_chase_player()
+	key.setup_state(Item.ItemState.CHASING)
 	
 	item_manager.key_in_scene = key
 	item_manager.items_node.add_child(key)

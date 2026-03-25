@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 func apply():
 	Globals.player.power_up_node.add_child(self)
 	Globals.power_up_manager.power_up_in_scene["LightBall"].append(self)
-	Globals.player._organizate_light_balls()
+	Globals.power_up_manager._organizate_light_balls()
 	
 func _ene_enter_light(body: Node2D) -> void:
 	var ene: Enemy = body.get_parent() as Enemy

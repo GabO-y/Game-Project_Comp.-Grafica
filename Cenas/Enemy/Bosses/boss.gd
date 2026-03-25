@@ -16,9 +16,11 @@ func _ready() -> void:
 	super._ready()
 	update_progress_bars()
 	get_window().size_changed.connect(update_progress_bars)
+	for i in [health_bar, damage_bar]:
+		i.max_value = heart
+		i.value = heart
 	
-	health_bar.value = heart
-	damage_bar.value = heart
+	
 	
 func _process(delta: float) -> void:
 	if wating_drop_health and timer_to_drop_health > time_to_drop_health:

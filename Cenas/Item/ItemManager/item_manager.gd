@@ -43,30 +43,14 @@ func _ready() -> void:
 	round_manager = room_manager.round_manager
 		
 func _process(delta: float) -> void:
-	if Input.is_key_pressed(KEY_0):
-		if  created_items.has("coin"): 
-			for c in created_items["coin"]:
-				(c as Coin).setup_state(Item.ItemState.CHASING)
-		
-func drop_coin(pos: Vector2) -> Coin:
-	return drop("Coin", pos)
-	var coin: Coin = load("res://Cenas/Item/Coin/Coin.tscn").instantiate() as Coin
-	Globals.house.add_child(coin)
-	coin.global_position = pos
-	coin.manager = self
-	if not created_items.has("coin"):
-		created_items["coin"] = []
-	created_items["coin"].append(coin)
-	coin.setup_state(Item.ItemState.DROPING)
-	return coin
-	
+	if Input.is_action_just_pressed("ui_ctrl"):
+		drop("Coin", Globals.player_pos() + Vector2.RIGHT * 30)
+			
 func drop(item_name: String, pos: Vector2) -> Item:
 		
 	var path: String = str("res://Cenas/Item/", item_name, "/", item_name, ".tscn")
 	var item: Item = load(path).instantiate() as Item
 	if not item: return null
-	
-	items_node.add_child(item)
 	
 	item.global_position = pos
 	item.manager = self
@@ -77,6 +61,8 @@ func drop(item_name: String, pos: Vector2) -> Item:
 	created_items[item_name].append(item)
 	item.setup_state(Item.ItemState.DROPING)
 	
+	items_node.add_child(item)
+
 	return item
 
 func create_item(item_name: String, pos: Vector2 = Vector2.ZERO) -> Item:
@@ -181,31 +167,6 @@ func make_items_chase_player():
 		for item in created_items[key]:
 			if is_instance_valid(item):
 				item.setup_state(Item.ItemState.CHASING)
-		
-func _collect_item(item: Item):
-	if Globals.player.is_dead:
-		item.queue_free()
-		return
-	if item is Coin:
-		Globals.conquited_coins += item.get_value()
-		Globals.player.coins += item.get_value()
-		Globals.player.update_label_coins()
-		
-		item.visible = false
-		
-		item.audio.finished.connect(item.queue_free)
-		
-		return
-
-	match item.type:
-		item_type.KEY:
-			# caso a chave esteja indo em direçao a porta
-			if item.is_going_to_door: return
-			
-			await Globals.player.get_key_animation(item)
-			
-			if not is_instance_valid(item): return
-			item.is_key_moment = true
 
 # caso o player atravesse a porta, mas não tenha pegado a chave
 
@@ -246,4 +207,5 @@ func create_defalt_drop_curve(item_pos: Vector2) -> MyCurve:
 	drop_curve.add_more_curve(p1, p2)
 	
 	return drop_curve
-	
+
+signal item_collected(item: Item)

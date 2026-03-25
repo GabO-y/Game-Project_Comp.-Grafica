@@ -29,7 +29,6 @@ func _process(delta: float) -> void:
 		frames += 1
 		if frames > menu.select_frames:
 			power_up.apply()
-			Globals.player._organizate_light_balls()
 			menu.setup_state(Menu.MenuState.DESABLE)
 			queue_free()
 			return

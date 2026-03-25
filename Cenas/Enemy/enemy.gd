@@ -28,7 +28,6 @@ var d: float = 0.0
 func _ready() -> void:
 	body.collision_layer = Globals.layers["enemy"]
 	body.collision_mask = Globals.layers["player"] | Globals.layers["weapon"] | Globals.layers["current_wall"] 
-	
 	setup_status()
 	
 func _physics_process(delta: float) -> void:
@@ -98,15 +97,16 @@ func die():
 	enemy_die.emit(self)
 
 func change_color_damage():
-	body.move_and_slide()
-	
-	var sprite = anim
-	var original_color = sprite.modulate
-
-	sprite.modulate = Color.RED
-	await get_tree().create_timer(0.1).timeout
-	sprite.modulate = original_color
-	
+	var tween: Tween = create_tween()
+	tween.tween_method(
+	func(t: float):
+		modulate = Color.RED + (Color.WHITE - Color.RED) * t
+		,0.0, 1.0, 1.0
+	)
+	tween.finished.connect(
+		func():
+			modulate = Color.WHITE
+	)
 func drop_damage_label(damage: int):
 	var label := Label.new()
 	label.text = str("-", damage)

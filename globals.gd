@@ -39,6 +39,8 @@ var god_vars: Dictionary
 
 var global_brightness: float = 0.5
 
+var multiplier_coins_bonus: float = 1.0
+
 var layers = {
 	"player" : 1 << 0,
 	"enemy" : 1 << 1,

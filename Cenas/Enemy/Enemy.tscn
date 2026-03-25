@@ -4,5 +4,3 @@
 
 [node name="Enemy" type="Node2D" unique_id=657019572]
 script = ExtResource("1_c8q0v")
-level = null
-life = null

@@ -95,15 +95,6 @@ func custom_state(delta: float):
 					body.move_and_slide()
 					aux_var["dist"] -= delta
 				2:
-					body.collision_layer = Globals.player.body.collision_mask
-					body.collision_mask = Globals.player.body.collision_layer
-					for body in area_hit.get_overlapping_bodies():
-						var player: Player = Globals.is_player(body)
-						if player:
-							var aux = player.can_take_damege
-							player.can_take_damege = true
-							Globals.player.take_damage(1)
-							player.can_take_damege = aux
 					body.velocity = aux_var["dir"] * speed
 					body.move_and_slide()
 					
@@ -165,7 +156,7 @@ func setup_status():
 	attributes = {
 		"heart": SimpleAttribute.new(20, 5, 9),
 		"damage": SimpleAttribute.new(3, 1, 9),
-		"speed": SimpleAttribute.new(150.0, 100.0, 9),
+		"speed": SimpleAttribute.new(120.0, 100.0, 9),
 		"wait_frames": SimpleAttribute.new(30, 40, 9),
 		"take_damage": SimpleAttribute.new(1, 5, 9)
 	}

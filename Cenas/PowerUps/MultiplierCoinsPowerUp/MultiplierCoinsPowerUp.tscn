@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dxb8bn1ant1bf"]
+
+[ext_resource type="Script" uid="uid://b4ly3hsr8c6v7" path="res://Cenas/PowerUps/MultiplierCoinsPowerUp/multiplier_coins_power_up.gd" id="1_nkks7"]
+
+[node name="MultiplierCoinsPowerUp" type="Node2D" unique_id=488618884]
+script = ExtResource("1_nkks7")
+power_up_name = "Multiplicador de Moedas "
+power_up_description = "Agora vocẽ irá duplicar os ganhos de moeda toda vez que escolher esse power up"
+icon_path = "res://Assets/PowerUp/MultiplierCoinsPowerUp.png"
+metadata/_custom_type_script = "uid://dipvwf1xl5w6d"

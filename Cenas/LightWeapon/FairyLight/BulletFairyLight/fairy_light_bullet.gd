@@ -40,6 +40,8 @@ func _physics_process(delta: float) -> void:
 			if f > fairy_light.attributes["frames_to_damage"].get_attr("value"):
 				ene["ene"].take_damage(fairy_light.attributes["damage"].get_attr("value"))
 				ene["frames"] = 0.0
+				if ene["ene"] is Boss:
+					frames = life_time_frames + 1
 	elif is_to_rotate:
 		rotate(deg_to_rad(20.0))
 		

@@ -100,7 +100,7 @@ func setup_status():
 		"damage": SimpleAttribute.new(2, 1, 9),
 		"speed": SimpleAttribute.new(150.0, 100.0, 9),
 		"arrow_speed": SimpleAttribute.new(5.0, 3.5, 9),
-		"wait_frames": SimpleAttribute.new(30, 50, 9),
+		"wait_frames": SimpleAttribute.new(40, 70, 9),
 		"take_damage": SimpleAttribute.new(20, 60, 9)
 	}
 	update_all_status()

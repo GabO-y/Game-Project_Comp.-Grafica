@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b0gn6qe8k1rbc"]
+
+[ext_resource type="Script" uid="uid://bwmy1qsduvinq" path="res://Cenas/PowerUps/CollectCoinsPowerUp/collect_coins_power_up.gd" id="1_a7usb"]
+
+[node name="CollectCoinsPowerUp" type="Node2D" unique_id=1752271040]
+script = ExtResource("1_a7usb")
+power_up_name = "Imã de Moedas"
+power_up_description = "Cada moeda dropada pelos inimigos já irá em direção ao Player"
+icon_path = "res://Assets/PowerUp/CollectCoinsPowerUp.png"
+metadata/_custom_type_script = "uid://dipvwf1xl5w6d"

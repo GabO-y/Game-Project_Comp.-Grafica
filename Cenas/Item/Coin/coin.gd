@@ -12,9 +12,7 @@ func _ready() -> void:
 	progress_scale = 100
 	
 func get_value() -> int:
-	
 	var value: int = 0
-	
 	match type:
 		1: value = 1
 		2: value = 5
@@ -42,7 +40,7 @@ func collect(body: Node2D):
 	if manager.created_items.has("coin"):
 		manager.created_items["coin"].erase(self)
 		
-	var value: int = get_value()
+	var value: int = get_value() * Globals.multiplier_coins_bonus
 		
 	Globals.player.coins += value
 	Globals.conquited_coins += value

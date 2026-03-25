@@ -128,7 +128,7 @@ func setup_status():
 	attributes = {
 		"heart": SimpleAttribute.new(20, 5, 9),
 		"damage": SimpleAttribute.new(5, 1, 9),
-		"speed": SimpleAttribute.new(200.0, 100.0, 9),
+		"speed": SimpleAttribute.new(150.0, 100.0, 9),
 		"wait_frames": SimpleAttribute.new(30, 40, 9),
 		"take_damage": SimpleAttribute.new(1, 5, 9)
 	}

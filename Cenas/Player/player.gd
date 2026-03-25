@@ -387,6 +387,8 @@ func reset():
 		power_up_node.remove_child(child)
 		child.queue_free()
 		
+	power_up_manager.reset()
+		
 func set_active(mode: bool):
 	set_process(mode)
 	set_physics_process(mode)
@@ -428,14 +430,7 @@ func update_status(name: String):
 		"invencible_time": 
 			invencible_frames_duration = attributes[name].get_attr("value")
 
-func _organizate_light_balls() -> void:
-	var l_balls: Array = power_up_manager.power_up_in_scene["LightBall"]
-	var size: int = l_balls.size()
-	
-	var delta: float = deg_to_rad(360.0 / size as float)
-	
-	for i in range(size):
-		l_balls.get(i).r = delta * (i + 1)
+
 		
 
 signal _die

@@ -63,6 +63,5 @@ func set_random_target():
 func apply():
 	Globals.player.power_up_node.add_child(self)
 	Globals.power_up_manager.power_up_in_scene["Fairy"].append(self)
-	Globals.player._organizate_light_balls()
 	
 enum FairyState {MOVING, WATING, ATTACKING}

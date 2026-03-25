@@ -41,12 +41,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	if anim.animation != "laugh" and current_state != EnemyState.CUSTOM:
-	#if anim.animation != "laugh":
 		animation_logic()
-	
-func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
-	
 
 func waiting_state(delta: float):
 	if wait_frames_count > wait_frames_duration:
@@ -119,7 +114,7 @@ func ghost_run(stage: int, delta: float):
 				collision_shape.shape = shape		
 				g.body.add_child(area)
 				area.add_child(collision_shape)
-				area.collision_layer = Globals.layers["enemy"]
+				#area.collision_layer = Globals.layers["enemy"]
 				area.collision_mask = Globals.layers["player"]
 				area.name = "ghost_area_special"
 				area.body_entered.connect(
@@ -138,7 +133,7 @@ func ghost_run(stage: int, delta: float):
 				body.global_position = Globals.player_pos() + get_viewport_rect().size.x * 0.4 * Globals.get_random_dir()
 			t += delta
 		6:
-			if chase_player(30.0, 1.3):
+			if chase_player(50.0, 1.3):
 				setup_state(EnemyState.ATTACKING)
 				is_in_special = false
 				timer_to_special_attack.start()
@@ -189,6 +184,26 @@ func shooting_ghosts(stage: int, delta: float):
 			var g: Ghost = load("res://Cenas/Enemy/Ghost/Ghost.tscn").instantiate()
 			aux_var["ghost_node"].add_child(g)
 			g.special_stage = 1
+			
+			var area: Area2D = Area2D.new()
+			var collision: CollisionShape2D = CollisionShape2D.new()
+			collision.shape = CircleShape2D.new()
+			collision.debug_color = Color.GREEN
+			area.add_child(collision)
+			
+			area.collision_layer = Globals.layers["enemy"]
+			area.collision_mask = Globals.layers["player"]
+			area.body_entered.connect(
+				func(body: Node2D): 
+					var player: Player = Globals.is_player(body)
+					if player:
+						player.take_damage(1)
+			)
+			
+			g.body.add_child(area)
+			
+			g.body.collision_layer = 0
+			g.body.collision_mask = 0
 			
 			g.setup_state(EnemyState.CUSTOM)
 			g.setup_custom_state(Ghost.CustomState.SHOOTING_GHOST)
@@ -286,7 +301,6 @@ func setup_custom_state(state: CustomState, idx: int = 0):
 			var r_state: CustomState = [
 				CustomState.GHOST_RUN, CustomState.SHOOTING_GHOSTS
 			].pick_random()
-						
 			body.collision_layer = Globals.layers["out_room_boss"]
 			body.collision_mask = 0
 
@@ -388,7 +402,7 @@ func _start_special_attack() -> void:
 	
 func setup_status():
 	attributes = {
-		"heart": SimpleAttribute.new(100, 100, 1),
+		"heart": SimpleAttribute.new(150, 150, 1),
 		"damage": SimpleAttribute.new(2, 2, 1),
 		"speed": SimpleAttribute.new(100.0, 100.0, 1),
 		"wait_frames": SimpleAttribute.new(30, 40, 9),

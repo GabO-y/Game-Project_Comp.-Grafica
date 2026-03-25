@@ -68,6 +68,7 @@ func setup_state(state: MenuState):
 			aux_var["play"] = false
 			insufficiente_coin_effect()
 			aux_var["inssu_effect"] = false
+			label_coins.modulate = Color.WHITE
 		MenuState.DESABLE:
 			label_coins.global_position = aux_var["original_pos_label_coins"] 
 			visible = false
