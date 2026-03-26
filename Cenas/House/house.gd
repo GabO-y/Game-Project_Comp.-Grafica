@@ -67,6 +67,7 @@ func _ready() -> void:
 	Globals.key_manager = room_manager.key_manager
 	Globals.round_manager = room_manager.round_manager
 	Globals.audio_manager = audio_manager
+	Globals.weapon_manager = player.weapon_manager
 	
 	power_up_menu.setup_state(Menu.MenuState.DESABLE)
 
@@ -106,6 +107,7 @@ func _ready() -> void:
 		zombie.global_position = room.camera.global_position
 		zombie.set_physics_process(false)
 		zombie.heart = 1000000
+		print(zombie.body.collision_layer)
 		
 	inital_menu.start_play.connect(await_initial_menu)
 

@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dv2h8dpx42l3j" path="res://Cenas/LightWeapon/WeaponManager/weapon_manager.gd" id="1_f5o6k"]
 
-[node name="WeaponManager" type="Node2D" unique_id=954447346]
+[node name="WeaponManager" type="Node2D" unique_id=954447346 node_paths=PackedStringArray("static_utils_node")]
 script = ExtResource("1_f5o6k")
+static_utils_node = NodePath("StaticUtils")
 
 [node name="Armors" type="Node2D" parent="." unique_id=822389571]
+
+[node name="StaticUtils" type="Node2D" parent="." unique_id=1268876883]

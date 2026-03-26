@@ -2,6 +2,8 @@ extends Node2D
 
 class_name WeaponManager
 
+@export var static_utils_node: Node2D
+
 var weapons: Dictionary = {}
 var weapons_infos: Dictionary = {}
 
@@ -21,6 +23,7 @@ func _ready() -> void:
 	add_child(aux_node)
 	
 	for key in weapons.keys():
+		print(key)
 		var path: String = str("res://Cenas/LightWeapon/", key ,"/", key, ".tscn")
 		
 		weapons[key] = {
@@ -43,7 +46,7 @@ func _ready() -> void:
 		weapons[l.name]["upgrades"] = upgrades
 	for child in aux_node.get_children():
 		aux_node.remove_child(child)
-	remove_child(aux_node)	
+	remove_child(aux_node)
 	set_weapon("Lantern")
 
 func set_weapon(name: String):
@@ -60,6 +63,7 @@ func set_weapon(name: String):
 			w_node.add_child(w)
 			
 			selected = w
+			selected.manager = self
 			selected_name = selected.name
 			
 			if weapons_infos.has(key):

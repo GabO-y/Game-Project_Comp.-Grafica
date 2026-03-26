@@ -61,6 +61,7 @@ func _change_room(goTo):
 	current_room = goTo
 	
 	current_room.enable()
+	changed_room.emit(current_room)
 	
 	var door_target: Door = current_room.get_door(room_name)
 	
@@ -70,10 +71,10 @@ func _change_room(goTo):
 	Globals.can_teleport = false
 	round_manager.start_random_round()
 	
-	await get_tree().create_timer(0.3).timeout
 	
+
+	await get_tree().create_timer(0.3).timeout
 	Globals.can_teleport = true
-	changed_room.emit(current_room)
 		
 func find_room(room_name: String) -> Room:
 	for room in rooms:

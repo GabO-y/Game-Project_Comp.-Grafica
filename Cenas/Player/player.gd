@@ -17,6 +17,7 @@ class_name Player
 @export var power_up_manager: PowerUpManager
 @export var raycast2d_node: Node2D
 @export var power_up_node: Node2D
+@export var static_utils_node: Node2D
 
 var flick_aux: int = 0
 
@@ -152,6 +153,7 @@ func _ready() -> void:
 		
 	body.collision_layer = Globals.layers["player"]
 	body.collision_mask = Globals.layers["enemy"] | Globals.layers["current_wall"] 
+	
 	
 func _physics_process(delta: float) -> void:
 	
@@ -371,6 +373,8 @@ func reset():
 	process_mode = Node.PROCESS_MODE_INHERIT
 	current_state = PlayerState.MOVING
 	weapon_manager.selected.can_toggle = true
+	if weapon_manager.selected is LightDash:
+		weapon_manager.selected.setup_state(LightWeapon.LightWeaponState.CUSTOM)
 	
 	can_dash = false   
 	

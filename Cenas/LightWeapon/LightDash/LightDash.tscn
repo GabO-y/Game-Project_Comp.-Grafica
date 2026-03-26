@@ -2,14 +2,30 @@
 
 [ext_resource type="Script" uid="uid://d047cu3umlal0" path="res://Cenas/LightWeapon/LightDash/light_dash.gd" id="1_1y48o"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1y48o"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1y48o"]
 
-[node name="LightDash" type="Node2D" unique_id=850298755 node_paths=PackedStringArray("light_area")]
+[sub_resource type="Gradient" id="Gradient_1y48o"]
+offsets = PackedFloat32Array(0, 0.7289157)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uyuh3"]
+gradient = SubResource("Gradient_1y48o")
+fill = 1
+fill_from = Vector2(0.47709924, 0.4923664)
+fill_to = Vector2(1, 1)
+
+[node name="LightDash" type="Node2D" unique_id=850298755 node_paths=PackedStringArray("point_light_exemple", "light_area")]
 script = ExtResource("1_1y48o")
+point_light_exemple = NodePath("LightArea/CollisionShape2D/PointLight2D")
 light_area = NodePath("LightArea")
+current_state = 2
 
 [node name="LightArea" type="Area2D" parent="." unique_id=151927648]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LightArea" unique_id=1091104499]
-shape = SubResource("CircleShape2D_1y48o")
+shape = SubResource("CapsuleShape2D_1y48o")
 disabled = true
+
+[node name="PointLight2D" type="PointLight2D" parent="LightArea/CollisionShape2D" unique_id=381515814]
+texture = SubResource("GradientTexture2D_uyuh3")

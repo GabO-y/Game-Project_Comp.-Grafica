@@ -3,8 +3,10 @@ extends Node2D
 class_name LightWeapon
 
 @export var light_area: Area2D
+@export var current_state: LightWeaponState
 
-var current_state: LightWeaponState
+var manager: WeaponManager
+
 var enemies_in_light: Dictionary
 
 var is_use_mouse: bool = true
@@ -46,6 +48,8 @@ func _physics_process(delta: float) -> void:
 			enable_state(delta)
 		LightWeaponState.DESABLE:
 			desable_state(delta)
+		LightWeaponState.CUSTOM:
+			custom_state(delta)
 
 func enable_state(delta: float):
 	for ene in enemies_in_light.keys():
@@ -91,6 +95,7 @@ func _input(event: InputEvent) -> void:
 	is_use_mouse = (event is InputEventMouseButton) or (event is  InputEventMouseMotion)
 
 func update_status(name: String):
+	if not attributes.has(name): return
 	var attr: CompostAtrribute = attributes[name]
 	match name:
 		"damage":
@@ -112,6 +117,9 @@ func get_dir() -> Vector2:
 	else:
 		last_dir = dir
 	return dir
-		
 
-enum LightWeaponState {ENABLE, DESABLE}
+func custom_state(delta: float):
+	pass
+
+
+enum LightWeaponState {ENABLE, DESABLE, CUSTOM}

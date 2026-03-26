@@ -36,6 +36,10 @@ func update():
 			"name": "Pisca-Pisca",
 			"icon": "res://Assets/LightArmor/FairyLight/fairy_light_icon.png"
 		},
+		"LightDash": {
+			"name": "Dash de Luz",
+			"icon": ""
+		},
 		"damage": {
 			"name": "Dano"
 		},
@@ -47,6 +51,9 @@ func update():
 		},
 		"distance": {
 			"name": "Distância da Luz"
+		},
+		"light_duration": {
+			"name": "Duração da Luz"
 		}
 	}
 	
